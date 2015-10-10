@@ -1,0 +1,562 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2013 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2013.0.0-CL199358   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          MAY 30, 2013           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *        MODEL 386/486/586        * *
+                                              * * Windows Server 2008 R2 6.1 7601 * *
+                                              * *        Compiled for 8664        * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (June 10, 2013):
+  
+               Welcome to MSC Nastran 2013
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2013
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+   The highlights for the MSC Nastran 2013 release include:
+  •   HPC
+     –   GPU Support for non-symmetric and complex systems encountered in
+           SOL 108, SOL 109, SOL 111 and SOL 112
+     –   Element Assembly Time has been Improved using Parallel Processing in
+           SOL 400
+     –   SOL 700 DMP Improvements for FSI applications
+     –   MSC Nastran now fully utilizes the memory for All Solutions Sequences
+           which reduces the amount of wall time.
+     -   New methods have been introduced to Control Pivoting strategies when
+           Factorizing the System of Equation, to provide a balance between
+           Performance and Accuracy
+  •   Acoustics
+     –   Poroelastic Materials which are Frequency Dependant can be included in
+           Interior Acoustic Simulation to model trim materials
+  •   Durability
+     –   Fatigue Simulations may be performed from within MSC Nastran for
+1          SOL 101, SOL 103, SOL 112 and SOL 200
+     -   There is a new User Guide fully describing this new capability
+  •   Optimization
+     –   Optimization may be performed using Design Life as either a Constraint
+         or an Objective Function.
+     –   Enhancements to Equivalent Radiated Power (ERP)
+  •   Linear Analysis
+     –   Enhancements to Transfer Path Analysis (TPA) to support inter-component
+           forces
+     -   The Definition of Loads in Dynamic Analysis has been Improved.
+  •   Aeroelasticity
+     –   Output enhancements with Monitor Points for SOL 146
+  •   Advanced Nonlinear (SOL 400)
+     –   Support for enforced relative displacement motion SPCD and SPCR
+     –   Export Adams MNF files from SOL 400 for nonlinear preload
+  •   Explicit Dynamics (SOL 700)
+     –   1D-3D Spherical Symmetry and 2D-3D Axial Symmetry Remap for Blast Loads
+     –   Support for Multiple Detonation points with varying ignition times
+     –   Empirical Blast Load Models
+  
+  
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20130/CONF/NAST20130.RCF[2])
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 103                                                                                 
+     CEND                                                                                    
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      DISP(PUNCH)=ALL                                                                         
+                  5      SPCF=NONE                                                                               
+                  6      SPC = 1                                                                                 
+                  7      METHOD = 1                                                                              
+                  8      $ **********************************************************                            
+                  9      $   B U L K    D A T A                                                                  
+                 10      $ **********************************************************                            
+                 11      BEGIN BULK                                                                              
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                              $INCLUDE "c:\Users\pasquale\Desktop\testProblems\seventyTwoBar\SEVENTYTWOBARTRUSS.BDF"
+                              $END OF INCLUDE FILE "c:\Users\pasquale\Desktop\testProblems\seventyTwoBar\SEVENTYTWOBARTRUSS.BDF"
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CMASS1  101     100     1       1
+                    2-        CMASS1  102     100     1       1
+                    3-        CMASS1  103     100     1       1
+                    4-        CMASS1  201     100     2       1
+                    5-        CMASS1  202     100     2       1
+                    6-        CMASS1  203     100     2       1
+                    7-        CMASS1  301     100     3       1
+                    8-        CMASS1  302     100     3       1
+                    9-        CMASS1  303     100     3       1
+                   10-        CMASS1  401     100     4       1
+                   11-        CMASS1  402     100     4       1
+                   12-        CMASS1  403     100     4       1
+                   13-        CROD    1       1       1       5
+                   14-        CROD    2       1       2       6
+                   15-        CROD    3       1       3       7
+                   16-        CROD    4       1       4       8
+                   17-        CROD    5       2       5       2
+                   18-        CROD    6       2       1       6
+                   19-        CROD    7       2       6       3
+                   20-        CROD    8       2       2       7
+                   21-        CROD    9       2       7       4
+                   22-        CROD    10      2       3       8
+                   23-        CROD    11      2       8       1
+                   24-        CROD    12      2       4       5
+                   25-        CROD    13      3       1       2
+                   26-        CROD    14      3       2       3
+                   27-        CROD    15      3       3       4
+                   28-        CROD    16      3       4       1
+                   29-        CROD    17      4       1       3
+                   30-        CROD    18      4       2       4
+                   31-        CROD    19      5       5       9
+                   32-        CROD    20      5       6       10
+                   33-        CROD    21      5       7       11
+                   34-        CROD    22      5       8       12
+                   35-        CROD    23      6       9       6
+                   36-        CROD    24      6       5       10
+                   37-        CROD    25      6       10      7
+                   38-        CROD    26      6       6       11
+                   39-        CROD    27      6       11      8
+                   40-        CROD    28      6       7       12
+                   41-        CROD    29      6       12      5
+                   42-        CROD    30      6       8       9
+                   43-        CROD    31      7       5       6
+                   44-        CROD    32      7       6       7
+                   45-        CROD    33      7       7       8
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   46-        CROD    34      7       8       5
+                   47-        CROD    35      8       5       7
+                   48-        CROD    36      8       6       8
+                   49-        CROD    37      9       9       13
+                   50-        CROD    38      9       10      14
+                   51-        CROD    39      9       11      15
+                   52-        CROD    40      9       12      16
+                   53-        CROD    41      10      13      10
+                   54-        CROD    42      10      9       14
+                   55-        CROD    43      10      14      11
+                   56-        CROD    44      10      10      15
+                   57-        CROD    45      10      15      12
+                   58-        CROD    46      10      11      16
+                   59-        CROD    47      10      16      9
+                   60-        CROD    48      10      12      13
+                   61-        CROD    49      11      9       10
+                   62-        CROD    50      11      10      11
+                   63-        CROD    51      11      11      12
+                   64-        CROD    52      11      12      9
+                   65-        CROD    53      12      9       11
+                   66-        CROD    54      12      10      12
+                   67-        CROD    55      13      13      17
+                   68-        CROD    56      13      14      18
+                   69-        CROD    57      13      15      19
+                   70-        CROD    58      13      16      20
+                   71-        CROD    59      14      17      14
+                   72-        CROD    60      14      13      18
+                   73-        CROD    61      14      18      15
+                   74-        CROD    62      14      14      19
+                   75-        CROD    63      14      19      16
+                   76-        CROD    64      14      15      20
+                   77-        CROD    65      14      20      13
+                   78-        CROD    66      14      16      17
+                   79-        CROD    67      15      13      14
+                   80-        CROD    68      15      14      15
+                   81-        CROD    69      15      15      16
+                   82-        CROD    70      15      16      13
+                   83-        CROD    71      16      13      15
+                   84-        CROD    72      16      14      16
+                   85-        EIGRL   1                       10                              MAX
+                   86-        FORCE   1       1               1.      5000.   5000.   -5000.
+                   87-        FORCE   2       1               1.      0.      0.      -5000.
+                   88-        FORCE   2       2               1.      0.      0.      -5000.
+                   89-        FORCE   2       3               1.      0.      0.      -5000.
+                   90-        FORCE   2       4               1.      0.      0.      -5000.
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   91-        GRID   *1                               0.              0.              *
+                   92-        *       240.
+                   93-        GRID   *2                               120.            0.              *
+                   94-        *       240.
+                   95-        GRID   *3                               120.            120.            *
+                   96-        *       240.
+                   97-        GRID   *4                               0.              120.            *
+                   98-        *       240.
+                   99-        GRID   *5                               0.              0.              *
+                  100-        *       180.
+                  101-        GRID   *6                               120.            0.              *
+                  102-        *       180.
+                  103-        GRID   *7                               120.            120.            *
+                  104-        *       180.
+                  105-        GRID   *8                               0.              120.            *
+                  106-        *       180.
+                  107-        GRID   *9                               0.              0.              *
+                  108-        *       120.
+                  109-        GRID   *10                              120.            0.              *
+                  110-        *       120.
+                  111-        GRID   *11                              120.            120.            *
+                  112-        *       120.
+                  113-        GRID   *12                              0.              120.            *
+                  114-        *       120.
+                  115-        GRID   *13                              0.              0.              *
+                  116-        *       60.
+                  117-        GRID   *14                              120.            0.              *
+                  118-        *       60.
+                  119-        GRID   *15                              120.            120.            *
+                  120-        *       60.
+                  121-        GRID   *16                              0.              120.            *
+                  122-        *       60.
+                  123-        GRID    17              0.      0.      0.
+                  124-        GRID   *18                              120.            0.              *
+                  125-        *       0.
+                  126-        GRID   *19                              120.            120.            *
+                  127-        *       0.
+                  128-        GRID   *20                              0.              120.            *
+                  129-        *       0.
+                  130-        MAT1    101     1E+07           .33     .000259
+                  131-        PARAM   AUTOSPC NO
+                  132-        PARAM   COUPMASS1
+                  133-        PARAM   GRDPNT  0
+                  134-        PARAM   POST    -1
+                  135-        PMASS   100     12.95
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  136-        PROD   *1               101             .5              999.
+                  137-        PROD   *2               101             .5              999.
+                  138-        PROD   *3               101             .5              999.
+                  139-        PROD   *4               101             .5              999.
+                  140-        PROD   *5               101             .5              999.
+                  141-        PROD   *6               101             .5              999.
+                  142-        PROD   *7               101             .5              999.
+                  143-        PROD   *8               101             .5              999.
+                  144-        PROD   *9               101             .5              999.
+                  145-        PROD   *10              101             .5              999.
+                  146-        PROD   *11              101             .5              999.
+                  147-        PROD   *12              101             .5              999.
+                  148-        PROD   *13              101             .5              999.
+                  149-        PROD   *14              101             .5              999.
+                  150-        PROD   *15              101             .5              999.
+                  151-        PROD   *16              101             .5              999.
+                  152-        SPC1    1       123     17      18      19      20
+                  153-        SPC1    1       456     1       2       3       4       5       6       +
+                  154-        +       7       8       9       10      11      12      13      14      +
+                  155-        +       15      16      17      18      19      20
+                              ENDDATA
+                        TOTAL COUNT= 156
+                              INPUT BULK DATA ENTRY COUNT = 161
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                       CMASS1                       12
+                                         CROD                       72
+                                        EIGRL                        1
+                                        FORCE                        5
+                                         GRID                       20
+                                         MAT1                        1
+                                        PARAM                        4
+                                        PMASS                        1
+                                         PROD                       16
+                                         SPC1                        2
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 4109 (OUTPX2)
+     THE LABEL IS XXXXXXXX FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          8 RECORDS.)
+                (TOTAL DATA WRITTEN FOR LABEL =         17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM16, TRL =
+                    101                 0                 0                 8                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM1   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         163 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         194 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM2X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM20, TRL =
+                    102                64                 4                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM2   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         291 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         401 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM3X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM30, TRL =
+                    103                 0                 0                64                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM3   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          38 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          69 WORDS.)
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM4X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM470, TRL =
+                    104                 0                 0                 0                64                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM4   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          35 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          66 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EPTX     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EPT0, TRL =
+                    105              4224                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          99 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         139 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR MPT, TRL =
+                    101             32768                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS MPTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          15 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          46 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK DYNAMICS WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR DYNAMIC, TRL =
+                    103               256                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS DYNAMICS
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          30 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          61 WORDS.)
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.565047E+02  0.000000E+00  0.000000E+00  0.000000E+00  3.744130E+04 -9.390285E+03 *
+                      *  0.000000E+00  1.104751E+00  0.000000E+00 -1.453038E+02  0.000000E+00  6.628506E+01 *
+                      *  0.000000E+00  0.000000E+00  1.104751E+00  6.628506E+01 -6.628506E+01  0.000000E+00 *
+                      *  0.000000E+00 -1.453038E+02  6.628506E+01  3.288435E+04 -3.977103E+03 -8.718226E+03 *
+                      *  3.744130E+04  0.000000E+00 -6.628506E+01 -3.977103E+03  8.983924E+06 -2.246478E+06 *
+                      * -9.390285E+03  6.628506E+01  0.000000E+00 -8.718226E+03 -2.246478E+06  1.134788E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.565047E+02      0.000000E+00  6.000000E+01  2.392343E+02
+                                  Y            1.104751E+00      6.000000E+01  0.000000E+00  1.315263E+02
+                                  Z            1.104751E+00      6.000000E+01  6.000000E+01  0.000000E+00
+                                                                I(S)
+                                           *  9.795987E+03 -9.094947E-13  1.818989E-12 *
+                                           * -9.094947E-13  2.270334E+04 -9.313226E-10 *
+                                           *  1.818989E-12 -9.313226E-10  5.673942E+05 *
+                                                                I(Q)
+                                           *  9.795987E+03                             *
+                                           *                2.270334E+04               *
+                                           *                              5.673942E+05 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+ *** USER INFORMATION MESSAGE 5010 (LNCILD)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = 7.904760D+01, CYCLES = 1.415026D+00 THE STURM COUNT = 1
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.        7.9047600E+01          1.4150262E+00                 1                       48
+
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................     7
+
+                                     NUMBER OF DECOMPOSITIONS .............     1
+
+                                     NUMBER OF ROOTS FOUND ................    10
+
+                                     NUMBER OF SOLVES REQUIRED ............     9
+
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        6.854958E+01        8.279468E+00        1.317718E+00        1.557995E+02        1.067999E+04
+        2         2        3.445781E+02        1.856281E+01        2.954364E+00        1.561087E+02        5.379166E+04
+        3         3        2.700491E+03        5.196625E+01        8.270685E+00        1.555927E+02        4.201768E+05
+        4         4        3.323790E+03        5.765232E+01        9.175651E+00        1.555943E+02        5.171628E+05
+        5         5        2.559531E+04        1.599854E+02        2.546246E+01        4.374643E-01        1.119703E+04
+        6         6        1.783295E+05        4.222908E+02        6.720966E+01        6.277058E-01        1.119385E+05
+        7         7        1.859500E+05        4.312192E+02        6.863067E+01        5.798289E-01        1.078192E+05
+        8         8        2.040371E+05        4.517047E+02        7.189103E+01        1.318676E+00        2.690588E+05
+        9         9        2.157414E+05        4.644797E+02        7.392425E+01        9.284699E-01        2.003094E+05
+       10        10        5.972709E+05        7.728330E+02        1.230002E+02        6.981210E-01        4.169673E+05
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG, TRL =
+                    101                 0              1600                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         160 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        3165 WORDS.)
+ *** USER INFORMATION MESSAGE 4110 (OUTPX2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+

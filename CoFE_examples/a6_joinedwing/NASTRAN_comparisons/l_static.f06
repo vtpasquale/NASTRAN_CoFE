@@ -1,0 +1,1420 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2013 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2013.0.0-CL199358   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          MAY 30, 2013           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *        MODEL 386/486/586        * *
+                                              * * Windows Server 2008 R2 6.1 7601 * *
+                                              * *        Compiled for 8664        * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (June 10, 2013):
+  
+               Welcome to MSC Nastran 2013
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2013
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+   The highlights for the MSC Nastran 2013 release include:
+  •   HPC
+     –   GPU Support for non-symmetric and complex systems encountered in
+           SOL 108, SOL 109, SOL 111 and SOL 112
+     –   Element Assembly Time has been Improved using Parallel Processing in
+           SOL 400
+     –   SOL 700 DMP Improvements for FSI applications
+     –   MSC Nastran now fully utilizes the memory for All Solutions Sequences
+           which reduces the amount of wall time.
+     -   New methods have been introduced to Control Pivoting strategies when
+           Factorizing the System of Equation, to provide a balance between
+           Performance and Accuracy
+  •   Acoustics
+     –   Poroelastic Materials which are Frequency Dependant can be included in
+           Interior Acoustic Simulation to model trim materials
+  •   Durability
+     –   Fatigue Simulations may be performed from within MSC Nastran for
+1          SOL 101, SOL 103, SOL 112 and SOL 200
+     -   There is a new User Guide fully describing this new capability
+  •   Optimization
+     –   Optimization may be performed using Design Life as either a Constraint
+         or an Objective Function.
+     –   Enhancements to Equivalent Radiated Power (ERP)
+  •   Linear Analysis
+     –   Enhancements to Transfer Path Analysis (TPA) to support inter-component
+           forces
+     -   The Definition of Loads in Dynamic Analysis has been Improved.
+  •   Aeroelasticity
+     –   Output enhancements with Monitor Points for SOL 146
+  •   Advanced Nonlinear (SOL 400)
+     –   Support for enforced relative displacement motion SPCD and SPCR
+     –   Export Adams MNF files from SOL 400 for nonlinear preload
+  •   Explicit Dynamics (SOL 700)
+     –   1D-3D Spherical Symmetry and 2D-3D Axial Symmetry Remap for Blast Loads
+     –   Support for Multiple Detonation points with varying ignition times
+     –   Empirical Blast Load Models
+  
+  
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20130/CONF/NAST20130.RCF[2])
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 101                                                                                 
+     CEND                                                                                    
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      TITLE = NONLINEAR                                                                       
+                  5      ECHO = NONE                                                                             
+                  6      NLPARM = 100                                                                            
+                  7      DISP(PUNCH) = ALL                                                                       
+                  8      FORCE = ALL                                                                             
+                  9      STRESS = ALL                                                                            
+                 10      SPCFORCES = NONE                                                                        
+                 11      SUBCASE 1                                                                               
+                 12         SPC = 1                                                                              
+                 13         LOAD = 1025                                                                          
+                 14      $ **********************************************************                            
+                 15      $   B U L K    D A T A                                                                  
+                 16      $ **********************************************************                            
+                 17      $                                                                                       
+                 18      $ ---------------------------------------------                                         
+                 19      $   ANALYSIS MODEL                                                                      
+                 20      $ ---------------------------------------------                                         
+                 21      $                                                                                       
+                 22      BEGIN BULK                                                                              
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                              $INCLUDE "c:\Users\pasquale\Desktop\testProblems\joinedWing\MODEL_N.BDF"
+                              $END OF INCLUDE FILE "c:\Users\pasquale\Desktop\testProblems\joinedWing\MODEL_N.BDF"
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                        CBEAM                      144
+                                       CMASS1                      300
+                                       CORD2R                        2
+                                        FORCE                      150
+                                         GRAV                        1
+                                         GRID                      250
+                                         LOAD                        2
+                                         MAT1                        1
+                                       MDLPRM                        1
+                                       NLPARM                        2
+                                        PARAM                        5
+                                       PBEAML                        4
+                                        PMASS                        2
+                                         RBE2                       51
+                                         RBE3                       50
+                                         SPC1                        1
+
+    DEFAULT NONLINEAR TOLERANCES 
+       NLPARM ID    100
+       NINC          20
+       EPSU          1.00000E-02 (not normally used)
+       EPSP          1.00000E-02
+       EPSW          1.00000E-02
+      (VALUES YOU ENTER OVERIDE THE ABOVE DEFAULTS)
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 4109 (OUTPX2)
+     THE LABEL IS XXXXXXXX FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          8 RECORDS.)
+                (TOTAL DATA WRITTEN FOR LABEL =         17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM16, TRL =
+                    101                 0              2048                 8                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM1   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2003 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        2067 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM2X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM20, TRL =
+                    102                64                 0                 0              1024                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM2   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2595 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        4433 WORDS.)
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM3X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM30, TRL =
+                    103                 0                 0                80                 8                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM3   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        1053 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        1121 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM4X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM470, TRL =
+                    104                 0                 0                 0                64              2560                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM4   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         503 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         863 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EPTX     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EPT0, TRL =
+                    105              4096                 0                 0              1024                 0                16
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         791 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        1066 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR MPT, TRL =
+                    101             32768                 4                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS MPTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          43 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          93 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EDTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EDT, TRL =
+                    105                 0                 0                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EDTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =           7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          37 WORDS.)
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.567248E+00  1.471381E-17 -9.152191E-19 -2.105549E-17  1.041899E+00 -6.387591E+00 *
+                      *  1.471381E-17  1.567248E+00  9.887416E-18 -1.041899E+00 -3.775716E-18  5.423337E+00 *
+                      * -9.152191E-19  9.887416E-18  1.567248E+00  6.387591E+00 -5.423337E+00  2.478264E-17 *
+                      * -2.105549E-17 -1.041899E+00  6.387591E+00  3.617230E+01 -2.662447E+01 -5.181761E+00 *
+                      *  1.041899E+00 -3.775716E-18 -5.423337E+00 -2.662447E+01  2.666105E+01 -4.813805E+00 *
+                      * -6.387591E+00  5.423337E+00  2.478264E-17 -5.181761E+00 -4.813805E+00  6.061611E+01 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.567248E+00     -1.343469E-17  4.075674E+00  6.647953E-01
+                                  Y            1.567248E+00      3.460421E+00 -2.409138E-18  6.647953E-01
+                                  Z            1.567248E+00      3.460421E+00  4.075674E+00  1.581284E-17
+                                                                I(S)
+                                           *  9.445910E+00  4.520714E+00  1.576352E+00 *
+                                           *  4.520714E+00  7.201374E+00  5.673651E-01 *
+                                           *  1.576352E+00  5.673651E-01  1.581534E+01 *
+                                                                I(Q)
+                                           *  1.274015E+01                             *
+                                           *                1.622119E+01               *
+                                           *                              3.501292E+00 *
+                                                                 Q
+                                           *  7.345898E-01  2.745975E-01  6.204628E-01 *
+                                           * -6.263038E-01 -7.733962E-02  7.757333E-01 *
+                                           *  2.610008E-01 -9.584439E-01  1.151686E-01 *
+
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX   -3.820981E+00     ----          ----          ----      -2.008323E+00  1.943419E+01                             
+               FY       ----      -1.415956E+01     ----       7.542252E+00     ----      -4.193773E+01                             
+               FZ       ----          ----       4.528141E+01  1.938879E+02 -9.909136E+01     ----                                  
+               MX       ----          ----          ----      -5.056719E-16     ----          ----                                  
+               MY       ----          ----          ----          ----       4.289104E-16     ----                                  
+               MZ       ----          ----          ----          ----          ----      -8.218252E-17                             
+             TOTALS -3.820981E+00 -1.415956E+01  4.528141E+01  2.014302E+02 -1.010997E+02 -2.250354E+01
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    10
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+  
+ *** SYSTEM INFORMATION MESSAGE 4159 (DFMSA)
+     THE DECOMPOSITION OF KLL      YIELDS A MAXIMUM MATRIX-TO-FACTOR-DIAGONAL RATIO OF    1.934714E+04
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+                1          1.9780728E-10          3.6718469E+00
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG, TRL =
+                    101                 0              2000                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2000 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        2179 WORDS.)
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    11
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+               2001   0.000   -2.513453E+01 -3.063291E+01  -3.154906E+01 -4.402688E+01  -1.966341E+03   1.007385E+01   0.0
+               2002   1.000   -8.030678E+00 -6.764392E+00  -3.154906E+01 -4.402688E+01  -1.966341E+03   1.007385E+01   0.0
+0         2
+               4001   0.000   -2.513430E+01 -1.139652E+01  -3.154840E+01  2.545197E+01   1.976802E+03   1.007344E+01   0.0
+               4002   1.000   -8.030807E+00 -2.519493E+01  -3.154840E+01  2.545197E+01   1.976802E+03   1.007344E+01   0.0
+0         3
+               2002   0.000   -2.343755E+01 -2.432159E+01  -3.163980E+01 -3.911224E+01  -1.816447E+03   9.556574E+00   0.0
+               2003   1.000   -6.284504E+00 -3.117473E+00  -3.163980E+01 -3.911224E+01  -1.816447E+03   9.556574E+00   0.0
+0         4
+               4002   0.000   -2.343771E+01 -7.637836E+00  -3.164038E+01  2.255879E+01   1.827106E+03   9.556570E+00   0.0
+               4003   1.000   -6.284346E+00 -1.986775E+01  -3.164038E+01  2.255879E+01   1.827106E+03   9.556570E+00   0.0
+0         5
+               2002   0.000   -1.524414E+01 -2.310906E+00  -1.479677E+02 -2.260768E+01  -2.899846E-03  -1.755713E+01   0.0
+               4002   1.000    1.523896E+01  2.346544E+00  -1.479677E+02 -2.260768E+01  -2.899846E-03  -1.755713E+01   0.0
+0         6
+               2003   0.000   -2.217845E+01 -1.922548E+01  -3.170119E+01 -3.606852E+01  -1.661495E+03   8.850883E+00   0.0
+               2004   1.000   -4.992141E+00  3.285022E-01  -3.170119E+01 -3.606852E+01  -1.661495E+03   8.850883E+00   0.0
+0         7
+               4003   0.000   -2.217832E+01 -3.759758E+00  -3.170083E+01  2.109106E+01   1.672526E+03   8.850886E+00   0.0
+               4004   1.000   -4.992213E+00 -1.519395E+01  -3.170083E+01  2.109106E+01   1.672526E+03   8.850886E+00   0.0
+0         8
+               2003   0.000   -1.571192E+01 -2.561387E+00  -1.525087E+02 -2.504127E+01   2.193175E-03  -1.610798E+01   0.0
+               4003   1.000    1.570669E+01  2.597412E+00  -1.525087E+02 -2.504127E+01   2.193175E-03  -1.610798E+01   0.0
+0         9
+               2004   0.000   -2.093341E+01 -1.454337E+01  -3.178007E+01 -3.291501E+01  -1.505862E+03   8.140320E+00   0.0
+               2005   1.000   -3.704299E+00  3.301033E+00  -3.178007E+01 -3.291501E+01  -1.505862E+03   8.140320E+00   0.0
+0        10
+               4004   0.000   -2.093340E+01 -3.219607E-01  -3.177988E+01  1.965523E+01   1.517389E+03   8.140318E+00   0.0
+               4005   1.000   -3.704388E+00 -1.097776E+01  -3.177988E+01  1.965523E+01   1.517389E+03   8.140318E+00   0.0
+0        11
+               2004   0.000   -1.576672E+01 -2.570111E+00  -1.530410E+02 -2.512546E+01   4.694381E-04  -1.487195E+01   0.0
+               4004   1.000    1.576153E+01  2.606030E+00  -1.530410E+02 -2.512546E+01   4.694381E-04  -1.487195E+01   0.0
+0        12
+               2005   0.000   -1.968708E+01 -1.032088E+01  -3.186865E+01 -2.968686E+01  -1.349663E+03   7.422528E+00   0.0
+               2006   1.000   -2.409966E+00  5.773411E+00  -3.186865E+01 -2.968686E+01  -1.349663E+03   7.422528E+00   0.0
+0        13
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    12
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               4005   0.000   -1.968694E+01  2.644078E+00  -3.186834E+01  1.824973E+01   1.361777E+03   7.422545E+00   0.0
+               4006   1.000   -2.410015E+00 -7.249730E+00  -3.186834E+01  1.824973E+01   1.361777E+03   7.422545E+00   0.0
+0        14
+               2005   0.000   -1.581350E+01 -2.579544E+00  -1.534938E+02 -2.521730E+01  -1.393637E-03  -1.362186E+01   0.0
+               4005   1.000    1.580804E+01  2.615518E+00  -1.534938E+02 -2.521730E+01  -1.393637E-03  -1.362186E+01   0.0
+0        15
+               2006   0.000   -1.843712E+01 -6.580449E+00  -3.195975E+01 -2.634179E+01  -1.192919E+03   6.691391E+00   0.0
+               2007   1.000   -1.110594E+00  7.700377E+00  -3.195975E+01 -2.634179E+01  -1.192919E+03   6.691391E+00   0.0
+0        16
+               4006   0.000   -1.843705E+01  5.104252E+00  -3.195918E+01  1.687419E+01   1.205684E+03   6.691379E+00   0.0
+               4007   1.000   -1.110812E+00 -4.043863E+00  -3.195918E+01  1.687419E+01   1.205684E+03   6.691379E+00   0.0
+0        17
+               2006   0.000   -1.586088E+01 -2.591047E+00  -1.539543E+02 -2.532929E+01   1.238533E-03  -1.235394E+01   0.0
+               4006   1.000    1.585562E+01  2.627099E+00  -1.539543E+02 -2.532929E+01   1.238533E-03  -1.235394E+01   0.0
+0        18
+               2007   0.000   -1.718250E+01 -3.356900E+00  -3.204833E+01 -2.283230E+01  -1.035667E+03   5.940805E+00   0.0
+               2008   1.000    1.920309E-01  9.021295E+00  -3.204833E+01 -2.283230E+01  -1.035667E+03   5.940805E+00   0.0
+0        19
+               4007   0.000   -1.718259E+01  7.013335E+00  -3.204868E+01  1.553770E+01   1.049125E+03   5.940811E+00   0.0
+               4008   1.000    1.921054E-01 -1.410186E+00  -3.204868E+01  1.553770E+01   1.049125E+03   5.940811E+00   0.0
+0        20
+               2007   0.000   -1.590686E+01 -2.604563E+00  -1.544007E+02 -2.546008E+01  -9.077103E-04  -1.105723E+01   0.0
+               4007   1.000    1.590152E+01  2.640515E+00  -1.544007E+02 -2.546008E+01  -9.077103E-04  -1.105723E+01   0.0
+0        21
+               2008   0.000   -1.592062E+01 -7.011750E-01  -3.212362E+01 -1.913054E+01  -8.779844E+02   5.166221E+00   0.0
+               2009   1.000    1.494700E+00  9.670147E+00  -3.212362E+01 -1.913054E+01  -8.779844E+02   5.166221E+00   0.0
+0        22
+               4008   0.000   -1.592055E+01  8.312271E+00  -3.212331E+01  1.423802E+01   8.921535E+02   5.166219E+00   0.0
+               4009   1.000    1.494629E+00  5.933393E-01  -3.212331E+01  1.423802E+01   8.921535E+02   5.166219E+00   0.0
+0        23
+               2008   0.000   -1.594732E+01 -2.618513E+00  -1.547936E+02 -2.559606E+01   8.162855E-04  -9.722470E+00   0.0
+               4008   1.000    1.594208E+01  2.654594E+00  -1.547936E+02 -2.559606E+01   8.162855E-04  -9.722470E+00   0.0
+0        24
+               2009   0.000   -1.465124E+01  1.327514E+00  -3.218079E+01 -1.521163E+01  -7.199794E+02   4.364196E+00   0.0
+               2010   1.000    2.795118E+00  9.574283E+00  -3.218079E+01 -1.521163E+01  -7.199794E+02   4.364196E+00   0.0
+0        25
+               4009   0.000   -1.465131E+01  8.935916E+00  -3.218108E+01  1.297753E+01   7.348588E+02   4.364196E+00   0.0
+               4010   1.000    2.795202E+00  1.900334E+00  -3.218108E+01  1.297753E+01   7.348588E+02   4.364196E+00   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    13
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0        26
+               2009   0.000   -1.597883E+01 -2.632653E+00  -1.551000E+02 -2.573290E+01   5.603503E-04  -8.342602E+00   0.0
+               4009   1.000    1.597361E+01  2.668630E+00  -1.551000E+02 -2.573290E+01   5.603503E-04  -8.342602E+00   0.0
+0        27
+               2010   0.000   -1.337349E+01  2.659648E+00  -3.221400E+01 -1.107215E+01  -5.617865E+02   3.534715E+00   0.0
+               2011   1.000    4.090822E+00  8.662243E+00  -3.221400E+01 -1.107215E+01  -5.617865E+02   3.534715E+00   0.0
+0        28
+               4010   0.000   -1.337334E+01  8.814910E+00  -3.221373E+01  1.176027E+01   5.773581E+02   3.534717E+00   0.0
+               4011   1.000    4.090831E+00  2.439264E+00  -3.221373E+01  1.176027E+01   5.773581E+02   3.534717E+00   0.0
+0        29
+               2010   0.000   -1.599877E+01 -2.644757E+00  -1.552932E+02 -2.585049E+01  -1.710682E-04  -6.914597E+00   0.0
+               4010   1.000    1.599348E+01  2.680751E+00  -1.552932E+02 -2.585049E+01  -1.710682E-04  -6.914597E+00   0.0
+0        30
+               2011   0.000   -1.208768E+01  3.222957E+00  -3.221895E+01 -6.720665E+00  -4.035561E+02   2.678801E+00   0.0
+               2012   1.000    5.379348E+00  6.866466E+00  -3.221895E+01 -6.720665E+00  -4.035561E+02   2.678801E+00   0.0
+0        31
+               4011   0.000   -1.208770E+01  7.878648E+00  -3.221877E+01  1.058318E+01   4.197871E+02   2.678800E+00   0.0
+               4012   1.000    5.379231E+00  2.141133E+00  -3.221877E+01  1.058318E+01   4.197871E+02   2.678800E+00   0.0
+0        32
+               2011   0.000   -1.600506E+01 -2.654600E+00  -1.553550E+02 -2.594599E+01  -6.011989E-04  -5.439340E+00   0.0
+               4011   1.000    1.599990E+01  2.690580E+00  -1.553550E+02 -2.594599E+01  -6.011989E-04  -5.439340E+00   0.0
+0        33
+               2012   0.000   -1.079574E+01  2.944330E+00  -3.220020E+01 -2.197463E+00  -2.454382E+02   1.800668E+00   0.0
+               2013   1.000    6.661090E+00  4.135650E+00  -3.220020E+01 -2.197463E+00  -2.454382E+02   1.800668E+00   0.0
+0        34
+               4012   0.000   -1.079575E+01  6.063214E+00  -3.220020E+01  9.442498E+00   2.622843E+02   1.800660E+00   0.0
+               4013   1.000    6.661098E+00  9.441057E-01  -3.220020E+01  9.442498E+00   2.622843E+02   1.800660E+00   0.0
+0        35
+               2012   0.000   -1.599768E+01 -2.661248E+00  -1.552826E+02 -2.601045E+01   4.929869E-04  -3.922111E+00   0.0
+               4012   1.000    1.599237E+01  2.697214E+00  -1.552826E+02 -2.601045E+01   4.929869E-04  -3.922111E+00   0.0
+0        36
+               2013   0.000   -9.477843E+00  1.796434E+00  -3.212726E+01  2.656530E+00  -8.772665E+01   8.706921E-01   0.0
+               2014   1.000    7.939493E+00  3.562341E-01  -3.212726E+01  2.656530E+00  -8.772665E+01   8.706921E-01   0.0
+0        37
+               4013   0.000   -9.477790E+00  3.283265E+00  -3.212715E+01  8.280020E+00   1.051485E+02   8.706985E-01   0.0
+               4014   1.000    7.939471E+00 -1.205625E+00  -3.212715E+01  8.280020E+00   1.051485E+02   8.706985E-01   0.0
+0        38
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    14
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               2013   0.000   -1.595765E+01 -2.672288E+00  -1.548936E+02 -2.611759E+01  -7.081170E-04  -2.339184E+00   0.0
+               4013   1.000    1.595240E+01  2.708267E+00  -1.548936E+02 -2.611759E+01  -7.081170E-04  -2.339184E+00   0.0
+0        39
+               2014   0.000   -7.708138E+00 -3.483718E-01  -3.206510E+01  7.574406E+00   6.510693E+01  -4.301301E-02   0.0
+               2015   1.000    9.675481E+00 -4.454724E+00  -3.206510E+01  7.574406E+00   6.510693E+01  -4.301301E-02   0.0
+0        40
+               4014   0.000   -7.708136E+00 -5.009205E-01  -3.206524E+01  7.071323E+00  -4.716279E+01  -4.265912E-02   0.0
+               4015   1.000    9.675532E+00 -4.334527E+00  -3.206524E+01  7.071323E+00  -4.716279E+01  -4.265912E-02   0.0
+0        41
+               2014   0.000   -1.546912E+01 -2.588475E+00  -1.501519E+02 -2.530242E+01  -1.715403E-04  -7.046537E-01   0.0
+               4014   1.000    1.546395E+01  2.624122E+00  -1.501519E+02 -2.530242E+01  -1.715403E-04  -7.046537E-01   0.0
+0        42
+               2015   0.000    2.046884E-01 -4.329184E+00   4.557056E-01 -1.478620E+01   8.199434E+00   3.195717E+00   0.0
+               2016   1.000   -4.236525E-02  3.686923E+00   4.557056E-01 -1.478620E+01   8.199434E+00   3.195717E+00   0.0
+0        43
+               4015   0.000    2.047593E-01  1.802990E+00   4.558860E-01  7.416205E+00  -9.962469E+00   3.195360E+00   0.0
+               4016   1.000   -4.239260E-02 -2.217596E+00   4.558860E-01  7.416205E+00  -9.962469E+00   3.195360E+00   0.0
+0        44
+               2015   0.000    7.747990E-13  1.320886E-10  -7.275958E-12  5.618404E-10   0.0            2.842171E-14   0.0
+               4015   1.000    2.273737E-12  1.634248E-11  -7.275958E-12  5.618404E-10   0.0            2.842171E-14   0.0
+0        45
+               2016   0.000    2.045414E-01 -1.272871E+00   5.295135E-01 -9.284511E+00   6.694289E+00   2.319025E+00   0.0
+               2017   1.000   -8.252679E-02  3.760595E+00   5.295135E-01 -9.284511E+00   6.694289E+00   2.319025E+00   0.0
+0        46
+               4016   0.000    2.045593E-01  2.742205E+00   5.297028E-01  5.672861E+00  -7.959847E+00   2.319022E+00   0.0
+               4017   1.000   -8.261150E-02 -3.332550E-01   5.297028E-01  5.672861E+00  -7.959847E+00   2.319022E+00   0.0
+0        47
+               2016   0.000    2.459596E-01 -1.996242E-01   2.412925E+00 -2.110946E+00   6.588874E-06  -4.959795E+00   0.0
+               4016   1.000   -2.511314E-01  2.352557E-01   2.412925E+00 -2.110946E+00   6.588874E-06  -4.959795E+00   0.0
+0        48
+               2017   0.000    2.018409E-01  5.169641E-01   5.864702E-01 -4.496373E+00   4.802832E+00   1.388869E+00   0.0
+               2018   1.000   -1.161047E-01  2.954602E+00   5.864702E-01 -4.496373E+00   4.802832E+00   1.388869E+00   0.0
+0        49
+               4017   0.000    2.018364E-01  2.910371E+00   5.864577E-01  4.469943E+00  -5.586201E+00   1.388869E+00   0.0
+               4018   1.000   -1.161025E-01  4.870613E-01   5.864577E-01  4.469943E+00  -5.586201E+00   1.388869E+00   0.0
+0        50
+               2017   0.000    2.924390E-01 -2.522839E-01   2.864702E+00 -2.623830E+00  -9.850785E-05  -3.243628E+00   0.0
+               4017   1.000   -2.977237E-01  2.882563E-01   2.864702E+00 -2.623830E+00  -9.850785E-05  -3.243628E+00   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    15
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0        51
+               2018   0.000    1.830257E-01  1.326065E+00   5.941212E-01  8.142769E-02   2.711285E+00   4.792253E-01   0.0
+               2019   1.000   -1.390691E-01  1.281921E+00   5.941212E-01  8.142769E-02   2.711285E+00   4.792253E-01   0.0
+0        52
+               4018   0.000    1.830799E-01  2.115599E+00   5.942635E-01  3.105502E+00  -3.046766E+00   4.792253E-01   0.0
+               4019   1.000   -1.390921E-01  4.319929E-01   5.942635E-01  3.105502E+00  -3.046766E+00   4.792253E-01   0.0
+0        53
+               2018   0.000    3.077387E-01 -2.409049E-01   3.013096E+00 -2.513411E+00   7.260242E-05  -1.628538E+00   0.0
+               4018   1.000   -3.129947E-01  2.768877E-01   3.013096E+00 -2.513411E+00   7.260242E-05  -1.628538E+00   0.0
+0        54
+               2019   0.000    1.046027E-01  9.691070E-01   3.765078E-01  2.120612E+00   8.605925E-01  -9.958225E-02   0.0
+               2020   1.000   -9.951513E-02 -1.805496E-01   3.765078E-01  2.120612E+00   8.605925E-01  -9.958225E-02   0.0
+0        55
+               4019   0.000    1.046290E-01  7.448047E-01   3.766166E-01  1.328307E+00  -8.975487E-01  -9.958233E-02   0.0
+               4020   1.000   -9.954784E-02  2.468402E-02   3.766166E-01  1.328307E+00  -8.975487E-01  -9.958233E-02   0.0
+0        56
+               2019   0.000    2.479324E-01 -1.379181E-01   2.432461E+00 -1.513606E+00  -8.682953E-06  -3.128127E-01   0.0
+               4019   1.000   -2.531832E-01  1.739027E-01   2.432461E+00 -1.513606E+00  -8.682953E-06  -3.128127E-01   0.0
+0        57
+               2020   0.000    7.912832E-02  5.988376E-02   7.935963E-01  4.066757E-01  -5.462323E-05   1.026169E-01   0.0
+               4020   1.000   -8.436193E-02 -2.389627E-02   7.935963E-01  4.066757E-01  -5.462323E-05   1.026169E-01   0.0
+0      4000
+               2021   0.000    2.647765E-02 -3.785072E+00   3.314221E-01 -3.389349E+00  -1.941009E+02   4.987276E-01   0.0
+               2022   1.000   -6.310192E-02 -2.868970E+00   3.314221E-01 -3.389349E+00  -1.941009E+02   4.987276E-01   0.0
+0      4001
+               4021   0.000    2.647438E-02 -2.418818E+00   3.313419E-01  1.106849E+00   1.212484E+02   4.984184E-01   0.0
+               4022   1.000   -6.308317E-02 -2.717985E+00   3.313419E-01  1.106849E+00   1.212484E+02   4.984184E-01   0.0
+0      4002
+               2022   0.000   -3.187138E-02 -2.899208E+00   1.915113E-01 -2.237100E+00  -1.944585E+02   5.375260E-01   0.0
+               2023   1.000   -8.363467E-02 -2.294546E+00   1.915113E-01 -2.237100E+00  -1.944585E+02   5.375260E-01   0.0
+0      4003
+               4022   0.000   -3.188571E-02 -2.687750E+00   1.914101E-01 -1.060685E+00   1.215129E+02   5.373313E-01   0.0
+               4023   1.000   -8.362176E-02 -2.401058E+00   1.914101E-01 -1.060685E+00   1.215129E+02   5.373313E-01   0.0
+0      4004
+               2022   0.000    5.507775E-02  6.986884E-02   7.025079E-01  8.909270E-01  -3.362775E-05  -3.023693E-02   0.0
+               4022   1.000   -5.505340E-02 -6.980048E-02   7.025079E-01  8.909270E-01  -3.362775E-05  -3.023693E-02   0.0
+0      4005
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    16
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               2023   0.000   -4.985692E-02 -2.326875E+00   1.967896E-01 -1.798053E+00  -1.948851E+02   5.446246E-01   0.0
+               2024   1.000   -1.030468E-01 -1.840882E+00   1.967896E-01 -1.798053E+00  -1.948851E+02   5.446246E-01   0.0
+0      4006
+               4023   0.000   -4.987896E-02 -2.368728E+00   1.966794E-01 -1.370521E+00   1.219181E+02   5.445095E-01   0.0
+               4024   1.000   -1.030391E-01 -1.998292E+00   1.966794E-01 -1.370521E+00   1.219181E+02   5.445095E-01   0.0
+0      4007
+               2023   0.000    3.744652E-02  5.835007E-03   4.774793E-01  7.374022E-02   1.243552E-04  -3.232846E-02   0.0
+               4023   1.000   -3.740682E-02 -5.725080E-03   4.774793E-01  7.374022E-02   1.243552E-04  -3.232846E-02   0.0
+0      4008
+               2024   0.000   -6.865845E-02 -1.869240E+00   2.158082E-02 -2.245522E+00  -1.952477E+02   4.932309E-01   0.0
+               2025   1.000   -7.449148E-02 -1.262303E+00   2.158082E-02 -2.245522E+00  -1.952477E+02   4.932309E-01   0.0
+0      4009
+               4024   0.000   -6.867193E-02 -1.969935E+00   2.147826E-02 -2.066404E+00   1.221067E+02   4.931591E-01   0.0
+               4025   1.000   -7.447723E-02 -1.411412E+00   2.147826E-02 -2.066404E+00   1.221067E+02   4.931591E-01   0.0
+0      4010
+               2024   0.000    1.918032E-02 -2.910008E-02   2.443857E-01 -3.721128E-01  -2.603412E-04  -2.835727E-02   0.0
+               4024   1.000   -1.913150E-02  2.923527E-02   2.443857E-01 -3.721128E-01  -2.603412E-04  -2.835727E-02   0.0
+0      4011
+               2025   0.000   -3.900285E-02 -1.285681E+00   1.865899E-01 -1.634970E+00  -1.953302E+02   4.158015E-01   0.0
+               2026   1.000   -8.943622E-02 -8.437657E-01   1.865899E-01 -1.634970E+00  -1.953302E+02   4.158015E-01   0.0
+0      4012
+               4025   0.000   -3.901103E-02 -1.388033E+00   1.864911E-01 -1.810465E+00   1.224284E+02   4.157566E-01   0.0
+               4026   1.000   -8.941764E-02 -8.986827E-01   1.864911E-01 -1.810465E+00   1.224284E+02   4.157566E-01   0.0
+0      4013
+               2025   0.000    1.325120E-02 -3.853226E-02   1.687070E-01 -4.925469E-01   1.218798E-04  -2.337902E-02   0.0
+               4025   1.000   -1.319664E-02  3.868328E-02   1.687070E-01 -4.925469E-01   1.218798E-04  -2.337902E-02   0.0
+0      4014
+               2026   0.000   -6.004627E-02 -8.640108E-01  -1.941401E-02 -2.649576E+00  -1.957928E+02   3.735151E-01   0.0
+               2027   1.000   -5.479890E-02 -1.478631E-01  -1.941401E-02 -2.649576E+00  -1.957928E+02   3.735151E-01   0.0
+0      4015
+               4026   0.000   -6.005866E-02 -8.784373E-01  -1.949749E-02 -2.022798E+00   1.226227E+02   3.734873E-01   0.0
+               4027   1.000   -5.478872E-02 -3.317001E-01  -1.949749E-02 -2.022798E+00   1.226227E+02   3.734873E-01   0.0
+0      4016
+               2026   0.000    1.328317E-02 -4.401339E-02   1.690916E-01 -5.625383E-01  -1.148224E-04  -2.024495E-02   0.0
+               4026   1.000   -1.322495E-02  4.417445E-02   1.690916E-01 -5.625383E-01  -1.148224E-04  -2.024495E-02   0.0
+0      4017
+               2027   0.000    6.919884E-04 -1.641570E-01   2.626618E-01 -1.449978E+00  -1.956944E+02   2.655116E-01   0.0
+               2028   1.000   -7.030240E-02  2.277549E-01   2.626618E-01 -1.449978E+00  -1.956944E+02   2.655116E-01   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    17
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0      4018
+               4027   0.000    6.735324E-04 -3.154061E-01   2.625315E-01 -1.874242E+00   1.230113E+02   2.654945E-01   0.0
+               4028   1.000   -7.028570E-02  1.911798E-01   2.625315E-01 -1.874242E+00   1.230113E+02   2.654945E-01   0.0
+0      4019
+               2027   0.000    1.999225E-02 -4.273327E-02   2.546690E-01 -5.462454E-01   2.427113E-04  -1.629383E-02   0.0
+               4027   1.000   -1.993163E-02  4.290038E-02   2.546690E-01 -5.462454E-01   2.427113E-04  -1.629383E-02   0.0
+0      4020
+               2028   0.000   -1.858574E-02  2.152043E-01   1.333598E-01 -2.430413E+00  -1.964635E+02   2.280540E-01   0.0
+               2029   1.000   -5.463126E-02  8.721151E-01   1.333598E-01 -2.430413E+00  -1.964635E+02   2.280540E-01   0.0
+0      4021
+               4028   0.000   -1.859569E-02  2.037301E-01   1.332858E-01 -1.797996E+00   1.235881E+02   2.280437E-01   0.0
+               4029   1.000   -5.462117E-02  6.897058E-01   1.332858E-01 -1.797996E+00   1.235881E+02   2.280437E-01   0.0
+0      4022
+               2028   0.000    3.557419E-02 -5.486911E-02   4.534518E-01 -7.010943E-01  -2.748389E-04  -1.255071E-02   0.0
+               4028   1.000   -3.551249E-02  5.503997E-02   4.534518E-01 -7.010943E-01  -2.748389E-04  -1.255071E-02   0.0
+0      4023
+               2029   0.000    3.837204E-02  8.634280E-01   3.561187E-01 -1.316725E+00  -1.968525E+02   1.199142E-01   0.0
+               2030   1.000   -5.788274E-02  1.219324E+00   3.561187E-01 -1.316725E+00  -1.968525E+02   1.199142E-01   0.0
+0      4024
+               4029   0.000    3.835534E-02  6.983930E-01   3.559929E-01 -1.750488E+00   1.244066E+02   1.199061E-01   0.0
+               4030   1.000   -5.786572E-02  1.171531E+00   3.559929E-01 -1.750488E+00   1.244066E+02   1.199061E-01   0.0
+0      4025
+               2029   0.000    5.457092E-02 -5.512219E-02   6.958005E-01 -7.043384E-01   4.643543E-04  -8.686893E-03   0.0
+               4029   1.000   -5.450815E-02  5.529534E-02   6.958005E-01 -7.043384E-01   4.643543E-04  -8.686893E-03   0.0
+0      4026
+               2030   0.000    4.932899E-02  1.214878E+00   4.170274E-01 -1.660021E+00  -1.980892E+02   7.547961E-02   0.0
+               2031   1.000   -6.338870E-02  1.663562E+00   4.170274E-01 -1.660021E+00  -1.980892E+02   7.547961E-02   0.0
+0      4027
+               4030   0.000    4.932021E-02  1.175976E+00   4.169668E-01 -1.514111E+00   1.257189E+02   7.547862E-02   0.0
+               4031   1.000   -6.338078E-02  1.585221E+00   4.169668E-01 -1.514111E+00   1.257189E+02   7.547862E-02   0.0
+0      4028
+               2030   0.000    8.580186E-02 -6.694708E-02   1.094230E+00 -8.552036E-01  -2.136763E-04  -4.445590E-03   0.0
+               4030   1.000   -8.573862E-02  6.712171E-02   1.094230E+00 -8.552036E-01  -2.136763E-04  -4.445590E-03   0.0
+0      4029
+               2031   0.000    8.335412E-02  1.661453E+00   6.242757E-01 -5.329665E-01  -1.994791E+02   1.501097E-02   0.0
+               2032   1.000   -8.537976E-02  1.805508E+00   6.242757E-01 -5.329665E-01  -1.994791E+02   1.501097E-02   0.0
+0      4030
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    18
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               4031   0.000    8.333626E-02  1.587330E+00   6.241220E-01 -5.267358E-01   1.276684E+02   1.500434E-02   0.0
+               4032   1.000   -8.535670E-02  1.729701E+00   6.241220E-01 -5.267358E-01   1.276684E+02   1.500434E-02   0.0
+0      4031
+               2031   0.000    1.210119E-01 -7.330366E-02   1.543431E+00 -9.363056E-01  -1.811232E-04  -2.108968E-03   0.0
+               4031   1.000   -1.209483E-01  7.347885E-02   1.543431E+00 -9.363056E-01  -1.811232E-04  -2.108968E-03   0.0
+0      4032
+               2032   0.000    1.004611E-01  1.806387E+00   8.404447E-01 -1.570426E-01  -2.015279E+02  -4.122575E-02   0.0
+               2033   1.000   -1.267026E-01  1.848834E+00   8.404447E-01 -1.570426E-01  -2.015279E+02  -4.122575E-02   0.0
+0      4033
+               4032   0.000    1.004507E-01  1.728823E+00   8.403791E-01 -2.845809E-01   1.299565E+02  -4.122256E-02   0.0
+               4033   1.000   -1.266943E-01  1.805742E+00   8.403791E-01 -2.845809E-01   1.299565E+02  -4.122256E-02   0.0
+0      4034
+               2032   0.000    1.584211E-01 -8.482710E-02   2.020677E+00 -1.083320E+00  -1.908534E-05   8.786630E-04   0.0
+               4032   1.000   -1.583573E-01  8.500337E-02   2.020677E+00 -1.083320E+00  -1.908534E-05   8.786630E-04   0.0
+0      4035
+               2033   0.000    8.576737E-02  1.852117E+00   8.561814E-01  2.939180E-01  -2.041214E+02  -8.120725E-02   0.0
+               2034   1.000   -1.456479E-01  1.772674E+00   8.561814E-01  2.939180E-01  -2.041214E+02  -8.120725E-02   0.0
+0      4036
+               4033   0.000    8.575162E-02  1.802459E+00   8.560822E-01  3.834944E-01   1.326900E+02  -8.120827E-02   0.0
+               4034   1.000   -1.456368E-01  1.698805E+00   8.560822E-01  3.834944E-01   1.326900E+02  -8.120827E-02   0.0
+0      4037
+               2033   0.000    1.895766E-01 -9.488746E-02   2.418162E+00 -1.211671E+00  -1.777566E-05   3.283451E-03   0.0
+               4033   1.000   -1.895131E-01  9.506350E-02   2.418162E+00 -1.211671E+00  -1.777566E-05   3.283451E-03   0.0
+0      4038
+               2034   0.000    9.397342E-02  1.778419E+00   1.028489E+00  9.094003E-01  -2.069621E+02  -1.352215E-01   0.0
+               2035   1.000   -1.840150E-01  1.532619E+00   1.028489E+00  9.094003E-01  -2.069621E+02  -1.352215E-01   0.0
+0      4039
+               4034   0.000    9.396181E-02  1.693059E+00   1.028366E+00  6.685032E-01   1.356962E+02  -1.352224E-01   0.0
+               4035   1.000   -1.839936E-01  1.512370E+00   1.028366E+00  6.685032E-01   1.356962E+02  -1.352224E-01   0.0
+0      4040
+               2034   0.000    2.131911E-01 -9.950160E-02   2.719426E+00 -1.270538E+00   2.660462E-04   5.745198E-03   0.0
+               4034   1.000   -2.131271E-01  9.967770E-02   2.719426E+00 -1.270538E+00   2.660462E-04   5.745198E-03   0.0
+0      4041
+               2035   0.000    6.609417E-02  1.540470E+00   9.727648E-01  9.939057E-01  -2.101905E+02  -1.622969E-01   0.0
+               2036   1.000   -1.968335E-01  1.271828E+00   9.727648E-01  9.939057E-01  -2.101905E+02  -1.622969E-01   0.0
+0      4042
+               4035   0.000    6.608412E-02  1.504521E+00   9.726890E-01  1.036613E+00   1.388575E+02  -1.623003E-01   0.0
+               4036   1.000   -1.968225E-01  1.224336E+00   9.726890E-01  1.036613E+00   1.388575E+02  -1.623003E-01   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    19
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0      4043
+               2035   0.000    2.285861E-01 -1.036312E-01   2.915830E+00 -1.323222E+00  -2.257886E-04   7.849792E-03   0.0
+               4035   1.000   -2.285224E-01  1.038075E-01   2.915830E+00 -1.323222E+00  -2.257886E-04   7.849792E-03   0.0
+0      4044
+               2036   0.000    5.968255E-02  1.281342E+00   1.025015E+00  1.419299E+00  -2.134374E+02  -2.014692E-01   0.0
+               2037   1.000   -2.173673E-01  8.977214E-01   1.025015E+00  1.419299E+00  -2.134374E+02  -2.014692E-01   0.0
+0      4045
+               4036   0.000    5.966274E-02  1.214825E+00   1.024895E+00  1.203707E+00   1.420941E+02  -2.014679E-01   0.0
+               4037   1.000   -2.173544E-01  8.894768E-01   1.024895E+00  1.203707E+00   1.420941E+02  -2.014679E-01   0.0
+0      4046
+               2036   0.000    2.349015E-01 -1.010399E-01   2.996385E+00 -1.290158E+00   2.488974E-04   9.512697E-03   0.0
+               4036   1.000   -2.348378E-01  1.012165E-01   2.996385E+00 -1.290158E+00   2.488974E-04   9.512697E-03   0.0
+0      4047
+               2037   0.000    3.547789E-02  9.087238E-01   9.528699E-01  1.393736E+00  -2.167445E+02  -2.198374E-01   0.0
+               2038   1.000   -2.220711E-01  5.320143E-01   9.528699E-01  1.393736E+00  -2.167445E+02  -2.198374E-01   0.0
+0      4048
+               4037   0.000    3.546642E-02  8.784744E-01   9.528026E-01  1.344857E+00   1.452699E+02  -2.198370E-01   0.0
+               4038   1.000   -2.220644E-01  5.149761E-01   9.528026E-01  1.344857E+00   1.452699E+02  -2.198370E-01   0.0
+0      4049
+               2037   0.000    2.338629E-01 -9.848513E-02   2.983138E+00 -1.257564E+00  -3.093350E-04   1.100263E-02   0.0
+               4037   1.000   -2.337993E-01  9.866141E-02   2.983138E+00 -1.257564E+00  -3.093350E-04   1.100263E-02   0.0
+0      4050
+               2038   0.000    2.152130E-02  5.439582E-01   9.171734E-01  1.483524E+00  -2.199171E+02  -2.412699E-01   0.0
+               2039   1.000   -2.263799E-01  1.429791E-01   9.171734E-01  1.483524E+00  -2.199171E+02  -2.412699E-01   0.0
+0      4051
+               4038   0.000    2.150185E-02  5.030300E-01   9.170032E-01  1.336668E+00   1.483409E+02  -2.412685E-01   0.0
+               4039   1.000   -2.263548E-01  1.417423E-01   9.170032E-01  1.336668E+00   1.483409E+02  -2.412685E-01   0.0
+0      4052
+               2038   0.000    2.263846E-01 -9.181929E-02   2.887729E+00 -1.172522E+00   1.610474E-04   1.194500E-02   0.0
+               4038   1.000   -2.263205E-01  9.199529E-02   2.887729E+00 -1.172522E+00   1.610474E-04   1.194500E-02   0.0
+0      4053
+               2039   0.000    3.256896E-03  1.557652E-01   8.398641E-01  1.414191E+00  -2.229343E+02  -2.532271E-01   0.0
+               2040   1.000   -2.237487E-01 -2.264743E-01   8.398641E-01  1.414191E+00  -2.229343E+02  -2.532271E-01   0.0
+0      4054
+               4039   0.000    3.252763E-03  1.289583E-01   8.398365E-01  1.299642E+00   1.512215E+02  -2.532242E-01   0.0
+               4040   1.000   -2.237445E-01 -2.223188E-01   8.398365E-01  1.299642E+00   1.512215E+02  -2.532242E-01   0.0
+0      4055
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    20
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               2039   0.000    2.141945E-01 -8.508713E-02   2.732214E+00 -1.086638E+00   3.693653E-05   1.278524E-02   0.0
+               4039   1.000   -2.141304E-01  8.526345E-02   2.732214E+00 -1.086638E+00   3.693653E-05   1.278524E-02   0.0
+0      4056
+               2040   0.000   -1.129071E-02 -2.132375E-01   7.666630E-01  1.257808E+00  -2.257085E+02  -2.615369E-01   0.0
+               2041   1.000   -2.185103E-01 -5.532076E-01   7.666630E-01  1.257808E+00  -2.257085E+02  -2.615369E-01   0.0
+0      4057
+               4040   0.000   -1.131370E-02 -2.355563E-01   7.665018E-01  1.155981E+00   1.538903E+02  -2.615320E-01   0.0
+               4041   1.000   -2.184903E-01 -5.480046E-01   7.665018E-01  1.155981E+00   1.538903E+02  -2.615320E-01   0.0
+0      4058
+               2040   0.000    1.985098E-01 -7.701641E-02   2.532130E+00 -9.836735E-01  -9.637028E-05   1.323675E-02   0.0
+               4040   1.000   -1.984465E-01  7.719184E-02   2.532130E+00 -9.836735E-01  -9.637028E-05   1.323675E-02   0.0
+0      4059
+               2041   0.000   -2.572311E-02 -5.396312E-01   6.862097E-01  1.111919E+00  -2.282404E+02  -2.680876E-01   0.0
+               2042   1.000   -2.111975E-01 -8.401697E-01   6.862097E-01  1.111919E+00  -2.282404E+02  -2.680876E-01   0.0
+0      4060
+               4041   0.000   -2.573134E-02 -5.615826E-01   6.861317E-01  9.846969E-01   1.563083E+02  -2.680826E-01   0.0
+               4042   1.000   -2.111843E-01 -8.277341E-01   6.861317E-01  9.846969E-01   1.563083E+02  -2.680826E-01   0.0
+0      4061
+               2041   0.000    1.807593E-01 -6.877955E-02   2.305665E+00 -8.785821E-01   5.355278E-05   1.357779E-02   0.0
+               4041   1.000   -1.806959E-01  6.895424E-02   2.305665E+00 -8.785821E-01   5.355278E-05   1.357779E-02   0.0
+0      4062
+               2042   0.000   -3.884000E-02 -8.264005E-01   6.041587E-01  8.678083E-01  -2.304869E+02  -2.705113E-01   0.0
+               2043   1.000   -2.021375E-01 -1.060959E+00   6.041587E-01  8.678083E-01  -2.304869E+02  -2.705113E-01   0.0
+0      4063
+               4042   0.000   -3.885251E-02 -8.415008E-01   6.040726E-01  7.666672E-01   1.584650E+02  -2.705003E-01   0.0
+               4043   1.000   -2.021267E-01 -1.048723E+00   6.040726E-01  7.666672E-01   1.584650E+02  -2.705003E-01   0.0
+0      4064
+               2042   0.000    1.614522E-01 -6.064451E-02   2.059361E+00 -7.747902E-01  -3.620989E-04   1.376747E-02   0.0
+               4042   1.000   -1.613896E-01  6.081771E-02   2.059361E+00 -7.747902E-01  -3.620989E-04   1.376747E-02   0.0
+0      4065
+               2043   0.000   -5.140971E-02 -1.047135E+00   5.218201E-01  6.368299E-01  -2.324596E+02  -2.727080E-01   0.0
+               2044   1.000   -1.924517E-01 -1.219263E+00   5.218201E-01  6.368299E-01  -2.324596E+02  -2.727080E-01   0.0
+0      4066
+               4043   0.000   -5.142463E-02 -1.062547E+00   5.217090E-01  5.332431E-01   1.603477E+02  -2.726909E-01   0.0
+               4044   1.000   -1.924364E-01 -1.206677E+00   5.217090E-01  5.332431E-01   1.603477E+02  -2.726909E-01   0.0
+0      4067
+               2043   0.000    1.414433E-01 -5.260803E-02   1.804099E+00 -6.722472E-01   5.337634E-04   1.382453E-02   0.0
+               4043   1.000   -1.413814E-01  5.277874E-02   1.804099E+00 -6.722472E-01   5.337634E-04   1.382453E-02   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    21
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0      4068
+               2044   0.000   -6.355548E-02 -1.205382E+00   4.389150E-01  3.861327E-01  -2.341492E+02  -2.745725E-01   0.0
+               2045   1.000   -1.821888E-01 -1.309749E+00   4.389150E-01  3.861327E-01  -2.341492E+02  -2.745725E-01   0.0
+0      4069
+               4044   0.000   -6.356958E-02 -1.220557E+00   4.388138E-01  2.887489E-01   1.619527E+02  -2.745448E-01   0.0
+               4045   1.000   -1.821755E-01 -1.298602E+00   4.388138E-01  2.887489E-01   1.619527E+02  -2.745448E-01   0.0
+0      4070
+               2044   0.000    1.208538E-01 -4.513063E-02   1.541435E+00 -5.768291E-01  -3.472897E-04   1.388081E-02   0.0
+               4044   1.000   -1.207935E-01  4.529756E-02   1.541435E+00 -5.768291E-01  -3.472897E-04   1.388081E-02   0.0
+0      4071
+               2045   0.000   -7.530936E-02 -1.295789E+00   3.562991E-01  1.288837E-01  -2.355570E+02  -2.769042E-01   0.0
+               2046   1.000   -1.716131E-01 -1.330625E+00   3.562991E-01  1.288837E-01  -2.355570E+02  -2.769042E-01   0.0
+0      4072
+               4045   0.000   -7.532571E-02 -1.312565E+00   3.561830E-01  5.239690E-02   1.632765E+02  -2.768589E-01   0.0
+               4046   1.000   -1.715982E-01 -1.326727E+00   3.561830E-01  5.239690E-02   1.632765E+02  -2.768589E-01   0.0
+0      4073
+               2045   0.000    9.998485E-02 -3.802297E-02   1.275209E+00 -4.861124E-01   7.252382E-04   1.396109E-02   0.0
+               4045   1.000   -9.992672E-02  3.818377E-02   1.275209E+00 -4.861124E-01   7.252382E-04   1.396109E-02   0.0
+0      4074
+               2046   0.000   -8.678515E-02 -1.316406E+00   2.737533E-01 -1.202787E-01  -2.366832E+02  -2.795045E-01   0.0
+               2047   1.000   -1.607773E-01 -1.283896E+00   2.737533E-01 -1.202787E-01  -2.366832E+02  -2.795045E-01   0.0
+0      4075
+               4046   0.000   -8.679312E-02 -1.340943E+00   2.736843E-01 -1.819267E-01   1.643193E+02  -2.794324E-01   0.0
+               4047   1.000   -1.607666E-01 -1.291771E+00   2.736843E-01 -1.819267E-01   1.643193E+02  -2.794324E-01   0.0
+0      4076
+               2046   0.000    7.924843E-02 -3.053060E-02   1.010679E+00 -3.904629E-01  -7.618352E-04   1.421776E-02   0.0
+               4046   1.000   -7.919363E-02  3.068145E-02   1.010679E+00 -3.904629E-01  -7.618352E-04   1.421776E-02   0.0
+0      4077
+               2047   0.000   -9.787717E-02 -1.269033E+00   1.913572E-01 -3.175899E-01  -2.375280E+02  -2.780046E-01   0.0
+               2048   1.000   -1.495988E-01 -1.183192E+00   1.913572E-01 -3.175899E-01  -2.375280E+02  -2.780046E-01   0.0
+0      4078
+               4047   0.000   -9.789591E-02 -1.306635E+00   1.912291E-01 -4.671610E-01   1.650822E+02  -2.778876E-01   0.0
+               4048   1.000   -1.495829E-01 -1.180367E+00   1.912291E-01 -4.671610E-01   1.650822E+02  -2.778876E-01   0.0
+0      4079
+               2047   0.000    6.000845E-02 -1.917502E-02   7.652617E-01 -2.454907E-01   4.262373E-04   1.486366E-02   0.0
+               4047   1.000   -5.995988E-02  1.931000E-02   7.652617E-01 -2.454907E-01   4.262373E-04   1.486366E-02   0.0
+0      4080
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    22
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+               2048   0.000   -1.084002E-01 -1.167635E+00   1.082180E-01 -3.412721E-01  -2.380936E+02  -2.606701E-01   0.0
+               2049   1.000   -1.376504E-01 -1.075392E+00   1.082180E-01 -3.412721E-01  -2.380936E+02  -2.606701E-01   0.0
+0      4081
+               4048   0.000   -1.084119E-01 -1.195923E+00   1.081189E-01 -9.565088E-01   1.655682E+02  -2.604812E-01   0.0
+               4049   1.000   -1.376352E-01 -9.373891E-01   1.081189E-01 -9.565088E-01   1.655682E+02  -2.604812E-01   0.0
+0      4082
+               2048   0.000    4.482903E-02  2.668714E-03   5.716651E-01  3.335075E-02  -5.979775E-04   1.555672E-02   0.0
+               4048   1.000   -4.478961E-02 -2.559607E-03   5.716651E-01  3.335075E-02  -5.979775E-04   1.555672E-02   0.0
+0      4083
+               2049   0.000   -1.176494E-01 -1.062023E+00   2.468039E-02 -8.938643E-02  -2.383881E+02  -2.197988E-01   0.0
+               2050   1.000   -1.243202E-01 -1.037863E+00   2.468039E-02 -8.938643E-02  -2.383881E+02  -2.197988E-01   0.0
+0      4084
+               4049   0.000   -1.176628E-01 -9.507601E-01   2.460322E-02 -1.748300E+00   1.657838E+02  -2.194915E-01   0.0
+               4050   1.000   -1.243128E-01 -4.782149E-01   2.460322E-02 -1.748300E+00   1.657838E+02  -2.194915E-01   0.0
+0      4085
+               2049   0.000    3.281603E-02  3.163302E-02   4.185054E-01  4.031344E-01   3.123508E-04   1.337024E-02   0.0
+               4049   1.000   -3.279211E-02 -3.156544E-02   4.185054E-01  4.031344E-01   3.123508E-04   1.337024E-02   0.0
+0      4086
+               2050   0.000   -8.907570E-15  1.133681E-14  -4.973799E-14  7.771561E-14  -7.275958E-12   4.510281E-17   0.0
+               4050   1.000   -1.110223E-15 -8.465451E-16  -4.973799E-14  7.771561E-14  -7.275958E-12   4.510281E-17   0.0
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    23
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+               2001   0.000    1.032717E+06  2.828291E+05 -2.013994E+06 -1.264106E+06  1.032717E+06 -2.013994E+06          
+               2002   1.000   -1.172459E+05 -3.568411E+05 -8.640281E+05 -6.244329E+05 -1.172459E+05 -8.640281E+05          
+0         2
+               4001   0.000    1.295435E+06  5.455532E+05 -3.089458E+05  4.409357E+05  1.295435E+06 -3.089458E+05          
+               4002   1.000    1.557590E+06  1.317991E+06 -5.710979E+05 -3.314989E+05  1.557590E+06 -5.710979E+05          
+0         3
+               2002   0.000    8.081959E+05  1.089369E+05 -1.714670E+06 -1.015411E+06  8.081959E+05 -1.714670E+06          
+               2003   1.000   -2.426143E+05 -4.301124E+05 -6.638572E+05 -4.763592E+05 -2.426143E+05 -6.638572E+05          
+0         4
+               4002   0.000    1.091863E+06  3.925994E+05 -1.800775E+05  5.191862E+05  1.091863E+06 -1.800775E+05          
+               4003   1.000    1.294472E+06  1.106979E+06 -3.826835E+05 -1.951901E+05  1.294472E+06 -3.826835E+05          
+0         5
+               2002   0.000    8.079696E+04  1.224805E+04 -8.079744E+04 -1.224853E+04  8.079696E+04 -8.079744E+04          
+               4002   1.000   -8.076994E+04 -1.243742E+04  8.076946E+04  1.243694E+04  8.076946E+04 -8.076994E+04          
+0         6
+               2003   0.000    6.370262E+05 -2.466742E+04 -1.466174E+06 -8.044800E+05  6.370262E+05 -1.466174E+06          
+               2004   1.000   -3.524175E+05 -5.013579E+05 -4.767272E+05 -3.277868E+05 -3.277868E+05 -5.013579E+05          
+0         7
+               4003   0.000    8.891188E+05  2.274289E+05 -5.447379E+04  6.072161E+05  8.891188E+05 -5.447379E+04          
+               4004   1.000    1.061409E+06  9.124660E+05 -2.267602E+05 -7.781760E+04  1.061409E+06 -2.267602E+05          
+0         8
+               2003   0.000    8.327670E+04  1.357608E+04 -8.327634E+04 -1.357571E+04  8.327670E+04 -8.327634E+04          
+               4003   1.000   -8.324861E+04 -1.376666E+04  8.324897E+04  1.376702E+04  8.324897E+04 -8.324861E+04          
+0         9
+               2004   0.000    4.817568E+05 -1.427913E+05 -1.233238E+06 -6.086899E+05  4.817568E+05 -1.233238E+06          
+               2005   1.000   -4.442344E+05 -5.547521E+05 -3.072441E+05 -1.967264E+05 -1.967264E+05 -5.547521E+05          
+0        10
+               4004   0.000    7.029569E+05  7.840938E+04  5.426911E+04  6.788167E+05  7.029569E+05  5.426911E+04          
+               4005   1.000    8.454255E+05  7.349051E+05 -8.819605E+04  2.232431E+04  8.454255E+05 -8.819605E+04          
+0        11
+               2004   0.000    8.356702E+04  1.362217E+04 -8.356695E+04 -1.362209E+04  8.356702E+04 -8.356695E+04          
+               4004   1.000   -8.353942E+04 -1.381247E+04  8.353950E+04  1.381255E+04  8.353950E+04 -8.353942E+04          
+0        12
+               2005   0.000    3.438399E+05 -2.435239E+05 -1.017372E+06 -4.300085E+05  3.438399E+05 -1.017372E+06          
+               2006   1.000   -5.172563E+05 -5.891576E+05 -1.562733E+05 -8.437198E+04 -8.437198E+04 -5.891576E+05          
+0        13
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    24
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               4005   0.000    5.343398E+05 -5.301964E+04  1.452305E+05  7.325900E+05  7.325900E+05 -5.301964E+04          
+               4006   1.000    6.475268E+05  5.756240E+05  3.204692E+04  1.039497E+05  6.475268E+05  3.204692E+04          
+0        14
+               2005   0.000    8.381480E+04  1.367201E+04 -8.381503E+04 -1.367224E+04  8.381480E+04 -8.381503E+04          
+               4005   1.000   -8.378609E+04 -1.386292E+04  8.378587E+04  1.386269E+04  8.378587E+04 -8.378609E+04          
+0        15
+               2006   0.000    2.240775E+05 -3.259936E+05 -8.193888E+05 -2.693176E+05  2.240775E+05 -8.193888E+05          
+               2007   1.000   -5.697700E+05 -6.029045E+05 -2.553837E+04  7.596175E+03  7.596175E+03 -6.029045E+05          
+0        16
+               4006   0.000    3.845162E+05 -1.655528E+05  2.171586E+05  7.672276E+05  7.672276E+05 -1.655528E+05          
+               4007   1.000    4.690119E+05  4.358708E+05  1.326663E+05  1.658073E+05  4.690119E+05  1.326663E+05          
+0        17
+               2006   0.000    8.406614E+04  1.373320E+04 -8.406594E+04 -1.373300E+04  8.406614E+04 -8.406594E+04          
+               4006   1.000   -8.403804E+04 -1.392408E+04  8.403824E+04  1.392429E+04  8.403824E+04 -8.403804E+04          
+0        18
+               2007   0.000    1.237497E+05 -3.888898E+05 -6.405866E+05 -1.279471E+05  1.237497E+05 -6.405866E+05          
+               2008   1.000   -5.994852E+05 -5.937559E+05  8.265119E+04  7.692195E+04  8.265119E+04 -5.994852E+05          
+0        19
+               4007   0.000    2.551681E+05 -2.574741E+05  2.683783E+05  7.810205E+05  7.810205E+05 -2.574741E+05          
+               4008   1.000    3.117763E+05  3.175078E+05  2.117735E+05  2.060420E+05  3.175078E+05  2.060420E+05          
+0        20
+               2007   0.000    8.430968E+04  1.380466E+04 -8.430984E+04 -1.380481E+04  8.430968E+04 -8.430984E+04          
+               4007   1.000   -8.428148E+04 -1.399537E+04  8.428134E+04  1.399522E+04  8.428134E+04 -8.428148E+04          
+0        21
+               2008   0.000    4.470856E+04 -4.302829E+05 -4.828563E+05 -7.864807E+03  4.470856E+04 -4.828563E+05          
+               2009   1.000   -6.038983E+05 -5.593039E+05  1.657535E+05  1.211592E+05  1.657535E+05 -6.038983E+05          
+0        22
+               4008   0.000    1.484784E+05 -3.265110E+05  2.967342E+05  7.717236E+05  7.717236E+05 -3.265110E+05          
+               4009   1.000    1.780679E+05  2.226601E+05  2.671481E+05  2.225558E+05  2.671481E+05  1.780679E+05          
+0        23
+               2008   0.000    8.452423E+04  1.387874E+04 -8.452410E+04 -1.387861E+04  8.452423E+04 -8.452410E+04          
+               4008   1.000   -8.449636E+04 -1.406984E+04  8.449650E+04  1.406998E+04  8.449650E+04 -8.449636E+04          
+0        24
+               2009   0.000   -1.085685E+04 -4.479762E+05 -3.484406E+05  8.867875E+04  8.867875E+04 -4.479762E+05          
+               2010   1.000   -5.802782E+05 -4.968859E+05  2.209837E+05  1.375914E+05  2.209837E+05 -5.802782E+05          
+0        25
+               4009   0.000    6.691670E+04 -3.702049E+05  2.998006E+05  7.369222E+05  7.369222E+05 -3.702049E+05          
+               4010   1.000    7.042039E+04  1.538152E+05  2.963002E+05  2.129054E+05  2.963002E+05  7.042039E+04          
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    25
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0        26
+               2009   0.000    8.469122E+04  1.395367E+04 -8.469112E+04 -1.395358E+04  8.469122E+04 -8.469112E+04          
+               4009   1.000   -8.466347E+04 -1.414426E+04  8.466356E+04  1.414435E+04  8.466356E+04 -8.466347E+04          
+0        27
+               2010   0.000   -4.038657E+04 -4.393845E+05 -2.399670E+05  1.590310E+05  1.590310E+05 -4.393845E+05          
+               2011   1.000   -5.259429E+05 -4.038933E+05  2.455925E+05  1.235429E+05  2.455925E+05 -5.259429E+05          
+0        28
+               4010   0.000    1.308998E+04 -3.859034E+05  2.750292E+05  6.740226E+05  6.740226E+05 -3.859034E+05          
+               4011   1.000   -8.410405E+03  1.136395E+05  2.965329E+05  1.744830E+05  2.965329E+05 -8.410405E+03          
+0        29
+               2010   0.000    8.479684E+04  1.401776E+04 -8.479687E+04 -1.401779E+04  8.479684E+04 -8.479687E+04          
+               4010   1.000   -8.476886E+04 -1.420856E+04  8.476883E+04  1.420854E+04  8.476883E+04 -8.476886E+04          
+0        30
+               2011   0.000   -4.120446E+04 -4.018402E+05 -1.601864E+05  2.004494E+05  2.004494E+05 -4.018402E+05          
+               2012   1.000   -4.383604E+05 -2.778677E+05  2.369727E+05  7.647994E+04  2.369727E+05 -4.383604E+05          
+0        31
+               4011   0.000   -1.030526E+04 -3.709414E+05  2.197913E+05  5.804275E+05  5.804275E+05 -3.709414E+05          
+               4012   1.000   -5.576991E+04  1.047194E+05  2.652592E+05  1.047700E+05  2.652592E+05 -5.576991E+04          
+0        32
+               2011   0.000    8.483019E+04  1.406989E+04 -8.483029E+04 -1.406999E+04  8.483019E+04 -8.483029E+04          
+               4011   1.000   -8.480290E+04 -1.426069E+04  8.480280E+04  1.426060E+04  8.480280E+04 -8.480290E+04          
+0        33
+               2012   0.000   -1.057810E+04 -3.326689E+05 -1.119061E+05  2.101847E+05  2.101847E+05 -3.326689E+05          
+               2013   1.000   -3.156507E+05 -1.169171E+05  1.931695E+05 -5.563968E+03  1.931695E+05 -3.156507E+05          
+0        34
+               4012   0.000   -8.176979E+02 -3.229088E+05  1.317046E+05  4.537957E+05  4.537957E+05 -3.229088E+05          
+               4013   1.000   -6.931580E+04  1.294179E+05  2.002060E+05  1.472256E+03  2.002060E+05 -6.931580E+04          
+0        35
+               2012   0.000    8.479116E+04  1.410522E+04 -8.479107E+04 -1.410514E+04  8.479116E+04 -8.479107E+04          
+               4012   1.000   -8.476293E+04 -1.429576E+04  8.476301E+04  1.429584E+04  8.476301E+04 -8.476293E+04          
+0        36
+               2013   0.000    5.214808E+04 -2.306232E+05 -9.592850E+04  1.868428E+05  1.868428E+05 -2.306232E+05          
+               2014   1.000   -1.536810E+05  8.319368E+04  1.099037E+05 -1.269709E+05  1.099037E+05 -1.536810E+05          
+0        37
+               4013   0.000    4.453246E+04 -2.382372E+05  7.938531E+03  2.907082E+05  2.907082E+05 -2.382372E+05          
+               4014   1.000   -4.700163E+04  1.898724E+05  9.947588E+04 -1.373981E+05  1.898724E+05 -1.373981E+05          
+0        38
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    26
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               2013   0.000    8.457888E+04  1.416364E+04 -8.457899E+04 -1.416375E+04  8.457888E+04 -8.457899E+04          
+               4013   1.000   -8.455116E+04 -1.435445E+04  8.455105E+04  1.435433E+04  8.455105E+04 -8.455116E+04          
+0        39
+               2014   0.000    1.442910E+05 -8.568120E+04 -1.118017E+05  1.181704E+05  1.442910E+05 -1.118017E+05          
+               2015   1.000    3.891757E+04  3.275854E+05 -6.425095E+03 -2.950929E+05  3.275854E+05 -2.950929E+05          
+0        40
+               4014   0.000    1.219967E+05 -1.079754E+05 -1.455339E+05  8.443818E+04  1.219967E+05 -1.455339E+05          
+               4015   1.000    6.397460E+03  2.950668E+05 -2.993149E+04 -3.186008E+05  2.950668E+05 -3.186008E+05          
+0        41
+               2014   0.000    8.198958E+04  1.371945E+04 -8.198961E+04 -1.371948E+04  8.198958E+04 -8.198961E+04          
+               4014   1.000   -8.196220E+04 -1.390842E+04  8.196218E+04  1.390839E+04  8.196218E+04 -8.196220E+04          
+0        42
+               2015   0.000    1.612913E+05  1.673982E+05 -1.571994E+05 -1.633063E+05  1.673982E+05 -1.633063E+05          
+               2016   1.000   -1.355430E+05 -1.368069E+05  1.396347E+05  1.408986E+05  1.408986E+05 -1.368069E+05          
+0        43
+               4015   0.000   -7.313345E+04 -6.702446E+04  6.816184E+04  6.205284E+04  6.816184E+04 -7.313345E+04          
+               4016   1.000    8.128309E+04  8.001831E+04 -8.625468E+04 -8.498990E+04  8.128309E+04 -8.625468E+04          
+0        44
+               2015   0.000   -4.106599E-09 -7.000975E-07  4.106599E-09  7.000975E-07  7.000975E-07 -7.000975E-07          
+               4015   1.000   -1.205129E-08 -8.661863E-08  1.205129E-08  8.661863E-08  8.661863E-08 -8.661863E-08          
+0        45
+               2016   0.000    4.633840E+04  5.244089E+04 -4.299765E+04 -4.910014E+04  5.244089E+04 -4.910014E+04          
+               2017   1.000   -1.380813E+05 -1.405435E+05  1.414219E+05  1.438841E+05  1.438841E+05 -1.405435E+05          
+0        46
+               4016   0.000   -1.078415E+05 -1.017385E+05  1.038692E+05  9.776619E+04  1.038692E+05 -1.078415E+05          
+               4017   1.000    1.173978E+04  9.275071E+03 -1.571203E+04 -1.324732E+04  1.173978E+04 -1.571203E+04          
+0        47
+               2016   0.000   -1.303638E+03  1.058051E+03  1.303639E+03 -1.058050E+03  1.303639E+03 -1.303638E+03          
+               4016   1.000    1.331050E+03 -1.246905E+03 -1.331049E+03  1.246906E+03  1.331050E+03 -1.331049E+03          
+0        48
+               2017   0.000   -2.119327E+04 -1.517135E+04  2.359007E+04  1.756815E+04  2.359007E+04 -2.119327E+04          
+               2018   1.000   -1.078361E+05 -1.113001E+05  1.102328E+05  1.136968E+05  1.136968E+05 -1.113001E+05          
+0        49
+               4017   0.000   -1.135130E+05 -1.074912E+05  1.107253E+05  1.047035E+05  1.107253E+05 -1.135130E+05          
+               4018   1.000   -1.792158E+04 -2.138550E+04  1.513384E+04  1.859776E+04  1.859776E+04 -2.138550E+04          
+0        50
+               2017   0.000   -1.549997E+03  1.337150E+03  1.549981E+03 -1.337166E+03  1.549981E+03 -1.549997E+03          
+               4017   1.000    1.577991E+03 -1.527828E+03 -1.578007E+03  1.527812E+03  1.577991E+03 -1.578007E+03          
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    27
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0        51
+               2018   0.000   -5.176726E+04 -4.630670E+04  5.312030E+04  4.765973E+04  5.312030E+04 -5.176726E+04          
+               2019   1.000   -4.530748E+04 -4.945660E+04  4.666045E+04  5.080957E+04  5.080957E+04 -4.945660E+04          
+0        52
+               4018   0.000   -8.280402E+04 -7.734184E+04  8.128357E+04  7.582138E+04  8.128357E+04 -8.280402E+04          
+               4019   1.000   -1.488052E+04 -1.903033E+04  1.336004E+04  1.750985E+04  1.750985E+04 -1.903033E+04          
+0        53
+               2018   0.000   -1.631075E+03  1.276853E+03  1.631087E+03 -1.276841E+03  1.631087E+03 -1.631075E+03          
+               4018   1.000    1.658944E+03 -1.467557E+03 -1.658932E+03  1.467569E+03  1.658944E+03 -1.658932E+03          
+0        54
+               2019   0.000   -3.767699E+04 -3.455617E+04  3.810645E+04  3.498563E+04  3.810645E+04 -3.767699E+04          
+               2020   1.000    8.467951E+03  5.498919E+03 -8.038500E+03 -5.069468E+03  8.467951E+03 -8.038500E+03          
+0        55
+               4019   0.000   -2.970709E+04 -2.658549E+04  2.925919E+04  2.613758E+04  2.925919E+04 -2.970709E+04          
+               4020   1.000    3.356497E+02 -2.634358E+03 -7.835763E+02  2.186432E+03  2.186432E+03 -2.634358E+03          
+0        56
+               2019   0.000   -1.314095E+03  7.309943E+02  1.314094E+03 -7.309958E+02  1.314094E+03 -1.314095E+03          
+               4019   1.000    1.341924E+03 -9.217220E+02 -1.341926E+03  9.217205E+02  1.341924E+03 -1.341926E+03          
+0        57
+               2020   0.000   -4.194014E+02 -3.174011E+02  4.193924E+02  3.173921E+02  4.193924E+02 -4.194014E+02          
+               4020   1.000    4.471317E+02  1.266508E+02 -4.471407E+02 -1.266598E+02  4.471317E+02 -4.471407E+02          
+0      4000
+               2021   0.000    1.187342E+06  1.216803E+06 -1.907270E+06 -1.936731E+06  1.216803E+06 -1.936731E+06          
+               2022   1.000    8.591215E+05  7.889094E+05 -1.579044E+06 -1.508832E+06  8.591215E+05 -1.579044E+06          
+0      4001
+               4021   0.000    1.208321E+06  1.237778E+06 -7.586342E+05 -7.880916E+05  1.237778E+06 -7.880916E+05          
+               4022   1.000    1.381606E+06  1.311415E+06 -9.319205E+05 -8.617292E+05  1.381606E+06 -9.319205E+05          
+0      4002
+               2022   0.000    8.535619E+05  8.180994E+05 -1.574811E+06 -1.539348E+06  8.535619E+05 -1.574811E+06          
+               2023   1.000    6.328277E+05  5.397693E+05 -1.354073E+06 -1.261014E+06  6.328277E+05 -1.354073E+06          
+0      4003
+               4022   0.000    1.352262E+06  1.316784E+06 -9.015959E+05 -8.661174E+05  1.352262E+06 -9.015959E+05          
+               4023   1.000    1.262733E+06  1.169689E+06 -8.120648E+05 -7.190208E+05  1.262733E+06 -8.120648E+05          
+0      4004
+               2022   0.000   -3.279316E+05 -4.159972E+05  3.279310E+05  4.159967E+05  4.159967E+05 -4.159972E+05          
+               4022   1.000    3.277859E+05  4.155897E+05 -3.277866E+05 -4.155902E+05  4.155897E+05 -4.155902E+05          
+0      4005
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    28
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               2023   0.000    6.265862E+05  5.711115E+05 -1.349414E+06 -1.293939E+06  6.265862E+05 -1.349414E+06          
+               2024   1.000    4.556183E+05  3.409605E+05 -1.178443E+06 -1.063785E+06  4.556183E+05 -1.178443E+06          
+0      4006
+               4023   0.000    1.231370E+06  1.175871E+06 -7.791988E+05 -7.236996E+05  1.231370E+06 -7.791988E+05          
+               4024   1.000    1.108074E+06  9.934242E+05 -6.558997E+05 -5.412504E+05  1.108074E+06 -6.558997E+05          
+0      4007
+               2023   0.000   -2.229544E+05 -3.474035E+04  2.229566E+05  3.474256E+04  2.229566E+05 -2.229544E+05          
+               4023   1.000    2.227202E+05  3.408806E+04 -2.227180E+05 -3.408584E+04  2.227202E+05 -2.227180E+05          
+0      4008
+               2024   0.000    4.475168E+05  3.711222E+05 -1.171686E+06 -1.095292E+06  4.475168E+05 -1.171686E+06          
+               2025   1.000    2.002911E+05  1.174061E+05 -9.244569E+05 -8.415719E+05  2.002911E+05 -9.244569E+05          
+0      4009
+               4024   0.000    1.077601E+06  1.001191E+06 -6.247279E+05 -5.483182E+05  1.077601E+06 -6.247279E+05          
+               4025   1.000    8.503391E+05  7.674700E+05 -3.974625E+05 -3.145934E+05  8.503391E+05 -3.974625E+05          
+0      4010
+               2024   0.000   -1.142014E+05  1.732587E+05  1.141968E+05 -1.732633E+05  1.732587E+05 -1.732633E+05          
+               4024   1.000    1.139060E+05 -1.740682E+05 -1.139107E+05  1.740636E+05  1.740636E+05 -1.740682E+05          
+0      4011
+               2025   0.000    1.900422E+05  1.466446E+05 -9.145142E+05 -8.711166E+05  1.900422E+05 -9.145142E+05          
+               2026   1.000    3.573043E+04 -6.378321E+04 -7.601994E+05 -6.606858E+05  3.573043E+04 -7.601994E+05          
+0      4012
+               4025   0.000    8.215561E+05  7.781494E+05 -3.674867E+05 -3.240800E+05  8.215561E+05 -3.674867E+05          
+               4026   1.000    6.476542E+05  5.481613E+05 -1.935816E+05 -9.408865E+04  6.476542E+05 -1.935816E+05          
+0      4013
+               2025   0.000   -7.889617E+04  2.294210E+05  7.889834E+04 -2.294188E+05  2.294210E+05 -2.294188E+05          
+               4025   1.000    7.857347E+04 -2.303180E+05 -7.857130E+04  2.303202E+05  2.303202E+05 -2.303180E+05          
+0      4014
+               2026   0.000    2.687641E+04 -3.993570E+04 -7.530615E+05 -6.862494E+05  2.687641E+04 -7.530615E+05          
+               2027   1.000   -2.715830E+05 -3.325565E+05 -4.545978E+05 -3.936243E+05 -2.715830E+05 -4.545978E+05          
+0      4015
+               4026   0.000    6.233262E+05  5.565002E+05 -1.685328E+05 -1.017069E+05  6.233262E+05 -1.685328E+05          
+               4027   1.000    3.947665E+05  3.338043E+05  6.003009E+04  1.209923E+05  3.947665E+05  6.003009E+04          
+0      4016
+               2026   0.000   -7.908859E+04  2.620534E+05  7.908654E+04 -2.620554E+05  2.620534E+05 -2.620554E+05          
+               4026   1.000    7.873991E+04 -2.630143E+05 -7.874195E+04  2.630123E+05  2.630123E+05 -2.630143E+05          
+0      4017
+               2027   0.000   -2.955484E+05 -2.947785E+05 -4.302682E+05 -4.310382E+05 -2.947785E+05 -4.310382E+05          
+               2028   1.000   -4.177856E+05 -4.960095E+05 -3.080282E+05 -2.298043E+05 -2.298043E+05 -4.960095E+05          
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    29
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0      4018
+               4027   0.000    3.579070E+05  3.586564E+05  9.833070E+04  9.758127E+04  3.586564E+05  9.758127E+04          
+               4028   1.000    1.883265E+05  1.101212E+05  2.679147E+05  3.461200E+05  3.461200E+05  1.101212E+05          
+0      4019
+               2027   0.000   -1.190311E+05  2.544347E+05  1.190354E+05 -2.544304E+05  2.544347E+05 -2.544304E+05          
+               4027   1.000    1.186745E+05 -2.554254E+05 -1.186701E+05  2.554297E+05  2.554297E+05 -2.554254E+05          
+0      4020
+               2028   0.000   -4.428046E+05 -4.634846E+05 -2.858621E+05 -2.651821E+05 -2.651821E+05 -4.634846E+05          
+               2029   1.000   -6.938452E+05 -7.546322E+05 -3.481730E+04  2.596965E+04  2.596965E+04 -7.546322E+05          
+0      4021
+               4028   0.000    1.554595E+05  1.347685E+05  3.029206E+05  3.236116E+05  3.236116E+05  1.347685E+05          
+               4029   1.000   -2.505067E+04 -8.582640E+04  4.834339E+05  5.442096E+05  5.442096E+05 -8.582640E+04          
+0      4022
+               2028   0.000   -2.118101E+05  3.266866E+05  2.118052E+05 -3.266915E+05  3.266866E+05 -3.266915E+05          
+               4028   1.000    2.114378E+05 -3.277088E+05 -2.114427E+05  3.277038E+05  3.277038E+05 -3.277088E+05          
+0      4023
+               2029   0.000   -7.427232E+05 -7.000276E+05  1.261730E+04 -3.007840E+04  1.261730E+04 -7.427232E+05          
+               2030   1.000   -8.360438E+05 -9.004486E+05  1.059407E+05  1.703455E+05  1.703455E+05 -9.004486E+05          
+0      4024
+               4029   0.000   -7.884456E+04 -3.616745E+04  5.402630E+05  4.975858E+05  5.402630E+05 -7.884456E+04          
+               4030   1.000   -2.205675E+05 -2.849534E+05  6.819894E+05  7.463753E+05  7.463753E+05 -2.849534E+05          
+0      4025
+               2029   0.000   -3.249095E+05  3.282000E+05  3.249178E+05 -3.281917E+05  3.282000E+05 -3.281917E+05          
+               4029   1.000    3.245440E+05 -3.292227E+05 -3.245357E+05  3.292309E+05  3.292309E+05 -3.292227E+05          
+0      4026
+               2030   0.000   -8.961489E+05 -8.412616E+05  1.614581E+05  1.065709E+05  1.614581E+05 -8.961489E+05          
+               2031   1.000   -1.018603E+06 -1.089134E+06  2.839152E+05  3.544464E+05  3.544464E+05 -1.089134E+06          
+0      4027
+               4030   0.000   -2.796003E+05 -2.247228E+05  7.458886E+05  6.910112E+05  7.458886E+05 -2.796003E+05          
+               4031   1.000   -3.857876E+05 -4.563099E+05  8.520792E+05  9.226016E+05  9.226016E+05 -4.563099E+05          
+0      4028
+               2030   0.000   -5.108636E+05  3.985990E+05  5.108598E+05 -3.986028E+05  5.108598E+05 -5.108636E+05          
+               4030   1.000    5.104832E+05 -3.996426E+05 -5.104871E+05  3.996388E+05  5.104832E+05 -5.104871E+05          
+0      4029
+               2031   0.000   -1.101949E+06 -1.009203E+06  3.621057E+05  2.693594E+05  3.621057E+05 -1.101949E+06          
+               2032   1.000   -1.067524E+06 -1.162524E+06  3.276823E+05  4.226824E+05  4.226824E+05 -1.162524E+06          
+0      4030
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    30
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               4031   0.000   -4.646676E+05 -3.719412E+05  9.381888E+05  8.454624E+05  9.381888E+05 -4.646676E+05          
+               4032   1.000   -4.295702E+05 -5.245446E+05  9.030934E+05  9.980678E+05  9.980678E+05 -5.245446E+05          
+0      4031
+               2031   0.000   -7.205028E+05  4.364462E+05  7.204996E+05 -4.364494E+05  7.204996E+05 -7.205028E+05          
+               4031   1.000    7.201211E+05 -4.374924E+05 -7.201243E+05  4.374892E+05  7.201211E+05 -7.201243E+05          
+0      4032
+               2032   0.000   -1.175077E+06 -1.063296E+06  4.276356E+05  3.158549E+05  4.276356E+05 -1.175077E+06          
+               2033   1.000   -1.066213E+06 -1.207192E+06  3.187738E+05  4.597529E+05  4.597529E+05 -1.207192E+06          
+0      4033
+               4032   0.000   -5.283372E+05 -4.165680E+05  1.010346E+06  8.985763E+05  1.010346E+06 -5.283372E+05          
+               4033   1.000   -4.337098E+05 -5.746797E+05  9.157202E+05  1.056690E+06  1.056690E+06 -5.746797E+05          
+0      4034
+               2032   0.000   -9.432346E+05  5.050578E+05  9.432342E+05 -5.050581E+05  9.432342E+05 -9.432346E+05          
+               4032   1.000    9.428546E+05 -5.061076E+05 -9.428549E+05  5.061073E+05  9.428546E+05 -9.428549E+05          
+0      4035
+               2033   0.000   -1.190584E+06 -1.095152E+06  4.335236E+05  3.380922E+05  4.335236E+05 -1.190584E+06          
+               2034   1.000   -1.029053E+06 -1.191112E+06  2.719943E+05  4.340534E+05  4.340534E+05 -1.191112E+06          
+0      4036
+               4033   0.000   -5.454780E+05 -4.500641E+05  1.037625E+06  9.422115E+05  1.037625E+06 -5.454780E+05          
+               4034   1.000   -3.739710E+05 -5.360178E+05  8.661193E+05  1.028166E+06  1.028166E+06 -5.360178E+05          
+0      4037
+               2033   0.000   -1.128734E+06  5.649569E+05  1.128733E+06 -5.649572E+05  1.128733E+06 -1.128734E+06          
+               4033   1.000    1.128355E+06 -5.660053E+05 -1.128356E+06  5.660050E+05  1.128355E+06 -1.128356E+06          
+0      4038
+               2034   0.000   -1.170003E+06 -1.065441E+06  4.024069E+05  2.978448E+05  4.024069E+05 -1.170003E+06          
+               2035   1.000   -9.139098E+05 -1.118659E+06  1.463138E+05  3.510631E+05  3.510631E+05 -1.118659E+06          
+0      4039
+               4034   0.000   -4.993237E+05 -3.947745E+05  1.002620E+06  8.980708E+05  1.002620E+06 -4.993237E+05          
+               4035   1.000   -2.701187E+05 -4.748442E+05  7.734158E+05  9.781413E+05  9.781413E+05 -4.748442E+05          
+0      4040
+               2034   0.000   -1.269331E+06  5.924319E+05  1.269336E+06 -5.924271E+05  1.269336E+06 -1.269331E+06          
+               4034   1.000    1.268955E+06 -5.934757E+05 -1.268950E+06  5.934804E+05  1.268955E+06 -1.268950E+06          
+0      4041
+               2035   0.000   -1.062283E+06 -9.887417E+05  2.827114E+05  2.091700E+05  2.827114E+05 -1.062283E+06          
+               2036   1.000   -8.051422E+05 -1.024154E+06  2.557071E+04  2.445828E+05  2.445828E+05 -1.024154E+06          
+0      4042
+               4035   0.000   -4.001458E+05 -3.266155E+05  9.151661E+05  8.416358E+05  9.151661E+05 -4.001458E+05          
+               4036   1.000   -1.382531E+05 -3.572530E+05  6.532736E+05  8.722734E+05  8.722734E+05 -3.572530E+05          
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    31
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0      4043
+               2035   0.000   -1.360997E+06  6.170149E+05  1.360993E+06 -6.170189E+05  1.360993E+06 -1.360997E+06          
+               4035   1.000    1.360613E+06 -6.180688E+05 -1.360617E+06  6.180648E+05  1.360613E+06 -1.360617E+06          
+0      4044
+               2036   0.000   -9.578001E+05 -8.913926E+05  1.661842E+05  9.977681E+04  1.661842E+05 -9.578001E+05          
+               2037   1.000   -6.453530E+05 -8.872127E+05 -1.462632E+05  9.559648E+04  9.559648E+04 -8.872127E+05          
+0      4045
+               4036   0.000   -2.710192E+05 -2.046338E+05  7.980422E+05  7.316569E+05  7.980422E+05 -2.710192E+05          
+               4037   1.000    1.736181E+04 -2.244835E+05  5.096612E+05  7.515065E+05  7.515065E+05 -2.244835E+05          
+0      4046
+               2036   0.000   -1.398594E+06  6.015908E+05  1.398599E+06 -6.015863E+05  1.398599E+06 -1.398594E+06          
+               4036   1.000    1.398220E+06 -6.026375E+05 -1.398215E+06  6.026419E+05  1.398220E+06 -1.398215E+06          
+0      4047
+               2037   0.000   -7.966948E+05 -7.572193E+05 -7.188763E+03 -4.666420E+04 -7.188763E+03 -7.966948E+05          
+               2038   1.000   -4.979487E+05 -7.450422E+05 -3.059352E+05 -5.884177E+04 -5.884177E+04 -7.450422E+05          
+0      4048
+               4037   0.000   -1.128632E+05 -7.340058E+04  6.516631E+05  6.122004E+05  6.516631E+05 -1.128632E+05          
+               4038   1.000    1.804206E+05 -6.666537E+04  3.583789E+05  6.054648E+05  6.054648E+05 -6.666537E+04          
+0      4049
+               2037   0.000   -1.392416E+06  5.863748E+05  1.392410E+06 -5.863802E+05  1.392410E+06 -1.392416E+06          
+               4037   1.000    1.392031E+06 -5.874298E+05 -1.392036E+06  5.874243E+05  1.392031E+06 -1.392036E+06          
+0      4050
+               2038   0.000   -6.442819E+05 -6.203357E+05 -1.713706E+05 -1.953169E+05 -1.713706E+05 -6.442819E+05          
+               2039   1.000   -3.408878E+05 -5.927756E+05 -4.747653E+05 -2.228776E+05 -2.228776E+05 -5.927756E+05          
+0      4051
+               4038   0.000    5.553956E+04  7.946418E+04  4.946485E+05  4.707239E+05  4.946485E+05  5.553956E+04          
+               4039   1.000    3.425290E+05  9.066920E+04  2.076586E+05  4.595184E+05  4.595184E+05  9.066920E+04          
+0      4052
+               2038   0.000   -1.347885E+06  5.466907E+05  1.347888E+06 -5.466878E+05  1.347888E+06 -1.347885E+06          
+               4038   1.000    1.347507E+06 -5.477358E+05 -1.347504E+06  5.477386E+05  1.347507E+06 -1.347504E+06          
+0      4053
+               2039   0.000   -4.795163E+05 -4.758925E+05 -3.473290E+05 -3.509529E+05 -3.473290E+05 -4.795163E+05          
+               2040   1.000   -1.954808E+05 -4.444408E+05 -6.313652E+05 -3.824052E+05 -1.954808E+05 -6.313652E+05          
+0      4054
+               4039   0.000    2.254062E+05  2.290255E+05  3.354634E+05  3.318441E+05  3.354634E+05  2.254062E+05          
+               4040   1.000    4.966595E+05  2.477041E+05  6.420960E+04  3.131650E+05  4.966595E+05  6.420960E+04          
+0      4055
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    32
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               2039   0.000   -1.275307E+06  5.066065E+05  1.275308E+06 -5.066058E+05  1.275308E+06 -1.275307E+06          
+               4039   1.000    1.274926E+06 -5.076556E+05 -1.274926E+06  5.076563E+05  1.274926E+06 -1.274926E+06          
+0      4056
+               2040   0.000   -3.242873E+05 -3.368503E+05 -5.128494E+05 -5.002865E+05 -3.242873E+05 -5.128494E+05          
+               2041   1.000   -6.870338E+04 -3.118348E+05 -7.684339E+05 -5.253026E+05 -6.870338E+04 -7.684339E+05          
+0      4057
+               4040   0.000    3.888874E+05  3.762989E+05  1.818785E+05  1.944670E+05  3.888874E+05  1.818785E+05          
+               4041   1.000    6.330898E+05  3.899806E+05 -6.232427E+04  1.807849E+05  6.330898E+05 -6.232427E+04          
+0      4058
+               2040   0.000   -1.181922E+06  4.585525E+05  1.181921E+06 -4.585542E+05  1.181921E+06 -1.181922E+06          
+               4040   1.000    1.181543E+06 -4.595987E+05 -1.181545E+06  4.595970E+05  1.181543E+06 -1.181545E+06          
+0      4059
+               2041   0.000   -1.862569E+05 -2.148784E+05 -6.602721E+05 -6.316506E+05 -1.862569E+05 -6.602721E+05          
+               2042   1.000    4.095665E+04 -1.940380E+05 -8.874862E+05 -6.524916E+05  4.095665E+04 -8.874862E+05          
+0      4060
+               4041   0.000    5.359373E+05  5.073067E+05  4.379496E+04  7.242563E+04  5.359373E+05  4.379496E+04          
+               4042   1.000    7.489481E+05  5.139682E+05 -1.692161E+05  6.576384E+04  7.489481E+05 -1.692161E+05          
+0      4061
+               2041   0.000   -1.076235E+06  4.095118E+05  1.076236E+06 -4.095109E+05  1.076236E+06 -1.076235E+06          
+               4041   1.000    1.075858E+06 -4.105510E+05 -1.075857E+06  4.105519E+05  1.075858E+06 -1.075857E+06          
+0      4062
+               2042   0.000   -6.478157E+04 -1.079980E+05 -7.900815E+05 -7.468651E+05 -6.478157E+04 -7.900815E+05          
+               2043   1.000    1.228656E+05 -1.020481E+05 -9.777289E+05 -7.528152E+05  1.228656E+05 -9.777289E+05          
+0      4063
+               4042   0.000    6.627534E+05  6.195231E+05 -7.502378E+04 -3.179347E+04  6.627534E+05 -7.502378E+04          
+               4043   1.000    8.391061E+05  6.142043E+05 -2.513765E+05 -2.647477E+04  8.391061E+05 -2.513765E+05          
+0      4064
+               2042   0.000   -9.612846E+05  3.610723E+05  9.612781E+05 -3.610788E+05  9.612781E+05 -9.612846E+05          
+               4042   1.000    9.609054E+05 -3.621100E+05 -9.609118E+05  3.621036E+05  9.609054E+05 -9.609118E+05          
+0      4065
+               2043   0.000    2.964614E+04 -2.755626E+04 -8.918270E+05 -8.346246E+05  2.964614E+04 -8.918270E+05          
+               2044   1.000    1.791475E+05 -3.498908E+04 -1.041328E+06 -8.271918E+05  1.791475E+05 -1.041328E+06          
+0      4066
+               4043   0.000    7.644608E+05  7.072418E+05 -1.697496E+05 -1.125306E+05  7.644608E+05 -1.697496E+05          
+               4044   1.000    9.023909E+05  6.882713E+05 -3.076796E+05 -9.355998E+04  9.023909E+05 -3.076796E+05          
+0      4067
+               2043   0.000   -8.421444E+05  3.132313E+05  8.421540E+05 -3.132218E+05  8.421540E+05 -8.421444E+05          
+               4043   1.000    8.417855E+05 -3.142383E+05 -8.417760E+05  3.142478E+05  8.417855E+05 -8.417760E+05          
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    33
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0      4068
+               2044   0.000    9.857542E+04  2.785869E+04 -9.670236E+05 -8.963069E+05  9.857542E+04 -9.670236E+05          
+               2045   1.000    2.076463E+05  4.928992E+03 -1.076094E+06 -8.733769E+05  2.076463E+05 -1.076094E+06          
+0      4069
+               4044   0.000    8.394014E+05  7.686690E+05 -2.387382E+05 -1.680058E+05  8.394014E+05 -2.387382E+05          
+               4045   1.000    9.375947E+05  7.348921E+05 -3.369311E+05 -1.342285E+05  9.375947E+05 -3.369311E+05          
+0      4070
+               2044   0.000   -7.195629E+05  2.687033E+05  7.195567E+05 -2.687095E+05  7.195567E+05 -7.195629E+05          
+               4044   1.000    7.191978E+05 -2.697034E+05 -7.192039E+05  2.696972E+05  7.191978E+05 -7.192039E+05          
+0      4071
+               2045   0.000    1.398132E+05  5.601824E+04 -1.013483E+06 -9.296884E+05  1.398132E+05 -1.013483E+06          
+               2046   1.000    2.077671E+05  1.681717E+04 -1.081437E+06 -8.904868E+05  2.077671E+05 -1.081437E+06          
+0      4072
+               4045   0.000    8.863668E+05  8.025536E+05 -2.807939E+05 -1.969807E+05  8.863668E+05 -2.807939E+05          
+               4046   1.000    9.457718E+05  7.548384E+05 -3.401983E+05 -1.492649E+05  9.457718E+05 -3.401983E+05          
+0      4073
+               2045   0.000   -5.953004E+05  2.263940E+05  5.953132E+05 -2.263811E+05  5.953132E+05 -5.953004E+05          
+               4045   1.000    5.949671E+05 -2.273386E+05 -5.949542E+05  2.273515E+05  5.949671E+05 -5.949542E+05          
+0      4074
+               2046   0.000    1.526170E+05  5.605316E+04 -1.030464E+06 -9.339005E+05  1.526170E+05 -1.030464E+06          
+               2047   1.000    1.803658E+05  1.472565E+03 -1.058212E+06 -8.793192E+05  1.803658E+05 -1.058212E+06          
+0      4075
+               4046   0.000    9.063916E+05  8.098188E+05 -2.969513E+05 -2.003786E+05  9.063916E+05 -2.969513E+05          
+               4047   1.000    9.272536E+05  7.483722E+05 -3.178125E+05 -1.389312E+05  9.272536E+05 -3.178125E+05          
+0      4076
+               2046   0.000   -4.718495E+05  1.817715E+05  4.718359E+05 -1.817851E+05  4.718359E+05 -4.718495E+05          
+               4046   1.000    4.715097E+05 -1.826832E+05 -4.715232E+05  1.826696E+05  4.715097E+05 -4.715232E+05          
+0      4077
+               2047   0.000    1.376717E+05  2.876597E+04 -1.018652E+06 -9.097461E+05  1.376717E+05 -1.018652E+06          
+               2048   1.000    1.310217E+05 -3.543343E+04 -1.012001E+06 -8.455458E+05  1.310217E+05 -1.012001E+06          
+0      4078
+               4047   0.000    8.998249E+05  7.908984E+05 -2.875549E+05 -1.786284E+05  8.998249E+05 -2.875549E+05          
+               4048   1.000    8.764722E+05  7.100347E+05 -2.642010E+05 -9.776352E+04  8.764722E+05 -2.642010E+05          
+0      4079
+               2047   0.000   -3.572847E+05  1.141713E+05  3.572923E+05 -1.141637E+05  3.572923E+05 -3.572847E+05          
+               4047   1.000    3.570031E+05 -1.149673E+05 -3.569955E+05  1.149749E+05  3.570031E+05 -3.569955E+05          
+0      4080
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    34
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+               2048   0.000    1.006322E+05 -1.998230E+04 -9.837092E+05 -8.630948E+05  1.006322E+05 -9.837092E+05          
+               2049   1.000    7.883874E+04 -7.432169E+04 -9.619151E+05 -8.087546E+05  7.883874E+04 -9.619151E+05          
+0      4081
+               4048   0.000    8.608880E+05  7.402606E+05 -2.468145E+05 -1.261871E+05  8.608880E+05 -2.468145E+05          
+               4049   1.000    7.704544E+05  6.173108E+05 -1.563791E+05 -3.235533E+03  7.704544E+05 -1.563791E+05          
+0      4082
+               2048   0.000   -2.669160E+05 -1.589476E+04  2.669053E+05  1.588412E+04  2.669053E+05 -2.669160E+05          
+               4048   1.000    2.666707E+05  1.523450E+04 -2.666813E+05 -1.524515E+04  2.666707E+05 -2.666813E+05          
+0      4083
+               2049   0.000    6.164770E+04 -6.925812E+04 -9.458164E+05 -8.149106E+05  6.164770E+04 -9.458164E+05          
+               2050   1.000    5.538857E+04 -8.293970E+04 -9.395571E+05 -8.012289E+05  5.538857E+04 -9.395571E+05          
+0      4084
+               4049   0.000    7.652605E+05  6.343398E+05 -1.503861E+05 -1.946538E+04  7.652605E+05 -1.503861E+05          
+               4050   1.000    5.739500E+05  4.356300E+05  4.092731E+04  1.792473E+05  5.739500E+05  4.092731E+04          
+0      4085
+               2049   0.000   -1.953829E+05 -1.883393E+05  1.953885E+05  1.883448E+05  1.953885E+05 -1.953829E+05          
+               4049   1.000    1.952460E+05  1.879424E+05 -1.952404E+05 -1.879369E+05  1.952460E+05 -1.952404E+05          
+0      4086
+               2050   0.000   -1.172923E-08 -1.322637E-07 -1.178000E-07  2.734385E-09  2.734385E-09 -1.322637E-07          
+               4050   1.000   -5.815440E-08 -5.972434E-08 -7.137487E-08 -6.980494E-08 -5.815440E-08 -7.137487E-08          
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OEF1X    WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OEF1, TRL =
+                    101                63                 5                 4                14                 0                 1
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OEF1X   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       14400 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =       14579 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OES1X1   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OES1X, TRL =
+                    101                63                 5                 4                14                 0                 1
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OES1X1  
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15984 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =       16163 WORDS.)
+ *** USER INFORMATION MESSAGE 4110 (OUTPX2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1    NONLINEAR                                                                  MAY   4, 2014  MSC Nastran  5/30/13   PAGE    35
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     F      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+

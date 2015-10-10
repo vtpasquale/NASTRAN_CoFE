@@ -1,0 +1,149 @@
+                                                                         
+                                                                         
+                  $ $ $                                                  
+         $ $ $ $ $ $ $ $ $ $ $                                           
+    $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $                                    
+             $ $ $ $ $ $ $ $ $ $ $ $ $ $                                 
+                      $ $ $ $ $ $ $ $ $                                  
+                          $ $ $ $ $ $ $ $                                
+                               $ $ $ $ $ $                               
+                                   $ $ $ $                               
+                                   $ $ $                                 
+                                 $ $ $                                   
+                    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                    $$                           $$
+              $$$$$$$$     NASTRAN Compatible    $$
+             $$     $$   Finite Elements (CoFE)  $$
+            $$      $$                           $$
+             $$     $$   Designed in 2013-2015   $$
+              $$    $$    by Anthony Ricciardi   $$
+               $$   $$       pasquale@vt.edu     $$
+                $$  $$  NastranCoFE.weebly.com   $$
+                 $$$$$                           $$
+                    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+---------------------------------------------------------------------------
+  The MIT License (MIT)
+
+  Copyright (c) 2015 Anthony Ricciardi <pasquale@vt.edu>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+---------------------------------------------------------------------------
+
+  NASTRAN is a registered trademark of the National Aeronautics and Space 
+  Administration.  
+
+  MSC Nastran is a registered trademark of MSC Software Corporation.      
+
+---------------------------------------------------------------------------
+
+  KNOWN DIFFERENCE FROM MSC Nastran:
+  MSC Nastran CBEAM element force output for BENDING MOMENT - PLANE 2 
+  uses an opposite sign convention than the convention used in CoFE. All
+  other element force outputs are consistent with MSC Nastran.
+
+  FORMAT
+  Node and element numbers are output as ordered in the input file.
+
+---------------------------------------------------------------------------
+  This case was run 28-Sep-2015 07:05:50 
+
+
+                          V I B R A T I O N     F R E Q U E N C I E S 
+ MODE NO. 	 FREQUENCY (Hz) 
+	 1 	 8.949501E+00 
+	 2 	 2.725022E+01 
+	 3 	 2.695656E+01 
+	 4 	 4.993071E+01 
+	 5 	 5.688473E+01 
+	 6 	 6.299655E+01 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  1 
+ Frequency = 8.9495 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 -7.845801E-02 	 -0.000000E+00 	 +3.035007E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        2 		 +7.845801E-02 	 -0.000000E+00 	 +3.035007E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        3 		 -5.974904E-02 	 -0.000000E+00 	 +1.232835E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        4 		 +5.974904E-02 	 -0.000000E+00 	 +1.232835E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        5 		 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        6 		 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  2 
+ Frequency = 27.2502 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 +1.741142E-01 	 +0.000000E+00 	 -7.026725E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        2 		 -1.741142E-01 	 +0.000000E+00 	 -7.026725E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        3 		 +6.393963E-02 	 +0.000000E+00 	 +2.566643E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        4 		 -6.393963E-02 	 +0.000000E+00 	 +2.566643E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        5 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        6 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  3 
+ Frequency = 26.9566 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 +2.841792E-01 	 +0.000000E+00 	 -1.158830E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        2 		 +2.841792E-01 	 +0.000000E+00 	 +1.158830E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        3 		 +1.768504E-01 	 +0.000000E+00 	 -4.505307E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        4 		 +1.768504E-01 	 +0.000000E+00 	 +4.505307E-02 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        5 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        6 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  4 
+ Frequency = 49.9307 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 +2.504911E-01 	 -0.000000E+00 	 +1.615080E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        2 		 -2.504911E-01 	 -0.000000E+00 	 +1.615080E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        3 		 +1.183409E-01 	 -0.000000E+00 	 -1.303786E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        4 		 -1.183409E-01 	 -0.000000E+00 	 -1.303786E-01 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        5 		 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+        6 		 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 	 -0.000000E+00 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  5 
+ Frequency = 56.8847 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 +5.916117E-02 	 +0.000000E+00 	 -2.489878E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        2 		 +5.916117E-02 	 +0.000000E+00 	 +2.489878E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        3 		 -3.214634E-02 	 +0.000000E+00 	 +2.173610E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        4 		 -3.214634E-02 	 +0.000000E+00 	 -2.173610E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        5 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        6 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+
+
+                          V I B R A T I O N     E I G E N V E C T O R     N O.  6 
+ Frequency = 62.9966 Hz 
+     GRID
+      ID.              T1             T2               T3             R1               R2             R3
+        1 		 -7.334830E-02 	 +0.000000E+00 	 +1.870209E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        2 		 -7.334830E-02 	 +0.000000E+00 	 -1.870209E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        3 		 +1.585302E-01 	 +0.000000E+00 	 +2.109429E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        4 		 +1.585302E-01 	 +0.000000E+00 	 -2.109429E-01 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        5 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 
+        6 		 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 	 +0.000000E+00 

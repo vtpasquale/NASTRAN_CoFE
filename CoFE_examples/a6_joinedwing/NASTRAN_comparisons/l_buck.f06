@@ -1,0 +1,1709 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2013 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2013.0.0-CL199358   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          MAY 30, 2013           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *        MODEL 386/486/586        * *
+                                              * * Windows Server 2008 R2 6.1 7601 * *
+                                              * *        Compiled for 8664        * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (June 10, 2013):
+  
+               Welcome to MSC Nastran 2013
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2013
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+   The highlights for the MSC Nastran 2013 release include:
+  •   HPC
+     –   GPU Support for non-symmetric and complex systems encountered in
+           SOL 108, SOL 109, SOL 111 and SOL 112
+     –   Element Assembly Time has been Improved using Parallel Processing in
+           SOL 400
+     –   SOL 700 DMP Improvements for FSI applications
+     –   MSC Nastran now fully utilizes the memory for All Solutions Sequences
+           which reduces the amount of wall time.
+     -   New methods have been introduced to Control Pivoting strategies when
+           Factorizing the System of Equation, to provide a balance between
+           Performance and Accuracy
+  •   Acoustics
+     –   Poroelastic Materials which are Frequency Dependant can be included in
+           Interior Acoustic Simulation to model trim materials
+  •   Durability
+     –   Fatigue Simulations may be performed from within MSC Nastran for
+1          SOL 101, SOL 103, SOL 112 and SOL 200
+     -   There is a new User Guide fully describing this new capability
+  •   Optimization
+     –   Optimization may be performed using Design Life as either a Constraint
+         or an Objective Function.
+     –   Enhancements to Equivalent Radiated Power (ERP)
+  •   Linear Analysis
+     –   Enhancements to Transfer Path Analysis (TPA) to support inter-component
+           forces
+     -   The Definition of Loads in Dynamic Analysis has been Improved.
+  •   Aeroelasticity
+     –   Output enhancements with Monitor Points for SOL 146
+  •   Advanced Nonlinear (SOL 400)
+     –   Support for enforced relative displacement motion SPCD and SPCR
+     –   Export Adams MNF files from SOL 400 for nonlinear preload
+  •   Explicit Dynamics (SOL 700)
+     –   1D-3D Spherical Symmetry and 2D-3D Axial Symmetry Remap for Blast Loads
+     –   Support for Multiple Detonation points with varying ignition times
+     –   Empirical Blast Load Models
+  
+  
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20130/CONF/NAST20130.RCF[2])
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+     $ ASSIGN OUTPUT4='KDGG.OUT' STATUS=UNKNOWN UNIT=13 FORM=FORMATTED               
+1                                                                               MAY   4, 2014  MSC Nastran  5/30/13   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 105                                                                                 
+     $ COMPILE SEBUCKL                                                                       
+     $ ALTER 119 $                                                                           
+     $ OUTPUT4 KDGG//0/13///16 $                                                             
+     $ ENDALTER                                                                              
+     $ DIAG 14                                                                               
+     CEND                                                                                    
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      TITLE = LINEAR BUCKLING ANALYSIS                                                        
+                  5      SPC = 1                                                                                 
+                  6      DISP(PUNCH) = ALL                                                                       
+                  7                                                                                              
+                  8      $                                                                                       
+                  9      SUBCASE 1                                                                               
+                 10      LOAD = 1025                                                                             
+                 11      $                                                                                       
+                 12      SUBCASE 2                                                                               
+                 13      METHOD = 20                                                                             
+                 14      $                                                                                       
+                 15      $ **********************************************************                            
+                 16      $   B U L K    D A T A                                                                  
+                 17      $ **********************************************************                            
+                 18      $                                                                                       
+                 19      $ ---------------------------------------------                                         
+                 20      $   ANALYSIS MODEL                                                                      
+                 21      $ ---------------------------------------------                                         
+                 22      $                                                                                       
+                 23      BEGIN BULK                                                                              
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                              $INCLUDE "c:\Users\pasquale\Desktop\testProblems\joinedWing\MODEL_N.BDF"
+                              $END OF INCLUDE FILE "c:\Users\pasquale\Desktop\testProblems\joinedWing\MODEL_N.BDF"
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBEAM   1       101     2001    2002    1.      0.      0.
+                    2-        CBEAM   2       101     4001    4002    1.      0.      0.
+                    3-        CBEAM   3       101     2002    2003    1.      0.      0.
+                    4-        CBEAM   4       101     4002    4003    1.      0.      0.
+                    5-        CBEAM   5       102     2002    4002    0.      1.      0.
+                    6-        CBEAM   6       101     2003    2004    1.      0.      0.
+                    7-        CBEAM   7       101     4003    4004    1.      0.      0.
+                    8-        CBEAM   8       102     2003    4003    0.      1.      0.
+                    9-        CBEAM   9       101     2004    2005    1.      0.      0.
+                   10-        CBEAM   10      101     4004    4005    1.      0.      0.
+                   11-        CBEAM   11      102     2004    4004    0.      1.      0.
+                   12-        CBEAM   12      101     2005    2006    1.      0.      0.
+                   13-        CBEAM   13      101     4005    4006    1.      0.      0.
+                   14-        CBEAM   14      102     2005    4005    0.      1.      0.
+                   15-        CBEAM   15      101     2006    2007    1.      0.      0.
+                   16-        CBEAM   16      101     4006    4007    1.      0.      0.
+                   17-        CBEAM   17      102     2006    4006    0.      1.      0.
+                   18-        CBEAM   18      101     2007    2008    1.      0.      0.
+                   19-        CBEAM   19      101     4007    4008    1.      0.      0.
+                   20-        CBEAM   20      102     2007    4007    0.      1.      0.
+                   21-        CBEAM   21      101     2008    2009    1.      0.      0.
+                   22-        CBEAM   22      101     4008    4009    1.      0.      0.
+                   23-        CBEAM   23      102     2008    4008    0.      1.      0.
+                   24-        CBEAM   24      101     2009    2010    1.      0.      0.
+                   25-        CBEAM   25      101     4009    4010    1.      0.      0.
+                   26-        CBEAM   26      102     2009    4009    0.      1.      0.
+                   27-        CBEAM   27      101     2010    2011    1.      0.      0.
+                   28-        CBEAM   28      101     4010    4011    1.      0.      0.
+                   29-        CBEAM   29      102     2010    4010    0.      1.      0.
+                   30-        CBEAM   30      101     2011    2012    1.      0.      0.
+                   31-        CBEAM   31      101     4011    4012    1.      0.      0.
+                   32-        CBEAM   32      102     2011    4011    0.      1.      0.
+                   33-        CBEAM   33      101     2012    2013    1.      0.      0.
+                   34-        CBEAM   34      101     4012    4013    1.      0.      0.
+                   35-        CBEAM   35      102     2012    4012    0.      1.      0.
+                   36-        CBEAM   36      101     2013    2014    1.      0.      0.
+                   37-        CBEAM   37      101     4013    4014    1.      0.      0.
+                   38-        CBEAM   38      102     2013    4013    0.      1.      0.
+                   39-        CBEAM   39      101     2014    2015    1.      0.      0.
+                   40-        CBEAM   40      101     4014    4015    1.      0.      0.
+                   41-        CBEAM   41      102     2014    4014    0.      1.      0.
+                   42-        CBEAM   42      101     2015    2016    1.      0.      0.
+                   43-        CBEAM   43      101     4015    4016    1.      0.      0.
+                   44-        CBEAM   44      102     2015    4015    0.      1.      0.
+                   45-        CBEAM   45      101     2016    2017    1.      0.      0.
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   46-        CBEAM   46      101     4016    4017    1.      0.      0.
+                   47-        CBEAM   47      102     2016    4016    0.      1.      0.
+                   48-        CBEAM   48      101     2017    2018    1.      0.      0.
+                   49-        CBEAM   49      101     4017    4018    1.      0.      0.
+                   50-        CBEAM   50      102     2017    4017    0.      1.      0.
+                   51-        CBEAM   51      101     2018    2019    1.      0.      0.
+                   52-        CBEAM   52      101     4018    4019    1.      0.      0.
+                   53-        CBEAM   53      102     2018    4018    0.      1.      0.
+                   54-        CBEAM   54      101     2019    2020    1.      0.      0.
+                   55-        CBEAM   55      101     4019    4020    1.      0.      0.
+                   56-        CBEAM   56      102     2019    4019    0.      1.      0.
+                   57-        CBEAM   57      102     2020    4020    0.      1.      0.
+                   58-        CBEAM   4000    201     2021    2022    1.      0.      0.
+                   59-        CBEAM   4001    201     4021    4022    1.      0.      0.
+                   60-        CBEAM   4002    201     2022    2023    1.      0.      0.
+                   61-        CBEAM   4003    201     4022    4023    1.      0.      0.
+                   62-        CBEAM   4004    202     2022    4022    0.      1.      0.
+                   63-        CBEAM   4005    201     2023    2024    1.      0.      0.
+                   64-        CBEAM   4006    201     4023    4024    1.      0.      0.
+                   65-        CBEAM   4007    202     2023    4023    0.      1.      0.
+                   66-        CBEAM   4008    201     2024    2025    1.      0.      0.
+                   67-        CBEAM   4009    201     4024    4025    1.      0.      0.
+                   68-        CBEAM   4010    202     2024    4024    0.      1.      0.
+                   69-        CBEAM   4011    201     2025    2026    1.      0.      0.
+                   70-        CBEAM   4012    201     4025    4026    1.      0.      0.
+                   71-        CBEAM   4013    202     2025    4025    0.      1.      0.
+                   72-        CBEAM   4014    201     2026    2027    1.      0.      0.
+                   73-        CBEAM   4015    201     4026    4027    1.      0.      0.
+                   74-        CBEAM   4016    202     2026    4026    0.      1.      0.
+                   75-        CBEAM   4017    201     2027    2028    1.      0.      0.
+                   76-        CBEAM   4018    201     4027    4028    1.      0.      0.
+                   77-        CBEAM   4019    202     2027    4027    0.      1.      0.
+                   78-        CBEAM   4020    201     2028    2029    1.      0.      0.
+                   79-        CBEAM   4021    201     4028    4029    1.      0.      0.
+                   80-        CBEAM   4022    202     2028    4028    0.      1.      0.
+                   81-        CBEAM   4023    201     2029    2030    1.      0.      0.
+                   82-        CBEAM   4024    201     4029    4030    1.      0.      0.
+                   83-        CBEAM   4025    202     2029    4029    0.      1.      0.
+                   84-        CBEAM   4026    201     2030    2031    1.      0.      0.
+                   85-        CBEAM   4027    201     4030    4031    1.      0.      0.
+                   86-        CBEAM   4028    202     2030    4030    0.      1.      0.
+                   87-        CBEAM   4029    201     2031    2032    1.      0.      0.
+                   88-        CBEAM   4030    201     4031    4032    1.      0.      0.
+                   89-        CBEAM   4031    202     2031    4031    0.      1.      0.
+                   90-        CBEAM   4032    201     2032    2033    1.      0.      0.
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   91-        CBEAM   4033    201     4032    4033    1.      0.      0.
+                   92-        CBEAM   4034    202     2032    4032    0.      1.      0.
+                   93-        CBEAM   4035    201     2033    2034    1.      0.      0.
+                   94-        CBEAM   4036    201     4033    4034    1.      0.      0.
+                   95-        CBEAM   4037    202     2033    4033    0.      1.      0.
+                   96-        CBEAM   4038    201     2034    2035    1.      0.      0.
+                   97-        CBEAM   4039    201     4034    4035    1.      0.      0.
+                   98-        CBEAM   4040    202     2034    4034    0.      1.      0.
+                   99-        CBEAM   4041    201     2035    2036    1.      0.      0.
+                  100-        CBEAM   4042    201     4035    4036    1.      0.      0.
+                  101-        CBEAM   4043    202     2035    4035    0.      1.      0.
+                  102-        CBEAM   4044    201     2036    2037    1.      0.      0.
+                  103-        CBEAM   4045    201     4036    4037    1.      0.      0.
+                  104-        CBEAM   4046    202     2036    4036    0.      1.      0.
+                  105-        CBEAM   4047    201     2037    2038    1.      0.      0.
+                  106-        CBEAM   4048    201     4037    4038    1.      0.      0.
+                  107-        CBEAM   4049    202     2037    4037    0.      1.      0.
+                  108-        CBEAM   4050    201     2038    2039    1.      0.      0.
+                  109-        CBEAM   4051    201     4038    4039    1.      0.      0.
+                  110-        CBEAM   4052    202     2038    4038    0.      1.      0.
+                  111-        CBEAM   4053    201     2039    2040    1.      0.      0.
+                  112-        CBEAM   4054    201     4039    4040    1.      0.      0.
+                  113-        CBEAM   4055    202     2039    4039    0.      1.      0.
+                  114-        CBEAM   4056    201     2040    2041    1.      0.      0.
+                  115-        CBEAM   4057    201     4040    4041    1.      0.      0.
+                  116-        CBEAM   4058    202     2040    4040    0.      1.      0.
+                  117-        CBEAM   4059    201     2041    2042    1.      0.      0.
+                  118-        CBEAM   4060    201     4041    4042    1.      0.      0.
+                  119-        CBEAM   4061    202     2041    4041    0.      1.      0.
+                  120-        CBEAM   4062    201     2042    2043    1.      0.      0.
+                  121-        CBEAM   4063    201     4042    4043    1.      0.      0.
+                  122-        CBEAM   4064    202     2042    4042    0.      1.      0.
+                  123-        CBEAM   4065    201     2043    2044    1.      0.      0.
+                  124-        CBEAM   4066    201     4043    4044    1.      0.      0.
+                  125-        CBEAM   4067    202     2043    4043    0.      1.      0.
+                  126-        CBEAM   4068    201     2044    2045    1.      0.      0.
+                  127-        CBEAM   4069    201     4044    4045    1.      0.      0.
+                  128-        CBEAM   4070    202     2044    4044    0.      1.      0.
+                  129-        CBEAM   4071    201     2045    2046    1.      0.      0.
+                  130-        CBEAM   4072    201     4045    4046    1.      0.      0.
+                  131-        CBEAM   4073    202     2045    4045    0.      1.      0.
+                  132-        CBEAM   4074    201     2046    2047    1.      0.      0.
+                  133-        CBEAM   4075    201     4046    4047    1.      0.      0.
+                  134-        CBEAM   4076    202     2046    4046    0.      1.      0.
+                  135-        CBEAM   4077    201     2047    2048    1.      0.      0.
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  136-        CBEAM   4078    201     4047    4048    1.      0.      0.
+                  137-        CBEAM   4079    202     2047    4047    0.      1.      0.
+                  138-        CBEAM   4080    201     2048    2049    1.      0.      0.
+                  139-        CBEAM   4081    201     4048    4049    1.      0.      0.
+                  140-        CBEAM   4082    202     2048    4048    0.      1.      0.
+                  141-        CBEAM   4083    201     2049    2050    1.      0.      0.
+                  142-        CBEAM   4084    201     4049    4050    1.      0.      0.
+                  143-        CBEAM   4085    202     2049    4049    0.      1.      0.
+                  144-        CBEAM   4086    202     2050    4050    0.      1.      0.
+                  145-        CMASS1  3000    110     1001    1
+                  146-        CMASS1  3001    110     1001    2
+                  147-        CMASS1  3002    110     1001    3
+                  148-        CMASS1  3003    110     5001    1
+                  149-        CMASS1  3004    110     5001    2
+                  150-        CMASS1  3005    110     5001    3
+                  151-        CMASS1  3006    110     1002    1
+                  152-        CMASS1  3007    110     1002    2
+                  153-        CMASS1  3008    110     1002    3
+                  154-        CMASS1  3009    110     5002    1
+                  155-        CMASS1  3010    110     5002    2
+                  156-        CMASS1  3011    110     5002    3
+                  157-        CMASS1  3012    110     1003    1
+                  158-        CMASS1  3013    110     1003    2
+                  159-        CMASS1  3014    110     1003    3
+                  160-        CMASS1  3015    110     5003    1
+                  161-        CMASS1  3016    110     5003    2
+                  162-        CMASS1  3017    110     5003    3
+                  163-        CMASS1  3018    110     1004    1
+                  164-        CMASS1  3019    110     1004    2
+                  165-        CMASS1  3020    110     1004    3
+                  166-        CMASS1  3021    110     5004    1
+                  167-        CMASS1  3022    110     5004    2
+                  168-        CMASS1  3023    110     5004    3
+                  169-        CMASS1  3024    110     1005    1
+                  170-        CMASS1  3025    110     1005    2
+                  171-        CMASS1  3026    110     1005    3
+                  172-        CMASS1  3027    110     5005    1
+                  173-        CMASS1  3028    110     5005    2
+                  174-        CMASS1  3029    110     5005    3
+                  175-        CMASS1  3030    110     1006    1
+                  176-        CMASS1  3031    110     1006    2
+                  177-        CMASS1  3032    110     1006    3
+                  178-        CMASS1  3033    110     5006    1
+                  179-        CMASS1  3034    110     5006    2
+                  180-        CMASS1  3035    110     5006    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  181-        CMASS1  3036    110     1007    1
+                  182-        CMASS1  3037    110     1007    2
+                  183-        CMASS1  3038    110     1007    3
+                  184-        CMASS1  3039    110     5007    1
+                  185-        CMASS1  3040    110     5007    2
+                  186-        CMASS1  3041    110     5007    3
+                  187-        CMASS1  3042    110     1008    1
+                  188-        CMASS1  3043    110     1008    2
+                  189-        CMASS1  3044    110     1008    3
+                  190-        CMASS1  3045    110     5008    1
+                  191-        CMASS1  3046    110     5008    2
+                  192-        CMASS1  3047    110     5008    3
+                  193-        CMASS1  3048    110     1009    1
+                  194-        CMASS1  3049    110     1009    2
+                  195-        CMASS1  3050    110     1009    3
+                  196-        CMASS1  3051    110     5009    1
+                  197-        CMASS1  3052    110     5009    2
+                  198-        CMASS1  3053    110     5009    3
+                  199-        CMASS1  3054    110     1010    1
+                  200-        CMASS1  3055    110     1010    2
+                  201-        CMASS1  3056    110     1010    3
+                  202-        CMASS1  3057    110     5010    1
+                  203-        CMASS1  3058    110     5010    2
+                  204-        CMASS1  3059    110     5010    3
+                  205-        CMASS1  3060    110     1011    1
+                  206-        CMASS1  3061    110     1011    2
+                  207-        CMASS1  3062    110     1011    3
+                  208-        CMASS1  3063    110     5011    1
+                  209-        CMASS1  3064    110     5011    2
+                  210-        CMASS1  3065    110     5011    3
+                  211-        CMASS1  3066    110     1012    1
+                  212-        CMASS1  3067    110     1012    2
+                  213-        CMASS1  3068    110     1012    3
+                  214-        CMASS1  3069    110     5012    1
+                  215-        CMASS1  3070    110     5012    2
+                  216-        CMASS1  3071    110     5012    3
+                  217-        CMASS1  3072    110     1013    1
+                  218-        CMASS1  3073    110     1013    2
+                  219-        CMASS1  3074    110     1013    3
+                  220-        CMASS1  3075    110     5013    1
+                  221-        CMASS1  3076    110     5013    2
+                  222-        CMASS1  3077    110     5013    3
+                  223-        CMASS1  3078    110     1014    1
+                  224-        CMASS1  3079    110     1014    2
+                  225-        CMASS1  3080    110     1014    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  226-        CMASS1  3081    110     5014    1
+                  227-        CMASS1  3082    110     5014    2
+                  228-        CMASS1  3083    110     5014    3
+                  229-        CMASS1  3084    110     1015    1
+                  230-        CMASS1  3085    110     1015    2
+                  231-        CMASS1  3086    110     1015    3
+                  232-        CMASS1  3087    110     5015    1
+                  233-        CMASS1  3088    110     5015    2
+                  234-        CMASS1  3089    110     5015    3
+                  235-        CMASS1  3090    110     1016    1
+                  236-        CMASS1  3091    110     1016    2
+                  237-        CMASS1  3092    110     1016    3
+                  238-        CMASS1  3093    110     5016    1
+                  239-        CMASS1  3094    110     5016    2
+                  240-        CMASS1  3095    110     5016    3
+                  241-        CMASS1  3096    110     1017    1
+                  242-        CMASS1  3097    110     1017    2
+                  243-        CMASS1  3098    110     1017    3
+                  244-        CMASS1  3099    110     5017    1
+                  245-        CMASS1  3100    110     5017    2
+                  246-        CMASS1  3101    110     5017    3
+                  247-        CMASS1  3102    110     1018    1
+                  248-        CMASS1  3103    110     1018    2
+                  249-        CMASS1  3104    110     1018    3
+                  250-        CMASS1  3105    110     5018    1
+                  251-        CMASS1  3106    110     5018    2
+                  252-        CMASS1  3107    110     5018    3
+                  253-        CMASS1  3108    110     1019    1
+                  254-        CMASS1  3109    110     1019    2
+                  255-        CMASS1  3110    110     1019    3
+                  256-        CMASS1  3111    110     5019    1
+                  257-        CMASS1  3112    110     5019    2
+                  258-        CMASS1  3113    110     5019    3
+                  259-        CMASS1  3114    110     1020    1
+                  260-        CMASS1  3115    110     1020    2
+                  261-        CMASS1  3116    110     1020    3
+                  262-        CMASS1  3117    110     5020    1
+                  263-        CMASS1  3118    110     5020    2
+                  264-        CMASS1  3119    110     5020    3
+                  265-        CMASS1  7000    210     1021    1
+                  266-        CMASS1  7001    210     1021    2
+                  267-        CMASS1  7002    210     1021    3
+                  268-        CMASS1  7003    210     5021    1
+                  269-        CMASS1  7004    210     5021    2
+                  270-        CMASS1  7005    210     5021    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  271-        CMASS1  7006    210     1022    1
+                  272-        CMASS1  7007    210     1022    2
+                  273-        CMASS1  7008    210     1022    3
+                  274-        CMASS1  7009    210     5022    1
+                  275-        CMASS1  7010    210     5022    2
+                  276-        CMASS1  7011    210     5022    3
+                  277-        CMASS1  7012    210     1023    1
+                  278-        CMASS1  7013    210     1023    2
+                  279-        CMASS1  7014    210     1023    3
+                  280-        CMASS1  7015    210     5023    1
+                  281-        CMASS1  7016    210     5023    2
+                  282-        CMASS1  7017    210     5023    3
+                  283-        CMASS1  7018    210     1024    1
+                  284-        CMASS1  7019    210     1024    2
+                  285-        CMASS1  7020    210     1024    3
+                  286-        CMASS1  7021    210     5024    1
+                  287-        CMASS1  7022    210     5024    2
+                  288-        CMASS1  7023    210     5024    3
+                  289-        CMASS1  7024    210     1025    1
+                  290-        CMASS1  7025    210     1025    2
+                  291-        CMASS1  7026    210     1025    3
+                  292-        CMASS1  7027    210     5025    1
+                  293-        CMASS1  7028    210     5025    2
+                  294-        CMASS1  7029    210     5025    3
+                  295-        CMASS1  7030    210     1026    1
+                  296-        CMASS1  7031    210     1026    2
+                  297-        CMASS1  7032    210     1026    3
+                  298-        CMASS1  7033    210     5026    1
+                  299-        CMASS1  7034    210     5026    2
+                  300-        CMASS1  7035    210     5026    3
+                  301-        CMASS1  7036    210     1027    1
+                  302-        CMASS1  7037    210     1027    2
+                  303-        CMASS1  7038    210     1027    3
+                  304-        CMASS1  7039    210     5027    1
+                  305-        CMASS1  7040    210     5027    2
+                  306-        CMASS1  7041    210     5027    3
+                  307-        CMASS1  7042    210     1028    1
+                  308-        CMASS1  7043    210     1028    2
+                  309-        CMASS1  7044    210     1028    3
+                  310-        CMASS1  7045    210     5028    1
+                  311-        CMASS1  7046    210     5028    2
+                  312-        CMASS1  7047    210     5028    3
+                  313-        CMASS1  7048    210     1029    1
+                  314-        CMASS1  7049    210     1029    2
+                  315-        CMASS1  7050    210     1029    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  316-        CMASS1  7051    210     5029    1
+                  317-        CMASS1  7052    210     5029    2
+                  318-        CMASS1  7053    210     5029    3
+                  319-        CMASS1  7054    210     1030    1
+                  320-        CMASS1  7055    210     1030    2
+                  321-        CMASS1  7056    210     1030    3
+                  322-        CMASS1  7057    210     5030    1
+                  323-        CMASS1  7058    210     5030    2
+                  324-        CMASS1  7059    210     5030    3
+                  325-        CMASS1  7060    210     1031    1
+                  326-        CMASS1  7061    210     1031    2
+                  327-        CMASS1  7062    210     1031    3
+                  328-        CMASS1  7063    210     5031    1
+                  329-        CMASS1  7064    210     5031    2
+                  330-        CMASS1  7065    210     5031    3
+                  331-        CMASS1  7066    210     1032    1
+                  332-        CMASS1  7067    210     1032    2
+                  333-        CMASS1  7068    210     1032    3
+                  334-        CMASS1  7069    210     5032    1
+                  335-        CMASS1  7070    210     5032    2
+                  336-        CMASS1  7071    210     5032    3
+                  337-        CMASS1  7072    210     1033    1
+                  338-        CMASS1  7073    210     1033    2
+                  339-        CMASS1  7074    210     1033    3
+                  340-        CMASS1  7075    210     5033    1
+                  341-        CMASS1  7076    210     5033    2
+                  342-        CMASS1  7077    210     5033    3
+                  343-        CMASS1  7078    210     1034    1
+                  344-        CMASS1  7079    210     1034    2
+                  345-        CMASS1  7080    210     1034    3
+                  346-        CMASS1  7081    210     5034    1
+                  347-        CMASS1  7082    210     5034    2
+                  348-        CMASS1  7083    210     5034    3
+                  349-        CMASS1  7084    210     1035    1
+                  350-        CMASS1  7085    210     1035    2
+                  351-        CMASS1  7086    210     1035    3
+                  352-        CMASS1  7087    210     5035    1
+                  353-        CMASS1  7088    210     5035    2
+                  354-        CMASS1  7089    210     5035    3
+                  355-        CMASS1  7090    210     1036    1
+                  356-        CMASS1  7091    210     1036    2
+                  357-        CMASS1  7092    210     1036    3
+                  358-        CMASS1  7093    210     5036    1
+                  359-        CMASS1  7094    210     5036    2
+                  360-        CMASS1  7095    210     5036    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  361-        CMASS1  7096    210     1037    1
+                  362-        CMASS1  7097    210     1037    2
+                  363-        CMASS1  7098    210     1037    3
+                  364-        CMASS1  7099    210     5037    1
+                  365-        CMASS1  7100    210     5037    2
+                  366-        CMASS1  7101    210     5037    3
+                  367-        CMASS1  7102    210     1038    1
+                  368-        CMASS1  7103    210     1038    2
+                  369-        CMASS1  7104    210     1038    3
+                  370-        CMASS1  7105    210     5038    1
+                  371-        CMASS1  7106    210     5038    2
+                  372-        CMASS1  7107    210     5038    3
+                  373-        CMASS1  7108    210     1039    1
+                  374-        CMASS1  7109    210     1039    2
+                  375-        CMASS1  7110    210     1039    3
+                  376-        CMASS1  7111    210     5039    1
+                  377-        CMASS1  7112    210     5039    2
+                  378-        CMASS1  7113    210     5039    3
+                  379-        CMASS1  7114    210     1040    1
+                  380-        CMASS1  7115    210     1040    2
+                  381-        CMASS1  7116    210     1040    3
+                  382-        CMASS1  7117    210     5040    1
+                  383-        CMASS1  7118    210     5040    2
+                  384-        CMASS1  7119    210     5040    3
+                  385-        CMASS1  7120    210     1041    1
+                  386-        CMASS1  7121    210     1041    2
+                  387-        CMASS1  7122    210     1041    3
+                  388-        CMASS1  7123    210     5041    1
+                  389-        CMASS1  7124    210     5041    2
+                  390-        CMASS1  7125    210     5041    3
+                  391-        CMASS1  7126    210     1042    1
+                  392-        CMASS1  7127    210     1042    2
+                  393-        CMASS1  7128    210     1042    3
+                  394-        CMASS1  7129    210     5042    1
+                  395-        CMASS1  7130    210     5042    2
+                  396-        CMASS1  7131    210     5042    3
+                  397-        CMASS1  7132    210     1043    1
+                  398-        CMASS1  7133    210     1043    2
+                  399-        CMASS1  7134    210     1043    3
+                  400-        CMASS1  7135    210     5043    1
+                  401-        CMASS1  7136    210     5043    2
+                  402-        CMASS1  7137    210     5043    3
+                  403-        CMASS1  7138    210     1044    1
+                  404-        CMASS1  7139    210     1044    2
+                  405-        CMASS1  7140    210     1044    3
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  406-        CMASS1  7141    210     5044    1
+                  407-        CMASS1  7142    210     5044    2
+                  408-        CMASS1  7143    210     5044    3
+                  409-        CMASS1  7144    210     1045    1
+                  410-        CMASS1  7145    210     1045    2
+                  411-        CMASS1  7146    210     1045    3
+                  412-        CMASS1  7147    210     5045    1
+                  413-        CMASS1  7148    210     5045    2
+                  414-        CMASS1  7149    210     5045    3
+                  415-        CMASS1  7150    210     1046    1
+                  416-        CMASS1  7151    210     1046    2
+                  417-        CMASS1  7152    210     1046    3
+                  418-        CMASS1  7153    210     5046    1
+                  419-        CMASS1  7154    210     5046    2
+                  420-        CMASS1  7155    210     5046    3
+                  421-        CMASS1  7156    210     1047    1
+                  422-        CMASS1  7157    210     1047    2
+                  423-        CMASS1  7158    210     1047    3
+                  424-        CMASS1  7159    210     5047    1
+                  425-        CMASS1  7160    210     5047    2
+                  426-        CMASS1  7161    210     5047    3
+                  427-        CMASS1  7162    210     1048    1
+                  428-        CMASS1  7163    210     1048    2
+                  429-        CMASS1  7164    210     1048    3
+                  430-        CMASS1  7165    210     5048    1
+                  431-        CMASS1  7166    210     5048    2
+                  432-        CMASS1  7167    210     5048    3
+                  433-        CMASS1  7168    210     1049    1
+                  434-        CMASS1  7169    210     1049    2
+                  435-        CMASS1  7170    210     1049    3
+                  436-        CMASS1  7171    210     5049    1
+                  437-        CMASS1  7172    210     5049    2
+                  438-        CMASS1  7173    210     5049    3
+                  439-        CMASS1  7174    210     1050    1
+                  440-        CMASS1  7175    210     1050    2
+                  441-        CMASS1  7176    210     1050    3
+                  442-        CMASS1  7177    210     5050    1
+                  443-        CMASS1  7178    210     5050    2
+                  444-        CMASS1  7179    210     5050    3
+                  445-        CORD2R *18                              0.              0.              *
+                  446-        *       0.              0.              -.121869        1.              *
+                  447-        *       .809017         -.587785        .121869
+                  448-        CORD2R  19              8.843   0.      2.5943  8.843   .0269   2.6841  +
+                  449-        +       8.9223  .0528   2.5785
+                  450-        EIGRL   20                      6                               MASS
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  451-        FORCE  *88              1                               .001371742112483*
+                  452-        *       -46.870384      -174.575167     1478.640158
+                  453-        FORCE  *88              2                               .001371742112483*
+                  454-        *       -44.309304      -334.970111     2416.658325
+                  455-        FORCE  *88              3                               .001371742112483*
+                  456-        *       -76.523505      -353.713667     2264.718485
+                  457-        FORCE  *88              4                               .001371742112483*
+                  458-        *       -86.014411      -401.96126      2327.074678
+                  459-        FORCE  *88              5                               .001371742112483*
+                  460-        *       -91.815692      -438.411157     2365.872628
+                  461-        FORCE  *88              6                               .001371742112483*
+                  462-        *       -91.882388      -470.641267     2420.3385
+                  463-        FORCE  *88              7                               .001371742112483*
+                  464-        *       -88.123557      -497.041463     2483.151798
+                  465-        FORCE  *88              8                               .001371742112483*
+                  466-        *       -81.889283      -518.145521     2557.196893
+                  467-        FORCE  *88              9                               .001371742112483*
+                  468-        *       -74.532651      -534.200264     2642.937478
+                  469-        FORCE  *88              10                              .001371742112483*
+                  470-        *       -66.279638      -545.956606     2738.900235
+                  471-        FORCE  *88              11                              .001371742112483*
+                  472-        *       -55.910834      -554.354426     2838.870433
+                  473-        FORCE  *88              12                              .001371742112483*
+                  474-        *       -34.601881      -561.083023     2910.463666
+                  475-        FORCE  *88              13                              .001371742112483*
+                  476-        *       -5.475016       -559.66096      2915.80483
+                  477-        FORCE  *88              14                              .001371742112483*
+                  478-        *       -12.581266      -541.892742     2953.422572
+                  479-        FORCE  *88              15                              .001371742112483*
+                  480-        *       -.92923         -545.337972     2986.542846
+                  481-        FORCE  *88              16                              .001371742112483*
+                  482-        *       -1.34243        -536.439478     2948.040707
+                  483-        FORCE  *88              17                              .001371742112483*
+                  484-        *       6.413668        -523.866015     2863.69678
+                  485-        FORCE  *88              18                              .001371742112483*
+                  486-        *       2.733655        -483.4535       2681.492209
+                  487-        FORCE  *88              19                              .001371742112483*
+                  488-        *       -12.323579      -316.900387     1825.442453
+                  489-        FORCE  *88              20                              .001371742112483*
+                  490-        *       -23.054895      -53.271685      385.541201
+                  491-        FORCE  *88              21                              .001371742112483*
+                  492-        *       10.77832        -3.244339       -54.320806
+                  493-        FORCE  *88              22                              .001371742112483*
+                  494-        *       30.226754       -48.205134      -309.168505
+                  495-        FORCE  *88              23                              .001371742112483*
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  496-        *       -3.799191       15.124961       92.121948
+                  497-        FORCE  *88              24                              .001371742112483*
+                  498-        *       29.151149       -.351624        -235.491651
+                  499-        FORCE  *88              25                              .001371742112483*
+                  500-        *       19.442199       15.958752       187.367616
+                  501-        FORCE  *88              26                              .001371742112483*
+                  502-        *       23.338683       20.606238       -175.767306
+                  503-        FORCE  *88              27                              .001371742112483*
+                  504-        *       73.076759       33.739125       261.777138
+                  505-        FORCE  *88              28                              .001371742112483*
+                  506-        *       14.439297       15.961636       -92.695152
+                  507-        FORCE  *88              29                              .001371742112483*
+                  508-        *       78.258049       31.800437       382.632702
+                  509-        FORCE  *88              30                              .001371742112483*
+                  510-        *       11.129694       -2.018806       76.530752
+                  511-        FORCE  *88              31                              .001371742112483*
+                  512-        *       88.673474       63.533244       947.909294
+                  513-        FORCE  *88              32                              .001371742112483*
+                  514-        *       3.124032        -4.812199       274.353767
+                  515-        FORCE  *88              33                              .001371742112483*
+                  516-        *       45.82128        104.846247      601.039877
+                  517-        FORCE  *88              34                              .001371742112483*
+                  518-        *       1.25041         32.742816       349.719852
+                  519-        FORCE  *88              35                              .001371742112483*
+                  520-        *       11.738463       104.371825      369.841822
+                  521-        FORCE  *88              36                              .001371742112483*
+                  522-        *       -6.919253       54.949084       271.273538
+                  523-        FORCE  *88              37                              .001371742112483*
+                  524-        *       -6.163505       89.635166       247.74351
+                  525-        FORCE  *88              38                              .001371742112483*
+                  526-        *       -9.484749       43.287969       145.701314
+                  527-        FORCE  *88              39                              .001371742112483*
+                  528-        *       -11.322577      67.765118       163.969976
+                  529-        FORCE  *88              40                              .001371742112483*
+                  530-        *       -5.482018       21.970574       58.082103
+                  531-        FORCE  *88              41                              .001371742112483*
+                  532-        *       -5.922084       29.655141       67.102649
+                  533-        FORCE  *88              42                              .001371742112483*
+                  534-        *       -2.436012       10.841538       25.433462
+                  535-        FORCE  *88              43                              .001371742112483*
+                  536-        *       -1.64334        8.208031        18.839824
+                  537-        FORCE  *88              44                              .001371742112483*
+                  538-        *       -.926923        5.184028        12.301666
+                  539-        FORCE  *88              45                              .001371742112483*
+                  540-        *       -.987202        5.428575        13.614289
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    17
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  541-        FORCE  *88              46                              .001371742112483*
+                  542-        *       -.887883        5.347577        14.461378
+                  543-        FORCE  *88              47                              .001371742112483*
+                  544-        *       -.658953        5.127278        15.24078
+                  545-        FORCE  *88              48                              .001371742112483*
+                  546-        *       -.075852        1.937786        5.993141
+                  547-        FORCE  *88              49                              .001371742112483*
+                  548-        *       .132568         -.534663        -2.197587
+                  549-        FORCE  *88              50                              .001371742112483*
+                  550-        *       .096727         .294088         .858038
+                  551-        FORCE  *88              1001                            .001371742112483*
+                  552-        *       -583.013422     59.120645       2596.41464
+                  553-        FORCE  *88              1002                            .001371742112483*
+                  554-        *       -614.379819     2.466488        2879.748559
+                  555-        FORCE  *88              1003                            .001371742112483*
+                  556-        *       -681.596853     -34.14281       2814.378402
+                  557-        FORCE  *88              1004                            .001371742112483*
+                  558-        *       -702.792297     -82.265063      2841.994559
+                  559-        FORCE  *88              1005                            .001371742112483*
+                  560-        *       -723.884526     -114.757528     2864.401507
+                  561-        FORCE  *88              1006                            .001371742112483*
+                  562-        *       -746.513058     -136.061806     2915.887453
+                  563-        FORCE  *88              1007                            .001371742112483*
+                  564-        *       -773.235905     -145.785787     2990.333598
+                  565-        FORCE  *88              1008                            .001371742112483*
+                  566-        *       -803.440259     -144.890706     3083.403455
+                  567-        FORCE  *88              1009                            .001371742112483*
+                  568-        *       -835.585208     -134.09778      3186.504748
+                  569-        FORCE  *88              1010                            .001371742112483*
+                  570-        *       -867.724075     -114.329621     3289.254245
+                  571-        FORCE  *88              1011                            .001371742112483*
+                  572-        *       -899.845554     -86.58022       3385.985706
+                  573-        FORCE  *88              1012                            .001371742112483*
+                  574-        *       -930.067592     -54.129055      3470.825551
+                  575-        FORCE  *88              1013                            .001371742112483*
+                  576-        *       -1005.148896    -14.520016      3686.585193
+                  577-        FORCE  *88              1014                            .001371742112483*
+                  578-        *       -966.405851     -8.684745       3660.77872
+                  579-        FORCE  *88              1015                            .001371742112483*
+                  580-        *       -1011.045371    24.212837       3723.605413
+                  581-        FORCE  *88              1016                            .001371742112483*
+                  582-        *       -982.115295     4.295386        3712.765931
+                  583-        FORCE  *88              1017                            .001371742112483*
+                  584-        *       -963.243055     .996646         3676.136129
+                  585-        FORCE  *88              1018                            .001371742112483*
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    18
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  586-        *       -887.253903     -28.393029      3596.737999
+                  587-        FORCE  *88              1019                            .001371742112483*
+                  588-        *       -540.006836     -37.702305      2322.168134
+                  589-        FORCE  *88              1020                            .001371742112483*
+                  590-        *       -2.081571       44.550345       -233.641679
+                  591-        FORCE  *88              1021                            .001371742112483*
+                  592-        *       .953978         -6.232918       -41.192127
+                  593-        FORCE  *88              1022                            .001371742112483*
+                  594-        *       -67.139344      46.785668       496.275856
+                  595-        FORCE  *88              1023                            .001371742112483*
+                  596-        *       -66.410806      19.967499       327.870784
+                  597-        FORCE  *88              1024                            .001371742112483*
+                  598-        *       -25.020334      -15.634551      246.041148
+                  599-        FORCE  *88              1025                            .001371742112483*
+                  600-        *       -188.576182     -97.423308      998.076356
+                  601-        FORCE  *88              1026                            .001371742112483*
+                  602-        *       19.729263       12.26081        -119.577048
+                  603-        FORCE  *88              1027                            .001371742112483*
+                  604-        *       -282.329619     -272.322118     1531.403052
+                  605-        FORCE  *88              1028                            .001371742112483*
+                  606-        *       -14.666249      -3.193234       -119.604829
+                  607-        FORCE  *88              1029                            .001371742112483*
+                  608-        *       -251.356655     -253.28626      1398.307317
+                  609-        FORCE  *88              1030                            .001371742112483*
+                  610-        *       -119.302035     -108.49818      283.577261
+                  611-        FORCE  *88              1031                            .001371742112483*
+                  612-        *       -199.374403     -127.032735     946.746997
+                  613-        FORCE  *88              1032                            .001371742112483*
+                  614-        *       -232.748325     -171.215266     711.070095
+                  615-        FORCE  *88              1033                            .001371742112483*
+                  616-        *       -90.989941      8.442907        493.403179
+                  617-        FORCE  *88              1034                            .001371742112483*
+                  618-        *       -210.836393     -71.005909      777.963617
+                  619-        FORCE  *88              1035                            .001371742112483*
+                  620-        *       -45.205178      47.410576       253.196866
+                  621-        FORCE  *88              1036                            .001371742112483*
+                  622-        *       -129.417201     35.965966       561.048082
+                  623-        FORCE  *88              1037                            .001371742112483*
+                  624-        *       -29.114403      50.9699         163.510392
+                  625-        FORCE  *88              1038                            .001371742112483*
+                  626-        *       -56.995724      59.145722       284.961504
+                  627-        FORCE  *88              1039                            .001371742112483*
+                  628-        *       -19.693624      45.385568       118.750579
+                  629-        FORCE  *88              1040                            .001371742112483*
+                  630-        *       -16.805498      29.898392       93.137823
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    19
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  631-        FORCE  *88              1041                            .001371742112483*
+                  632-        *       -11.685387      33.133795       79.201272
+                  633-        FORCE  *88              1042                            .001371742112483*
+                  634-        *       -3.202943       7.35826         18.416539
+                  635-        FORCE  *88              1043                            .001371742112483*
+                  636-        *       -3.661813       11.018695       25.798104
+                  637-        FORCE  *88              1044                            .001371742112483*
+                  638-        *       -2.094288       6.242517        15.328799
+                  639-        FORCE  *88              1045                            .001371742112483*
+                  640-        *       -1.88301        5.948841        15.517413
+                  641-        FORCE  *88              1046                            .001371742112483*
+                  642-        *       -2.012224       7.08647         19.863843
+                  643-        FORCE  *88              1047                            .001371742112483*
+                  644-        *       -1.580885       6.683297        20.622969
+                  645-        FORCE  *88              1048                            .001371742112483*
+                  646-        *       -.555201        2.656128        8.99956
+                  647-        FORCE  *88              1049                            .001371742112483*
+                  648-        *       -.138335        -.315535        -.76083
+                  649-        FORCE  *88              1050                            .001371742112483*
+                  650-        *       -.390021        -.402978        -1.27597
+                  651-        FORCE  *88              5001                            .001371742112483*
+                  652-        *       -3.715129       18.603108       -129.176117
+                  653-        FORCE  *88              5002                            .001371742112483*
+                  654-        *       5.029076        -36.507907      254.205962
+                  655-        FORCE  *88              5003                            .001371742112483*
+                  656-        *       -2.348211       -22.363218      139.985444
+                  657-        FORCE  *88              5004                            .001371742112483*
+                  658-        *       -1.678275       -26.196792      148.431962
+                  659-        FORCE  *88              5005                            .001371742112483*
+                  660-        *       -2.339571       -27.824182      147.349591
+                  661-        FORCE  *88              5006                            .001371742112483*
+                  662-        *       -1.963816       -30.001837      150.42299
+                  663-        FORCE  *88              5007                            .001371742112483*
+                  664-        *       -1.001516       -31.73409       152.157665
+                  665-        FORCE  *88              5008                            .001371742112483*
+                  666-        *       .747441         -33.194358      152.831314
+                  667-        FORCE  *88              5009                            .001371742112483*
+                  668-        *       3.261173        -34.201227      151.175958
+                  669-        FORCE  *88              5010                            .001371742112483*
+                  670-        *       6.216872        -34.50503       146.379714
+                  671-        FORCE  *88              5011                            .001371742112483*
+                  672-        *       8.265243        -33.585982      139.499748
+                  673-        FORCE  *88              5012                            .001371742112483*
+                  674-        *       7.305895        -31.558696      137.432689
+                  675-        FORCE  *88              5013                            .001371742112483*
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    20
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  676-        *       5.580011        -31.660575      148.609852
+                  677-        FORCE  *88              5014                            .001371742112483*
+                  678-        *       9.024617        -34.045193      152.57403
+                  679-        FORCE  *88              5015                            .001371742112483*
+                  680-        *       9.565914        -32.941659      147.569347
+                  681-        FORCE  *88              5016                            .001371742112483*
+                  682-        *       9.89927         -32.351266      144.450612
+                  683-        FORCE  *88              5017                            .001371742112483*
+                  684-        *       9.896319        -31.458602      139.549952
+                  685-        FORCE  *88              5018                            .001371742112483*
+                  686-        *       10.564957       -30.261684      129.548656
+                  687-        FORCE  *88              5019                            .001371742112483*
+                  688-        *       9.797357        -26.369617      112.327561
+                  689-        FORCE  *88              5020                            .001371742112483*
+                  690-        *       -9.705045       -22.421419      158.563377
+                  691-        FORCE  *88              5021                            .001371742112483*
+                  692-        *       3.931079        3.135929        5.988652
+                  693-        FORCE  *88              5022                            .001371742112483*
+                  694-        *       98.822356       -45.914191      -538.963376
+                  695-        FORCE  *88              5023                            .001371742112483*
+                  696-        *       -12.12602       -.097257        74.753141
+                  697-        FORCE  *88              5024                            .001371742112483*
+                  698-        *       66.355911       16.056503       -474.878992
+                  699-        FORCE  *88              5025                            .001371742112483*
+                  700-        *       4.304272        -5.94709        -93.694581
+                  701-        FORCE  *88              5026                            .001371742112483*
+                  702-        *       24.992798       28.487938       -250.155298
+                  703-        FORCE  *88              5027                            .001371742112483*
+                  704-        *       7.311391        16.718805       -293.808104
+                  705-        FORCE  *88              5028                            .001371742112483*
+                  706-        *       8.139192        11.181385       -77.514958
+                  707-        FORCE  *88              5029                            .001371742112483*
+                  708-        *       18.156064       40.558621       -436.401774
+                  709-        FORCE  *88              5030                            .001371742112483*
+                  710-        *       .088155         -3.511369       -.739747
+                  711-        FORCE  *88              5031                            .001371742112483*
+                  712-        *       28.105491       19.535755       134.251653
+                  713-        FORCE  *88              5032                            .001371742112483*
+                  714-        *       3.956503        -4.121433       -55.290344
+                  715-        FORCE  *88              5033                            .001371742112483*
+                  716-        *       17.479917       27.858393       121.373826
+                  717-        FORCE  *88              5034                            .001371742112483*
+                  718-        *       5.304873        -5.432324       -22.330144
+                  719-        FORCE  *88              5035                            .001371742112483*
+                  720-        *       5.032377        25.462505       74.12639
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    21
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  721-        FORCE  *88              5036                            .001371742112483*
+                  722-        *       3.092742        -2.526863       -1.924808
+                  723-        FORCE  *88              5037                            .001371742112483*
+                  724-        *       -.011317        16.358339       36.389534
+                  725-        FORCE  *88              5038                            .001371742112483*
+                  726-        *       .263491         1.558374        7.184093
+                  727-        FORCE  *88              5039                            .001371742112483*
+                  728-        *       -.015268        4.487984        6.716283
+                  729-        FORCE  *88              5040                            .001371742112483*
+                  730-        *       -1.23118        3.908911        10.213527
+                  731-        FORCE  *88              5041                            .001371742112483*
+                  732-        *       .03126          .736651         .591038
+                  733-        FORCE  *88              5042                            .001371742112483*
+                  734-        *       -.629269        1.722456        4.123479
+                  735-        FORCE  *88              5043                            .001371742112483*
+                  736-        *       -.217003        .87077          1.868961
+                  737-        FORCE  *88              5044                            .001371742112483*
+                  738-        *       .084273         -.447335        -1.014558
+                  739-        FORCE  *88              5045                            .001371742112483*
+                  740-        *       .077654         -.36172         -.940912
+                  741-        FORCE  *88              5046                            .001371742112483*
+                  742-        *       .061474         -.263378        -.728
+                  743-        FORCE  *88              5047                            .001371742112483*
+                  744-        *       .032017         .035097         .242471
+                  745-        FORCE  *88              5048                            .001371742112483*
+                  746-        *       .059418         -.134778        -.373457
+                  747-        FORCE  *88              5049                            .001371742112483*
+                  748-        *       .032277         -.25686         -.757204
+                  749-        FORCE  *88              5050                            .001371742112483*
+                  750-        *       .348006         .226069         .591637
+                  751-        GRAV   *9               0               80.5            .162368         *
+                  752-        *       0.              -.98673
+                  753-        GRID    1       0       0.      0.      0.      0
+                  754-        GRID    2       0       .311781 .440255 .053653 0
+                  755-        GRID    3       0       .623563 .880509 .107307 0
+                  756-        GRID    4       0       .935344 1.320764.16096  0
+                  757-        GRID    5       0       1.2471251.761018.214614 0
+                  758-        GRID    6       0       1.5589062.201273.268267 0
+                  759-        GRID    7       0       1.8706882.641528.32192  0
+                  760-        GRID    8       0       2.18247 3.081783.375574 0
+                  761-        GRID    9       0       2.4942513.522038.429227 0
+                  762-        GRID    10      0       2.8060323.962292.482881 0
+                  763-        GRID    11      0       3.1178134.402547.536534 0
+                  764-        GRID    12      0       3.4295954.842801.590187 0
+                  765-        GRID    13      0       3.7413765.283056.643841 0
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    22
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  766-        GRID    14      0       4.0531575.72331 .697494 0
+                  767-        GRID    15      0       4.3649396.163565.751148 0
+                  768-        GRID    16      0       4.67672 6.60382 .804801 0
+                  769-        GRID    17      0       4.9885017.044074.858454 0
+                  770-        GRID    18      0       5.3002827.484329.912108 0
+                  771-        GRID    19      0       5.6120647.924584.965761 0
+                  772-        GRID    20      0       5.9238468.3648391.0194150
+                  773-        GRID    21      0       8.843   0.      2.5943  0
+                  774-        GRID    22      0       8.688746.212615 2.53061 0
+                  775-        GRID    23      0       8.534491.42523  2.46692 0
+                  776-        GRID    24      0       8.380237.637844 2.4032310
+                  777-        GRID    25      0       8.225983.850459 2.3395410
+                  778-        GRID    26      0       8.0717291.0630742.2758510
+                  779-        GRID    27      0       7.9174751.2756892.2121620
+                  780-        GRID    28      0       7.7632211.4883032.1484720
+                  781-        GRID    29      0       7.6089671.7009182.0847820
+                  782-        GRID    30      0       7.4547121.9135332.0210920
+                  783-        GRID    31      0       7.3004582.1261481.9574030
+                  784-        GRID    32      0       7.1462042.3387621.8937130
+                  785-        GRID    33      0       6.99195 2.5513771.8300230
+                  786-        GRID    34      0       6.8376962.7639921.7663340
+                  787-        GRID    35      0       6.6834422.9766061.7026440
+                  788-        GRID    36      0       6.5291873.1892221.6389540
+                  789-        GRID    37      0       6.3749333.4018361.5752640
+                  790-        GRID    38      0       6.2206793.6144511.5115750
+                  791-        GRID    39      0       6.0664243.8270661.4478850
+                  792-        GRID    40      0       5.91217 4.0396811.3841950
+                  793-        GRID    41      0       5.7579164.2522951.3205060
+                  794-        GRID    42      0       5.6036624.46491 1.2568160
+                  795-        GRID    43      0       5.4494084.6775251.1931260
+                  796-        GRID    44      0       5.2951544.8901391.1294360
+                  797-        GRID    45      0       5.1409  5.1027541.0657470
+                  798-        GRID    46      0       4.9866455.3153691.0020570
+                  799-        GRID    47      0       4.8323915.527984.938367 0
+                  800-        GRID    48      0       4.6781375.740598.874678 0
+                  801-        GRID    49      0       4.5238835.953214.810988 0
+                  802-        GRID    50      0       4.3696296.165828.747298 0
+                  803-        GRID   *1001            0               -.421336        .294017         *
+                  804-        *       .035832         0
+                  805-        GRID   *1002            0               -.109555        .734271         *
+                  806-        *       .089485         0
+                  807-        GRID    1003    0       .202226 1.174526.143138 0
+                  808-        GRID    1004    0       .514008 1.614781.196792 0
+                  809-        GRID    1005    0       .825789 2.055035.250445 0
+                  810-        GRID    1006    0       1.13757 2.49529 .304098 0
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    23
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  811-        GRID    1007    0       1.4493522.935545.357752 0
+                  812-        GRID    1008    0       1.7611333.3758  .411405 0
+                  813-        GRID    1009    0       2.0729153.816054.465059 0
+                  814-        GRID    1010    0       2.3846964.256309.518712 0
+                  815-        GRID    1011    0       2.6964774.696563.572365 0
+                  816-        GRID    1012    0       3.0082595.136818.626019 0
+                  817-        GRID    1013    0       3.32004 5.577073.679672 0
+                  818-        GRID    1014    0       3.6318216.017327.733326 0
+                  819-        GRID    1015    0       3.9436026.457582.786979 0
+                  820-        GRID    1016    0       4.2553846.897836.840632 0
+                  821-        GRID    1017    0       4.5671657.338091.894286 0
+                  822-        GRID    1018    0       4.8789467.778346.947939 0
+                  823-        GRID    1019    0       5.1907288.2186011.0015930
+                  824-        GRID    1020    0       5.5025098.6588561.0552460
+                  825-        GRID   *1021            0               8.735725        -.07142         *
+                  826-        *       2.615694        0
+                  827-        GRID    1022    0       8.581471.141194 2.5520050
+                  828-        GRID    1023    0       8.427216.353809 2.4883150
+                  829-        GRID    1024    0       8.272962.566424 2.4246250
+                  830-        GRID    1025    0       8.118708.779038 2.3609350
+                  831-        GRID    1026    0       7.964454.991654 2.2972460
+                  832-        GRID    1027    0       7.8102  1.2042682.2335560
+                  833-        GRID    1028    0       7.6559461.4168832.1698660
+                  834-        GRID    1029    0       7.5016921.6294972.1061770
+                  835-        GRID    1030    0       7.3474371.8421132.0424870
+                  836-        GRID    1031    0       7.1931832.0547271.9787970
+                  837-        GRID    1032    0       7.0389292.2673421.9151070
+                  838-        GRID    1033    0       6.8846742.4799571.8514180
+                  839-        GRID    1034    0       6.73042 2.6925711.7877280
+                  840-        GRID    1035    0       6.5761662.9051861.7240380
+                  841-        GRID    1036    0       6.4219123.1178011.6603480
+                  842-        GRID    1037    0       6.2676583.3304161.5966590
+                  843-        GRID    1038    0       6.1134043.54303 1.5329690
+                  844-        GRID    1039    0       5.9591493.7556461.4692790
+                  845-        GRID    1040    0       5.8048953.96826 1.40559 0
+                  846-        GRID    1041    0       5.6506414.1808751.3419  0
+                  847-        GRID    1042    0       5.4963874.3934891.27821 0
+                  848-        GRID    1043    0       5.3421334.6061041.21452 0
+                  849-        GRID    1044    0       5.1878794.8187191.1508310
+                  850-        GRID    1045    0       5.0336255.0313331.0871410
+                  851-        GRID    1046    0       4.87937 5.2439491.0234510
+                  852-        GRID    1047    0       4.7251165.456563.959762 0
+                  853-        GRID    1048    0       4.5708625.669178.896072 0
+                  854-        GRID    1049    0       4.4166075.881793.832382 0
+                  855-        GRID    1050    0       4.2623536.094408.768692 0
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    24
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  856-        GRID   *2001            0               -.084268        .058804         *
+                  857-        *       .007166         0
+                  858-        GRID    2002    0       .227514 .499058 .06082  0
+                  859-        GRID    2003    0       .539295 .939313 .114473 0
+                  860-        GRID    2004    0       .851076 1.379567.168126 0
+                  861-        GRID    2005    0       1.1628581.819822.22178  0
+                  862-        GRID    2006    0       1.4746392.260077.275433 0
+                  863-        GRID    2007    0       1.7864212.700332.329087 0
+                  864-        GRID    2008    0       2.0982023.140587.38274  0
+                  865-        GRID    2009    0       2.4099833.580841.436394 0
+                  866-        GRID    2010    0       2.7217654.021096.490047 0
+                  867-        GRID    2011    0       3.0335464.46135 .5437   0
+                  868-        GRID    2012    0       3.3453274.901605.597354 0
+                  869-        GRID    2013    0       3.6571085.341859.651007 0
+                  870-        GRID    2014    0       3.96889 5.782114.70466  0
+                  871-        GRID    2015    0       4.2806716.222369.758314 0
+                  872-        GRID    2016    0       4.5924526.662623.811967 0
+                  873-        GRID    2017    0       4.9042347.102878.865621 0
+                  874-        GRID    2018    0       5.2160157.543132.919274 0
+                  875-        GRID    2019    0       5.5277977.983388.972927 0
+                  876-        GRID    2020    0       5.8395788.4236421.0265810
+                  877-        GRID   *2021            0               8.778634        -.042853        *
+                  878-        *       2.607137        0
+                  879-        GRID    2022    0       8.62438 .169762 2.5434470
+                  880-        GRID    2023    0       8.470126.382377 2.4797570
+                  881-        GRID    2024    0       8.315872.594992 2.4160680
+                  882-        GRID    2025    0       8.161618.807606 2.3523780
+                  883-        GRID    2026    0       8.0073631.0202222.2886880
+                  884-        GRID    2027    0       7.8531091.2328362.2249980
+                  885-        GRID    2028    0       7.6988551.4454512.1613090
+                  886-        GRID    2029    0       7.5446011.6580652.0976190
+                  887-        GRID    2030    0       7.3903471.87068 2.0339290
+                  888-        GRID    2031    0       7.2360932.0832951.9702390
+                  889-        GRID    2032    0       7.0818392.2959091.90655 0
+                  890-        GRID    2033    0       6.9275842.5085251.84286 0
+                  891-        GRID    2034    0       6.77333 2.7211391.77917 0
+                  892-        GRID    2035    0       6.6190762.9337541.7154810
+                  893-        GRID    2036    0       6.4648213.1463691.6517910
+                  894-        GRID    2037    0       6.3105673.3589841.5881010
+                  895-        GRID    2038    0       6.1563133.5715981.5244110
+                  896-        GRID    2039    0       6.0020593.7842131.4607220
+                  897-        GRID    2040    0       5.8478053.9968281.3970320
+                  898-        GRID    2041    0       5.6935514.2094421.3333420
+                  899-        GRID    2042    0       5.5392974.4220571.2696530
+                  900-        GRID    2043    0       5.3850424.6346721.2059630
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    25
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  901-        GRID    2044    0       5.2307884.8472871.1422730
+                  902-        GRID    2045    0       5.0765345.0599011.0785830
+                  903-        GRID    2046    0       4.92228 5.2725171.0148940
+                  904-        GRID    2047    0       4.7680265.485131.951204 0
+                  905-        GRID    2048    0       4.6137725.697746.887514 0
+                  906-        GRID    2049    0       4.4595175.910361.823824 0
+                  907-        GRID    2050    0       4.3052636.122975.760135 0
+                  908-        GRID   *4001            0               .084268         -.058804        *
+                  909-        *       -.007166        0
+                  910-        GRID    4002    0       .396049 .381451 .046487 0
+                  911-        GRID    4003    0       .70783  .821706 .10014  0
+                  912-        GRID    4004    0       1.0196111.26196 .153794 0
+                  913-        GRID    4005    0       1.3313931.702215.207447 0
+                  914-        GRID    4006    0       1.6431742.142469.261101 0
+                  915-        GRID    4007    0       1.9549562.582725.314754 0
+                  916-        GRID    4008    0       2.2667373.022979.368407 0
+                  917-        GRID    4009    0       2.5785183.463234.422061 0
+                  918-        GRID    4010    0       2.8903  3.903489.475714 0
+                  919-        GRID    4011    0       3.2020814.343743.529368 0
+                  920-        GRID    4012    0       3.5138624.783998.583021 0
+                  921-        GRID    4013    0       3.8256445.224252.636674 0
+                  922-        GRID    4014    0       4.1374255.664507.690328 0
+                  923-        GRID    4015    0       4.4492066.104761.743981 0
+                  924-        GRID    4016    0       4.7609876.545016.797635 0
+                  925-        GRID    4017    0       5.0727696.985271.851288 0
+                  926-        GRID    4018    0       5.38455 7.425525.904941 0
+                  927-        GRID    4019    0       5.6963327.865781.958595 0
+                  928-        GRID    4020    0       6.0081138.3060351.0122480
+                  929-        GRID    4021    0       8.907366.042853 2.5814630
+                  930-        GRID    4022    0       8.753112.255467 2.5177740
+                  931-        GRID    4023    0       8.598857.468082 2.4540840
+                  932-        GRID    4024    0       8.444603.680697 2.3903940
+                  933-        GRID    4025    0       8.290349.893311 2.3267040
+                  934-        GRID    4026    0       8.1360941.1059272.2630150
+                  935-        GRID    4027    0       7.98184 1.3185412.1993250
+                  936-        GRID    4028    0       7.8275861.5311562.1356350
+                  937-        GRID    4029    0       7.6733321.74377 2.0719460
+                  938-        GRID    4030    0       7.5190781.9563862.0082560
+                  939-        GRID    4031    0       7.3648242.169   1.9445660
+                  940-        GRID    4032    0       7.21057 2.3816151.8808760
+                  941-        GRID    4033    0       7.0563152.59423 1.8171870
+                  942-        GRID    4034    0       6.9020612.8068441.7534970
+                  943-        GRID    4035    0       6.7478073.0194591.6898070
+                  944-        GRID    4036    0       6.5935533.2320741.6261170
+                  945-        GRID    4037    0       6.4392993.4446891.5624280
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    26
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  946-        GRID    4038    0       6.2850453.6573031.4987380
+                  947-        GRID    4039    0       6.13079 3.8699191.4350480
+                  948-        GRID    4040    0       5.9765364.0825331.3713590
+                  949-        GRID    4041    0       5.8222824.2951481.3076690
+                  950-        GRID    4042    0       5.6680284.5077621.2439790
+                  951-        GRID    4043    0       5.5137734.7203771.1802890
+                  952-        GRID    4044    0       5.3595194.9329921.1166  0
+                  953-        GRID    4045    0       5.2052655.1456061.05291 0
+                  954-        GRID    4046    0       5.0510115.358222.98922  0
+                  955-        GRID    4047    0       4.8967575.570836.925531 0
+                  956-        GRID    4048    0       4.7425035.783451.861841 0
+                  957-        GRID    4049    0       4.5882485.996066.798151 0
+                  958-        GRID    4050    0       4.4339946.208681.734461 0
+                  959-        GRID   *5001            0               .421336         -.294017        *
+                  960-        *       -.035832        0
+                  961-        GRID    5002    0       .733117 .146238 .017822 0
+                  962-        GRID    5003    0       1.044899.586492 .071475 0
+                  963-        GRID    5004    0       1.35668 1.026747.125129 0
+                  964-        GRID    5005    0       1.6684611.467002.178782 0
+                  965-        GRID    5006    0       1.9802431.907256.232435 0
+                  966-        GRID    5007    0       2.2920242.347512.286089 0
+                  967-        GRID    5008    0       2.6038062.787766.339742 0
+                  968-        GRID    5009    0       2.9155873.228021.393396 0
+                  969-        GRID    5010    0       3.2273683.668275.447049 0
+                  970-        GRID    5011    0       3.5391494.10853 .500702 0
+                  971-        GRID    5012    0       3.8509314.548785.554356 0
+                  972-        GRID    5013    0       4.1627124.989039.608009 0
+                  973-        GRID    5014    0       4.4744935.429294.661663 0
+                  974-        GRID    5015    0       4.7862755.869548.715316 0
+                  975-        GRID    5016    0       5.0980566.309803.768969 0
+                  976-        GRID    5017    0       5.4098376.750057.822623 0
+                  977-        GRID    5018    0       5.7216187.190312.876276 0
+                  978-        GRID    5019    0       6.0334  7.630567.92993  0
+                  979-        GRID    5020    0       6.3451828.070822.983583 0
+                  980-        GRID    5021    0       8.950275.07142  2.5729060
+                  981-        GRID    5022    0       8.796021.284035 2.5092160
+                  982-        GRID    5023    0       8.641767.49665  2.4455260
+                  983-        GRID    5024    0       8.487513.709265 2.3818360
+                  984-        GRID    5025    0       8.333259.921879 2.3181470
+                  985-        GRID    5026    0       8.1790041.1344952.2544570
+                  986-        GRID    5027    0       8.02475 1.3471092.1907670
+                  987-        GRID    5028    0       7.8704961.5597242.1270780
+                  988-        GRID    5029    0       7.7162421.7723382.0633880
+                  989-        GRID    5030    0       7.5619871.9849531.9996980
+                  990-        GRID    5031    0       7.4077332.1975681.9360080
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    27
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  991-        GRID    5032    0       7.2534792.4101821.8723190
+                  992-        GRID    5033    0       7.0992252.6227981.8086290
+                  993-        GRID    5034    0       6.9449712.8354121.7449390
+                  994-        GRID    5035    0       6.7907173.0480271.68125 0
+                  995-        GRID    5036    0       6.6364623.2606421.61756 0
+                  996-        GRID    5037    0       6.4822083.4732571.55387 0
+                  997-        GRID    5038    0       6.3279543.6858711.49018 0
+                  998-        GRID    5039    0       6.1737  3.8984861.4264910
+                  999-        GRID    5040    0       6.0194464.1111011.3628010
+                 1000-        GRID    5041    0       5.8651924.3237151.2991110
+                 1001-        GRID    5042    0       5.7109384.53633 1.2354220
+                 1002-        GRID    5043    0       5.5566834.7489451.1717320
+                 1003-        GRID    5044    0       5.4024294.96156 1.1080420
+                 1004-        GRID    5045    0       5.2481755.1741741.0443520
+                 1005-        GRID    5046    0       5.09392 5.38679 .980663 0
+                 1006-        GRID    5047    0       4.9396665.599404.916973 0
+                 1007-        GRID    5048    0       4.7854125.812019.853283 0
+                 1008-        GRID    5049    0       4.6311586.024634.789593 0
+                 1009-        GRID    5050    0       4.4769046.237248.725904 0
+                 1010-        LOAD    1025    1.      1.      88      1.      9
+                 1011-        MAT1   *501             1440000000.                     .33             *
+                 1012-        *       5.370788
+                 1013-        PARAM   COUPMASS1
+                 1014-        PARAM   POST    -1
+                 1015-        PBEAML  101     501             BAR                                     +
+                 1016-        +       0.0399340.1003590.018830
+                 1017-        PBEAML  102     501             ROD                                     +
+                 1018-        +       0.0621640.000000
+                 1019-        PBEAML  201     501             BAR                                     +
+                 1020-        +       0.0269620.0200000.009911
+                 1021-        PBEAML  202     501             ROD                                     +
+                 1022-        +       0.0059800.000000
+                 1023-        PMASS  *110             .006928989
+                 1024-        PMASS  *210             9.265104E-22
+                 1025-        RBE2    1000    1       123456  1001    5001
+                 1026-        RBE2    1001    2       123456  1002    5002
+                 1027-        RBE2    1002    3       123456  1003    5003
+                 1028-        RBE2    1003    4       123456  1004    5004
+                 1029-        RBE2    1004    5       123456  1005    5005
+                 1030-        RBE2    1005    6       123456  1006    5006
+                 1031-        RBE2    1006    7       123456  1007    5007
+                 1032-        RBE2    1007    8       123456  1008    5008
+                 1033-        RBE2    1008    9       123456  1009    5009
+                 1034-        RBE2    1009    10      123456  1010    5010
+                 1035-        RBE2    1010    11      123456  1011    5011
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    28
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                 1036-        RBE2    1011    12      123456  1012    5012
+                 1037-        RBE2    1012    13      123456  1013    5013
+                 1038-        RBE2    1013    14      123456  1014    5014
+                 1039-        RBE2    1014    15      123456  1015    5015
+                 1040-        RBE2    1015    16      123456  1016    5016
+                 1041-        RBE2    1016    17      123456  1017    5017
+                 1042-        RBE2    1017    18      123456  1018    5018
+                 1043-        RBE2    1018    19      123456  1019    5019
+                 1044-        RBE2    1019    20      123456  1020    5020
+                 1045-        RBE2    5000    21      123456  1021    5021
+                 1046-        RBE2    5001    22      123456  1022    5022
+                 1047-        RBE2    5002    23      123456  1023    5023
+                 1048-        RBE2    5003    24      123456  1024    5024
+                 1049-        RBE2    5004    25      123456  1025    5025
+                 1050-        RBE2    5005    26      123456  1026    5026
+                 1051-        RBE2    5006    27      123456  1027    5027
+                 1052-        RBE2    5007    28      123456  1028    5028
+                 1053-        RBE2    5008    29      123456  1029    5029
+                 1054-        RBE2    5009    30      123456  1030    5030
+                 1055-        RBE2    5010    31      123456  1031    5031
+                 1056-        RBE2    5011    32      123456  1032    5032
+                 1057-        RBE2    5012    33      123456  1033    5033
+                 1058-        RBE2    5013    34      123456  1034    5034
+                 1059-        RBE2    5014    35      123456  1035    5035
+                 1060-        RBE2    5015    36      123456  1036    5036
+                 1061-        RBE2    5016    37      123456  1037    5037
+                 1062-        RBE2    5017    38      123456  1038    5038
+                 1063-        RBE2    5018    39      123456  1039    5039
+                 1064-        RBE2    5019    40      123456  1040    5040
+                 1065-        RBE2    5020    41      123456  1041    5041
+                 1066-        RBE2    5021    42      123456  1042    5042
+                 1067-        RBE2    5022    43      123456  1043    5043
+                 1068-        RBE2    5023    44      123456  1044    5044
+                 1069-        RBE2    5024    45      123456  1045    5045
+                 1070-        RBE2    5025    46      123456  1046    5046
+                 1071-        RBE2    5026    47      123456  1047    5047
+                 1072-        RBE2    5027    48      123456  1048    5048
+                 1073-        RBE2    5028    49      123456  1049    5049
+                 1074-        RBE2    5029    50      123456  1050    5050
+                 1075-        RBE2    10000   2015    123456  4015    2050    4050
+                 1076-        RBE3    2000            1       123456  1.000000123456  2001    4001
+                 1077-        RBE3    2001            2       123456  1.000000123456  2002    4002
+                 1078-        RBE3    2002            3       123456  1.000000123456  2003    4003
+                 1079-        RBE3    2003            4       123456  1.000000123456  2004    4004
+                 1080-        RBE3    2004            5       123456  1.000000123456  2005    4005
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    29
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                 1081-        RBE3    2005            6       123456  1.000000123456  2006    4006
+                 1082-        RBE3    2006            7       123456  1.000000123456  2007    4007
+                 1083-        RBE3    2007            8       123456  1.000000123456  2008    4008
+                 1084-        RBE3    2008            9       123456  1.000000123456  2009    4009
+                 1085-        RBE3    2009            10      123456  1.000000123456  2010    4010
+                 1086-        RBE3    2010            11      123456  1.000000123456  2011    4011
+                 1087-        RBE3    2011            12      123456  1.000000123456  2012    4012
+                 1088-        RBE3    2012            13      123456  1.000000123456  2013    4013
+                 1089-        RBE3    2013            14      123456  1.000000123456  2014    4014
+                 1090-        RBE3    2014            15      123456  1.000000123456  2015    4015
+                 1091-        RBE3    2015            16      123456  1.000000123456  2016    4016
+                 1092-        RBE3    2016            17      123456  1.000000123456  2017    4017
+                 1093-        RBE3    2017            18      123456  1.000000123456  2018    4018
+                 1094-        RBE3    2018            19      123456  1.000000123456  2019    4019
+                 1095-        RBE3    2019            20      123456  1.000000123456  2020    4020
+                 1096-        RBE3    6000            21      123456  1.000000123456  2021    4021
+                 1097-        RBE3    6001            22      123456  1.000000123456  2022    4022
+                 1098-        RBE3    6002            23      123456  1.000000123456  2023    4023
+                 1099-        RBE3    6003            24      123456  1.000000123456  2024    4024
+                 1100-        RBE3    6004            25      123456  1.000000123456  2025    4025
+                 1101-        RBE3    6005            26      123456  1.000000123456  2026    4026
+                 1102-        RBE3    6006            27      123456  1.000000123456  2027    4027
+                 1103-        RBE3    6007            28      123456  1.000000123456  2028    4028
+                 1104-        RBE3    6008            29      123456  1.000000123456  2029    4029
+                 1105-        RBE3    6009            30      123456  1.000000123456  2030    4030
+                 1106-        RBE3    6010            31      123456  1.000000123456  2031    4031
+                 1107-        RBE3    6011            32      123456  1.000000123456  2032    4032
+                 1108-        RBE3    6012            33      123456  1.000000123456  2033    4033
+                 1109-        RBE3    6013            34      123456  1.000000123456  2034    4034
+                 1110-        RBE3    6014            35      123456  1.000000123456  2035    4035
+                 1111-        RBE3    6015            36      123456  1.000000123456  2036    4036
+                 1112-        RBE3    6016            37      123456  1.000000123456  2037    4037
+                 1113-        RBE3    6017            38      123456  1.000000123456  2038    4038
+                 1114-        RBE3    6018            39      123456  1.000000123456  2039    4039
+                 1115-        RBE3    6019            40      123456  1.000000123456  2040    4040
+                 1116-        RBE3    6020            41      123456  1.000000123456  2041    4041
+                 1117-        RBE3    6021            42      123456  1.000000123456  2042    4042
+                 1118-        RBE3    6022            43      123456  1.000000123456  2043    4043
+                 1119-        RBE3    6023            44      123456  1.000000123456  2044    4044
+                 1120-        RBE3    6024            45      123456  1.000000123456  2045    4045
+                 1121-        RBE3    6025            46      123456  1.000000123456  2046    4046
+                 1122-        RBE3    6026            47      123456  1.000000123456  2047    4047
+                 1123-        RBE3    6027            48      123456  1.000000123456  2048    4048
+                 1124-        RBE3    6028            49      123456  1.000000123456  2049    4049
+                 1125-        RBE3    6029            50      123456  1.000000123456  2050    4050
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    30
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                 1126-        SPC1    1       123456  2001    4001    2021    4021
+                              ENDDATA
+                        TOTAL COUNT= 1127
+                              INPUT BULK DATA ENTRY COUNT = 1132
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    31
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                        CBEAM                      144
+                                       CMASS1                      300
+                                       CORD2R                        2
+                                        EIGRL                        1
+                                        FORCE                      150
+                                         GRAV                        1
+                                         GRID                      250
+                                         LOAD                        1
+                                         MAT1                        1
+                                        PARAM                        2
+                                       PBEAML                        4
+                                        PMASS                        2
+                                         RBE2                       51
+                                         RBE3                       50
+                                         SPC1                        1
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 4379 (IFP9A)
+     THE USER SUPPLIED PBEAML/PBMSECT BULK DATA ENTRIES ARE REPLACED BY THE FOLLOWING PBEAM ENTRIES.
+     CONVERSION METHOD FOR PBARL/PBEAML - FINITE ELEMENT METHOD.
+  PBEAM            101         501  4.0077E-03  3.3638E-06  5.3260E-07  0.0000E+00  1.5976E-06  1.8830E-02
+            5.0179E-02  1.9967E-02 -5.0180E-02  1.9967E-02 -5.0180E-02 -1.9967E-02  5.0179E-02 -1.9967E-02
+            8.3335E-01  8.3385E-01  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+            0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+  PBEAM            102         501  1.2140E-02  1.1729E-05  1.1729E-05  0.0000E+00  2.3457E-05  0.0000E+00
+            6.2164E-02  0.0000E+00  0.0000E+00  6.2164E-02 -6.2164E-02  0.0000E+00  0.0000E+00 -6.2164E-02
+            8.5721E-01  8.5720E-01  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+            0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+  PBEAM            201         501  5.3924E-04  1.7975E-08  3.2667E-08  0.0000E+00  3.9265E-08  9.9110E-03
+            1.0000E-02  1.3481E-02 -9.9999E-03  1.3481E-02 -9.9999E-03 -1.3481E-02  1.0000E-02 -1.3481E-02
+            8.3351E-01  8.3337E-01  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+            0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+  PBEAM            202         501  1.1234E-04  1.0044E-09  1.0044E-09  0.0000E+00  2.0087E-09  0.0000E+00
+            5.9800E-03  0.0000E+00  0.0000E+00  5.9800E-03 -5.9800E-03  0.0000E+00  0.0000E+00 -5.9800E-03
+            8.5721E-01  8.5722E-01  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+            0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00  0.0000E+00
+ *** USER INFORMATION MESSAGE 4109 (OUTPX2)
+     THE LABEL IS XXXXXXXX FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          8 RECORDS.)
+                (TOTAL DATA WRITTEN FOR LABEL =         17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM16, TRL =
+                    101                 0              2048                 8                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM1   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2003 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        2067 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM2X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM20, TRL =
+                    102                64                 0                 0              1024                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM2   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2595 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        4433 WORDS.)
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    32
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM3X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM30, TRL =
+                    103                 0                 0                80                 8                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM3   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        1053 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        1113 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM4X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM470, TRL =
+                    104                 0                 0                 0                64              2560                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM4   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         503 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         863 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EPTX     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EPT0, TRL =
+                    105              4096                 0                 0              1024                 0                16
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         791 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        1066 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR MPT, TRL =
+                    101             32768                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS MPTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          15 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          46 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK DYNAMICS WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR DYNAMIC, TRL =
+                    103               256                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS DYNAMICS
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          30 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          61 WORDS.)
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    33
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX   -3.820981E+00     ----          ----          ----      -2.008323E+00  1.943419E+01                             
+               FY       ----      -1.415956E+01     ----       7.542252E+00     ----      -4.193773E+01                             
+               FZ       ----          ----       4.528141E+01  1.938879E+02 -9.909136E+01     ----                                  
+               MX       ----          ----          ----      -5.056719E-16     ----          ----                                  
+               MY       ----          ----          ----          ----       4.289104E-16     ----                                  
+               MZ       ----          ----          ----          ----          ----      -8.218252E-17                             
+             TOTALS -3.820981E+00 -1.415956E+01  4.528141E+01  2.014302E+02 -1.010997E+02 -2.250354E+01
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    34
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        2     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+  
+ *** SYSTEM INFORMATION MESSAGE 4159 (DFMSA)
+     THE DECOMPOSITION OF KLL      YIELDS A MAXIMUM MATRIX-TO-FACTOR-DIAGONAL RATIO OF    1.934714E+04
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    35
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+                1          1.9780728E-10          3.6718469E+00
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG, TRL =
+                    101                 0              2000                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2000 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        2179 WORDS.)
+ *** USER INFORMATION MESSAGE 5010 (LNCILD)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = -6.102295D-01, CYCLES = 1.243274D-01 THE STURM COUNT = 0
+ *** USER INFORMATION MESSAGE 5010 (LNCILD)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = -5.362494D+00, CYCLES = 3.685561D-01 THE STURM COUNT = 3
+ *** USER INFORMATION MESSAGE 5010 (LNCILD)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = 4.061315D+00, CYCLES = 3.207403D-01 THE STURM COUNT = 6
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.       -6.1022949E-01         -1.2432736E-01                 0                        6
+     2.       -5.3624945E+00         -3.6855605E-01                 3                        5
+     3.        4.0613151E+00          3.2074025E-01                 6                        3
+
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    36
+                                                                                                                                    
+0                                                                                                            SUBCASE 2              
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................     7
+
+                                     NUMBER OF DECOMPOSITIONS .............     3
+
+                                     NUMBER OF ROOTS FOUND ................     6
+
+                                     NUMBER OF SOLVES REQUIRED ............    36
+
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    37
+                                                                                                                                    
+0                                                                                                            SUBCASE 2              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        6.777207E-01        8.232380E-01        1.310224E-01        6.177080E+01        4.186335E+01
+        2         2        1.215149E+00        1.102338E+00        1.754425E-01        2.631559E+02        3.197737E+02
+        3         3        1.988527E+00        1.410151E+00        2.244326E-01        2.679924E+02        5.329103E+02
+        4         4        2.578031E+00        1.605625E+00        2.555431E-01        3.678157E+02        9.482402E+02
+        5         5        3.271381E+00        1.808696E+00        2.878629E-01        3.213821E+02        1.051363E+03
+        6         6       -3.770179E+00        1.941695E+00        3.090303E-01       -5.876740E+01        2.215636E+02
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG, TRL =
+                    101                 0             12000                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        2000 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          70 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =       12949 WORDS.)
+ *** USER INFORMATION MESSAGE 4110 (OUTPX2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1    LINEAR BUCKLING ANALYSIS                                                   MAY   4, 2014  MSC Nastran  5/30/13   PAGE    38
+                                                                                                                                    
+0                                                                                                            SUBCASE 2              
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+
