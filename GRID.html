@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GRID</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>GRID</h1>
+<p>Defines a static concentrated force at a grid point by specifying a vector.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>GRID</td><td>ID</td><td>CP</td><td>X1</td><td>X2</td><td>X3</td><td><ghost>CD</ghost></td><td>PS</td><td><ghost>SEID</ghost></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+GRID,2081,,703.017,567.7358,108.0487
+</p>
+<p class="cn">
+GRID,1003,18,-0.515028,1.084270,0.0
+</p>
+
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+    <tr>
+    <td>ID</td>
+    <td>Grid point identification number. (0 < Integer < 100,000,000)</td>
+  </tr>
+  <tr>
+    <td>CP</td>
+    <td>Identification number of coordinate system in which the location of the grid point is defined. (Integer &geq; 0 or blank; Default = 0)
+	</td>
+  </tr>
+  <tr>
+    <td>Xi</td>
+    <td>Location of the grid point in coordinate system CP. (Real)</td>
+  </tr>
+  <tr>
+  <tr>
+    <td><ghost>CD</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>PS</td>
+    <td>Permanent single-point constraints associated with the grid point. (Any of the Integers 1 through 6 with no embedded blanks, blank, or integer 0).  See the <crn>GRDSET</crn> entry documentation for default options </td>
+  </tr>
+  <tr>
+    <td><ghost>SEID</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

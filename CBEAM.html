@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CBEAM</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>CBEAM</h1>
+<p>Defines a beam element.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>CBEAM</td><td>EID</td><td>PID</td><td>GA</td><td>GB</td><td>X1</td><td>X2</td><td>X3</td><td><ghost>OFFT/BIT</ghost></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+CBEAM,9,101,2004,2005,1.0,0.0,0.0
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>EID</td>
+    <td>Unique element identification number. (0 < Integer < 100,000,000)</td>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number of PBEAM or PBEAML entry. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>GA, GB</td>
+    <td>Grid point identification numbers of connection points. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>X1, X2, X3</td>
+    <td>Components of orientation vector in the basic coordinate system. (Real)</td>
+  </tr>
+  <tr>
+    <td><ghost>OFFT/BIT</ghost></td>
+    <td>Not used</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

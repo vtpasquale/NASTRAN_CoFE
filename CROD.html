@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CROD</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>CROD</h1>
+<p>Defines a tension-compression-torsion element.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+	<td>CROD</td><td>EID</td><td>PID</td><td>G1</td><td>G2</td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+CROD,7,701,5,4
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>EID</td>
+    <td>Element identification number. (1 < Integer < 100,000,000)</td>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number of a PROD entry. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>G1, G2</td>
+    <td>Grid point identification numbers of connection points. (Integer > 0; G1 &ne; G2 )</td>
+  </tr>
+</table>
+
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+Differential stiffness of the torsional component of stiffness is not captured for buckling eigenvalue problems. 
+</li>
+ 
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

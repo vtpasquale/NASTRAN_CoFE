@@ -1,0 +1,13 @@
+table.style1  {border: 1px solid black; border-collapse: collapse;}
+table.style1 td{padding:10px; border: 1px solid black; min-width: 75px; text-align: center;}
+table.style1 th{padding:10px; border: 1px solid black; min-width: 75px; text-align: center;}
+table.style2  {border: 1px solid black; border-collapse: collapse;}
+table.style2 td{padding:10px; border: 1px solid grey; min-width: 75px;}
+table.style2 th{padding:10px; border: 1px solid grey; min-width: 75px;}
+p.cn {font-family: "Courier New", Courier, monospace}
+ghost {color: #888888;}
+crn {font-family: "Courier New", Courier, monospace}
+table {margin-bottom: 1cm;}
+p {font-size: 1.3em;/* 14px/16=0.875em */}
+table{font-size: 1.3em;/* 14px/16=0.875em */}
+ol{font-size: 1.3em;/* 14px/16=0.875em */}

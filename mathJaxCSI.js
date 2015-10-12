@@ -1,0 +1,4 @@
+document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [[\'$\',\'$\']]}});</script>');
+document.write('<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>');
+document.write('<script type="text/x-mathjax-config"> MathJax.Hub.Config({TeX: {   equationNumbers: { autoNumber: "AMS" }	}});</script>');
+document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: {Macros: {V: ["{\\boldsymbol #1}",1], M: ["{\\boldsymbol #1}",1],dd: ["{\\frac{\\partial{#1}}{\\partial{#2}}}",2]  } }});</script>');

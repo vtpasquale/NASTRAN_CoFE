@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GRDSET</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>GRDSET</h1>
+<p>Defines a static concentrated force at a grid point by specifying a vector.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>GRDSET</td><td></td><td><ghost>CP</ghost></td><td></td><td></td><td></td><td><ghost>CD</ghost></td><td>PS</td><td><ghost>SEID</ghost></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+$1------2-------3-------4-------5-------6-------7-------8-------9-------
+</p>
+<p class="cn">
+$GRDSET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PS
+</p>
+<p class="cn">                                          
+GRDSET&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2456
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td><ghost>CP</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td><ghost>CD</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>PS</td>
+    <td>Default permanent single-point constraints on all grid points. (Any combination of Integers 1 through 6 with no embedded blanks, or blank.)</td>
+  </tr>
+  <tr>
+    <td><ghost>SEID</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+This entry is optional.  When omitted, the default is no single-point constraints. 
+</li>
+<li>
+The contents of field 8 of this entry are assumed for the corresponding field 8 of any GRID entry whose field 8 is blank. If field 8 on the GRID entry is blank, the default option is used for that field. If no permanent single-point constraints are desired, the default may be overridden on the GRID entry by making field 8 zero (rather than blank). Only one GRDSET entry may appear in the Bulk Data Section.
+</li>
+<li>
+The primary purpose of this entry is to minimize the burden of preparing data for problems with a large amount of repetition (e.g., two-dimensional pinned-joint problems).
+</li>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

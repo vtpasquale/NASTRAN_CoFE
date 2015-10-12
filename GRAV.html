@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GRAV</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>GRAV</h1>
+<p>Defines acceleration vectors for gravity or other acceleration loading.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>GRAV</td><td>SID</td><td><ghost>CID</ghost></td><td>A</td><td>N1</td><td>N2</td><td>N3</td><td><ghost>MB</ghost></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+GRAV,9,0,29420.4,0.138814,0.0,-0.990318
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>SID</td>
+    <td>Load set identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td><ghost>CID</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>Acceleration vector scale factor. (Real) </td>
+  </tr>
+  <tr>
+    <td>Ni</td>
+    <td>Acceleration vector components measured in default coordinate system. (Real)</td>
+  </tr>
+  <tr>
+    <td><ghost>MB</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
