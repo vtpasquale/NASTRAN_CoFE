@@ -3,4 +3,5 @@
 More information and examples available at:
 http://NASTRANCoFE.weebly.com/
 
-HTML manual coming soon.  
+Site and up-to-date documentation are migrating to:
+http://vtpasquale.github.io/NASTRAN_CoFE/
