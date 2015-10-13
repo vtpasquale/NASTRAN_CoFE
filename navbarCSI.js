@@ -38,7 +38,7 @@ document.write('<nav class="navbar navbar-inverse">');
         document.write('<li><a href="#">Page 3</a></li>');
       document.write('</ul>');
       document.write('<ul class="nav navbar-nav navbar-right">');
-        document.write('<li><a href="#"><span class="glyphicon glyphicon-home"></span>  Author Home</a></li>');
+        document.write('<li><a target="_blank" href="http://aricciardi.weebly.com/"><span class="glyphicon glyphicon-home"></span>  Author Home</a></li>');
 	  document.write('</ul>');
     document.write('</div>');
   document.write('</div>');
