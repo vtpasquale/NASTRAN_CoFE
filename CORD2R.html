@@ -58,14 +58,17 @@ CORD2R,18,,0.000000,0.0,0.0,0.0,-0.122,1.0,
 <h2>Remarks:</h2>
 <ol>
 <li> 
-The three points [(A1, A2, A3), (B1, B2, B3), (C1, C2, C3)] must be unique and noncolinear. The first point defines the origin. The second defines the direction of the z-axis. The third point defines a vector which, with the z-axis, defines the x-z plane. The reference coordinate system must be independently defined.
+The three points [(A1, A2, A3), (B1, B2, B3), (C1, C2, C3)] must be unique and noncolinear. The first point defines the origin. The second defines the direction of the z-axis. The third point defines a vector which, with the z-axis, defines the x-z plane.
 </li>
 <li>
-The location of a grid point (P in the Fig.~\ref{f:CORD2R_Definition}) in this coordinate system is given by (X, Y, Z).
-\myfig{CORD2R_Definition}{CORD2R Definition.\cite{msc2011msc}}
+The location of a grid point (P in the Fig. 1) in this coordinate system is given by (x, y, z).
+<figure>
+  <object type="image/svg+xml" data="cord2r.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 1:  CORD2R definition.</figcaption>
+</figure>
 </li>
 <li>
-This entry is referenced exclusively by \texttt{GRID} entries, so that they can be specified in an alternative coordinate system.  No other inputs or outputs will use an alternative (not basic) coordinate system.
+This entry is referenced exclusively by <crn>GRID</crn> entries, so that they can be specified in an alternative coordinate system.  No other inputs or outputs will use an alternative (not basic) coordinate system.
 </li>  
 
 </div>

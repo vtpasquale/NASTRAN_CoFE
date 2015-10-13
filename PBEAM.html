@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PBEAM</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>PBEAM</h1>
+<p>Defines the properties of a beam element (CBEAM entry). Tapered beams are not supported.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+	<td>PBEAM</td><td>PID</td><td>MID</td><td>A</td><td>I1</td><td>I2</td><td>I12</td><td>J</td><td>NSM</td>
+  </tr>
+  <tr>
+	<td></td><td>C1</td><td>C2</td><td>D1</td><td>D2</td><td>E1</td><td>E2</td><td>F1</td><td>F2</td>
+  </tr>
+  <tr>
+	<td></td><td>K1</td><td>K2</td><td></td><td></td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+PBEAM,1,1,5.065E+10,1.4125E+9,1.4125E+8,0.0,2.1192E+8,1.0952E-6
+</p>
+<p class="cn">
+,,,,,,,,
+</p>
+<p class="cn">
+,1.0,1.0
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+	<th>Default Value</th>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number. (Integer > 0)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>MID</td>
+    <td>Material identification number. (Integer > 0)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>Area of the beam cross section. (Real > 0.0)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>I1</td>
+    <td>Area moment of inertia for bending in plane 1 about the neutral axis. See Remark 1. (Real > 0.0)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>I2</td>
+    <td>Area moment of inertia for bending in plane 2 about the neutral axis. See Remark 1. (Real > 0.0)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>I12</td>
+    <td>Area product of inertia.  Must be 0.0 or blank.</td>
+	<td>0.0</td>
+  </tr>
+  <tr>
+    <td>J</td>
+    <td>Torsional stiffness parameter. (Real)</td>
+	<td>Required</td>
+  </tr>
+  <tr>
+    <td>NSM</td>
+    <td>Nonstructural mass per unit length. (Real)</td>
+	<td>0.0</td>
+  </tr>
+  <tr>
+    <td>Ci, Di, Ei, Fi</td>
+    <td>The y and z locations (i = 1 corresponds to y and i = 2 corresponds to z) in element coordinates relative to the shear center (see the diagram following the remarks) for stress data recovery. (Real)</td>
+	<td>y = z = 0.0</td>
+  </tr>
+  <tr>
+    <td>K1, K2</td>
+    <td>Shear stiffness factor K in K*A*G for plane 1 and plane 2. See Remark 2. (Real)</td>
+	<td>Required</td>
+  </tr>
+</table>
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+Figure 1 describes the PBEAM element coordinate system
+<figure>
+  <object type="image/svg+xml" data="pbeam.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 1:  PBEAM element coordinate system.</figcaption>
+</figure>
+where
+\begin{align}
+I1= & I_{(zz)_{elem}} \nonumber \\
+I2= & I_{(yy)_{elem}} \nonumber \\
+I12 = & I_{(zy)_{elem}} \nonumber \\
+J = & I_{(xx)_{elem}} \nonumber 
+\end{align}
+</li>
+<li>
+The shear stiffness factors K1 and K2 adjust the effective transverse shear cross-section area according to the Timoshenko beam theory. Nominal values of 1.0 approximate the effects of shear deformation.  Look up values for your specific cross section.  To neglect shear deformation (i.e., to obtain the Bernoulli-Euler beam theory), the values of K1 and K2 should be set to 0.0.
+</li>
+<li>
+Taper is not supported.
+</li>  
+<li>
+Warping torsion is not supported. 
+</li>  
+<li>
+Nonzero I12 is not supported. 
+</li>  
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
