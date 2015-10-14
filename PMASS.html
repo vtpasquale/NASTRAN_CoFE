@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PMASS</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>PMASS</h1>
+<p>Specifies the mass value of a scalar mass element (CMASS1 entries).</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>PMASS</td><td>PID1</td><td>M1</td><td><ghost>PID2</ghost></td><td><ghost>M2</ghost></td><td><ghost>PID3</ghost></td><td><ghost>M3</ghost></td><td><ghost>PID4</ghost></td><td><ghost>M4</ghost></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+PMASS,110,1.591280E-02
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>PID1</td>
+    <td>Property identification number. (Integer > 0) </td>
+  </tr>
+  <tr>
+    <td>M1</td>
+    <td>Value of scalar mass. (Real)</td>
+  </tr>
+  <tr>
+    <td><ghost>PID2</ghost>, <ghost>PID3</ghost>, <ghost>PID4</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td><ghost>M2</ghost>, <ghost>M3</ghost>, <ghost>M4</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

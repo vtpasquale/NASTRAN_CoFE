@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>RBE2</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>RBE2</h1>
+<p>Defines a beam element.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>RBE2</td><td>EID</td><td>GN</td><td>CM</td><td>GM1</td><td>GM2</td><td>GM3</td><td>GM4</td><td>GM5</td>
+  </tr>
+  <tr>
+    <td></td><td>GM6</td><td>GM7</td><td>GM8</td><td>-etc.-</td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+RBE2,1000,1,123456,1001,5001
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>EID</td>
+    <td>Element identification number. (0 < Integer < 100,000,000)</td>
+  </tr>
+  <tr>
+    <td>GN</td>
+    <td>Identification number of grid point to which all six independent degrees-of freedom for the element are assigned. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>CM</td>
+    <td>Component numbers of the dependent degrees-of-freedom in the global coordinate system at grid points GMi. (Integers 1 through 6 with no embedded blanks.) </td>
+  </tr>
+  <tr>
+    <td>GMi</td>
+    <td>Grid point identification numbers at which dependent degrees-of-freedom are assigned. (Integer > 0)</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

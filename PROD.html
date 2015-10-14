@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PROD</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>PROD</h1>
+<p>Defines the properties of a rod element (CROD entry).</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>PROD</td><td>PID</td><td>MID</td><td>A</td><td>J</td><td><ghost>C</ghost></td><td>NSM</td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+PROD,501,501,9.5318,25000.,,0.0
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number. (Integer > 0) </td>
+  </tr>
+  <tr>
+    <td>MID</td>
+    <td>Material identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>Area of the rod. (Real)</td>
+  </tr>
+  <tr>
+    <td>J</td>
+    <td>Torsional constant. (Real)</td>
+  </tr>
+  <tr>
+    <td><ghost>C</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>NSM</td>
+    <td>Nonstructural mass per unit length. (Real; Default = 0.0)</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

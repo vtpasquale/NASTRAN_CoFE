@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PBEAML</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>PBEAML</h1>
+<p>Defines the properties of a beam element by cross-sectional dimensions.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+	<td>PBEAML</td><td>PID</td><td>MID</td><td><ghost>GROUP</ghost></td><td>TYPE</td><td></td><td></td><td></td><td></td>
+  </tr>
+  <tr>
+	<td></td><td>DIM1</td><td>DIM2</td><td>-etc.-</td><td>NSM</td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+PBEAML,101,501,,BAR,,,,,<br>
+,0.031291,0.181177,0.002854<br>
+PBEAML,102,501,,ROD,,,,,<br>
+,0.015135,0.0<br>
+</p>
+
+
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>MID</td>
+    <td>Material identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td><ghost>GROUP</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>TYPE</td>
+    <td>Cross-section shape. See Remark 1. (Character: ``ROD'' or ``BAR'') </td>
+  </tr>
+  <tr>
+    <td>DIMi</td>
+    <td>Cross-section dimensions. (Real > 0.0)</td>
+  </tr>
+  <tr>
+    <td>NSM</td>
+    <td>Nonstructural mass per unit length. (Real, Default = 0.0)</td>
+  </tr>
+</table>
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+Cross-sections dimensions are shown in Figs. 1 and 2.
+<figure>
+  <object type="image/svg+xml" data="rod.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 1:  Type = ''ROD''.</figcaption>
+</figure>
+<figure>
+  <object type="image/svg+xml" data="bar.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 2:  Type = ''BAR''.</figcaption>
+</figure>
+</li>
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

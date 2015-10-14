@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SPC1</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>SPC1</h1>
+<p>Defines a single-point constraint.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>SPC1</td><td>SID</td><td>C</td><td>G1</td><td><ghost>G2</ghost></td><td><ghost>G3</ghost></td><td><ghost>G4</ghost></td><td><ghost>G5</ghost></td><td><ghost>G6</ghost></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+SPC1,1,123456,2021
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>SID</td>
+    <td>Identification number of single-point constraint set. (Integer > 0) </td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td>Component numbers. (Any unique combination of the Integers 1 through 6 with no embedded blanks for grid points.)</td>
+  </tr>
+  <tr>
+    <td><ghost>G2</ghost>, <ghost>G3</ghost>, <ghost>G4</ghost>, <ghost>G5</ghost>, <ghost>G6</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
