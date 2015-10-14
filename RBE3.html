@@ -30,7 +30,8 @@
 
 <h2>Example</h2>
 <p class="cn">
-RBE2,1000,1,123456,1001,5001
+RBE3,2000,,1,123,1.000000,123,2001,3001<br>
+,4001,12001,13001,14001
 </p>
 
 <h2>Fields</h2>
@@ -44,16 +45,24 @@ RBE2,1000,1,123456,1001,5001
     <td>Element identification number. (0 < Integer < 100,000,000)</td>
   </tr>
   <tr>
-    <td>GN</td>
-    <td>Identification number of grid point to which all six independent degrees-of freedom for the element are assigned. (Integer > 0)</td>
+    <td>REFGRID</td>
+    <td>Reference grid point identification number. (Integer > 0)</td>
   </tr>
   <tr>
-    <td>CM</td>
-    <td>Component numbers of the dependent degrees-of-freedom in the global coordinate system at grid points GMi. (Integers 1 through 6 with no embedded blanks.) </td>
+    <td>REFC</td>
+    <td>Component numbers at the reference grid point. (Any of the integers 1 through 6 with no embedded blanks.) </td>
   </tr>
   <tr>
-    <td>GMi</td>
-    <td>Grid point identification numbers at which dependent degrees-of-freedom are assigned. (Integer > 0)</td>
+    <td>WT1</td>
+    <td>Weighting factor for components of motion on the following entry at grid points G1,j. (Real)</td>
+  </tr>
+  <tr>
+    <td>C1</td>
+    <td>Component numbers with weighting factor WT1 at grid points G1,j. (Any of the integers 1 through 6 with no embedded blanks.)</td>
+  </tr>
+  <tr>
+    <td>G1,j</td>
+    <td>Grid points with components C1 that have weighting factor WT1 in the averaging equations. (Integer > 0)</td>
   </tr>
 </table>
 
