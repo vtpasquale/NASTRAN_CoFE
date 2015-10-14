@@ -23,6 +23,12 @@ obj.x2 = [FEM.GRID(h2).X1;FEM.GRID(h2).X2;FEM.GRID(h2).X3];
 obj.x3 = [FEM.GRID(h3).X1;FEM.GRID(h3).X2;FEM.GRID(h3).X3];
 obj.x4 = [FEM.GRID(h4).X1;FEM.GRID(h4).X2;FEM.GRID(h4).X3];
 
+% G1-G4 must be in located in a plane parallel to the basic coordinate system x-y plane.
+if any(obj.x1(3)~=[obj.x2(3) obj.x3(3) obj.x4(3)]) || ...
+        any(obj.x2(3)~=[obj.x3(3) obj.x4(3)])  || obj.x3(3) ~= obj.x4(3)
+    error('G1-G4 must be in located in a plane parallel to the basic coordinate system x-y plane.');
+end
+
 % find property
 pidH = [FEM.PSHELL.PID]==obj.PID;
 assert(sum(pidH)==1,['There should be one and only one PROD with ID#',num2str(obj.PID),''])
@@ -42,8 +48,7 @@ t = FEM.PSHELL(pidH).T;
 kbliq = bliqmix( [obj.x1(1:2),obj.x2(1:2),obj.x3(1:2),obj.x4(1:2)]', t, obj.G );
 
 obj.ke = zeros(12);
-obj.ke([1,2,4,5,7,8,10,11],[1,2,4,5,7,8,10,11])  = -1* kbliq;
-%                                               ^ ISSUES ^
+obj.ke([1,2,4,5,7,8,10,11],[1,2,4,5,7,8,10,11])  = kbliq;
 obj.me = zeros(12);
 end
 
@@ -99,7 +104,7 @@ for xi=GaussPoints;
       Nxy = J \ DN;
       B(1,[1 3 5 7]) = Nxy(1,:);
       B(2,[2 4 6 8]) = Nxy(2,:);
-      k = k + B'*(EE*B*(thick*det(J)));
+      k = k + B'*(EE*B*(thick*abs(det(J))));
    end
 end
 %
@@ -115,6 +120,6 @@ weight = 2;
       Nxy = J \ DN;
       B(3,[1 3 5 7]) = Nxy(2,:);
       B(3,[2 4 6 8]) = Nxy(1,:);
-      kshear = B(3,:)'*(EE(3,3)*B(3,:)*(thick*det(J)*weight^2));
+      kshear = B(3,:)'*(EE(3,3)*B(3,:)*(thick*abs(det(J))*weight^2));
 k = k + kshear;
 end
