@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PSHELL</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>PSHELL</h1>
+<p>Defines the properties of membrane elements.  In the near future, the entry will be expanded to support bending and transverse shear properties of thin shell elements.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+	<td>PSHELL</td><td>PID</td><td>MID1</td><td>T</td><td><ghost>MID2</ghost></td><td><ghost>12I/T**3</ghost></td><td><ghost>MID3</ghost></td><td><ghost>TS/T</ghost></td><td><ghost>NSM</ghost></td>
+  </tr>
+  <tr>
+	<td></td><td><ghost>Z1</ghost></td><td><ghost>Z2</ghost></td><td><ghost>MID4</ghost></td><td></td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+PSHELL,105,501,0.0833,501,,501,,4.0
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>PID</td>
+    <td>Property identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td>MID1</td>
+    <td>Material identification number for the membrane. (Integer > 0 or blank)</td>
+  </tr>
+  <tr>
+    <td>T</td>
+    <td>Membrane thickness. (Real)</td>
+  </tr>
+  <tr>
+    <td><ghost>MID2</ghost>, <ghost>12I/T**3</ghost>, <ghost>MID3</ghost>, <ghost>TS/T</ghost>, <ghost>NSM</ghost>, <ghost>Z1</ghost>, <ghost>Z2</ghost>, <ghost>MID4</ghost></td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+The continuation is optional.
+</li>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

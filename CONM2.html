@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CONM2</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>CONM2</h1>
+<p>Defines a concentrated mass at a grid point.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+	<td>CONM2</td><td>EID</td><td>G</td><td><ghost>CID</ghost></td><td>M</td><td>X1</td><td>X2</td><td>X3</td><td></td>
+  </tr>
+  <tr>
+	<td></td><td>I11</td><td>I21</td><td>I22</td><td>I31</td><td>I32</td><td>I33</td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+CONM2,3000,1001,,10.060968
+
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>EID</td>
+    <td>Element identification number. (0 < Integer < 100,000,000)</td>
+  </tr>
+  <tr>
+    <td>G</td>
+    <td>Grid point identification number. (Integer > 0)</td>
+  </tr>
+  <tr>
+    <td><ghost>CID</ghost></td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>M</td>
+    <td>Mass value. (Real)</td>
+  </tr>
+  <tr>
+    <td>X1, X2, X3</td>
+    <td>Offset distances from the grid point to the center of gravity of the mass in the basic coordinate system. (Real)</td>
+  </tr>
+  <tr>
+    <td>Iij</td>
+    <td>Mass moments of inertia measured at the mass center of gravity in the basic coordinate system. (Real)</td>
+  </tr>
+</table>
+
+
+<h2>Remarks:</h2>
+<ol>
+<li> 
+The continuation is optional.
+</li>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
