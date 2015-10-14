@@ -40,6 +40,7 @@ document.write('<nav class="navbar navbar-inverse">');
         document.write('<li><a href="examples.html">Examples</a></li>');
       document.write('</ul>');
       document.write('<ul class="nav navbar-nav navbar-right">');
+	  document.write('<li><a target="_blank" href="https://github.com/vtpasquale/NASTRAN_CoFE"><span class="glyphicon glyphicon-cloud-download"></span>  View on GitHub</a></li>');
         document.write('<li><a target="_blank" href="http://aricciardi.weebly.com/"><span class="glyphicon glyphicon-home"></span>  Author Home</a></li>');
 	  document.write('</ul>');
     document.write('</div>');
