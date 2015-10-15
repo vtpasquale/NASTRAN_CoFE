@@ -67,16 +67,21 @@ ke = zeros(12);
 me = zeros(4);
 
 % normal terms - ASTROS QUAD4 will need to integrate through thickness for bending
+xi = 1/sqrt(3)*[-1 -1; 1 1];
+eta = 1/sqrt(3)*[-1 1; -1 1];
 for i = 1:2
     for j = 1:2
-        [kp,mp] = ele_p(obj,i,j);
-        ke = ke + kp;
-        me = me + mp;
+        B = obj.B(qn.xi{1}(i,j,k),qn.xi{2}(i,j,k));
+        detJ = det(obj.Jacobian(xi(i,j),eta(i,j)));
+        ke = ke + B.'*obj.G*B *detJ;
+        
+        me(i,j) = me(i,j) + obj.N(i,xi,eta) * rho * obj.N(j,xi,eta) * detJ;
+        
     end
 end
 obj.ke = t*ke;
 obj.me = zeros(12);
-obj.me([1,2,7,8],[1,2,7,8]) = rho*t*me;
+obj.me([1,2,7,8],[1,2,7,8]) = t*me;
 
 
 % keyboard

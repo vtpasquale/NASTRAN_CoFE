@@ -3,13 +3,13 @@ function obj = element(obj,FEM)
 
 % find GRIDs
 h1 = find(FEM.gnum==obj.G1);
-assert(size(h1,2)==1,['There should be one and only one GRID with ID#',num2str(obj.G1),''])
+if size(h1,2)~=1; error(['There should be one and only one GRID with ID#',num2str(obj.G1),'']); end
 h2 = find(FEM.gnum==obj.G2);
-assert(size(h2,2)==1,['There should be one and only one GRID with ID#',num2str(obj.G2),''])
+if size(h2,2)~=1,error(['There should be one and only one GRID with ID#',num2str(obj.G2),'']); end
 h3 = find(FEM.gnum==obj.G3);
-assert(size(h3,2)==1,['There should be one and only one GRID with ID#',num2str(obj.G3),''])
+if size(h3,2)~=1,error(['There should be one and only one GRID with ID#',num2str(obj.G3),'']); end
 h4 = find(FEM.gnum==obj.G4);
-assert(size(h4,2)==1,['There should be one and only one GRID with ID#',num2str(obj.G4),''])
+if size(h4,2)~=1,error(['There should be one and only one GRID with ID#',num2str(obj.G4),'']); end
 
 % global dof
 obj.gdof = [FEM.gnum2gdof(1:3,h1);
@@ -31,11 +31,11 @@ end
 
 % find property
 pidH = [FEM.PSHELL.PID]==obj.PID;
-assert(sum(pidH)==1,['There should be one and only one PROD with ID#',num2str(obj.PID),''])
+if sum(pidH)~=1; error(['There should be one and only one PROD with ID#',num2str(obj.PID),'']); end
 
 % find MAT1
 mat1H = [FEM.MAT1.MID]==FEM.PSHELL(pidH).MID1;
-assert(sum(mat1H)==1,['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID1),''])
+if sum(mat1H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID1),'']); end
 
 % stress-strain matrix
 obj.G = FEM.MAT1(mat1H).stress_strain_mat;
