@@ -10,7 +10,7 @@
   MathJax.Hub.Config({
     TeX: { equationNumbers: { autoNumber: "AMS" } }
   });
-</script>
+  </script>
 </head>
 <body>
 
@@ -36,7 +36,7 @@ Multipoint constraints and rigid elements are used to constrain one or more degr
 The constraint equations resulting from the use of multipoint constraints and rigid elements together can be expressed in the form
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>g</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>g</mi></mrow></msub><mo>=</mo><mn>0</mn>
 </math></p>
 
@@ -45,7 +45,7 @@ where the coefficients are either supplied explicitly by the user (in the form o
 vector may immediately be partitioned into two subsets, 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>g</mi></mrow></msub><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -53,7 +53,7 @@ vector may immediately be partitioned into two subsets,
 where the set, $\boldsymbol{u}_m$, is the set of dependent degrees of freedom. The matrix of constraint coefficients is similarly partitioned
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>g</mi></mrow></msub><mo>=</mo><mfenced open="[" close="]" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>n</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -61,7 +61,7 @@ where the set, $\boldsymbol{u}_m$, is the set of dependent degrees of freedom. T
 so that the equation becomes
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><mn>0</mn>
 </math></p>
 
@@ -69,7 +69,7 @@ so that the equation becomes
 $\boldsymbol{R}_m$ is a nonsingular matrix.  The constraint matrix can, therefore, be formed as
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><mo>-</mo><msubsup><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>m</mi></mrow><mrow><mo>-</mo><mn>1</mn></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">R</mi></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -77,7 +77,7 @@ $\boldsymbol{R}_m$ is a nonsingular matrix.  The constraint matrix can, therefor
 so the previous equation  may be stated as
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -85,7 +85,7 @@ so the previous equation  may be stated as
 Prior to the imposition of constraints, the structural problem may be written as
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>g</mi><mi>g</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>g</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">P</mi></mrow><mrow><mi>g</mi></mrow></msub>
 </math></p>
 
@@ -93,7 +93,7 @@ Prior to the imposition of constraints, the structural problem may be written as
 or, partitioning in terms of the coordinate sets, $\boldsymbol{u}_n$ and $\boldsymbol{u}_m$
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <mfenced open="[" close="]" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -101,11 +101,11 @@ or, partitioning in terms of the coordinate sets, $\boldsymbol{u}_n$ and $\bolds
 Bars over symbols are used to designate arrays that are replaced in the reduction process.  The addition of constraints to the structure requires that the forces of constraint be added to the equilibrium equations. 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>-</mo><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub>
 </math></p>
 
@@ -113,7 +113,7 @@ Bars over symbols are used to designate arrays that are replaced in the reductio
 where $\boldsymbol{q}_m^m$ is the vector of constraint forces on <math><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub></math>.  Thus, writing the equilibrium and constraint equations (<math><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><mn>0</mn></math>) together in partitioned form,
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <mfenced open="[" close="]" separators="|"><mrow><mtable><mtr><mtd><mtable><mtr><mtd><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr></mtable></mtd><mtd><mtable><mtr><mtd><mo>|</mo></mtd><mtd><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup></mtd></mtr><mtr><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr></mtable></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><mo>-</mo><mi mathvariant="bold-italic">I</mi></mtd></mtr></mtable></mtd><mtd><mtable><mtr><mtd><mo>|</mo></mtd><mtd><mo>-</mo><mi mathvariant="bold-italic">I</mi></mtd></mtr><mtr><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><mo>|</mo></mtd><mtd><mn>0</mn></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><mn>0</mn></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -121,7 +121,7 @@ where $\boldsymbol{q}_m^m$ is the vector of constraint forces on <math><msub><mr
 Solving for $\boldsymbol{p}_m$ in the second matrix equation
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub>
 </math></p>
 
@@ -129,7 +129,7 @@ Solving for $\boldsymbol{p}_m$ in the second matrix equation
 and substitute in the first matrix equation 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><mfenced separators="|"><mrow><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub></mrow></mfenced><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -137,7 +137,7 @@ and substitute in the first matrix equation
 distribute
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>+</mo><msubsup><mrow><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>-</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -145,7 +145,7 @@ distribute
 substitute $\boldsymbol{u}_m = \boldsymbol{G}_m \boldsymbol{u}_n$
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msubsup><mrow><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>-</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -153,7 +153,7 @@ substitute $\boldsymbol{u}_m = \boldsymbol{G}_m \boldsymbol{u}_n$
 and rearrange
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <mfenced open="[" close="]" separators="|"><mrow><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">K</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>+</mo><msubsup><mrow><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow></msub></mrow></mfenced><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub>
 </math></p>
 
@@ -161,7 +161,7 @@ and rearrange
 or 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>n</mi></mrow></msub>
 </math></p>
 
@@ -190,7 +190,7 @@ The initial partition of $\boldsymbol{K}_{gg}$ and the associated operations are
 The vector of constraint forces $\boldsymbol{q}_m^m$ on $\boldsymbol{u}_m$ is obtained from the middle row of the partitioned matrix equation 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>m</mi><mi>m</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>m</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>m</mi></mrow></msub>
 </math></p>
 
@@ -198,7 +198,7 @@ The vector of constraint forces $\boldsymbol{q}_m^m$ on $\boldsymbol{u}_m$ is ob
 Let $\boldsymbol{q}_n^m$  be the vector of constraint forces on $\boldsymbol{u}_n$. Then it is clear that
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>n</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><mo>-</mo><msubsup><mrow><mi mathvariant="bold-italic">G</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup>
 </math></p>
 
@@ -206,7 +206,7 @@ Let $\boldsymbol{q}_n^m$  be the vector of constraint forces on $\boldsymbol{u}_
 So, the resultant forces of constraint due to multipoint constraints and rigid elements are therefore given by
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>g</mi></mrow><mrow><mi>m</mi></mrow></msubsup><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>n</mi></mrow><mrow><mi>m</mi></mrow></msubsup></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>m</mi></mrow><mrow><mi>m</mi></mrow></msubsup></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -218,7 +218,7 @@ So, the resultant forces of constraint due to multipoint constraints and rigid e
 Single point constraints are applied to the set, $\boldsymbol{u}_s$ , in the form
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">y</mi></mrow><mrow><mi>s</mi></mrow></msub>
 </math></p>
 
@@ -226,7 +226,7 @@ Single point constraints are applied to the set, $\boldsymbol{u}_s$ , in the for
 where $\boldsymbol{y}_s$ is a vector of enforced deformations, any or all of whose elements may be zero. The set, $\boldsymbol{u}_n$, is partitioned into $\boldsymbol{u}_s$ and $\boldsymbol{u}_f$ (the free or unconstrained set).
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>n</mi></mrow></msub><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -234,7 +234,7 @@ where $\boldsymbol{y}_s$ is a vector of enforced deformations, any or all of who
 The stiffness matrix, $\boldsymbol{K}_{nn}$, is similarly partitioned
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>n</mi><mi>n</mi></mrow></msub><mo>=</mo><mfenced open="[" close="]" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>f</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow><mrow><mi>T</mi></mrow></msubsup></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>s</mi><mi>s</mi></mrow></msub></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -242,7 +242,7 @@ The stiffness matrix, $\boldsymbol{K}_{nn}$, is similarly partitioned
 The complete structural equations including the single point forces of constraint, $\boldsymbol{u}_q$, may be written in partitioned matrix form as
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <mfenced open="[" close="]" separators="|"><mrow><mtable><mtr><mtd><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>f</mi></mrow></msub></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr></mtable></mtd><mtd><mtable><mtr><mtd><mo>|</mo></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr></mtable></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow><mrow><mi>T</mi></mrow></msubsup></mtd><mtd><mo>|</mo></mtd><mtd><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>s</mi><mi>s</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo></mtd><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mo>|</mo></mtd><mtd><mo>-</mo><mi mathvariant="bold-italic">I</mi></mtd></mtr></mtable></mtd><mtd><mtable><mtr><mtd><mo>|</mo></mtd><mtd><mo>-</mo><mi mathvariant="bold-italic">I</mi></mtd></mtr><mtr><mtd><mo>+</mo></mtd><mtd><mo>-</mo></mtd></mtr><mtr><mtd><mo>|</mo></mtd><mtd><mn>0</mn></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>s</mi></mrow></msub></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced><mo>=</mo><mfenced open="{" close="}" separators="|"><mrow><mtable><mtr><mtd><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>f</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><mtable><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>s</mi></mrow></msub></mtd></mtr><mtr><mtd><mo>-</mo><mo>-</mo></mtd></mtr><mtr><mtd><msub><mrow><mi mathvariant="bold-italic">y</mi></mrow><mrow><mi>s</mi></mrow></msub></mtd></mtr></mtable></mtd></mtr></mtable></mrow></mfenced>
 </math></p>
 
@@ -250,7 +250,7 @@ The complete structural equations including the single point forces of constrain
 Using simple algebra
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>f</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>f</mi></mrow></msub>
 </math></p>
 
@@ -258,7 +258,7 @@ Using simple algebra
 Substituting $\boldsymbol{u}_s=\boldsymbol{y}_s$
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>f</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub><mo>=</mo><msub><mrow><mover accent="true"><mrow><mi mathvariant="bold-italic">p</mi></mrow><mo>-</mo></mover></mrow><mrow><mi>f</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">y</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>f</mi></mrow></msub>
 </math></p>
 
@@ -266,7 +266,7 @@ Substituting $\boldsymbol{u}_s=\boldsymbol{y}_s$
 or 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>f</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>f</mi></mrow></msub>
 </math></p>
 
@@ -274,7 +274,7 @@ or
 Finally, constraint forces are recovered by means of the middle row of the partitioned equation
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>s</mi><mi>s</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>s</mi></mrow></msub>
 </math></p>
 
@@ -282,7 +282,7 @@ Finally, constraint forces are recovered by means of the middle row of the parti
 or 
 </p>
 
-<p align="center"><math>
+<p class="center"><math>
 <msub><mrow><mi mathvariant="bold-italic">q</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>=</mo><msubsup><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>f</mi><mi>s</mi></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>f</mi></mrow></msub><mo>+</mo><msub><mrow><mi mathvariant="bold-italic">K</mi></mrow><mrow><mi>s</mi><mi>s</mi></mrow></msub><msub><mrow><mi mathvariant="bold-italic">u</mi></mrow><mrow><mi>s</mi></mrow></msub><mo>-</mo><msub><mrow><mi mathvariant="bold-italic">p</mi></mrow><mrow><mi>s</mi></mrow></msub>
 </math></p>
 
