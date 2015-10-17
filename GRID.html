@@ -21,15 +21,13 @@
     <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
   </tr>
   <tr>
-    <td>GRID</td><td>ID</td><td>CP</td><td>X1</td><td>X2</td><td>X3</td><td><ghost>CD</ghost></td><td>PS</td><td><ghost>SEID</ghost></td>
+    <td>GRID</td><td>ID</td><td>CP</td><td>X1</td><td>X2</td><td>X3</td><td class = "ghost">CD</td><td>PS</td><td class = "ghost">SEID</td>
   </tr>
 </table>
 
 <h2>Example</h2>
 <p class="cn">
-GRID,2081,,703.017,567.7358,108.0487
-</p>
-<p class="cn">
+GRID,2081,,703.017,567.7358,108.0487<br>
 GRID,1003,18,-0.515028,1.084270,0.0
 </p>
 
@@ -42,7 +40,7 @@ GRID,1003,18,-0.515028,1.084270,0.0
   </tr>
     <tr>
     <td>ID</td>
-    <td>Grid point identification number. (0 < Integer < 100,000,000)</td>
+    <td>Grid point identification number. (0 &lt; Integer &lt; 100,000,000)</td>
   </tr>
   <tr>
     <td>CP</td>
@@ -55,15 +53,15 @@ GRID,1003,18,-0.515028,1.084270,0.0
   </tr>
   <tr>
   <tr>
-    <td><ghost>CD</ghost></td>
+    <td class = "ghost">CD</td>
     <td>Not used.</td>
   </tr>
   <tr>
     <td>PS</td>
-    <td>Permanent single-point constraints associated with the grid point. (Any of the Integers 1 through 6 with no embedded blanks, blank, or integer 0).  See the <crn>GRDSET</crn> entry documentation for default options </td>
+    <td>Permanent single-point constraints associated with the grid point. (Any of the Integers 1 through 6 with no embedded blanks, blank, or integer 0).  See the GRDSET entry documentation for default options </td>
   </tr>
   <tr>
-    <td><ghost>SEID</ghost></td>
+    <td class = "ghost">SEID</td>
     <td>Not used.</td>
   </tr>
 </table>

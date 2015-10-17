@@ -5,7 +5,6 @@
   <script type="text/javascript" src="headerCSI.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css">
   <script type="text/javascript" src="mathJaxCSI.js"></script>
-</script>
 </head>
 
 <body>
@@ -23,7 +22,7 @@
     <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
   </tr>
   <tr>
-    <td>MAT1</td><td>MID</td><td>E</td><td>G</td><td>NU</td><td>RHO</td><td><ghost>A</ghost></td><td><ghost>TREF</ghost></td><td><ghost>GE</ghost></td>
+    <td>MAT1</td><td>MID</td><td>E</td><td>G</td><td>NU</td><td>RHO</td><td class = "ghost">A</td><td class = "ghost">TREF</td><td class = "ghost">GE</td>
   </tr>
 </table>
 
@@ -54,7 +53,6 @@ MAT1,501,1440000000.0,,0.33,5.370788
     <td>Shear modulus. See Remark 1. (Real > 0.0 or blank)</td>
   </tr>
   <tr>
-  <tr>
     <td>NU</td>
     <td>Poisson's ratio. See Remark 1. (Real or blank)</td>
   </tr>
@@ -63,15 +61,15 @@ MAT1,501,1440000000.0,,0.33,5.370788
     <td>Mass density. (Real, Default = 0.0)</td>
   </tr>
   <tr>
-    <td><ghost>A</ghost></td>
+    <td class = "ghost">A</td>
     <td>Not used.</td>
   </tr>
   <tr>
-    <td><ghost>TREF</ghost></td>
+    <td class = "ghost">TREF</td>
     <td>Not used.</td>
   </tr>
   <tr>
-    <td><ghost>GE</ghost></td>
+    <td class = "ghost">GE</td>
     <td>Not used.</td>
   </tr>
 </table>
@@ -82,7 +80,7 @@ MAT1,501,1440000000.0,,0.33,5.370788
 <li> 
 Either NU or G may be omitted.  The other will be calculated using the following relationship: $$G = \frac{E}{2(1+NU)}$$
 </li> 
-
+</ol>
 
 </div>
 
