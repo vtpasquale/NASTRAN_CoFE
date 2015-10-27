@@ -35,17 +35,8 @@ XE = TEG *([obj.x1,obj.x2,obj.x3,obj.x4]-[x0,x0,x0,x0]);
 obj.XE = XE;
 
 % nodal unit normals
-j1=@(xi,eta) XE*...
-    [obj.dNdxi(1,xi,eta);
-     obj.dNdxi(2,xi,eta);
-     obj.dNdxi(3,xi,eta);
-     obj.dNdxi(4,xi,eta)]; % tanget vector
- 
-j2=@(xi,eta) XE*...
-    [obj.dNdeta(1,xi,eta);
-     obj.dNdeta(2,xi,eta);
-     obj.dNdeta(3,xi,eta);
-     obj.dNdeta(4,xi,eta)]; % tanget vector
+j1=@(xi,eta) .25*XE*[      -(1-eta),       (1-eta),       (1+eta),      -(1+eta)].';
+j2=@(xi,eta) .25*XE*[(1-xi)*-1     ,(1+xi)*-1     ,(1+xi)        ,(1-xi)        ].';
 
 obj.n1 = cross3(j1(-1,-1),j2(-1,-1)); obj.n1 = obj.n1./norm_cs(obj.n1);
 obj.n2 = cross3(j1( 1,-1),j2( 1,-1)); obj.n2 = obj.n2./norm_cs(obj.n2); 
