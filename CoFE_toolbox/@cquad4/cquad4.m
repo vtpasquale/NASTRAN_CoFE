@@ -2,18 +2,6 @@ classdef cquad4
     % Summary of this class goes here
     %   Detailed explanation goes here
     
-    % input entry data
-    properties (Constant = true)
-        minRows = 1;
-        maxRows = 2;
-        fields = {'CQUAD4','EID','PID','G1','G2','G3','G4','MCID','ZOFFS';
-            [],[],'TFLAG','T1','T2','T3','T4',[],[]};
-        dataType = {'str','int','int','int','int','int','int','int','dec';
-            [],'int','dec','dec','dec','dec',[],[],[]};
-        default = {Inf,[],[],[],[],[],[],Inf,Inf;
-            Inf,[],[],[],[],[],Inf,Inf,Inf};
-    end
-    
     % fundamental data (from input file)
     properties
         EID
@@ -37,13 +25,17 @@ classdef cquad4
         x2
         x3
         x4
+        XE
         gdof
         n1 % surface normals and nodes
         n2
         n3
         n4
-        ye
-        G % stress-strain matrix -> from MAT1
+        G % stress-strain matrix -> from MAT1 and PSHELL
+        A % rotation transformation matricies at nodes
+        t % [4x1] element thicknesses at nodes
+        NSM % nonstructural mass
+        rho % material density
     end
     
     % physical quantities
@@ -69,7 +61,7 @@ classdef cquad4
             end
             
             if size(data,2)>10
-                obj.TFLAG = set_data('CQUAD4','TFLAG',data{13},'int',1.0);
+                obj.TFLAG = set_data('CQUAD4','TFLAG',data{13},'int',0);
                 if obj.TFLAG ~= 0 && obj.TFLAG ~= 1
                     error('CQUAD entry TFLAG field should be zero or one.')
                 end
@@ -78,7 +70,7 @@ classdef cquad4
                 obj.T3 = set_data('CQUAD4','T3',data{16},'dec',1.0);
                 obj.T4 = set_data('CQUAD4','T4',data{17},'dec',1.0);
             else
-                obj.TFLAG = int32(1.0);
+                obj.TFLAG = int32(-999);
                 obj.T1 = 1.0;
                 obj.T2 = 1.0;
                 obj.T3 = 1.0;
