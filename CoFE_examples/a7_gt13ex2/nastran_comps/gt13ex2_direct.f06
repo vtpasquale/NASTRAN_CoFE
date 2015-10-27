@@ -1,0 +1,424 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2015 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2014.1.0-CL347922   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          JUL  3, 2015           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *  MODEL P5-4/2224 (afseo-0229)   * *
+                                              * *  Windows 7 Enterprise 6.1 7601  * *
+                                              * * Compiled for 8664 (SINGLE Mode) * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (April 9, 2015):
+  
+               Welcome to MSC Nastran 2014.1
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2014.1
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+   The highlights for the MSC Nastran 2014.1 release include:
+  
+     HPC
+     -   MSC Nastran 2014.1 now provides a parallel(SMP)version of the CASI
+         iterative solver (SMETHOD=element)
+     -   For large SOL 101 or 400 solid element models, users can expect as much
+         as a 3x reduction in wall clock time with SMP=8.
+  
+     Capabilities
+     -   Allows one to consider the weight based upon property id or
+         material id to be the response. This allows you tomake better design
+         decisions. New response type WMPID is given via DRESP1. This design
+         response cannot beused with topology optimization at this time.
+         One may also obtain the total weight based upon the material id.
+  
+     Delivery
+     -   Win 7 32-bit is no longer available
+1    -   The I4 and I8 installers have been split.
+  
+  
+    Documentation
+  
+     The complete documentation set is provided in a separate installer and when
+     installed is available at:
+     MSC_DOC_DIR/doc/pdf_nastran directory.
+     Where MSC_DOC_DIR is the directory where documentation was installed
+     This help set has cross references between documents, links to how-to
+     videos, and example files.
+  
+    Individual MSC Nastran documents are available for download from the
+      Simcompanion Website at:
+      http://simcompanion.mscsoftware.com/
+  
+    These documents were updated for the MSC Nastran 2014.1 Release
+  
+         1.  MSC 2014.1 Installation and Operations Guide
+         2.  MSC 2014.1 Quick Reference Guide
+         3.  MSC 2014.1 Release Guide
+         4.  MSC 2014.1 Demonstration Problems Manual
+         5.  MSC 2014.1 Design Sensitivity and Optimization
+         6.  MSC 2014.1 DMAP Programmer's Guide
+         7.  MSC 2014.1 Nonlinear User's Guide SOL 400
+  
+  
+    Please refer to:
+  
+    MSC_DOC_DIR/doc/pdf_nastran/nastran_library.pdf
+  
+  
+1                                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     $ SYSFIELD=SCR*(RAW=YES,BUFFIO=YES,WNUM=16,WSIZE=16MB) $(C:/MSC.SOFTWARE/MSC_NAS
+     $ SYSFIELD=DBALL(RAW=YES,BUFFIO=YES,WNUM=16,WSIZE=16MB) $(C:/MSC.SOFTWARE/MSC_NA
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20141/CONF/NAST20141.RCF[5])
+     NASTRAN IFPSTAR=NO $(C:/MSC.SOFTWARE/MSC_NASTRAN/20141/CONF/NAST20141.RCF[14])  
+     NASTRAN SYSTEM(357)=0 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20141/CONF/NAST20141.RCF[15]
+     $ CHAPTER 13  EXAMPLE 2                                                         
+1                                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 101                                                                                 
+     CEND                                                                                    
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     3
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      SPCF=ALL                                                                                
+                  2      DISP=ALL                                                                                
+                  3      TITLE=PLATE EXAMPLE                                                                     
+                  4      SUBTITLE=FIXED-HINGED-HINGED-FREE                                                       
+                  5      LABEL=UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                     
+                  6      SPC=100                                                                                 
+                  7      ECHO=SORT                                                                               
+                  8      LOAD=5                                                                                  
+                  9      OLOAD=ALL                                                                               
+                 10      DISP(PUNCH)=ALL                                                                         
+ *** USER WARNING MESSAGE 602 (IFP1D)
+     TWO OR MORE OF THE ABOVE CARD TYPES DETECTED WHERE ONLY ONE IS
+     LEGAL.   THE LAST FOUND WILL BE USED.
+                 11      $                                                                                       
+                 12      BEGIN BULK                                                                              
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,1,,1.0,0.00E+00,0.00E+00,-9.375000E-02,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,2,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,3,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,4,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,5,,1.0,0.00E+00,0.00E+00,-9.375000E-02,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,6,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,7,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,8,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,9,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,10,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,11,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,12,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,13,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,14,,1.0,0.00E+00,0.00E+00,-3.750000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,15,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,16,,1.0,0.00E+00,0.00E+00,-9.375000E-02,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,17,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,18,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,19,,1.0,0.00E+00,0.00E+00,-1.875000E-01,
+ *** USER WARNING MESSAGE 4699 (FREFLD)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     FORCE,5,20,,1.0,0.00E+00,0.00E+00,-9.375000E-02,
+0                             INPUT BULK DATA ENTRY COUNT =      73
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     4
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+0                                                 S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CQUAD4  1       101     1       6       7       2                               
+                    2-        CQUAD4  2       101     2       7       8       3                               
+                    3-        CQUAD4  3       101     3       8       9       4                               
+                    4-        CQUAD4  4       101     4       9       10      5                               
+                    5-        CQUAD4  5       101     6       11      12      7                               
+                    6-        CQUAD4  6       101     7       12      13      8                               
+                    7-        CQUAD4  7       101     8       13      14      9                               
+                    8-        CQUAD4  8       101     9       14      15      10                              
+                    9-        CQUAD4  9       101     11      16      17      12                              
+                   10-        CQUAD4  10      101     12      17      18      13                              
+                   11-        CQUAD4  11      101     13      18      19      14                              
+                   12-        CQUAD4  12      101     14      19      20      15                              
+                   13-        FORCE   5       1               1.0     0.00E+000.00E+00-.09375                 
+                   14-        FORCE   5       2               1.0     0.00E+000.00E+00-.1875                  
+                   15-        FORCE   5       3               1.0     0.00E+000.00E+00-.1875                  
+                   16-        FORCE   5       4               1.0     0.00E+000.00E+00-.1875                  
+                   17-        FORCE   5       5               1.0     0.00E+000.00E+00-.09375                 
+                   18-        FORCE   5       6               1.0     0.00E+000.00E+00-.1875                  
+                   19-        FORCE   5       7               1.0     0.00E+000.00E+00-.375                   
+                   20-        FORCE   5       8               1.0     0.00E+000.00E+00-.375                   
+                   21-        FORCE   5       9               1.0     0.00E+000.00E+00-.375                   
+                   22-        FORCE   5       10              1.0     0.00E+000.00E+00-.1875                  
+                   23-        FORCE   5       11              1.0     0.00E+000.00E+00-.1875                  
+                   24-        FORCE   5       12              1.0     0.00E+000.00E+00-.375                   
+                   25-        FORCE   5       13              1.0     0.00E+000.00E+00-.375                   
+                   26-        FORCE   5       14              1.0     0.00E+000.00E+00-.375                   
+                   27-        FORCE   5       15              1.0     0.00E+000.00E+00-.1875                  
+                   28-        FORCE   5       16              1.0     0.00E+000.00E+00-.09375                 
+                   29-        FORCE   5       17              1.0     0.00E+000.00E+00-.1875                  
+                   30-        FORCE   5       18              1.0     0.00E+000.00E+00-.1875                  
+                   31-        FORCE   5       19              1.0     0.00E+000.00E+00-.1875                  
+                   32-        FORCE   5       20              1.0     0.00E+000.00E+00-.09375                 
+                   33-        GRID    1               0.      0.      0.                                      
+                   34-        GRID    2               1.5     0.      0.                                      
+                   35-        GRID    3               3.0     0.      0.                                      
+                   36-        GRID    4               4.5     0.      0.                                      
+                   37-        GRID    5               6.0     0.      0.                                      
+                   38-        GRID    6               0.      1.      0.                                      
+                   39-        GRID    7               1.5     1.      0.                                      
+                   40-        GRID    8               3.0     1.      0.                                      
+                   41-        GRID    9               4.5     1.      0.                                      
+                   42-        GRID    10              6.0     1.      0.                                      
+                   43-        GRID    11              0.      2.      0.                                      
+                   44-        GRID    12              1.5     2.      0.                                      
+                   45-        GRID    13              3.0     2.      0.                                      
+                   46-        GRID    14              4.5     2.      0.                                      
+                   47-        GRID    15              6.0     2.      0.                                      
+                   48-        GRID    16              0.      3.      0.                                      
+                   49-        GRID    17              1.5     3.      0.                                      
+                   50-        GRID    18              3.0     3.      0.                                      
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     5
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+0                                                 S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   51-        GRID    19              4.5     3.      0.                                      
+                   52-        GRID    20              6.0     3.      0.                                      
+                   53-        MAT1    105     30.E6           0.3                                             
+                   54-        PSHELL  101     105     .05     105             105                             
+                   55-        SPC1    100     6       1       THRU    20                                      
+                   56-        SPC1    100     1234    1       6       11      5       10      15              
+                   57-        SPC1    100     123456  16      THRU    20                                      
+                              ENDDATA 
+0                       TOTAL COUNT=        58
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =       20
+  
+                                   NUMBER OF CQUAD4   ELEMENTS =       12
+  
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     6
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -4.500000E+00 -6.750000E+00  1.350000E+01     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00 -4.500000E+00 -6.750000E+00  1.350000E+01  0.000000E+00
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     7
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+  
+ *** SYSTEM INFORMATION MESSAGE 4159 (DFMSA)
+     THE DECOMPOSITION OF KLL      YIELDS A MAXIMUM MATRIX-TO-FACTOR-DIAGONAL RATIO OF    6.603743E+01
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+                1          3.2193830E-14          2.1618363E-03
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     8
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  SPCFORCE RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       4.500000E+00  8.752237E+00 -1.350000E+01     ----                                  
+               MX       ----          ----          ----      -2.002237E+00     ----          ----                                  
+               MY       ----          ----          ----          ----      -8.326673E-15     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  4.500000E+00  6.750000E+00 -1.350000E+01  0.000000E+00
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE     9
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+ 
+                                                     L O A D   V E C T O R
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0           -9.375000E-02   0.0            0.0            0.0
+             2      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+             3      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+             4      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+             5      G      0.0            0.0           -9.375000E-02   0.0            0.0            0.0
+             6      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+             7      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+             8      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+             9      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+            10      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            11      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            12      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+            13      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+            14      G      0.0            0.0           -3.750000E-01   0.0            0.0            0.0
+            15      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            16      G      0.0            0.0           -9.375000E-02   0.0            0.0            0.0
+            17      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            18      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            19      G      0.0            0.0           -1.875000E-01   0.0            0.0            0.0
+            20      G      0.0            0.0           -9.375000E-02   0.0            0.0            0.0
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE    10
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0    UNIFORM LATERAL PRESSURE LOAD (0.25 LB/IN**2)                                                                                  
+ 
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            3.573215E-01  -9.876604E-02   0.0            0.0
+             5      G      0.0            0.0            3.573215E-01  -9.876604E-02   0.0            0.0
+             6      G      0.0            0.0            4.665502E-01  -4.985500E-02   0.0            0.0
+            10      G      0.0            0.0            4.665502E-01  -4.985500E-02   0.0            0.0
+            11      G      0.0            0.0            3.688164E-01   2.798499E-01   0.0            0.0
+            15      G      0.0            0.0            3.688164E-01   2.798499E-01   0.0            0.0
+            16      G      0.0            0.0           -4.810770E-01   9.887268E-02   2.685458E-02   0.0
+            17      G      0.0            0.0            9.978767E-01  -7.305090E-01  -5.310712E-03   0.0
+            18      G      0.0            0.0            1.081024E+00  -1.001422E+00  -4.329870E-15   0.0
+            19      G      0.0            0.0            9.978767E-01  -7.305090E-01   5.310712E-03   0.0
+            20      G      0.0            0.0           -4.810770E-01   9.887268E-02  -2.685458E-02   0.0
+1   PLATE EXAMPLE                                                           OCTOBER  20, 2015  MSC Nastran  7/ 3/15   PAGE    11
+     FIXED-HINGED-HINGED-FREE                                                                                                       
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     F      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+  
