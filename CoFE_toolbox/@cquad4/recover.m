@@ -1,9 +1,10 @@
 function [obj,obj_prime] = recover(obj,gnum2gdof,globalDef,obj_prime,globalDef_prime)
 
-% % analysis results
-% elDef = globalDef([gnum2gdof(:,obj.G1);gnum2gdof(:,obj.G2)]) ;
-% obj.force = obj.R*obj.ke*elDef;
-% obj.stress = obj.force_stress*obj.force;
+% analysis results
+elDef = globalDef(obj.gdof);
+
+obj.stress = [crunch(obj.GB1,elDef), crunch(obj.GB2,elDef)];
+
 % 
 % % Design Derivatives
 % if nargin > 3
@@ -16,3 +17,12 @@ function [obj,obj_prime] = recover(obj,gnum2gdof,globalDef,obj_prime,globalDef_p
 
 end
 
+function stressOut = crunch(G,u)
+stress = G*u;
+s = [stress(1:3)+stress(4:6);stress(7:8)];
+vmStress = sqrt( s(1)^2 - s(1)*s(2) + s(2)^2 + 3*s(3)^2 );
+principalAngles = .5*atand(2*s(3)/(s(1)-s(2)));
+major = (s(1)+s(2))/2 + sqrt( ((s(1)-s(2))/2)^2 + s(3)^2);
+minor = (s(1)+s(2))/2 - sqrt( ((s(1)-s(2))/2)^2 + s(3)^2);
+stressOut = [s;principalAngles;major;minor;vmStress];
+end

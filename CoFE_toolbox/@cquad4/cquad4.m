@@ -36,12 +36,16 @@ classdef cquad4
         t % [4x1] element thicknesses at nodes
         NSM % nonstructural mass
         rho % material density
+        GB1 % displacement-stress matricies at top (1) and bottom (1) of element midpoint
+        GB2
+        tc  % thickness at element midpoint
     end
     
     % physical quantities
     properties
         ke
         me
+        stress
     end
     methods
         function obj = initialize(obj,data)

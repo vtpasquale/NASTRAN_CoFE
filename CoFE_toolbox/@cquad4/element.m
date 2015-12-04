@@ -47,18 +47,42 @@ obj.n4 = cross3(j1(-1, 1),j2(-1, 1)); obj.n4 = obj.n4./norm_cs(obj.n4);
 pidH = [FEM.PSHELL.PID]==obj.PID;
 if sum(pidH)~=1; error(['There should be one and only one PROD with ID#',num2str(obj.PID),'']); end
 
-% find MAT1
-mat1H = [FEM.MAT1.MID]==FEM.PSHELL(pidH).MID1;
-if sum(mat1H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID1),'']); end
+% materials
+if FEM.PSHELL(pidH).MID1 ~= -999;
+    mat1H = [FEM.MAT1.MID]==FEM.PSHELL(pidH).MID1;
+    if sum(mat1H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID1),'']); end
+    G1 = FEM.MAT1(mat1H).stress_strain_mat;
+else
+    G1 = zeros(3);
+end
 
-% stress-strain matrix
-G = FEM.MAT1(mat1H).stress_strain_mat;
+if FEM.PSHELL(pidH).MID2 == FEM.PSHELL(pidH).MID1
+    G2 = G1;
+elseif FEM.PSHELL(pidH).MID2 ~= -999;
+    mat2H = [FEM.MAT1.MID]==FEM.PSHELL(pidH).MID2;
+    if sum(mat2H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID2),'']); end
+    G2 = FEM.MAT1(mat2H).stress_strain_mat;
+else
+    G2 = zeros(3);
+end
 
-% shell stress-strain matrix
-obj.G= [G           ,zeros(3,3)                     , zeros(3,2) 
-        zeros(3,3)  ,FEM.PSHELL(pidH).n12I_Tpwr3*G  , zeros(3,2) 
-        zeros(2,3)  ,zeros(2,3)                     , FEM.PSHELL(pidH).TS_T*G(1:2,1:2)];
-    
+if FEM.PSHELL(pidH).MID3 == FEM.PSHELL(pidH).MID1
+    G3 = G1;
+elseif FEM.PSHELL(pidH).MID3 == FEM.PSHELL(pidH).MID2
+    G3 = G2;
+elseif FEM.PSHELL(pidH).MID3 ~= -999;
+    mat3H = [FEM.MAT1.MID]==FEM.PSHELL(pidH).MID3;
+    if sum(mat3H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID3),'']); end
+    G3 = FEM.MAT1(mat3H).stress_strain_mat;
+else
+    G3 = G2;
+end
+
+% shell stress-strain matrix (bending relationship is scaled by t^3/12 at integration point)
+obj.G= [G1          ,zeros(3,3)                     , zeros(3,2) 
+        zeros(3,3)  ,FEM.PSHELL(pidH).n12I_Tpwr3*G2 , zeros(3,2)
+        zeros(2,3)  ,zeros(2,3)                     , FEM.PSHELL(pidH).TS_T*G3(3,3)*eye(2)];
+
 % material density
 obj.rho = FEM.MAT1(mat1H).RHO;
 
@@ -100,7 +124,7 @@ mi1 = 1:6:24;
 mi2 = 2:6:24;
 mi3 = 3:6:24;
 
-% Loop through Gauss Points
+% Loop through Gauss points
 XI = 1/sqrt(3)*[-1 -1; 1 1];
 ETA = 1/sqrt(3)*[-1 1; -1 1];
 for i = 1:2
@@ -116,7 +140,7 @@ for i = 1:2
         me(mi3,mi3) = me(mi3,mi3) + mp;
     end
 end
-[~,ks,~] = ele_p(obj,0,0);
+[~,ks,~,GB1,GB2,tc] = ele_p(obj,0,0);
 ke = ke + 4*ks;
 
 %% single point Gauss quadrature
@@ -127,13 +151,15 @@ ke = ke + 4*ks;
 % ke = ke + 4*kn + 4*ks;
 
 %% transform to global coordinate system and save
-R(22:24,22:24)=TEG;R(19:21,19:21)=TEG;R(16:18,16:18)=TEG;R(13:15,13:15)=TEG;
-R(10:12,10:12)=TEG;R(7:9,7:9)=TEG;R(4:6,4:6)=TEG;R(1:3,1:3)=TEG;
-% REG = R;
-RGE = R.';
+REG(22:24,22:24)=TEG;REG(19:21,19:21)=TEG;REG(16:18,16:18)=TEG;REG(13:15,13:15)=TEG;
+REG(10:12,10:12)=TEG;REG(7:9,7:9)=TEG;REG(4:6,4:6)=TEG;REG(1:3,1:3)=TEG;
+RGE = REG.';
 
-obj.ke =  RGE*ke*RGE.';
-obj.me =  RGE*me*RGE.';
+obj.ke =  sparse(RGE*ke*REG);
+obj.me =  sparse(RGE*me*REG);
+obj.GB1 = sparse(GB1*REG);
+obj.GB2 = sparse(GB2*REG);
+obj.tc = tc;
 
 end
 

@@ -6,7 +6,7 @@ addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
 CASE.inputFile = 'gt13ex2.bdf';
-CASE.SOL = 101; % SOL = 101, SOL = 103, and SOL = 105 are options
+CASE.SOL = 101;
 CASE.SPC = 100;
 CASE.LOAD = 5;
 CASE.METHOD = 10;
@@ -25,3 +25,6 @@ nas_scaleOption = 2;
 post_gui(FEM,nas_response,nas_comment,nas_scaleOption);
 axis equal
 view(-50,20)
+
+%%
+100*(min(FEM.x)-min(nas_response(:,4)))./min(nas_response(:,4))

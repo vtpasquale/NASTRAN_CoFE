@@ -1,7 +1,7 @@
 % Function to calculate integration point contributions for cquad4 element mass and stiffness matricies
 % Anthony Ricciardi
 %
-function [kn,ks,mp] = ele_p(obj,xi,eta)
+function [kn,ks,mp,GB1,GB2,tc] = ele_p(obj,xi,eta)
 
 %% shape function evaluations
 Ni      = .25*[(1-xi)*(1-eta),(1+xi)*(1-eta),(1+xi)*(1+eta),(1-xi)*(1+eta)];
@@ -55,40 +55,32 @@ s3=[0 0 dNdxzy(2,3) 0    Ni(3) 0
 s4=[0 0 dNdxzy(2,4) 0    Ni(4) 0
     0 0 dNdxzy(1,4) Ni(4) 0    0];
 
-
 z3 = zeros(3);
-zeta = 1/sqrt(3)*[-1 1];
 
-
-B1 = [[e1  z3
-       z3  .5*tg*zeta(1)*e1
+B  = [[e1  z3
+       z3  e1
        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
       [e2  z3
-       z3  .5*tg*zeta(1)*e2
+       z3  e2
        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
       [e3  z3
-       z3  .5*tg*zeta(1)*e3
+       z3  e3
        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
       [e4  z3
-       z3  .5*tg*zeta(1)*e4
+       z3  e4
        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
 
-B2 = [[e1  z3
-       z3  .5*tg*zeta(2)*e1
-       s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
-      [e2  z3
-       z3  .5*tg*zeta(2)*e2
-       s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
-      [e3  z3
-       z3  .5*tg*zeta(2)*e3
-       s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
-      [e4  z3
-       z3  .5*tg*zeta(2)*e4
-       s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
-   
-%% Stiffness matrix
-kn = (B1([1:2,4:5],:).'*obj.G([1:2,4:5],[1:2,4:5])*B1([1:2,4:5],:) + B2([1:2,4:5],:).'*obj.G([1:2,4:5],[1:2,4:5])*B2([1:2,4:5],:)) *.5*tg*detJ;
-ks = (B1([3,6:8],:).'*obj.G([3,6:8],[3,6:8])*B1([3,6:8],:) + B2([3,6:8],:).'*obj.G([3,6:8],[3,6:8])*B2([3,6:8],:)) *.5*tg*detJ;
+%% Modify constitutive (stress-strain) matrix for bending 
+G = obj.G;
+G(4:6,4:6) = tg^2/12*G(4:6,4:6); % << not tg^3/12 because membrane and shear terms dimensionalized with tg in integral lines
+
+%% Stiffness matrix contributions at integration point
+kn = B([1:2,4:5],:).'*G([1:2,4:5],[1:2,4:5])*B([1:2,4:5],:) *tg*detJ;
+ks = B([3,6:8]  ,:).'*G([3,6:8]  ,[3,6:8]  )*B([3,6:8]  ,:) *tg*detJ;
+
+% ks3  = B( 3     ,:).'*G(3      ,3      )*B(3      ,:) *tg*detJ;
+% ks68 = B( 6:8   ,:).'*G( 6:8   , 6:8   )*B( 6:8   ,:) *tg*detJ;
+% keyboard
 
 %% Mass matrix
 % consistant
@@ -97,7 +89,43 @@ mp = (tg*obj.rho + obj.NSM) *(Ni.')*Ni*detJ;
 % lumped
 % mp = (tg*obj.rho + obj.NSM) *diag(Ni)*detJ;
 
+
+%% displacement-stress matrix (no membrane-bending coupling)
+if nargout > 3
+   zeta = [-1 1];
+   GB1 = obj.G*...
+        [[e1  z3
+        z3  .5*tg*zeta(1)*e1
+        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
+        [e2  z3
+        z3  .5*tg*zeta(1)*e2
+        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
+        [e3  z3
+        z3  .5*tg*zeta(1)*e3
+        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
+        [e4  z3
+        z3  .5*tg*zeta(1)*e4
+        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
+   GB2 = obj.G*...
+        [[e1  z3
+        z3  .5*tg*zeta(2)*e1
+        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
+        [e2  z3
+        z3  .5*tg*zeta(2)*e2
+        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
+        [e3  z3
+        z3  .5*tg*zeta(2)*e3
+        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
+        [e4  z3
+        z3  .5*tg*zeta(2)*e4
+        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
+    
+    tc=tg;
 end
+
+
+end
+
 function p = cross3(u,v)
     p = [u(2)*v(3), u(3)*v(1), u(1)*v(2)]-[u(3)*v(2), u(1)*v(3), u(2)*v(1)];
 end
@@ -105,3 +133,33 @@ end
 function p = norm_cs(v)
     p = sqrt(v(1).^2+v(2).^2+v(3).^2);
 end
+
+%% Through thinkness integration inefficent
+% zeta = 1/sqrt(3)*[-1 1];
+% B1 = [[e1  z3
+%        z3  .5*tg*zeta(1)*e1
+%        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
+%       [e2  z3
+%        z3  .5*tg*zeta(1)*e2
+%        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
+%       [e3  z3
+%        z3  .5*tg*zeta(1)*e3
+%        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
+%       [e4  z3
+%        z3  .5*tg*zeta(1)*e4
+%        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
+% B2 = [[e1  z3
+%        z3  .5*tg*zeta(2)*e1
+%        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
+%       [e2  z3
+%        z3  .5*tg*zeta(2)*e2
+%        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
+%       [e3  z3
+%        z3  .5*tg*zeta(2)*e3
+%        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
+%       [e4  z3
+%        z3  .5*tg*zeta(2)*e4
+%        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
+% 
+% kn = (B1([1:2,4:5],:).'*obj.G([1:2,4:5],[1:2,4:5])*B1([1:2,4:5],:) + B2([1:2,4:5],:).'*obj.G([1:2,4:5],[1:2,4:5])*B2([1:2,4:5],:)) *.5*tg*detJ;
+% ks = (B1([3,6:8],:).'*obj.G

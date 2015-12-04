@@ -6,7 +6,7 @@ addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
 CASE.inputFile = 'topex3a.dat';
-CASE.SOL = 101; % SOL = 101, SOL = 103, and SOL = 105 are options
+CASE.SOL = 101;
 CASE.SPC = 2;
 CASE.LOAD = 2;
 CASE.METHOD = 10;
