@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CQUAD4 Theory</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+    Macros: {
+      V: ["{\\boldsymbol #1}",1],
+      M: ["{\\boldsymbol #1}",1],
+      dd: ["{\\frac{\\partial{#1}}{\\partial{#2}}}",2]
+    }
+  }
+});
+</script>
+</head>
+
+<body>
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+<h1>CQUAD4 Theory</h1>
+<p>
+The CoFE four node quadrilateral is most closely influenced by the ASTROS [1] CQUAD4 formulation.  However, the CoFE CQUAD4 deviates from the ASTROS CQUAD4 with respect to shear strain approximation.  ASTROS uses a generalization of the Hughes and Tezdayar [2] approach to enforce constant shear along each edge of the element, which eliminates the need to perform reduced integration to avoid shear locking.  CoFE uses the classical shear strain approximation with reduced order integration.  
+</p>
+
+<h2>Geometry</h2>
+
+
+<figure>
+  <object type="image/svg+xml" data="cquad4_midsurf.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 1:  CQUAD4 midsurface and coordinate systems.</figcaption>
+</figure>
+<p></p>
+
+<p>
+The origin of the element coordinate system, reference frame $E$, is located at the average of the element node locations.  The $\V{x}_{\small E}$ vector points from the $E$ reference frame origin to the midpoint of nodes 2 and 3, and the $\V{y}_{\small E}$ vector points from the $E$ reference frame origin to the midpoint of nodes 3 and 4.  The vectors $\V{x}_{\small E}$, $\V{y}_{\small E}$, and $\V{z}_{\small E}$ (perpendicular to $\V{x}_{\small E}$ and $\V{y}_{\small E}$) are used to define transformation matrices to other reference frames.  There is a local $I$ reference frame that is defined uniquely at any point on the element midsurface.  
+</p>
+
+<h2>Interpolation Functions and Derivatives</h2>
+<p>
+The isoparametric element shape function are defined as functions of curvilinear coordinates $\xi$ and $\eta$.
+\begin{align}
+N_1 &= \frac{1}{4}(1-\xi)(1-\eta) \\
+N_2 &= \frac{1}{4}(1+\xi)(1-\eta) \\
+N_3 &= \frac{1}{4}(1+\xi)(1+\eta) \\
+N_4 &= \frac{1}{4}(1-\xi)(1+\eta)
+\end{align}
+The element domain is mapped to curvilinear space such that the domain spans $-1 \leq \xi \leq 1$, $-1 \leq \eta \leq 1$, and $-1 \leq \zeta \leq 1$, where $\zeta$ is the thickness perpendicular to the element midsurface.  The shape function and derivative values are plotted on the curvilinear domain in Fig. 2.  
+</p>
+
+<figure>
+  <object type="image/svg+xml" data="shapeFunctions.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 2:  CQUAD4 shape functions and derivatives on curvilinear domain.</figcaption>
+</figure>
+<p></p>
+
+<p>
+
+Any continuous spatially varying parameter, say $\varphi$, can be approximated as
+\begin{equation}
+\label{e:interp1}
+\varphi(\xi,\eta) = \sum_{i=1}^4 \varphi^i N_i(\xi,\eta)
+\end{equation}
+
+where $\varphi^i$ are the values of $\varphi$ at each node.  Additionally, the partial derivatives with respect to curvilinear coordinates are approximated as
+\begin{equation}
+\label{e:interp2}
+\frac{\partial \varphi}{\partial \xi} = \sum_{i=1}^4 \varphi^i \frac{\partial N_i}{\partial \xi} 
+\end{equation}
+
+and similarly for the derivative with respect to $\eta$.  Partial derivatives of the shape functions with respect to the physical coordinates ($x$, $y$, and $z$) are necessary for the element formulation.  Therefore, the derivatives of the shape functions with respect to the physical coordinates must be related to the partial derivatives of the shape functions with respect to the curvilinear coordinates using the element geometry and multivariable calculus. 
+Using the chain rule of partial differentiation
+
+\begin{align}
+\dd{N_i}{\xi}   &= \dd{N_i}{x}\dd{x}{\xi}   + \dd{N_i}{y}\dd{y}{\xi}   + \dd{N_i}{z}\dd{z}{\xi} \\
+\dd{N_i}{\eta}  &= \dd{N_i}{x}\dd{x}{\eta}  + \dd{N_i}{y}\dd{y}{\eta}  + \dd{N_i}{z}\dd{z}{\eta} \\
+\dd{N_i}{\zeta} &= \dd{N_i}{x}\dd{x}{\zeta} + \dd{N_i}{y}\dd{y}{\zeta} + \dd{N_i}{z}\dd{z}{\zeta}
+\end{align}
+
+or in matrix form
+\begin{equation}
+\begin{Bmatrix}
+\dd{N_i}{\xi}\\
+\dd{N_i}{\eta} \\
+\dd{N_i}{\zeta} 
+\end{Bmatrix}
+= 
+\underbrace{
+\begin{bmatrix}
+\dd{x}{\xi} & \dd{y}{\xi}  & \dd{z}{\xi} \\ 
+\dd{x}{\eta} & \dd{y}{\eta}  & \dd{z}{\eta} \\ 
+\dd{x}{\zeta} & \dd{y}{\zeta}  & \dd{z}{\zeta} \\ 
+\end{bmatrix}
+}_{\mbox{Jacobian matrix} \; \M{J}}
+\begin{Bmatrix}
+\dd{N_i}{x}\\
+\dd{N_i}{y} \\
+\dd{N_i}{z} 
+\end{Bmatrix}
+\label{e:pcTran}
+\end{equation}
+
+Based on Equations \ref{e:interp1} and \ref{e:interp2}
+
+\begin{equation}
+\begin{Bmatrix} x \\ y \\ z \end{Bmatrix} = \sum_{i=1}^4 \begin{Bmatrix} x \\ y \\ z \end{Bmatrix}^i N_i
+\end{equation}
+
+and
+\begin{align}
+\begin{Bmatrix} \dd{x}{\xi}  \\ \dd{y}{\xi}  \\ \dd{z}{\xi} \end{Bmatrix}  &= \sum_{i=1}^4 \begin{Bmatrix} x \\ y \\ z \end{Bmatrix}^i \dd{N_i}{\xi} = \V{v}_\xi \label{e:dxi} \\
+\begin{Bmatrix} \dd{x}{\eta} \\ \dd{y}{\eta} \\ \dd{z}{\eta} \end{Bmatrix} &= \sum_{i=1}^4 \begin{Bmatrix} x \\ y \\ z \end{Bmatrix}^i \dd{N_i}{\eta} = \V{v}_\eta \label{e:deta}
+\end{align}
+
+where $\V{v}_\xi$ and $\V{v}_\eta$ are vectors tangent to the element midsurface. Equations \ref{e:dxi} and \ref{e:deta} determine the first two rows of the Jacobian matrix.  The final row of the Jacobian matrix is the interpolated value of the unit vectors that are normal to the element midsurface at the nodes
+
+\begin{equation}
+\begin{Bmatrix} \dd{x}{\zeta}  \\ \dd{y}{\zeta}  \\ \dd{z}{\zeta} \end{Bmatrix}  = \sum_{i=1}^4 
+\left( \frac{\V{v}_\xi \times \V{v}_\eta}{\left| \V{v}_\xi \times \V{v}_\eta \right|} \right)^i
+\end{equation}
+
+Based on the know Jacobian matrix and the known partial derivatives of the shape function with respect to the curvilinear coordinates, partial derivatives of the shape function with respect to the phystical coordinates are determined by rearranging Equation \ref{e:pcTran} to 
+
+\begin{equation}
+\begin{Bmatrix}
+\dd{N_i}{x}\\
+\dd{N_i}{y} \\
+\dd{N_i}{z} 
+\end{Bmatrix}
+=
+\M{J}^{-1}
+\begin{Bmatrix}
+\dd{N_i}{\xi}\\
+\dd{N_i}{\eta} \\
+\dd{N_i}{\zeta} 
+\end{Bmatrix}
+\end{equation}
+ 
+</p>
+
+
+<h2>Local Coordinates</h2>
+<p>
+The CQUAD4 element supports nonrectangular and nonplanar geometries, so it is necessary to define the local $I$ reference frame.  The x-y plane of the $I$ reference frame remains tangent to the element midsurface, $\V{z}_{\small I}$ remains normal to the element midsurface, and the projection of $\V{y}_{\small I}$ onto the x-y plane of the $E$ reference frame remains parallel to $\V{y}_{\small E}$.  The axes of the $I$ reference frame are defined as
+
+\begin{align}
+\V{z}_{\small I}  &= 
+\left( \frac{\V{v}_\xi \times \V{v}_\eta}{\left| \V{v}_\xi \times \V{v}_\eta \right|} \right) \\
+\V{x}_{\small I} &= 
+\left( \frac{\V{y}_{\small E} \times \V{z}_{\small I}}
+{\left| \V{y}_{\small E} \times \V{z}_{\small I} \right|} \right) \\
+\V{y}_{\small I}  &= \V{z}_{\small I} \times \V{x}_{\small I}
+\end{align}
+
+Finally, the rotation matrix that transforms quantities in the element reference frame to the local reference frame is
+\begin{equation}
+\M{T}_{\small IE} = \left[ \V{x}_{\small I} \;\; \V{y}_{\small I} \;\; \V{z}_{\small I}\right]^{\small T}
+\end{equation}
+</p>
+
+<h2>Plate Rotation Coordinates</h2>
+<p>
+For convenience of consistency between membrane strain-displacement matrices and bending strain-displacement matrices, plate rotations, denoted $\tilde{\boldsymbol{\theta}}$, use the nonstandard numbering and signs shown in Figure 3.
+</p>
+
+<figure>
+  <object type="image/svg+xml" data="plateRefFrame.svg">Your browser does not support SVG</object>
+  <figcaption>Fig. 3:  Local $I$ reference frame and plate rotation convention.</figcaption>
+</figure>
+<p></p>
+
+<p>
+Plate rotations are related to standard rotations using
+\begin{equation}
+\tilde{\boldsymbol{\theta}}_{\small I}
+=
+\begin{bmatrix}
+0  & 1 & 0 \\ 
+-1 & 0 & 0 \\ 
+0  & 0 & 1 \\ 
+\end{bmatrix}
+\boldsymbol{\theta}_{\small I}
+\end{equation}
+
+The plate rotation transformation is only valid in the local $I$ reference frame.  Rotations at node $i$ expressed in the $E$ reference frame can be transformed to plate rotations expressed in the local $I$ reference frame at any other point on the element midsurface using
+
+\begin{equation}
+\tilde{\boldsymbol{\theta}}_{\small I}
+=
+\boldsymbol{T}_{\small IE}
+\underbrace{
+\boldsymbol{T}_{\small EI}^i
+\begin{bmatrix}
+0  & 1 & 0 \\ 
+-1 & 0 & 0 \\ 
+0  & 0 & 1 \\ 
+\end{bmatrix}
+\boldsymbol{T}_{\small IE}^i
+}_{\Large \boldsymbol{A}^i}
+\boldsymbol{\theta}_{\small E}^i
+\end{equation}
+
+or
+
+\begin{equation}
+\tilde{\boldsymbol{\theta}}_{\small I}
+=
+\boldsymbol{T}_{\small IE}
+\boldsymbol{A}^i
+\boldsymbol{\theta}_{\small E}^i
+\end{equation}
+
+where superscript $i$ denotes the node number.  The $\boldsymbol{A}^i$ matrices are unique for each node number and the $\boldsymbol{T}_{\small IE}$ matrix is dependant on local position.  
+</p>
+
+<h2>Interpolated Displacements and Rotations</h2>
+<p>
+The values of $\boldsymbol{u}_{\small I}$ and $\tilde{\boldsymbol{\theta}}_{\small I}$ at any point in the element are assumed to be a shape-function weighted sum of the nodal values
+
+\begin{align}
+\boldsymbol{u}_{\small I}
+& =
+\sum_{i=1}^4
+N_i
+\boldsymbol{T}_{\small IE}
+\boldsymbol{u}_{\small E}^i 
+\\
+\tilde{\boldsymbol{\theta}}_{\small I}
+& =
+\sum_{i=1}^4
+N_i
+\boldsymbol{T}_{\small IE}
+\boldsymbol{A}^i
+\boldsymbol{\theta}_{\small E}^i
+\end{align}
+
+noting that both $N_i$ and $\boldsymbol{T}_{\small IE}$ are functions of local position.
+</p>
+
+<h2>Strain-Displacement Relationship</h2>
+<p>
+Membrane
+\begin{equation}
+\V{\epsilon}_{\small I}^{\small M}
+=
+\begin{Bmatrix}
+\epsilon_x\\ 
+\epsilon_y\\ 
+\gamma_{xy}
+\end{Bmatrix}_{\small I}^{\small M}
+= 
+\begin{Bmatrix}
+\dd{u}{x} \\
+\dd{v}{y} \\
+\dd{u}{y}+\dd{v}{x} 
+\end{Bmatrix}_{\small I}^{\small M}
+=
+\begin{bmatrix}
+\dd{}{x} & 0 & 0\\ 
+0 & \dd{}{y} & 0\\ 
+\dd{}{y} & \dd{}{x} & 0 
+\end{bmatrix}
+\V{u}_{\small I}^{\small M}
+\end{equation}
+
+bending
+\begin{equation}
+\V{\epsilon}_{\small I}^{\small B}
+=
+\begin{Bmatrix}
+\epsilon_x\\ 
+\epsilon_y\\ 
+\gamma_{xy}
+\end{Bmatrix}_{\small I}^{\small B}
+= 
+\begin{Bmatrix}
+\dd{u}{x} \\
+\dd{v}{y} \\
+\dd{u}{y}+\dd{v}{x} 
+\end{Bmatrix}_{\small I}^{\small B}
+=
+\begin{bmatrix}
+\dd{}{x} & 0 & 0\\ 
+0 & \dd{}{y} & 0\\ 
+\dd{}{y} & \dd{}{x} & 0 
+\end{bmatrix}
+\V{u}_{\small I}^{\small B}
+\end{equation}
+
+transverse shear
+\begin{equation}
+\V{\gamma}_{\small I}^{\small S}
+=
+\begin{Bmatrix}
+\gamma_{yz}\\ 
+\gamma_{zx}
+\end{Bmatrix}_{\small I}
+= 
+\begin{Bmatrix}
+\dd{w}{y} + \dd{v}{z} \\
+\dd{w}{x} + \dd{u}{z}
+\end{Bmatrix}_{\small I}
+=
+\begin{bmatrix}
+0 & 0 & \dd{}{y} & 0 & \dd{}{z} & 0\\ 
+0 & 0 & \dd{}{x} & \dd{}{z} & 0 & 0 
+\end{bmatrix}
+\begin{Bmatrix}
+\V{u}_{\small I}^{\small M} \\
+\V{u}_{\small I}^{\small B}
+\end{Bmatrix}
+\end{equation}
+
+assuming plane sections remain plane
+\begin{equation}
+\dd{}{z} \V{u}_{\small I}^{\small B} = \dd{}{z} z_{\small I} \tilde{\V{\theta}}_{\small I} =  \tilde{\V{\theta}}_{\small I}
+\end{equation}
+
+and applying the nodal interpolation and transformations
+\begin{equation}
+\label{membraneStrain}
+\V{\epsilon}_{\small I}^{\small M}
+=
+\sum_{i=1}^4
+\begin{bmatrix}
+\dd{N_i}{x} & 0 & 0\\ 
+0 & \dd{N_i}{y} & 0\\ 
+\dd{N_i}{y} & \dd{N_i}{x} & 0 
+\end{bmatrix}
+\M{T}_{\small IE}
+\V{u}_{\small E}^i
+\end{equation}
+
+\begin{equation}
+\label{bendingStrain}
+\V{\epsilon}_{\small I}^{\small B}
+=
+\zeta \frac{t_{\small I}}{2}
+\sum_{i=1}^4
+\begin{bmatrix}
+\dd{N_i}{x} & 0 & 0\\ 
+0 & \dd{N_i}{y} & 0\\ 
+\dd{N_i}{y} & \dd{N_i}{x} & 0 
+\end{bmatrix}
+\M{T}_{\small IE} \M{A}^i
+\V{\theta}_{\small E}^i
+\end{equation}
+
+\begin{equation}
+\label{shearStrain}
+\V{\gamma}_{\small I}^{\small S}
+=
+\sum_{i=1}^4
+\begin{bmatrix}
+0 & 0 & \dd{N_i}{y} & 0 & N_i & 0\\ 
+0 & 0 & \dd{N_i}{x} & N_i & 0 & 0 
+\end{bmatrix}
+\begin{bmatrix}
+\M{T}_{\small IE} & \M{0} \\ 
+\M{0}             & \M{T}_{\small IE} \M{A}^i  
+\end{bmatrix}
+\begin{Bmatrix}
+\V{u}_{\small E}^i \\
+\V{\theta}_{\small E}^i
+\end{Bmatrix}
+\end{equation}
+
+The strain-displacement matrices should be populated with quantities expressed in the appropriate local $I$ reference frame, thus, derivatives with respect to physical coordinates should be derived at each point using
+\begin{equation}
+\begin{Bmatrix}
+\dd{N_i}{x}\\
+\dd{N_i}{y} \\
+\dd{N_i}{z} 
+\end{Bmatrix}_{\small I}
+= 
+\M{T}_{\small IE}
+\M{J}^{-1}
+\begin{Bmatrix}
+\dd{N_i}{\xi}\\
+\dd{N_i}{\eta} \\
+\dd{N_i}{\zeta} 
+\end{Bmatrix}_{\small E}
+\end{equation}
+
+See equations \ref{membraneStrain}, \ref{bendingStrain}, and \ref{shearStrain}.
+
+
+\begin{equation}
+\begin{Bmatrix}
+\V{\epsilon}_{\small I}^{\small M} \\
+\V{\epsilon}_{\small I}^{\small B} \\
+\V{\gamma}_{\small I}^{\small S} \\
+\end{Bmatrix}
+=
+\sum_{i=1}^4
+\begin{bmatrix}
+\dd{N_i}{x} & 0 & 0 & 0 & 0 & 0 \\
+0 & \dd{N_i}{y} & 0 & 0 & 0 & 0 \\
+\dd{N_i}{y} & \dd{N_i}{x} & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & \frac{\zeta t_i}{2}\dd{N_i}{x} & 0 & 0 \\
+0 & 0 & 0 & 0 & \frac{\zeta t_i}{2}\dd{N_i}{y} & 0 \\
+0 & 0 & 0 & \frac{\zeta t_i}{2}\dd{N_i}{y} & \frac{\zeta t_i}{2}\dd{N_i}{x} & 0 \\
+0 & 0 & \dd{N_i}{y} & 0 & N_i & 0 \\
+0 & 0 & \dd{N_i}{x} & N_i & 0 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+\M{T} & \M{0} \\ 
+\M{0} & \M{A}^i  
+\end{bmatrix}
+\begin{Bmatrix}
+\V{u}_{\small E}^i \\
+\V{\theta}_{\small E}^i
+\end{Bmatrix}
+\end{equation}
+</p>
+
+<h2>Stress-Strain Relationship</h2>
+<p>
+Stresses are related to the previously defined strains by the elasticity matrix
+\begin{equation}
+\begin{Bmatrix}
+\V{\sigma}^{\small M}\\
+\V{\sigma}^{\small B}\\
+\V{\tau}^{\small S} 
+\end{Bmatrix}
+= 
+\begin{bmatrix}
+\M{G}_1 & \M{0}   & \M{0} \\
+\M{0}   & \M{G}_2 & \M{0} \\
+\M{0}   & \M{0}   & \M{G}_3 
+\end{bmatrix}
+\begin{Bmatrix}
+\V{\epsilon}^{\small M}\\
+\V{\epsilon}^{\small B}\\
+\V{\gamma}^{\small S} 
+\end{Bmatrix}
+\end{equation}
+
+where $\V{\sigma}^{\small M}$ is the membrane stress vector, 
+$\V{\sigma}^{\small B}$ is the bending stress vector, 
+$\V{\gamma}^{\small S}$ is the transverse shear stress vector, 
+$\M{G}_1$ is the membrane moduli matrix, 
+$\M{G}_2$ is the bending moduli matrix, and 
+$\M{G}_3$ is the transverse shear moduli matrix.
+</p>
+
+<p>
+For isotropic materials:
+\begin{align}
+\M{G}_1 &=
+\frac{E}{1-\nu^2}
+\begin{bmatrix}
+1   & \nu  & 0 \\
+\nu & 1  & 0 \\
+0   & 0    & \frac{1-\nu}{2}
+\end{bmatrix}
+\\
+\M{G}_2 &= \frac{t^3}{12 I} \M{G}_1
+\\
+\M{G}_3 &=
+\frac{t_s}{t}
+\frac{E}{1-\nu^2}
+\begin{bmatrix}
+1   & \nu \\
+\nu & 1 
+\end{bmatrix}
+\end{align}
+
+where $E$ is Young's modulus; $t$ is the element thickness at the corresponding integration point, $\nu$ is Poisson's ratio and $\frac{t_s}{t}$ is the transverse shear factor.
+
+</p>
+
+<h2>References</h2>
+<ol>
+<li>
+Neill, D. J., D. L. Herendeen, and V. B. Venkayya. "ASTROS Enhancements: Volume III-ASTROS Theoretical Manual." Flight Dynamics Directorate, Wright Laboratory, Wright Patterson Air Force Base, WL-TR-95-3006 (1995).
+</li>
+<li>
+Hughes, T. J. R., and T. E. Tezduyar. "Finite elements based upon Mindlin plate theory with particular reference to the four-node bilinear isoparametric element." Journal of applied mechanics 48.3 (1981): 587-596.
+</li>
+</ol>
+
+</div>
+
+
+
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
