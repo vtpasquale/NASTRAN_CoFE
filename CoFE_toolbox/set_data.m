@@ -51,6 +51,24 @@ switch type
         end
         
     case 'dec'
+        
+        % deal with scientific notation
+        sign = strfind(data(2:end),'-');
+        if isempty(sign) 
+            sign = strfind(data(2:end),'+');
+        end
+        if isempty(sign) ~= 1
+            E = strfind(data(2:end),'E');
+            if isempty(E)
+                dataNew = [data,' '];
+                dataNew(sign+2:end) = data(sign+1:end);
+                dataNew(sign+1)='E';
+                data = dataNew;
+            elseif sign-E ~= 1
+                error('There is a formating problem')
+            end
+        end
+        
         out = sscanf(data, '%f'); % out = str2double(data);
         if isfloat(out) == 0
             error([fieldName,' on  ',entryName,' should be a real number.']);

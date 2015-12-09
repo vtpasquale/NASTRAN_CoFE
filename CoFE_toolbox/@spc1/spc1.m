@@ -14,8 +14,10 @@ classdef spc1
             obj.C   = set_data('SPC1','C',data{3},'int',[],1);
             obj.G1  = set_data('SPC1','G1',data{4},'int',[],1);
             
-            if strcmp(data{5},'') == 0
-                error('CoFE does not allow G2 field on SPC1 entries.')
+            if isempty(data{5}) ~= 1
+                if strcmp(data{5},'') ~= 1
+                    error('CoFE does not allow G2 field on SPC1 entries.')
+                end
             end
         end
         
