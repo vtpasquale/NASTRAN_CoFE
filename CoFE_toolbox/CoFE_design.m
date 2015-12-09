@@ -3,7 +3,7 @@
 %
 % Input
 % FEM = [1x1 fem] Finite element model and solution object
-% X = [1xndv real] vector of design variables
+% X = [ndvx1 real] vector of design variables
 % X_2_FEM = [function handle] function to update FEM object based on design variable values 
 %
 % Outputs

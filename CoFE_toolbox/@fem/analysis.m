@@ -29,7 +29,7 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
     end
     
     % Element Recovery
-    if isfield('obj.CASE','RECOVER') == 0
+    if isfield(obj.CASE,'RECOVER') == 0
         obj.CASE.RECOVER = 1;
     end
     
@@ -54,15 +54,14 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
                         [~,placeholderObjPrime(i)] = ...
                             recover(placeholderObj(i),obj.gnum2gdof,obj.x,placeholderObjPrime(i),obj_prime(dv).x);
                     end
+                    obj_prime(dv).(obj.recoverList{j}) = placeholderObjPrime;
                 end
-                obj_prime(dv).(obj.recoverList{j}) = placeholderObjPrime;
                 clear placeholderObj
                 clear placeholderObjPrime
             end
         end
-        
     end
-    
+
 %% SOL 105 - Buckling Modes
     if obj.CASE.SOL == 105
         
