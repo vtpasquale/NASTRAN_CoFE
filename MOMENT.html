@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MOMENT</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>MOMENT</h1>
+<p>Defines a static concentrated moment at a grid point by specifying a scale factor and a vector that determines the direction.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>MOMENT</td><td>SID</td><td>G</td><td class = "ghost">CID</td><td>M</td><td>N1</td><td>N2</td><td>N3</td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+MOMENT,88,3,,1.0,0.002274,-0.015465,-0.129763
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>SID</td>
+    <td>Load set identification number. (Integer &gt; 0)</td>
+  </tr>
+  <tr>
+    <td>G</td>
+    <td>Grid point identification number at which the moment is applied. (Integer &gt; 0)</td>
+  </tr>
+  <tr>
+    <td class = "ghost">CID</td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>F</td>
+    <td>Scale factor. (Real)</td>
+  </tr>
+  <tr>
+    <td>Ni</td>
+    <td>Components of the moment vector measured in default coordinate system. (Real)</td>
+  </tr>
+</table>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

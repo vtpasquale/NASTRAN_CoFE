@@ -27,6 +27,7 @@ document.write('<nav class="navbar navbar-inverse">');
             document.write('<li><a href="GRDSET.html">GRDSET</a></li>');
             document.write('<li><a href="GRID.html">GRID</a></li>');
             document.write('<li><a href="MAT1.html">MAT1</a></li>');
+			document.write('<li><a href="MOMENT.html">MOMENT</a></li>');
             document.write('<li><a href="PBEAM.html">PBEAM</a></li>');
             document.write('<li><a href="PBEAML.html">PBEAML</a></li>');
             document.write('<li><a href="PMASS.html">PMASS</a></li>');
