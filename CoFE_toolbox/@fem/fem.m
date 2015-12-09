@@ -7,7 +7,7 @@ classdef fem
     %% Input data format
     properties (Constant = true)
         entryList = {'BLIQ','CBEAM','CMASS1','CONM2','CORD2R','CQUAD4','CROD','EIGRL','FORCE','GRAV',...
-            'GRDSET','GRID','MAT1','PBEAM','PBEAML','PMASS','PROD','PSHELL','SPC1','RBE2','RBE3'};
+            'GRDSET','GRID','MAT1','MOMENT','PBEAM','PBEAML','PMASS','PROD','PSHELL','SPC1','RBE2','RBE3'};
         constraintList = {'RBE3','RBE2'};
         elementList = {'BLIQ','CBEAM','CMASS1','CONM2','CQUAD4','CROD'};
         plotList = {'BLIQ','CBEAM','CMASS1','CONM2','CQUAD4','CROD','RBE2'};
@@ -28,6 +28,7 @@ classdef fem
         CQUAD4@cquad4;
         CORD2R@cord2r;
         MAT1@mat1;
+        MOMENT@moment;
         PBEAM@pbeam;
         PBEAML@pbeaml;
         PSHELL@pshell;

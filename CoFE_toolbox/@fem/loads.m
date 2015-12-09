@@ -21,6 +21,25 @@ if isempty(obj.FORCE) == 0
     end
 end
 
+%% moments
+if isempty(obj.MOMENT) == 0
+    nmoment = size(obj.MOMENT,2);
+    for i = 1:nmoment
+        if obj.MOMENT(i).SID == obj.CASE.LOAD
+            
+            nnum = obj.MOMENT(i).G;
+            mag = obj.MOMENT(i).F;
+            
+            p( obj.gnum2gdof(4,find(nnum==obj.gnum)) ,  1) = p( obj.gnum2gdof(4,find(nnum==obj.gnum)) ,  1)...
+                + mag * obj.MOMENT(i).N1;
+            p( obj.gnum2gdof(5,find(nnum==obj.gnum)) ,  1) = p( obj.gnum2gdof(5,find(nnum==obj.gnum)) ,  1)...
+                + mag * obj.MOMENT(i).N2;
+            p( obj.gnum2gdof(6,find(nnum==obj.gnum)) ,  1) = p( obj.gnum2gdof(6,find(nnum==obj.gnum)) ,  1)...
+                + mag * obj.MOMENT(i).N3;
+        end
+    end
+end
+
 %% gravity loads
 if isempty(obj.GRAV) == 0
     
@@ -44,26 +63,3 @@ end
 
 %%
 obj.p = p;
-
-% 
-% % moments
-% if isfield(FEM,'moment')
-%     nmoment = size(FEM.moment,3);
-%     for i = 1:nmoment
-%         if FEM.moment{1,2,i} == LOAD
-%             
-%             nnum = FEM.moment{1,3,i};
-%             mag = FEM.moment{1,5,i};
-%             
-%             P( gnum2gdof(4,indexOfValue(nnum,gnum)) ,  1) =  P( gnum2gdof(4,indexOfValue(nnum,gnum)) ,  1)...
-%                 + mag * FEM.moment{1,6,i};
-%             P( gnum2gdof(5,indexOfValue(nnum,gnum)) ,  1) =  P( gnum2gdof(5,indexOfValue(nnum,gnum)) ,  1)...
-%                 + mag * FEM.moment{1,7,i};
-%             P( gnum2gdof(6,indexOfValue(nnum,gnum)) ,  1) =  P( gnum2gdof(6,indexOfValue(nnum,gnum)) ,  1)...
-%                 + mag * FEM.moment{1,8,i};
-%             
-%         else
-%             warning(['Moment from loading condition #',num2str(FEM.moment{1,2,i}),' ignored'])
-%         end
-%     end
-% end
