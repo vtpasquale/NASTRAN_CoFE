@@ -24,7 +24,7 @@
 	<td>CQUAD4</td><td>EID</td><td>PID</td><td>G1</td><td>G2</td><td>G3</td><td>G4</td><td class = "ghost">THETA</td><td class = "ghost">ZOFFS</td>
   </tr>
   <tr>
-	<td></td><td class = "ghost">TFLAG</td><td class = "ghost">T1</td><td class = "ghost">T2</td><td class = "ghost">T3</td><td class = "ghost">T4</td><td></td><td></td><td></td>
+	<td></td><td>TFLAG</td><td>T1</td><td>T2</td><td>T3</td><td>T4</td><td></td><td></td><td></td>
   </tr>
 </table>
 
@@ -52,18 +52,33 @@ CQUAD4,1,101,4001,4002,3002,3001
     <td>Grid point identification numbers of connection points. (Integers &gt; 0, all unique.)</td>
   </tr>
   <tr>
-    <td class = "ghost">THETA, ZOFFS, TFLAG, T1, T2, T3, T4</td>
+    <td class = "ghost">THETA</td>
     <td>Not used.</td>
+  </tr>
+  <tr>
+    <td class = "ghost">ZOFFS</td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>TFLAG</td>
+    <td>An integer flag, signifying the meaning of the Ti values. (Integer 0, 1, or blank)</td>
+  </tr>
+  <tr>
+    <td>Ti</td>
+    <td>
+		Membrane thickness of element at grid points G1 through G4. If "TFLAG" is zero or blank, then Ti are actual user specified thicknesses. See Remark 3. for default. (Real &gt; 0.0 or blank, not all zero.) If "TFLAG" is one, then the Ti are fractions relative to the T value of the PSHELL. (Real &gt; 0.0 or blank, not all zero. Default = 1.0) Ti are ignored for hyperelastic elements.
+    </td>
   </tr>
 </table>
 
 
 <h2>Remarks:</h2>
 <ol>
-<li> 
-The continuation is optional.
-</li>
+<li>Grid points G1 through G4 must be ordered consecutively around the perimeter of the element.</li>
+<li>All interior angles must be less than 180 degrees.</li>
+<li>The continuation is optional. If it is not supplied, then T1 through T4 will be set equal to the value of T on the PSHELL entry.</li>
 </ol>
+
 </div>
 
 <script type="text/javascript" src="footerCSI.js"></script>
