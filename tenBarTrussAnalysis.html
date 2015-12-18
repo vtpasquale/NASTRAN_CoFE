@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ten Bar Truss Analysis</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Ten Bar Truss Analysis</h1>
+
+<p>
+The ten bar truss model was developed by Venkayya for:<br>
+Venkayya, V. B. (1971). "Design of Optimum Structures," Computers &amp; Structures, 1(1), 265-309.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a1_tenBarTrussAnalysis">NASTRAN_CoFE/CoFE_examples/a1_tenBarTrussAnalysis/</a><br>
+</p>
+
+<p>
+MSC Nastran verification files are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a1_tenBarTrussAnalysis/NASTRAN_comparisons">NASTRAN_CoFE/CoFE_examples/a1_tenBarTrussAnalysis/NASTRAN_comparisons/</a><br>
+</p>
+
+<h2>Linear Statics</h2>
+<p>
+Open the 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a1_tenBarTrussAnalysis/tenbar_analysis.m">tenbar_analysis.m</a>
+file and check that the SOL variable is set to 101.  Run the script.  
+The postprocessor GUI will show the linear static response compared to the response from MSC Nastran.  
+</p>
+
+<img src="img/tenBarStatic.png">
+<p></p>
+
+<p>
+CoFE element forces printed to the 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a1_tenBarTrussAnalysis/tenBar_analysis.c06">tenBar_analysis.c06</a>
+ output file: 
+</p> 
+<pre>
+                    F O R C E S   I N   R O D   E L E M E N T S     ( C R O D )
+      ELEMENT       AXIAL                            ELEMENT        AXIAL
+       ID.          FORCE              TORQUE          ID.          FORCE            TORQUE
+        1       +1.493947E+00       +0.000000E+00       2       +5.524035E-01     +0.000000E+00
+        3       -1.506053E+00       +0.000000E+00       4       -4.475965E-01     +0.000000E+00
+        5       +4.635013E-02       +0.000000E+00       6       -4.475965E-01     +0.000000E+00
+        7       +7.156676E-01       +0.000000E+00       8       -6.985460E-01     +0.000000E+00
+        9       +6.329970E-01       +0.000000E+00      10       -7.812166E-01     +0.000000E+00
+</pre>
+
+<p>
+exactly match MSC Nastran element force output printed in
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a1_tenBarTrussAnalysis/NASTRAN_comparisons/l_static.f06">/NASTRAN_comparisons/l_static.f06</a>:
+<p>
+<pre>
+                                           F O R C E S   I N   R O D   E L E M E N T S     ( C R O D )
+       ELEMENT           AXIAL                                     ELEMENT           AXIAL
+         ID.             FORCE          TORQUE                       ID.             FORCE          TORQUE
+             1        1.493947E+00   0.0                                 2        5.524036E-01   0.0
+             3       -1.506053E+00   0.0                                 4       -4.475965E-01   0.0
+             5        4.635013E-02   0.0                                 6       -4.475965E-01   0.0
+             7        7.156676E-01   0.0                                 8       -6.985459E-01   0.0
+             9        6.329970E-01   0.0                                10       -7.812166E-01   0.0
+</pre>
+
+<p>
+Additionally, CoFE element stresses in
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a1_tenBarTrussAnalysis/tenBar_analysis.c06">tenBar_analysis.c06</a>: 
+</p> 
+
+<pre>
+                  S T R E S S E S   I N   R O D   E L E M E N T S      ( C R O D )
+    ELEMENT       AXIAL         TORSIONAL       ELEMENT             AXIAL        TORSIONAL
+      ID.        STRESS          STRESS           ID.              STRESS          STRESS
+       1       +1.567329E-01       N/A             2            +5.795375E-02       N/A
+       3       -1.580030E-01       N/A             4            -4.695823E-02       N/A
+       5       +4.862684E-03       N/A             6            -4.695823E-02       N/A
+       7       +7.508210E-02       N/A             8            -7.328584E-02       N/A
+       9       +6.640897E-02       N/A            10            -8.195898E-02       N/A
+</pre>
+
+<p>
+exactly match MSC Nastran element stresses printed in 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a1_tenBarTrussAnalysis/NASTRAN_comparisons/l_static.f06">/NASTRAN_comparisons/l_static.f06</a>:
+
+<pre>
+                                S T R E S S E S   I N   R O D   E L E M E N T S      ( C R O D )
+       ELEMENT       AXIAL       SAFETY      TORSIONAL     SAFETY       ELEMENT       AXIAL       SAFETY      TORSIONAL     SAFETY
+         ID.        STRESS       MARGIN        STRESS      MARGIN         ID.        STRESS       MARGIN        STRESS      MARGIN
+             1    1.567329E-01              0.0                               2    5.795375E-02              0.0           
+             3   -1.580030E-01              0.0                               4   -4.695823E-02              0.0           
+             5    4.862684E-03              0.0                               6   -4.695823E-02              0.0           
+             7    7.508210E-02              0.0                               8   -7.328583E-02              0.0           
+             9    6.640896E-02              0.0                              10   -8.195898E-02              0.0           
+</pre>
+
+
+<h2>Vibration Response</h2>
+<p>
+Change the SOL variable to 103 and run the script. The postprocessor GUI will show the first vibration mode shape compared to the result from MSC Nastran. 
+</p>
+
+<img src="img/tenBarVib.png">
+<p></p>
+
+<p>
+The response has near perfect agreement with MSC Nastran.  Other available results can be selected from the list boxes in the GUI.  
+</p>
+
+<h2>Buckling Response</h2>
+<p>
+Change the SOL variable to 105 and run the script. The postprocessor GUI will show the buckling mode shapes compared to the results from MSC Nastran. 
+</p>
+
+<img src="img/tenBarBuck.png">
+<p></p>
+
+<p>
+The postprocessor GUI will initially show the linear static response to the applied reference load.
+Buckling modes can be selected in GUI list boxes.
+The response has near perfect agreement with MSC Nastran.   
+</p>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

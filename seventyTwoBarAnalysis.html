@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Seventy Two Bar Truss Analysis</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Seventy Two Bar Truss Analysis</h1>
+
+<p>
+The seventy two bar space truss was developed for: <br>
+Fox, Richard L., and Lucien A. Schmit, JR. "Advances in the Integrated Approach to Structural Synthesis." Journal of Spacecraft and Rockets 3.6 (1966): 858-866.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a3_seventyTwoBarTrussAnalysis">NASTRAN_CoFE/CoFE_examples/a3_seventyTwoBarTrussAnalysis/</a><br>
+</p>
+
+<p>
+MSC Nastran verification files are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a3_seventyTwoBarTrussAnalysis/NASTRAN_comparison">NASTRAN_CoFE/CoFE_examples/a3_seventyTwoBarTrussAnalysis/NASTRAN_comparison/</a><br>
+</p>
+
+<h2>Linear Statics</h2>
+<p>
+Open the 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a3_seventyTwoBarTrussAnalysis/seventyTwoBar_analysis.m">seventyTwoBar_analysis.m</a>
+file and check that the SOL variable is set to 101.  Run the script.  
+The postprocessor GUI will show the linear static response compared to the response from MSC Nastran.  
+</p>
+
+<img src="img/seventyTwoBarStatic.png">
+<p></p>
+
+
+<ul>
+<li>CoFE element forces can be read from the .c06 output file or FEM.CBEAM.force variable.</li>      
+<li>MSC Nastran element forces can be read from the .f06 output file in the \NASTRAN_comparisons folder.</li>
+<li>CoFE element stresses can be read from the .c06 output file or FEM.CBEAM.stress variable.</li>
+<li>MSC Nastran element stresses can be read from the .f06 output file in the \NASTRAN_comparisons folder.</li>
+</ul>
+<p>
+The response has near perfect agreement with MSC Nastran.
+</p>
+
+
+<h2>Vibration Response</h2>
+<p>
+Change the SOL variable to 103 and run the script. The postprocessor GUI will show the first vibration mode shape compared to the result from MSC Nastran. 
+</p>
+
+<img src="img/seventyTwoBarVib.png">
+<p></p>
+
+<p>
+The response has near perfect agreement with MSC Nastran.  The 822 Hz mode is a torsional mode, which is poorly visualized by most postprocessors.  Other available results can be selected from the list boxes in the GUI.  
+</p>
+
+<h2>Buckling Response</h2>
+<p>
+Change the SOL variable to 105 and run the script. The postprocessor GUI will show the buckling mode shapes compared to the results from MSC Nastran. 
+</p>
+
+<img src="img/seventyTwoBarBuck.png">
+<p></p>
+
+<p>
+The postprocessor GUI will initially show the linear static response to the applied reference load.
+Buckling modes can be selected in GUI list boxes.
+The response has near perfect agreement with MSC Nastran.  Eigenvectors may be scaled differently.  
+</p>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

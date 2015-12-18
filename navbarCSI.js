@@ -11,6 +11,7 @@ document.write('<nav class="navbar navbar-inverse">');
     document.write('<div class="collapse navbar-collapse" id="myNavbar">');
       document.write('<ul class="nav navbar-nav">');
         document.write('<li><a href="index.html">Home</a></li>');
+		
         document.write('<li class="dropdown">');
           document.write('<a class="dropdown-toggle" data-toggle="dropdown" href="#">Bulk Data Inputs<span class="caret"></span></a>');
           document.write('<ul class="dropdown-menu">');
@@ -38,12 +39,30 @@ document.write('<nav class="navbar navbar-inverse">');
             document.write('<li><a href="SPC1.html">SPC1</a></li>');			
           document.write('</ul>');
         document.write('</li>');
-        document.write('<li><a href="examples.html">Examples</a></li>');
+				
+		document.write('<li class="dropdown">');
+          document.write('<a class="dropdown-toggle" data-toggle="dropdown" href="#">Examples<span class="caret"></span></a>');
+          document.write('<ul class="dropdown-menu">');
+		    document.write('<li><a href="#"><b>ANALYSIS EXAMPLES</b></a></li>');
+			document.write('<li><a href="tenBarTrussAnalysis.html">Ten Bar Truss</a></li>');
+			document.write('<li><a href="svanbergAnalysis.html">Svanberg Beam</a></li>');
+			document.write('<li><a href="seventyTwoBarAnalysis.html">Seventy Two Bar Truss</a></li>');
+			
+			document.write('<li class="divider"></li>');
+			
+		    document.write('<li><a href="#"><b>OPTIMIZATION EXAMPLES</b></a></li>');
+			document.write('<li><a href="#">Optimization Example 1</a></li>');
+          document.write('</ul>');
+        document.write('</li>');
+		
       document.write('</ul>');
+	  
+	  
       document.write('<ul class="nav navbar-nav navbar-right">');
-	  document.write('<li><a target="_blank" href="https://github.com/vtpasquale/NASTRAN_CoFE"><span class="glyphicon glyphicon-cloud-download"></span>  View on GitHub</a></li>');
+	    document.write('<li><a target="_blank" href="https://github.com/vtpasquale/NASTRAN_CoFE"><span class="glyphicon glyphicon-cloud-download"></span>  View on GitHub</a></li>');
         document.write('<li><a target="_blank" href="http://aricciardi.weebly.com/"><span class="glyphicon glyphicon-home"></span>  Author Home</a></li>');
 	  document.write('</ul>');
+	  
     document.write('</div>');
   document.write('</div>');
 document.write('</nav>');

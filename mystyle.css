@@ -13,8 +13,11 @@ ghost {color: #888888;}
 crn {font-family: "Courier New", Courier, monospace}
 table {margin-bottom: 1cm;}
 p {font-size: 1.3em;/* 14px/16=0.875em */}
+ul {font-size: 1.3em;/* 14px/16=0.875em */}
 table{font-size: 1.3em;/* 14px/16=0.875em */}
 ol{font-size: 1.3em;/* 14px/16=0.875em */}
 figcaption{font-size: 1.3em;/* 14px/16=0.875em */}
 p.center {text-align: center}
 ul.method li{font-size: 1.3em; font-family: "Courier New"}
+
+pre {font-family: "Courier New", Courier, monospace}
