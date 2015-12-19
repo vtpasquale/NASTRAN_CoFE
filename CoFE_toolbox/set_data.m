@@ -51,14 +51,14 @@ switch type
         end
         
     case 'dec'
-        
+                
         % deal with scientific notation
         sign = strfind(data(2:end),'-');
         if isempty(sign) 
             sign = strfind(data(2:end),'+');
         end
         if isempty(sign) ~= 1
-            E = strfind(data(2:end),'E');
+            E = strfind(upper(data(2:end)),'E');
             if isempty(E)
                 dataNew = [data,' '];
                 dataNew(sign+2:end) = data(sign+1:end);

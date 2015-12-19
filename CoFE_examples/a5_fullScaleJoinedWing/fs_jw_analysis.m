@@ -6,7 +6,7 @@ addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
 CASE.inputFile = 'fullJW.bdf';
-CASE.SOL = 103; % SOL = 101, SOL = 103 are options
+CASE.SOL = 101; % SOL = 101, SOL = 103 are options
 CASE.SPC = 1;
 CASE.LOAD = 88;
 CASE.METHOD = 1;

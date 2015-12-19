@@ -43,7 +43,7 @@ end
 %% gravity loads
 if isempty(obj.GRAV) == 0
     
-    gent = find(obj.FORCE(i).SID == [obj.GRAV.SID]);
+    gent = find(obj.CASE.LOAD == [obj.GRAV.SID]);
     if size(gent,2)~=1
         if size(gent,2)>1
             error(['There cannot be more than one GRAV entry with SID = ',num2str(obj.FORCE(i).SID)])
@@ -56,7 +56,7 @@ if isempty(obj.GRAV) == 0
         gAccel(1:6:obj.ndof) = objGRAV.A * objGRAV.N1;
         gAccel(2:6:obj.ndof) = objGRAV.A * objGRAV.N2;
         gAccel(3:6:obj.ndof) = objGRAV.A * objGRAV.N3;
-                
+
         p = p + obj.M_G*gAccel;
     end
 end            
