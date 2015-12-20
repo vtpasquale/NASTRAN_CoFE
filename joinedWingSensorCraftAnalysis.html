@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Joined-Wing SensorCraft Scaled-Model Analysis</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Joined-Wing SensorCraft Scaled-Model Analysis</h1>
+
+<p>
+This joined-wing SensorCraft scaled model was developed for:</p>
+
+<ul><li>
+Ricciardi, A. P., Eger, C. A. G., Canfield, R. A., Patil, M. P., and Lindsley, N., 
+"Nonlinear Aeroelastic Scaled Model Optimization Using Equivalent Static Loads," 
+<a href="https://dx.doi.org/10.2514/1.C032539">doi: 10.2514/1.C032539</a>. 
+Journal of Aircraft, Vol. 51, No. 6 (2014), pp. 1842-1851.
+</li></ul>
+
+<p>
+and subsequently implemented in CoFE for:</p>
+
+<ul><li>
+Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N., 
+"Nonlinear Aeroelastic Scaled-Model Design," 
+<a href="https://dx.doi.org/10.2514/1.C033171">doi: 10.2514/1.C033171</a>. 
+Journal of Aircraft Early Edition Online.
+</li></ul>
+
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a6_joinedwing">NASTRAN_CoFE/CoFE_examples/a6_joinedwing/</a><br>
+</p>
+
+<p>
+MSC Nastran verification files are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/a6_joinedwing/NASTRAN_comparison">NASTRAN_CoFE/CoFE_examples/a6_joinedwing/NASTRAN_comparison/</a><br>
+</p>
+
+<h2>Linear Statics</h2>
+<p>
+Open the 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/a6_joinedwing/jw_analysis.m">jw_analysis.m</a>
+file and check that the SOL variable is set to 101.  Run the script.  
+The postprocessor GUI will show the linear static response compared to the response from MSC Nastran.  
+</p>
+
+<img src="img/jwScaledStatic.png">
+<p></p>
+
+
+<ul>
+<li>CoFE element forces can be read from the .c06 output file or FEM.CBEAM.force variable.</li>      
+<li>MSC Nastran element forces can be read from the .f06 output file in the \NASTRAN_comparisons folder.</li>
+<li>CoFE element stresses can be read from the .c06 output file or FEM.CBEAM.stress variable.</li>
+<li>MSC Nastran element stresses can be read from the .f06 output file in the \NASTRAN_comparisons folder.</li>
+</ul>
+<p>
+The response has near perfect agreement with MSC Nastran.
+</p>
+
+
+<h2>Vibration Response</h2>
+<p>
+Change the SOL variable to 103 and run the script. The postprocessor GUI will show the first vibration mode shape compared to the result from MSC Nastran. 
+</p>
+
+<img src="img/jwScaledVib.png">
+<p></p>
+
+<p>
+The response has near perfect agreement with MSC Nastran.  The 822 Hz mode is a torsional mode, which is poorly visualized by most postprocessors.  Other available results can be selected from the list boxes in the GUI.  
+</p>
+
+<h2>Buckling Response</h2>
+<p>
+Change the SOL variable to 105 and run the script. The postprocessor GUI will show the buckling mode shapes compared to the results from MSC Nastran. 
+</p>
+
+<img src="img/jwScaledBuck.png">
+<p></p>
+
+<p>
+The postprocessor GUI will initially show the linear static response to the applied reference load.
+Buckling modes can be selected in GUI list boxes.
+The response has near perfect agreement with MSC Nastran.  Eigenvectors may be scaled differently.  
+</p>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
