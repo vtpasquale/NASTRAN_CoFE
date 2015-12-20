@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ten Bar Truss Shape &amp; Sizing Optimization</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Ten Bar Truss Shape &amp; Sizing Optimization</h1>
+
+<p>
+The ten bar truss model was developed by Venkayya for:<br>
+Venkayya, V. B. (1971). "Design of Optimum Structures," Computers &amp; Structures, 1(1), 265-309.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/o1s_tenBarTrussShapeOpt">NASTRAN_CoFE/CoFE_examples/o1s_tenBarTrussShapeOpt/</a><br>
+</p>
+
+<h2>Design Problem</h2>
+<p>
+The minimum weight sizing problem with stress constraints described
+<a href="http://vtpasquale.github.io/NASTRAN_CoFE/tenBarTrussOptimization.html">here</a>
+ was modified so the x and z positions of top right and top middle nodes were design variables.     
+</p>
+
+<p>
+The 
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/blob/master/CoFE_examples/o1s_tenBarTrussShapeOpt/tenBar_Opt.m">tenBar_Opt.m</a> script will execute the optimization and display the initial and final design geometries.  
+</p>
+
+<img src="img/tenbarShapInitial.svg">
+<p></p>
+
+<img src="img/tenbarShapFinal.svg">
+<p></p>
+
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

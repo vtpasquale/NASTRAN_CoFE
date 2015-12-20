@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ten Bar Truss Sizing Optimization</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Ten Bar Truss Sizing Optimization</h1>
+
+<p>
+The ten bar truss model was developed by Venkayya for:<br>
+Venkayya, V. B. (1971). "Design of Optimum Structures," Computers &amp; Structures, 1(1), 265-309.
+</p>
+
+<p>
+The design problems for this page are described in:<br>
+Haftka, Raphael T. Elements of Structural Optimization.  Springer, 1992.  Pages 238, 244.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/o1_tenbarOpt">NASTRAN_CoFE/CoFE_examples/o1_tenbarOpt/</a><br>
+</p>
+
+
+<img src="img/tenBarDesign.jpg">
+<p></p>
+
+
+<h2>Details</h2>
+<ul>
+<li>Young's modulus: 10^7 psi</li>
+<li>Specific mass: 0.1 lbm/in^3</li>
+<li>Minimum area: 0.1 in^2 </li>
+<li>Allowable stress: +/- 25000 psi</li>
+<li>The ten design variables are the areas of the ten members.  </li>
+</ul>
+
+<h2>Design Problem 1</h2>
+
+<p>Design for minimum weight with stress constraints.</p>
+
+<table class="style1">
+  <tr>
+    <th>Design Variable</th><th>Design from CoFE + SQP</th><th>Design in Haftka</th>
+  </tr>
+  <tr>
+    <td>$x_1$</td><td>7.94</td><td>7.94</td>
+  </tr>
+  <tr>
+    <td>$x_2$</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>$x_3$</td><td>8.06</td><td>8.06</td>
+  </tr>
+  <tr>
+    <td>$x_4$</td><td>3.94</td><td>3.94</td>
+  </tr>
+  <tr>
+    <td>$x_5$</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>$x_6$</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>$x_7$</td><td>5.74 </td><td>5.74</td>
+  </tr>
+  <tr>
+    <td>$x_8$</td><td>5.57</td><td>5.57</td>
+  </tr>
+  <tr>
+    <td>$x_9$</td><td>5.57</td><td>5.57</td>
+  </tr>
+  <tr>
+    <td>$x_{10}$</td><td>0.1</td><td>0.1</td>
+  </tr>
+</table>
+
+<table class="style1">
+  <tr>
+    <th>Objective Function</th><th>Design from CoFE + SQP</th><th>Design in Haftka</th>
+  </tr>
+  <tr>
+    <td>Weight</td><td>1593.2 lb</td><td>1593.2 lb</td>
+  </tr>
+</table>
+
+
+<h2>Design Problem 2</h2>
+
+<p>Design for minimum weight with previous stress constraints and additional displacement constraints:</p>
+
+<table class="style1">
+  <tr>
+    <th>Nodes</th><th>Direction</th><th>Upper Limit</th><th>Lower Limit</th>
+  </tr>
+  <tr>
+    <td>1-4</td><td>Vertical</td><td>2</td><td>-2</td>
+  </tr>
+</table>
+
+<table class="style1">
+  <tr>
+    <th>Design Variable</th><th>Design from CoFE + SQP</th><th>Design in Haftka</th>
+  </tr>
+  <tr>
+    <td>$x_1$</td><td>30.52</td><td>30.52</td>
+  </tr>
+  <tr>
+    <td>$x_2$</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>$x_3$</td><td>23.20</td><td>23.20</td>
+  </tr>
+  <tr>
+    <td>$x_4$</td><td>15.22</td><td>15.22</td>
+  </tr>
+  <tr>
+    <td>$x_5$</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>$x_6$</td><td>0.55</td><td>0.55</td>
+  </tr>
+  <tr>
+    <td>$x_7$</td><td>7.46</td><td>7.46</td>
+  </tr>
+  <tr>
+    <td>$x_8$</td><td>21.04</td><td>21.04</td>
+  </tr>
+  <tr>
+    <td>$x_9$</td><td>21.53</td><td>21.53</td>
+  </tr>
+  <tr>
+    <td>$x_{10}$</td><td>0.1</td><td>0.1</td>
+  </tr>
+</table>
+
+<table class="style1">
+  <tr>
+    <th>Objective Function</th><th>Design from CoFE + SQP</th><th>Design in Haftka</th>
+  </tr>
+  <tr>
+    <td>Weight</td><td>5060.85 lb</td><td>5060.85 lb</td>
+  </tr>
+</table>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

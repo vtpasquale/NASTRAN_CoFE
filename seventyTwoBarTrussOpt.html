@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Seventy Two Bar Truss Optimization</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Seventy Two Bar Truss Optimization</h1>
+
+<h2>Background</h2>
+
+<p>
+The seventy two bar space truss was developed for: <br>
+Fox, Richard L., and Lucien A. Schmit, JR. "Advances in the Integrated Approach to Structural Synthesis." Journal of Spacecraft and Rockets 3.6 (1966): 858-866.
+</p>
+
+<p>
+The design problem for this page are described in:<br>
+Haftka, Raphael T. Elements of Structural Optimization. Vol. 11. Springer, 1992.  Pages 238, 244.<br>
+<b>However, there are typos in Haftka's problem description that are detrimental to the benchmark results.</b>
+</p>
+
+<p>
+The problem is described without typos in: <br>
+Sedaghati, R. "Benchmark Case Studies in Structural Design Optimization Using the Force Method." International Journal of Solids and Structures 42.21 (2005): 5848-5871.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/o3_seventyTwoBarTrussOptimization">NASTRAN_CoFE/CoFE_examples/o3_seventyTwoBarTrussOptimization/</a><br>
+</p>
+
+<h2>Design Problem</h2>
+<p>
+Design for minimum weight subject to stress and displacement constraints.  
+</p>
+
+<figure>
+  <object type="image/jpg" data="img/seventyTwoBarDesign.jpg">Your browser does not support JPG</object>
+  <figcaption>Seventy two bar truss. Image from Sedaghati.</figcaption>
+</figure>
+
+<ul>
+<li>Young's modulus: 10^7 psi</li>
+<li>Specific mass: 0.1 lbm/in^3</li>
+<li>Minimum area: 0.1 in^2 </li>
+<li>Allowable stress: +/- 25000 psi</li>
+<li>Allowable displacement nodes 1-4: &pm;0.25 in in X and Y </li>
+</ul>
+
+<h3>Applied Loads</h3>
+<table class="style1">
+  <tr>
+    <th>LOAD CASE</th><th>NODE</th><th>Force X</th><th>Force Y</th><th>Force Z</th>
+  </tr>
+  <tr>
+    <td>1</td><td>1</td><td>5000</td><td>5000</td><td>-5000</td>
+  </tr>
+    <tr>
+    <td></td><td></td><td></td><td></td><td></td>
+  </tr>
+  <tr>
+    <td>2</td><td>1</td><td>0</td><td>0</td><td>-5000</td>
+  </tr>
+  <tr>
+    <td>2</td><td>2</td><td>0</td><td>0</td><td>-5000</td>
+  </tr>
+  <tr>
+    <td>2</td><td>3</td><td>0</td><td>0</td><td>-5000</td>
+  </tr>
+  <tr>
+    <td>2</td><td>4</td><td>0</td><td>0</td><td>-5000</td>
+  </tr>
+</table>
+
+
+<h3>Design Variables</h3>
+<table class="style1">
+  <tr>
+    <th>DESIGN VARIABLES</th><th>AREA OF MEMBERS</th>
+  </tr>
+  <tr>
+    <td>1</td><td>1-4</td>
+  </tr>
+  <tr>
+    <td>2</td><td>5-12</td>
+  </tr>
+  <tr>
+    <td>3</td><td>13-16</td>
+  </tr>
+  <tr>
+    <td>4</td><td>17-18</td>
+  </tr>
+  <tr>
+    <td>5</td><td>19-22</td>
+  </tr>
+  <tr>
+    <td>6</td><td>23-30</td>
+  </tr>
+  <tr>
+    <td>7</td><td>31-34</td>
+  </tr>
+  <tr>
+    <td>8</td><td>35-36</td>
+  </tr>
+  <tr>
+    <td>9</td><td>37-40</td>
+  </tr>
+  <tr>
+    <td>10</td><td>41-48</td>
+  </tr>
+  <tr>
+    <td>11</td><td>49-52</td>
+  </tr>
+  <tr>
+    <td>12</td><td>53-54</td>
+  </tr>
+  <tr>
+    <td>13</td><td>55-58</td>
+  </tr>
+  <tr>
+    <td>14</td><td>59-66</td>
+  </tr>
+  <tr>
+    <td>15</td><td>67-70</td>
+  </tr>
+  <tr>
+    <td>16</td><td>71-72</td>
+  </tr>
+</table>
+
+<h2>Result</h2>
+<table class="style1">
+  <tr>
+    <th>DESIGN VARIABLE #</th><th>Design from CoFE + SQP</th><th>Design from Sedaghati</th>
+  </tr>
+  <tr>
+    <td>1</td><td>0.1565</td><td>0.1565</td>
+  </tr>
+  <tr>
+    <td>2</td><td>0.5456</td><td>0.5456</td>
+  </tr>
+  <tr>
+    <td>3</td><td>0.4104</td><td>0.4104</td>
+  </tr>
+  <tr>
+    <td>4</td><td>0.5697</td><td>0.5697</td>
+  </tr>
+  <tr>
+    <td>5</td><td>0.5237</td><td>0.5237</td>
+  </tr>
+  <tr>
+    <td>6</td><td>0.5171</td><td>0.5171</td>
+  </tr>
+  <tr>
+    <td>7</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>8</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>9</td><td>1.268</td><td>1.268</td>
+  </tr>
+  <tr>
+    <td>10</td><td>0.5117</td><td>0.5117</td>
+  </tr>
+  <tr>
+    <td>11</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>12</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>13</td><td>1.886</td><td>1.886</td>
+  </tr>
+  <tr>
+    <td>14</td><td>0.5123</td><td>0.5123</td>
+  </tr>
+  <tr>
+    <td>15</td><td>0.1</td><td>0.1</td>
+  </tr>
+  <tr>
+    <td>16</td><td>0.1</td><td>0.1</td>
+  </tr>
+</table>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Svanberg Beam Optimization</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>Svanberg Beam Optimization</h1>
+
+<p>
+The Svanberg beam model was developed in: <br>
+Svanberg, Krister. "The Method of Moving Asymptotes-A New Method for Structural Optimization." International Journal for Numerical Methods in Engineering 24.2 (1987): 359-373.
+</p>
+
+<p>
+Example CoFE input files for this page are provided here:<br>
+<a href="https://github.com/vtpasquale/NASTRAN_CoFE/tree/master/CoFE_examples/o2_svanbergBeamOptimization">NASTRAN_CoFE/CoFE_examples/o2_svanbergBeamOptimization/</a><br>
+</p>
+
+<h2>Design Problem</h2>
+<p>
+Given section thickness ($t$), the height ($x_j$) of five sections is optimized for minimum weight subject to a displacement constraint.
+</p>
+<img src="img/svanbergOpt.png">
+<p></p>
+
+<h2>Result</h2>
+
+<table class="style1">
+  <tr>
+    <th>Design Variable</th><th>Design from CoFE + SQP</th><th>Design from Svanberg</th>
+  </tr>
+  <tr>
+    <td>$x_1$</td><td>6.01601</td><td>6.016</td>
+  </tr>
+  <tr>
+    <td>$x_2$</td><td>5.30919</td><td>5.309</td>
+  </tr>
+  <tr>
+    <td>$x_3$</td><td>4.49432</td><td>4.494</td>
+  </tr>
+  <tr>
+    <td>$x_4$</td><td>3.50148</td><td>3.502</td>
+  </tr>
+  <tr>
+    <td>$x_5$</td><td>2.15266</td><td>2.153</td>
+  </tr>
+</table>
+
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

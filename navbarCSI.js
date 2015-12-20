@@ -36,7 +36,7 @@ document.write('<nav class="navbar navbar-inverse">');
 			document.write('<li><a href="PSHELL.html">PSHELL</a></li>');
             document.write('<li><a href="RBE2.html">RBE2</a></li>');
             document.write('<li><a href="RBE3.html">RBE3</a></li>');
-            document.write('<li><a href="SPC1.html">SPC1</a></li>');			
+            document.write('<li><a href="SPC1.html">SPC1</a></li>');
           document.write('</ul>');
         document.write('</li>');
 				
@@ -47,11 +47,16 @@ document.write('<nav class="navbar navbar-inverse">');
 			document.write('<li><a href="tenBarTrussAnalysis.html">Ten Bar Truss</a></li>');
 			document.write('<li><a href="svanbergAnalysis.html">Svanberg Beam</a></li>');
 			document.write('<li><a href="seventyTwoBarAnalysis.html">Seventy Two Bar Truss</a></li>');
+			document.write('<li><a href="joinedWingSensorCraftAnalysis.html">Joined-Wing Scaled Model</a></li>');
 			
 			document.write('<li class="divider"></li>');
 			
 		    document.write('<li><a href="#"><b>OPTIMIZATION EXAMPLES</b></a></li>');
-			document.write('<li><a href="#">Optimization Example 1</a></li>');
+			document.write('<li><a href="tenBarTrussOptimization.html">Ten Bar Truss Sizing</a></li>');
+			document.write('<li><a href="tenBarTrussShapeOpt.html">Ten Bar Truss Shape &amp; Sizing</a></li>');
+			document.write('<li><a href="svanbergBeamOpt.html">Svanberg Beam</a></li>');
+			document.write('<li><a href="seventyTwoBarTrussOpt.html">Seventy Two Bar Truss</a></li>');
+			
           document.write('</ul>');
         document.write('</li>');
 		
