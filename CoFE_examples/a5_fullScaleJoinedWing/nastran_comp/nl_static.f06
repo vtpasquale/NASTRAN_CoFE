@@ -1,0 +1,1359 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2012 MSC.Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC.SOFTWARE          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2012.2.0-CL151760   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          JUL  6, 2012           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *        MODEL 386/486/586        * *
+                                              * * Windows Server 2008 R2 6.1 7601 * *
+                                              * *        Compiled for 8664        * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1News file -  (May 29, 2012):
+  
+               Welcome to MSC Nastran 2012.2
+  
+   Details of the release can be found in the Release Guide available
+   electronically in the installation documentation sub-directory.
+   Additional information can be found at the Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+   The support page provides links to this valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        frequently asked questions written by MSC.Software subject-matter experts
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC.Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions. For a detailed description of features added to MSC Nastran 2012.2
+   Release Guide.
+   The highlights for the 2012.1 release include:
+      * MD and MSC Products have been consolidated into one release.
+      * Improved Performance when using ACMS especially with Parallel Processing
+      * A New Method for Complex Eigenvalue Analysis which has Greater Accuracy
+      * Improved performance for the Solution of Nonsymmetric systems encountered
+        with Exterior Acoustics, Friction and complex Lanczos
+      * Support of GPU computing
+      * Structural Interior - Exterior Acoustics can be performed using Weakly
+        Coupled Procedure which is Faster in SOL 111 and SOL 200
+      * Complex stress recovery for Shells in SOL 108,109, 111 and 112.
+      * Improved coupling with ACTRAN for modeling of Trimming material in SOL 10
+        and SOL 111
+      * Panel Participation Factor may be obtained for the Structural Response an
+        may be utilized in optimization.
+      * Easier to use Linear Contact Capability in SOL 400
+      * Improved Time Stepping procedure in SOL 400
+      * Coupled Thermal-Structural Analysis with SOL 700
+      * Wood and Ice Model in SOL 700
+      * Improved Computational Performance for FSI simulations on Parallel Proces
+      * Improved Splining techniques in Aeroelastic calculations
+ The highlights for the 2012.2 release include:
+1     * Reduction in I/O times for large models which had significant I/O in
+        previous releases
+      * Improved performance when using SOL 400 for nonlinear analysis
+      * The Segment-to-Segment Contact Procedure is expanded for Large Deformatio
+        and Friction
+      * User can easily add mass to CBUSH elements
+  
+  
+  
+  
+  
+  
+  
+  
+  
+1                                                                             MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20122/CONF/NAST20122.RCF[2])
+     NASTRAN REAL=2144075776 $(PROGRAM DEFAULT)                                      
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+1                                                                             MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 400                                                                                 
+     CEND                                                                                    
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      TITLE = NONLINEAR                                                                       
+                  5      ECHO = NONE                                                                             
+                  6      NLPARM = 100                                                                            
+                  7      DISP(PUNCH) = ALL                                                                       
+                  8      SPCFORCES = NONE                                                                        
+                  9      SUBCASE 1                                                                               
+                 10         SPC = 1                                                                              
+                 11         LOAD = 1025                                                                          
+                 12      $ **********************************************************                            
+                 13      $   B U L K    D A T A                                                                  
+                 14      $ **********************************************************                            
+                 15      $                                                                                       
+                 16      $ ---------------------------------------------                                         
+                 17      $   ANALYSIS MODEL                                                                      
+                 18      $ ---------------------------------------------                                         
+                 19      $                                                                                       
+                 20      BEGIN BULK                                                                              
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHINPUTS_FW.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHINPUTS_FW.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHPROPS_FW.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHPROPS_FW.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHINPUTS_AW.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHINPUTS_AW.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHPROPS_AW.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\MESHPROPS_AW.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\CONNECT.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\CONNECT.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\AIRLOADS.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\AIRLOADS.BDF"
+                              $INCLUDE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\GRAVITYLOADS.BDF"
+                              $END OF INCLUDE FILE "Z:\NASTRAN\SDM_2_Journal\myModel\assembled\wingbox\GRAVITYLOADS.BDF"
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                        CONM2                      100
+                                       CORD2R                        2
+                                       CQUADR                      432
+                                        FORCE                      150
+                                         GRAV                        1
+                                         GRID                      450
+                                         LOAD                        2
+                                         MAT1                        1
+                                       MDLPRM                        1
+                                       NLPARM                        2
+                                        PARAM                        4
+                                       PSHELL                        8
+                                         RBE2                       51
+                                         RBE3                       50
+                                         SPC1                        1
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 3 (NONL_STS)
+ *** USER INFORMATION MESSAGE : A new STS file has been created (The name of STS file is ./nl_static.sts)
+ *** USER INFORMATION MESSAGE 4109 (OUTPX2)
+     THE LABEL IS XXXXXXXX FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          8 RECORDS.)
+                (TOTAL DATA WRITTEN FOR LABEL =         17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM16, TRL =
+                    101                 0              2048                 8                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM1   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        3603 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        3667 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM2X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM20, TRL =
+                    102                 2                 0                 0                 0           1572865                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM2   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        6051 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          35 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        9612 WORDS.)
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EPTX     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EPT0, TRL =
+                    103                 0               512                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          91 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         122 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR MPT, TRL =
+                    101             32768                 6                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS MPTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          43 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         123 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK DYNAMICS WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR DYNAMIC, TRL =
+                    103              2048                 0                 0                 0               512                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS DYNAMICS
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          11 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          25 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          55 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EDTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EDT, TRL =
+                    105                 0                 0                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EDTS    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =           7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          37 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK DIT      WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR DI, TRL =
+                    101                32                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS DIT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          17 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          48 WORDS.)
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.298148E-14  6.681449E+03 -4.135512E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.681449E+03  5.109401E-14  3.488256E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.135512E+04 -3.488256E+04 -6.407548E-14 *
+                      *  1.298148E-14 -6.681449E+03  4.135512E+04  2.115029E+06 -1.546295E+06 -2.972863E+05 *
+                      *  6.681449E+03  5.109401E-14 -3.488256E+04 -1.546295E+06  1.542279E+06 -2.799716E+05 *
+                      * -4.135512E+04  3.488256E+04 -6.407548E-14 -2.972863E+05 -2.799716E+05  3.530190E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.144010E-17  3.644474E+01  5.888115E+00
+                                  Y            1.134735E+03      3.074071E+01  4.502726E-17  5.888115E+00
+                                  Z            1.134735E+03      3.074071E+01  3.644474E+01 -5.646736E-17
+                                                                I(S)
+                                           *  5.685115E+05  2.750091E+05  9.189375E+04 *
+                                           *  2.750091E+05  4.306235E+05  3.646796E+04 *
+                                           *  9.189375E+04  3.646796E+04  9.506986E+05 *
+                                                                I(Q)
+                                           *  7.701689E+05                             *
+                                           *                9.734428E+05               *
+                                           *                              2.062219E+05 *
+                                                                 Q
+                                           *  7.391356E-01  2.657738E-01  6.189045E-01 *
+                                           * -6.254887E-01 -7.005418E-02  7.770819E-01 *
+                                           *  2.498849E-01 -9.614867E-01  1.144590E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0     1025     FX   -3.178180E+02     ----          ----          ----      -2.014211E+03  1.638012E+04                             
+               FY       ----      -3.308155E+03     ----       1.315551E+03     ----      -3.875321E+04                             
+               FZ       ----          ----       1.346276E+04  5.609318E+05 -3.065616E+05     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -3.178180E+02 -3.308155E+03  1.346276E+04  5.622473E+05 -3.085758E+05 -2.237309E+04
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    10
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                       N O N - L I N E A R   I T E R A T I O N   S O L U T I O N   C O N T R O L   P A R A M E T E R S
+
+     LOOP CONTROLS FOR :   SUBCASE        1,         STEP        1,         SUBSTEP        0
+
+
+     SOLUTION CONTROL PARAMETERS FROM : NLPARM                     ID :        100
+
+          Number of Increments (NINC) .............           20
+          Incremental Time for Creep (DT) .........     0.00E+00
+          Matrix Update Option (KMETHOD) ..........         AUTO
+          Matrix Update Increment (KSTEP) .........           10
+          Maximum Number of Iterations (MAXITER) ..          100
+          Convergence Options (CONV) ..............     UPW     
+          Intermediate Output Flag (INTOUT) .......          YES
+                     - Displacement   (EPSU) ......     1.00E-02
+          Tolerance  - Residual Force (EPSP) ......     1.00E-02
+                     - Work           (EPSW) ......     1.00E-02
+          Divergence Limit (MAXDIV) ...............            3
+          Maximum Quasi-Newton Vectors (MAXQN) ....          100
+          Maximum Line Searches (MAXLS) ...........            4
+          Error Tolerance in YF (FSTRESS) .........     2.00E-01
+          Line Search Tolerance (LSTOL) ...........     5.00E-01
+          Maximum Number of Bisection (MAXBIS) ....            5
+          Maximum Ratio for Arc-Length (MAXR) .....     2.00E+01
+          Maximum Incremental Rotation (RTOLB) ....     2.00E+01
+          Minimum Number of Iterations (MINITER) ..            0
+
+ *** USER INFORMATION MESSAGE 6204 (NL3EMA)
+     6.240034E-02 SECONDS REQUIRED TO DECOMPOSE MATRIX.
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    11
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+0                             N O N - L I N E A R   I T E R A T I O N   M O D U L E   O U T P U T
+
+     STIFFNESS UPDATE TIME          0.01 SECONDS                                        SUBCASE        1          STEP        1
+            ITERATION TIME          0.06 SECONDS
+
+        LOAD  NO.       - - ERROR FACTORS - -    CONV  ITR MAT NO.    AVG     TOTL       - - - - - DISP - - - - - -  LINE_S  NO. TOT TOT
+        STEP  INC ITR  DISP     LOAD      WORK   RATE  DIV DIV BIS  R_FORCE   WORK      AVG        MAX     AT GRID C FACT NO QNV KUD ITR
+
+%5.00000E-02   1  1 1.00E+00 2.33E+01 2.33E+01  1.000  0   1   0  2.87E+01 1.147E+01 3.91E-03  4.953E-02    12020 3  1.00 0  0   0    1
+ *** USER INFORMATION MESSAGE 4550 (nl3con)
+     *** THE STIFFNESS MATRIX IS UPDATING TO THE INITIAL STATE FOR NEW LMFACT=7.395382E+06, PENFN=7.395382E+06 ***
+
+ *** JOB DOES NOT CONVERGE AT THE CURRENT TIME STEP OR INCREMENT.
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    12
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+0                             N O N - L I N E A R   I T E R A T I O N   M O D U L E   O U T P U T
+
+     STIFFNESS UPDATE TIME          0.01 SECONDS                                        SUBCASE        1          STEP        1
+            ITERATION TIME          0.05 SECONDS
+
+        LOAD  NO.       - - ERROR FACTORS - -    CONV  ITR MAT NO.    AVG     TOTL       - - - - - DISP - - - - - -  LINE_S  NO. TOT TOT
+        STEP  INC ITR  DISP     LOAD      WORK   RATE  DIV DIV BIS  R_FORCE   WORK      AVG        MAX     AT GRID C FACT NO QNV KUD ITR
+
+%5.00000E-02   1  1 1.00E+00 2.33E+01 2.33E+01  1.000  0   1   0  2.93E+01 1.147E+01 3.73E-03  4.953E-02    12020 3  1.00 0  0   1    2
+%5.00000E-02   1  2 7.63E-03 6.20E-01 3.69E-03  0.027  0   1   0  7.10E-01 1.143E+01 3.75E-03  4.930E-02    12020 3  1.00 0  1   1    3
+%5.00000E-02   1  3 4.20E-03 1.95E-01 5.17E-03  0.034  0   1   0  3.01E-01 1.149E+01 3.74E-03  4.952E-02    12020 3  1.00 0  2   1    4
+%5.00000E-02   1  4 3.00E-04 9.07E-03 3.89E-04  0.250  0   1   0  1.09E-02 1.149E+01 3.74E-03  4.953E-02    12020 3  1.00 0  3   1    5
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    13
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    14
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.368281E-14  6.708961E+03 -4.135723E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.708961E+03  5.034297E-14  3.487582E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.135723E+04 -3.487582E+04 -6.402578E-14 *
+                      *  1.368281E-14 -6.708961E+03  4.135723E+04  2.115635E+06 -1.546031E+06 -2.982619E+05 *
+                      *  6.708961E+03  5.034297E-14 -3.487582E+04 -1.546031E+06  1.542129E+06 -2.813414E+05 *
+                      * -4.135723E+04  3.487582E+04 -6.402578E-14 -2.982619E+05 -2.813414E+05  3.529892E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.205816E-17  3.644660E+01  5.912360E+00
+                                  Y            1.134735E+03      3.073478E+01  4.436540E-17  5.912360E+00
+                                  Z            1.134735E+03      3.073478E+01  3.644660E+01 -5.642356E-17
+                                                                I(S)
+                                           *  5.686388E+05  2.749262E+05  9.206348E+04 *
+                                           *  2.749262E+05  4.305629E+05  3.682257E+04 *
+                                           *  9.206348E+04  3.682257E+04  9.506614E+05 *
+                                                                I(Q)
+                                           *  7.701840E+05                             *
+                                           *                9.734532E+05               *
+                                           *                              2.062259E+05 *
+                                                                 Q
+                                           *  7.392660E-01  2.657937E-01  6.187403E-01 *
+                                           * -6.254926E-01 -6.938358E-02  7.771389E-01 *
+                                           *  2.494890E-01 -9.615299E-01  1.149591E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    15
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%1.00000E-01   2  1 5.00E-01 1.15E+01 5.77E+00  1.000  0   1   0  3.46E+01 4.610E+01 7.48E-03  9.919E-02    12020 3  1.00 0  3   1    6
+%1.00000E-01   2  2 4.77E-03 4.27E-01 3.53E-03  0.037  0   1   0  1.12E+00 4.594E+01 7.51E-03  9.888E-02    12020 3  1.00 0  4   1    7
+%1.00000E-01   2  3 1.39E-03 1.47E-01 2.82E-03  0.048  0   1   0  4.15E-01 4.607E+01 7.51E-03  9.905E-02    12020 3  1.00 0  5   1    8
+%1.00000E-01   2  4 6.09E-05 1.24E-02 1.87E-04  0.278  0   1   0  2.90E-02 4.607E+01 7.51E-03  9.906E-02    12020 3  1.00 0  6   1    9
+%1.00000E-01   2  5 3.34E-05 1.02E-03 1.36E-05  0.084  0   1   0  3.78E-03 4.607E+01 7.51E-03  9.906E-02    12020 3  1.00 0  7   1   10
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    16
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    17
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.438602E-14  6.736594E+03 -4.135932E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.736594E+03  4.958994E-14  3.486907E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.135932E+04 -3.486907E+04 -6.397596E-14 *
+                      *  1.438602E-14 -6.736594E+03  4.135932E+04  2.116243E+06 -1.545767E+06 -2.992414E+05 *
+                      *  6.736594E+03  4.958994E-14 -3.486907E+04 -1.545767E+06  1.541982E+06 -2.827155E+05 *
+                      * -4.135932E+04  3.486907E+04 -6.397596E-14 -2.992414E+05 -2.827155E+05  3.529593E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.267787E-17  3.644844E+01  5.936712E+00
+                                  Y            1.134735E+03      3.072883E+01  4.370179E-17  5.936712E+00
+                                  Z            1.134735E+03      3.072883E+01  3.644844E+01 -5.637966E-17
+                                                                I(S)
+                                           *  5.687666E+05  2.748434E+05  9.223377E+04 *
+                                           *  2.748434E+05  4.305032E+05  3.717712E+04 *
+                                           *  9.223377E+04  3.717712E+04  9.506237E+05 *
+                                                                I(Q)
+                                           *  7.701993E+05                             *
+                                           *                9.734641E+05               *
+                                           *                              2.062301E+05 *
+                                                                 Q
+                                           *  7.393953E-01  2.658162E-01  6.185760E-01 *
+                                           * -6.254963E-01 -6.871468E-02  7.771954E-01 *
+                                           *  2.490964E-01 -9.615716E-01  1.154597E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    18
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%1.50000E-01   3  1 3.32E-01 7.50E+00 2.50E+00  1.000  0   1   0  2.84E+01 1.035E+02 1.12E-02  1.487E-01    12020 3  1.00 0  7   1   11
+%1.50000E-01   3  2 6.90E-03 4.78E-01 3.05E-03  0.064  0   1   0  1.89E+00 1.038E+02 1.13E-02  1.483E-01    12020 3  1.00 0  8   1   12
+%1.50000E-01   3  3 1.36E-03 6.95E-02 1.75E-03  0.069  0   1   0  3.26E-01 1.039E+02 1.13E-02  1.486E-01    12020 3  1.00 0  9   1   13
+%1.50000E-01   3  4 1.36E-04 1.00E-02 6.67E-05  0.145  0   1   0  4.00E-02 1.040E+02 1.13E-02  1.486E-01    12020 3  1.00 0 10   1   14
+%1.50000E-01   3  5 1.79E-05 1.56E-03 1.01E-05  0.146  0   1   0  7.41E-03 1.040E+02 1.13E-02  1.486E-01    12020 3  1.00 0 10   1   15
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    19
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    20
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.509120E-14  6.764355E+03 -4.136141E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.764355E+03  4.883483E-14  3.486232E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.136141E+04 -3.486232E+04 -6.392602E-14 *
+                      *  1.509120E-14 -6.764355E+03  4.136141E+04  2.116853E+06 -1.545502E+06 -3.002252E+05 *
+                      *  6.764355E+03  4.883483E-14 -3.486232E+04 -1.545502E+06  1.541838E+06 -2.840943E+05 *
+                      * -4.136141E+04  3.486232E+04 -6.392602E-14 -3.002252E+05 -2.840943E+05  3.529291E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.329932E-17  3.645028E+01  5.961177E+00
+                                  Y            1.134735E+03      3.072288E+01  4.303633E-17  5.961177E+00
+                                  Z            1.134735E+03      3.072288E+01  3.645028E+01 -5.633565E-17
+                                                                I(S)
+                                           *  5.688948E+05  2.747607E+05  9.240475E+04 *
+                                           *  2.747607E+05  4.304443E+05  3.753166E+04 *
+                                           *  9.240475E+04  3.753166E+04  9.505854E+05 *
+                                                                I(Q)
+                                           *  7.702149E+05                             *
+                                           *                9.734752E+05               *
+                                           *                              2.062344E+05 *
+                                                                 Q
+                                           *  7.395235E-01  2.658417E-01  6.184118E-01 *
+                                           * -6.254996E-01 -6.804762E-02  7.772514E-01 *
+                                           *  2.487073E-01 -9.616120E-01  1.159611E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    21
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%2.00000E-01   4  1 2.52E-01 6.54E+00 1.64E+00  1.000  0   1   0  3.78E+01 1.858E+02 1.51E-02  1.981E-01    12020 3  1.00 0 10   1   16
+%2.00000E-01   4  2 3.19E-03 5.11E-01 4.14E-03  0.078  0   1   0  3.35E+00 1.851E+02 1.52E-02  1.981E-01    12020 3  1.00 0 11   1   17
+%2.00000E-01   4  3 1.60E-03 1.15E-01 1.32E-03  0.089  0   1   0  7.41E-01 1.853E+02 1.51E-02  1.981E-01    12020 3  1.00 0 12   1   18
+%2.00000E-01   4  4 1.90E-04 3.21E-02 2.86E-04  0.235  0   1   0  1.52E-01 1.854E+02 1.51E-02  1.982E-01    12020 3  1.00 0 13   1   19
+%2.00000E-01   4  5 7.59E-05 2.15E-03 6.19E-06  0.233  0   1   0  2.24E-02 1.854E+02 1.51E-02  1.982E-01    12020 3  1.00 0 14   1   20
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    22
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    23
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.579842E-14  6.792252E+03 -4.136348E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.792252E+03  4.807753E-14  3.485555E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.136348E+04 -3.485555E+04 -6.387595E-14 *
+                      *  1.579842E-14 -6.792252E+03  4.136348E+04  2.117466E+06 -1.545236E+06 -3.012135E+05 *
+                      *  6.792252E+03  4.807753E-14 -3.485555E+04 -1.545236E+06  1.541698E+06 -2.854781E+05 *
+                      * -4.136348E+04  3.485555E+04 -6.387595E-14 -3.012135E+05 -2.854781E+05  3.528987E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.392257E-17  3.645211E+01  5.985761E+00
+                                  Y            1.134735E+03      3.071691E+01  4.236895E-17  5.985761E+00
+                                  Z            1.134735E+03      3.071691E+01  3.645211E+01 -5.629151E-17
+                                                                I(S)
+                                           *  5.690237E+05  2.746780E+05  9.257653E+04 *
+                                           *  2.746780E+05  4.303863E+05  3.788621E+04 *
+                                           *  9.257653E+04  3.788621E+04  9.505464E+05 *
+                                                                I(Q)
+                                           *  7.702309E+05                             *
+                                           *                9.734867E+05               *
+                                           *                              2.062389E+05 *
+                                                                 Q
+                                           *  7.396503E-01  2.658706E-01  6.182477E-01 *
+                                           * -6.255026E-01 -6.738255E-02  7.773069E-01 *
+                                           *  2.483221E-01 -9.616509E-01  1.164632E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    24
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%2.50000E-01   5  1 1.97E-01 3.91E+00 7.79E-01  1.000  0   1   0  2.97E+01 2.891E+02 1.88E-02  2.465E-01    12020 3  1.00 0 14   1   21
+%2.50000E-01   5  2 1.01E-02 5.22E-01 4.80E-03  0.133  0   1   0  5.38E+00 2.903E+02 1.90E-02  2.480E-01    12020 3  1.00 0 15   1   22
+%2.50000E-01   5  3 9.95E-04 9.94E-02 1.07E-03  0.140  0   1   0  9.08E-01 2.906E+02 1.90E-02  2.477E-01    12020 3  1.00 0 16   1   23
+%2.50000E-01   5  4 1.33E-04 1.23E-02 6.72E-07  0.180  0   1   0  1.02E-01 2.906E+02 1.90E-02  2.477E-01    12020 3  1.00 0 17   1   24
+%2.50000E-01   5  5 6.97E-05 3.04E-03 3.38E-05  0.137  0   1   0  2.82E-02 2.906E+02 1.90E-02  2.477E-01    12020 3  1.00 0 18   1   25
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    25
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    26
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.650780E-14  6.820291E+03 -4.136554E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.820291E+03  4.731792E-14  3.484877E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.136554E+04 -3.484877E+04 -6.382573E-14 *
+                      *  1.650780E-14 -6.820291E+03  4.136554E+04  2.118082E+06 -1.544970E+06 -3.022068E+05 *
+                      *  6.820291E+03  4.731792E-14 -3.484877E+04 -1.544970E+06  1.541561E+06 -2.868672E+05 *
+                      * -4.136554E+04  3.484877E+04 -6.382573E-14 -3.022068E+05 -2.868672E+05  3.528681E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.454772E-17  3.645392E+01  6.010471E+00
+                                  Y            1.134735E+03      3.071094E+01  4.169954E-17  6.010471E+00
+                                  Z            1.134735E+03      3.071094E+01  3.645392E+01 -5.624726E-17
+                                                                I(S)
+                                           *  5.691531E+05  2.745954E+05  9.274925E+04 *
+                                           *  2.745954E+05  4.303294E+05  3.824084E+04 *
+                                           *  9.274925E+04  3.824084E+04  9.505068E+05 *
+                                                                I(Q)
+                                           *  7.702472E+05                             *
+                                           *                9.734986E+05               *
+                                           *                              2.062435E+05 *
+                                                                 Q
+                                           *  7.397757E-01  2.659031E-01  6.180837E-01 *
+                                           * -6.255055E-01 -6.671958E-02  7.773618E-01 *
+                                           *  2.479412E-01 -9.616881E-01  1.169664E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    27
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%3.00000E-01   6  1 1.72E-01 5.64E+00 9.54E-01  1.000  0   1   0  4.07E+01 4.205E+02 2.30E-02  2.980E-01    12020 3  1.00 0 18   1   26
+%3.00000E-01   6  2 2.02E-03 6.89E-01 3.00E-03  0.122  0   1   0  5.97E+00 4.194E+02 2.30E-02  2.965E-01    12020 3  1.00 0 19   1   27
+%3.00000E-01   6  3 2.41E-03 2.25E-01 7.44E-04  0.144  0   1   0  2.19E+00 4.197E+02 2.29E-02  2.973E-01    12020 3  1.00 0 20   1   28
+%3.00000E-01   6  4 3.61E-04 4.34E-02 6.13E-04  0.293  0   1   0  3.42E-01 4.199E+02 2.29E-02  2.973E-01    12020 3  1.00 0 21   1   29
+%3.00000E-01   6  5 1.45E-04 3.65E-03 7.67E-06  0.175  0   1   0  5.26E-02 4.199E+02 2.29E-02  2.973E-01    12020 3  1.00 0 22   1   30
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    28
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    29
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.721948E-14  6.848484E+03 -4.136758E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.848484E+03  4.655586E-14  3.484198E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.136758E+04 -3.484198E+04 -6.377535E-14 *
+                      *  1.721948E-14 -6.848484E+03  4.136758E+04  2.118701E+06 -1.544702E+06 -3.032055E+05 *
+                      *  6.848484E+03  4.655586E-14 -3.484198E+04 -1.544702E+06  1.541428E+06 -2.882620E+05 *
+                      * -4.136758E+04  3.484198E+04 -6.377535E-14 -3.032055E+05 -2.882620E+05  3.528373E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.517489E-17  3.645572E+01  6.035316E+00
+                                  Y            1.134735E+03      3.070495E+01  4.102797E-17  6.035316E+00
+                                  Z            1.134735E+03      3.070495E+01  3.645572E+01 -5.620286E-17
+                                                                I(S)
+                                           *  5.692832E+05  2.745129E+05  9.292308E+04 *
+                                           *  2.745129E+05  4.302735E+05  3.859559E+04 *
+                                           *  9.292308E+04  3.859559E+04  9.504665E+05 *
+                                                                I(Q)
+                                           *  7.702640E+05                             *
+                                           *                9.735109E+05               *
+                                           *                              2.062483E+05 *
+                                                                 Q
+                                           *  7.398993E-01  2.659400E-01  6.179199E-01 *
+                                           * -6.255082E-01 -6.605893E-02  7.774161E-01 *
+                                           *  2.475652E-01 -9.617235E-01  1.174707E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    30
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%3.50000E-01   7  1 1.43E-01 3.85E+00 5.57E-01  1.000  0   1   0  3.84E+01 5.719E+02 2.67E-02  3.480E-01    12020 3  1.00 0 22   1   31
+%3.50000E-01   7  2 8.08E-03 3.65E-01 2.05E-03  0.095  0   1   0  5.54E+00 5.730E+02 2.69E-02  3.466E-01    12020 3  1.00 0 23   1   32
+%3.50000E-01   7  3 1.35E-03 4.76E-02 8.46E-04  0.098  0   1   0  9.62E-01 5.735E+02 2.69E-02  3.470E-01    12020 3  1.00 0 24   1   33
+%3.50000E-01   7  4 1.63E-04 3.53E-02 1.06E-04  0.201  0   1   0  3.80E-01 5.735E+02 2.69E-02  3.470E-01    12020 3  1.00 0 25   1   34
+%3.50000E-01   7  5 4.61E-05 2.18E-03 4.05E-05  0.452  0   1   0  4.15E-02 5.735E+02 2.69E-02  3.470E-01    12020 3  1.00 0 26   1   35
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    31
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    32
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.793352E-14  6.876839E+03 -4.136961E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.876839E+03  4.579128E-14  3.483518E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.136961E+04 -3.483518E+04 -6.372480E-14 *
+                      *  1.793352E-14 -6.876839E+03  4.136961E+04  2.119323E+06 -1.544434E+06 -3.042100E+05 *
+                      *  6.876839E+03  4.579128E-14 -3.483518E+04 -1.544434E+06  1.541298E+06 -2.896629E+05 *
+                      * -4.136961E+04  3.483518E+04 -6.372480E-14 -3.042100E+05 -2.896629E+05  3.528062E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.580415E-17  3.645751E+01  6.060304E+00
+                                  Y            1.134735E+03      3.069896E+01  4.035417E-17  6.060304E+00
+                                  Z            1.134735E+03      3.069896E+01  3.645751E+01 -5.615831E-17
+                                                                I(S)
+                                           *  5.694141E+05  2.744305E+05  9.309819E+04 *
+                                           *  2.744305E+05  4.302189E+05  3.895048E+04 *
+                                           *  9.309819E+04  3.895048E+04  9.504254E+05 *
+                                                                I(Q)
+                                           *  7.702812E+05                             *
+                                           *                9.735238E+05               *
+                                           *                              2.062534E+05 *
+                                                                 Q
+                                           *  7.400209E-01  2.659817E-01  6.177562E-01 *
+                                           * -6.255109E-01 -6.540085E-02  7.774695E-01 *
+                                           *  2.471945E-01 -9.617569E-01  1.179765E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    33
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%4.00000E-01   8  1 1.29E-01 4.33E+00 5.47E-01  1.000  0   1   0  4.64E+01 7.519E+02 3.09E-02  3.961E-01    12020 3  1.00 0 26   1   36
+%4.00000E-01   8  2 1.93E-03 3.47E-01 1.18E-03  0.080  0   1   0  4.82E+00 7.511E+02 3.09E-02  3.963E-01    12020 3  1.00 0 27   1   37
+%4.00000E-01   8  3 1.26E-03 1.44E-01 7.94E-04  0.105  0   1   0  1.95E+00 7.517E+02 3.09E-02  3.965E-01    12020 3  1.00 0 28   1   38
+%4.00000E-01   8  4 4.48E-04 3.63E-02 3.30E-04  0.367  0   1   0  4.52E-01 7.518E+02 3.09E-02  3.967E-01    12020 3  1.00 0 29   1   39
+%4.00000E-01   8  5 6.12E-05 1.07E-02 2.37E-05  0.261  0   1   0  1.31E-01 7.518E+02 3.09E-02  3.967E-01    12020 3  1.00 0 30   1   40
+%4.00000E-01   8  6 1.41E-05 1.28E-03 1.50E-05  0.255  0   1   0  2.55E-02 7.518E+02 3.09E-02  3.967E-01    12020 3  1.00 0 30   1   41
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    34
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    35
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.865004E-14  6.905366E+03 -4.137163E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.905366E+03  4.502403E-14  3.482837E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.137163E+04 -3.482837E+04 -6.367407E-14 *
+                      *  1.865004E-14 -6.905366E+03  4.137163E+04  2.119948E+06 -1.544166E+06 -3.052208E+05 *
+                      *  6.905366E+03  4.502403E-14 -3.482837E+04 -1.544166E+06  1.541173E+06 -2.910703E+05 *
+                      * -4.137163E+04  3.482837E+04 -6.367407E-14 -3.052208E+05 -2.910703E+05  3.527750E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.643559E-17  3.645929E+01  6.085444E+00
+                                  Y            1.134735E+03      3.069296E+01  3.967802E-17  6.085444E+00
+                                  Z            1.134735E+03      3.069296E+01  3.645929E+01 -5.611361E-17
+                                                                I(S)
+                                           *  5.695457E+05  2.743483E+05  9.327473E+04 *
+                                           *  2.743483E+05  4.301655E+05  3.930553E+04 *
+                                           *  9.327473E+04  3.930553E+04  9.503836E+05 *
+                                                                I(Q)
+                                           *  7.702989E+05                             *
+                                           *                9.735373E+05               *
+                                           *                              2.062587E+05 *
+                                                                 Q
+                                           *  7.401404E-01  2.660287E-01  6.175928E-01 *
+                                           * -6.255136E-01 -6.474560E-02  7.775222E-01 *
+                                           *  2.468297E-01 -9.617883E-01  1.184838E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    36
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%4.50000E-01   9  1 1.14E-01 2.46E+00 2.78E-01  1.000  0   1   0  3.47E+01 9.527E+02 3.49E-02  4.466E-01    12020 3  1.00 0 30   1   42
+%4.50000E-01   9  2 3.00E-03 3.68E-01 2.17E-03  0.150  0   1   0  5.61E+00 9.545E+02 3.49E-02  4.464E-01    12020 3  1.00 0 31   1   43
+%4.50000E-01   9  3 5.38E-04 6.49E-02 7.43E-04  0.153  0   1   0  1.09E+00 9.551E+02 3.49E-02  4.465E-01    12020 3  1.00 0 32   1   44
+%4.50000E-01   9  4 3.06E-04 2.94E-02 8.12E-05  0.218  0   1   0  4.37E-01 9.552E+02 3.49E-02  4.464E-01    12020 3  1.00 0 33   1   45
+%4.50000E-01   9  5 3.69E-05 4.96E-03 8.06E-05  0.364  0   1   0  9.12E-02 9.551E+02 3.49E-02  4.464E-01    12020 3  1.00 0 34   1   46
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    37
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    38
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  1.936930E-14  6.934081E+03 -4.137364E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.934081E+03  4.425383E-14  3.482155E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.137364E+04 -3.482155E+04 -6.362313E-14 *
+                      *  1.936930E-14 -6.934081E+03  4.137364E+04  2.120578E+06 -1.543897E+06 -3.062388E+05 *
+                      *  6.934081E+03  4.425383E-14 -3.482155E+04 -1.543897E+06  1.541053E+06 -2.924849E+05 *
+                      * -4.137364E+04  3.482155E+04 -6.362313E-14 -3.062388E+05 -2.924849E+05  3.527435E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.706945E-17  3.646106E+01  6.110750E+00
+                                  Y            1.134735E+03      3.068694E+01  3.899927E-17  6.110750E+00
+                                  Z            1.134735E+03      3.068694E+01  3.646106E+01 -5.606872E-17
+                                                                I(S)
+                                           *  5.696782E+05  2.742662E+05  9.345302E+04 *
+                                           *  2.742662E+05  4.301136E+05  3.966091E+04 *
+                                           *  9.345302E+04  3.966091E+04  9.503410E+05 *
+                                                                I(Q)
+                                           *  7.703172E+05                             *
+                                           *                9.735514E+05               *
+                                           *                              2.062642E+05 *
+                                                                 Q
+                                           *  7.402574E-01  2.660820E-01  6.174297E-01 *
+                                           * -6.255164E-01 -6.409337E-02  7.775739E-01 *
+                                           *  2.464716E-01 -9.618173E-01  1.189931E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    39
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%5.00000E-01  10  1 1.05E-01 3.13E+00 3.20E-01  1.000  0   1   0  4.28E+01 1.183E+03 3.91E-02  4.961E-01    12020 3  1.00 0 34   1   47
+%5.00000E-01  10  2 6.12E-04 1.82E-01 1.29E-04  0.058  0   1   0  2.98E+00 1.183E+03 3.91E-02  4.955E-01    12020 3  1.00 0 35   1   48
+%5.00000E-01  10  3 9.74E-04 1.24E-01 6.61E-04  0.093  0   1   0  2.15E+00 1.184E+03 3.91E-02  4.963E-01    12020 3  1.00 0 36   1   49
+%5.00000E-01  10  4 1.60E-04 2.05E-02 2.19E-04  0.472  0   1   0  3.51E-01 1.184E+03 3.91E-02  4.962E-01    12020 3  1.00 0 37   1   50
+%5.00000E-01  10  5 5.80E-05 2.32E-03 3.34E-05  0.158  0   1   0  5.02E-02 1.184E+03 3.91E-02  4.962E-01    12020 3  1.00 0 38   1   51
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    40
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    41
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.009146E-14  6.962999E+03 -4.137564E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.962999E+03  4.348053E-14  3.481471E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.137564E+04 -3.481471E+04 -6.357198E-14 *
+                      *  2.009146E-14 -6.962999E+03  4.137564E+04  2.121211E+06 -1.543627E+06 -3.072644E+05 *
+                      *  6.962999E+03  4.348053E-14 -3.481471E+04 -1.543627E+06  1.540937E+06 -2.939072E+05 *
+                      * -4.137564E+04  3.481471E+04 -6.357198E-14 -3.072644E+05 -2.939072E+05  3.527118E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.770586E-17  3.646283E+01  6.136234E+00
+                                  Y            1.134735E+03      3.068092E+01  3.831778E-17  6.136234E+00
+                                  Z            1.134735E+03      3.068092E+01  3.646283E+01 -5.602365E-17
+                                                                I(S)
+                                           *  5.698116E+05  2.741845E+05  9.363324E+04 *
+                                           *  2.741845E+05  4.300632E+05  4.001662E+04 *
+                                           *  9.363324E+04  4.001662E+04  9.502974E+05 *
+                                                                I(Q)
+                                           *  7.703361E+05                             *
+                                           *                9.735662E+05               *
+                                           *                              2.062700E+05 *
+                                                                 Q
+                                           *  7.403715E-01  2.661419E-01  6.172670E-01 *
+                                           * -6.255195E-01 -6.344447E-02  7.776247E-01 *
+                                           *  2.461207E-01 -9.618437E-01  1.195045E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    42
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%5.50000E-01  11  1 9.38E-02 2.64E+00 2.45E-01  1.000  0   1   0  3.95E+01 1.436E+03 4.31E-02  5.465E-01    12020 3  1.00 0 38   1   52
+%5.50000E-01  11  2 3.71E-03 3.27E-01 3.80E-04  0.124  0   1   0  5.45E+00 1.436E+03 4.32E-02  5.457E-01    12020 3  1.00 0 38   1   53
+%5.50000E-01  11  3 7.14E-04 6.61E-02 1.79E-03  0.132  0   1   0  1.25E+00 1.438E+03 4.32E-02  5.460E-01    12020 3  1.00 0 39   1   54
+%5.50000E-01  11  4 1.13E-04 1.13E-02 1.63E-04  0.197  0   1   0  1.95E-01 1.438E+03 4.32E-02  5.461E-01    12020 3  1.00 0 40   1   55
+%5.50000E-01  11  5 2.26E-05 5.10E-03 4.67E-05  0.212  0   1   0  7.87E-02 1.438E+03 4.32E-02  5.461E-01    12020 3  1.00 0 40   1   56
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    43
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    44
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.081657E-14  6.992131E+03 -4.137763E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -6.992131E+03  4.270404E-14  3.480786E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.137763E+04 -3.480786E+04 -6.352061E-14 *
+                      *  2.081657E-14 -6.992131E+03  4.137763E+04  2.121849E+06 -1.543357E+06 -3.082984E+05 *
+                      *  6.992131E+03  4.270404E-14 -3.480786E+04 -1.543357E+06  1.540827E+06 -2.953378E+05 *
+                      * -4.137763E+04  3.480786E+04 -6.352061E-14 -3.082984E+05 -2.953378E+05  3.526798E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.834487E-17  3.646458E+01  6.161907E+00
+                                  Y            1.134735E+03      3.067488E+01  3.763350E-17  6.161907E+00
+                                  Z            1.134735E+03      3.067488E+01  3.646458E+01 -5.597837E-17
+                                                                I(S)
+                                           *  5.699460E+05  2.741030E+05  9.381563E+04 *
+                                           *  2.741030E+05  4.300146E+05  4.037265E+04 *
+                                           *  9.381563E+04  4.037265E+04  9.502529E+05 *
+                                                                I(Q)
+                                           *  7.703557E+05                             *
+                                           *                9.735818E+05               *
+                                           *                              2.062760E+05 *
+                                                                 Q
+                                           *  7.404824E-01  2.662096E-01  6.171048E-01 *
+                                           * -6.255229E-01 -6.279945E-02  7.776743E-01 *
+                                           *  2.457782E-01 -9.618673E-01  1.200183E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    45
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%6.00000E-01  12  1 9.03E-02 3.45E+00 3.05E-01  1.000  0   1   0  6.64E+01 1.724E+03 4.76E-02  5.984E-01    12020 3  1.00 0 40   1   57
+%6.00000E-01  12  2 3.30E-03 7.23E-01 7.90E-03  0.210  0   1   0  1.26E+01 1.714E+03 4.74E-02  5.946E-01    12020 3  1.00 0 40   1   58
+%6.00000E-01  12  3 1.31E-03 1.32E-01 3.65E-03  0.205  0   1   0  2.55E+00 1.719E+03 4.75E-02  5.961E-01    12020 3  1.00 0 41   1   59
+%6.00000E-01  12  4 1.62E-04 2.78E-02 4.49E-04  0.187  0   1   0  5.88E-01 1.719E+03 4.75E-02  5.962E-01    12020 3  1.00 0 42   1   60
+%6.00000E-01  12  5 1.07E-04 1.10E-02 1.57E-07  0.243  0   1   0  2.49E-01 1.719E+03 4.75E-02  5.961E-01    12020 3  1.00 0 43   1   61
+%6.00000E-01  12  6 5.06E-05 3.59E-03 5.18E-05  0.376  0   1   0  9.19E-02 1.719E+03 4.75E-02  5.961E-01    12020 3  1.00 0 43   1   62
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    46
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    47
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.154532E-14  7.021512E+03 -4.137961E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.021512E+03  4.192365E-14  3.480100E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.137961E+04 -3.480100E+04 -6.346896E-14 *
+                      *  2.154532E-14 -7.021512E+03  4.137961E+04  2.122492E+06 -1.543086E+06 -3.093425E+05 *
+                      *  7.021512E+03  4.192365E-14 -3.480100E+04 -1.543086E+06  1.540722E+06 -2.967782E+05 *
+                      * -4.137961E+04  3.480100E+04 -6.346896E-14 -3.093425E+05 -2.967782E+05  3.526476E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.898710E-17  3.646632E+01  6.187799E+00
+                                  Y            1.134735E+03      3.066884E+01  3.694576E-17  6.187799E+00
+                                  Z            1.134735E+03      3.066884E+01  3.646632E+01 -5.593286E-17
+                                                                I(S)
+                                           *  5.700816E+05  2.740218E+05  9.400088E+04 *
+                                           *  2.740218E+05  4.299679E+05  4.072949E+04 *
+                                           *  9.400088E+04  4.072949E+04  9.502073E+05 *
+                                                                I(Q)
+                                           *  7.703761E+05                             *
+                                           *                9.735982E+05               *
+                                           *                              2.062824E+05 *
+                                                                 Q
+                                           *  7.405894E-01  2.662864E-01  6.169431E-01 *
+                                           * -6.255270E-01 -6.215823E-02  7.777225E-01 *
+                                           *  2.454450E-01 -9.618877E-01  1.205356E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    48
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%6.50000E-01  13  1 7.58E-02 2.00E+00 1.52E-01  1.000  0   1   0  4.25E+01 2.016E+03 5.14E-02  6.403E-01    12020 3  1.00 0 43   1   63
+%6.50000E-01  13  2 1.09E-02 8.82E-01 3.06E-03  0.442  0   1   0  1.87E+01 2.020E+03 5.17E-02  6.442E-01    12020 3  1.00 0 43   1   64
+%6.50000E-01  13  3 2.50E-03 2.07E-01 5.30E-03  0.378  0   1   0  5.22E+00 2.027E+03 5.18E-02  6.454E-01    12020 3  1.00 0 44   1   65
+%6.50000E-01  13  4 7.50E-04 6.63E-02 7.14E-04  0.251  0   1   0  1.84E+00 2.028E+03 5.18E-02  6.459E-01    12020 3  1.00 0 45   1   66
+%6.50000E-01  13  5 2.57E-04 4.37E-02 4.03E-04  0.402  0   1   0  8.21E-01 2.027E+03 5.18E-02  6.461E-01    12020 3  1.00 0 46   1   67
+%6.50000E-01  13  6 1.50E-04 1.38E-02 2.10E-04  0.523  0   1   0  3.10E-01 2.027E+03 5.18E-02  6.462E-01    12020 3  1.00 0 47   1   68
+%6.50000E-01  13  7 3.61E-05 4.60E-03 1.17E-05  0.320  0   1   0  1.02E-01 2.027E+03 5.18E-02  6.462E-01    12020 3  1.00 0 47   1   69
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    49
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    50
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.227736E-14  7.051141E+03 -4.138158E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.051141E+03  4.113971E-14  3.479413E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.138158E+04 -3.479413E+04 -6.341707E-14 *
+                      *  2.227736E-14 -7.051141E+03  4.138158E+04  2.123140E+06 -1.542816E+06 -3.103964E+05 *
+                      *  7.051141E+03  4.113971E-14 -3.479413E+04 -1.542816E+06  1.540623E+06 -2.982281E+05 *
+                      * -4.138158E+04  3.479413E+04 -6.341707E-14 -3.103964E+05 -2.982281E+05  3.526151E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      1.963222E-17  3.646806E+01  6.213910E+00
+                                  Y            1.134735E+03      3.066278E+01  3.625491E-17  6.213910E+00
+                                  Z            1.134735E+03      3.066278E+01  3.646806E+01 -5.588712E-17
+                                                                I(S)
+                                           *  5.702184E+05  2.739411E+05  9.418876E+04 *
+                                           *  2.739411E+05  4.299233E+05  4.108664E+04 *
+                                           *  9.418876E+04  4.108664E+04  9.501606E+05 *
+                                                                I(Q)
+                                           *  7.703974E+05                             *
+                                           *                9.736157E+05               *
+                                           *                              2.062891E+05 *
+                                                                 Q
+                                           *  7.406924E-01  2.663726E-01  6.167822E-01 *
+                                           * -6.255317E-01 -6.152188E-02  7.777693E-01 *
+                                           *  2.451220E-01 -9.619047E-01  1.210557E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    51
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%7.00000E-01  14  1 7.39E-02 2.72E+00 1.95E-01  1.000  0   1   0  5.35E+01 2.350E+03 5.60E-02  6.950E-01    12020 3  1.00 0 47   1   70
+%7.00000E-01  14  2 5.11E-03 6.89E-01 3.64E-03  0.253  0   1   0  1.44E+01 2.356E+03 5.62E-02  6.953E-01    12020 3  1.00 0 47   1   71
+%7.00000E-01  14  3 1.00E-03 1.26E-01 3.29E-03  0.239  0   1   0  3.28E+00 2.362E+03 5.62E-02  6.964E-01    12020 3  1.00 0 48   1   72
+%7.00000E-01  14  4 2.51E-04 3.24E-02 6.37E-05  0.194  0   1   0  1.01E+00 2.362E+03 5.62E-02  6.965E-01    12020 3  1.00 0 49   1   73
+%7.00000E-01  14  5 8.08E-05 1.55E-02 1.52E-04  0.303  0   1   0  3.82E-01 2.362E+03 5.62E-02  6.964E-01    12020 3  1.00 0 50   1   74
+%7.00000E-01  14  6 5.99E-05 6.97E-03 6.36E-06  0.469  0   1   0  2.01E-01 2.362E+03 5.62E-02  6.964E-01    12020 3  1.00 0 50   1   75
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    52
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    53
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.301358E-14  7.081068E+03 -4.138354E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.081068E+03  4.035128E-14  3.478725E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.138354E+04 -3.478725E+04 -6.336486E-14 *
+                      *  2.301358E-14 -7.081068E+03  4.138354E+04  2.123793E+06 -1.542544E+06 -3.114626E+05 *
+                      *  7.081068E+03  4.035128E-14 -3.478725E+04 -1.542544E+06  1.540532E+06 -2.996898E+05 *
+                      * -4.138354E+04  3.478725E+04 -6.336486E-14 -3.114626E+05 -2.996898E+05  3.525824E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.028102E-17  3.646979E+01  6.240284E+00
+                                  Y            1.134735E+03      3.065672E+01  3.556009E-17  6.240284E+00
+                                  Z            1.134735E+03      3.065672E+01  3.646979E+01 -5.584111E-17
+                                                                I(S)
+                                           *  5.703566E+05  2.738609E+05  9.438030E+04 *
+                                           *  2.738609E+05  4.298812E+05  4.144471E+04 *
+                                           *  9.438030E+04  4.144471E+04  9.501126E+05 *
+                                                                I(Q)
+                                           *  7.704198E+05                             *
+                                           *                9.736343E+05               *
+                                           *                              2.062962E+05 *
+                                                                 Q
+                                           *  7.407904E-01  2.664706E-01  6.166223E-01 *
+                                           * -6.255375E-01 -6.089063E-02  7.778144E-01 *
+                                           *  2.448112E-01 -9.619178E-01  1.215801E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    54
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%7.50000E-01  15  1 7.39E-02 2.37E+00 1.67E-01  1.000  0   1   0  4.84E+01 2.729E+03 6.08E-02  7.476E-01    12020 3  1.00 0 50   1   76
+%7.50000E-01  15  2 1.40E-03 2.54E-01 3.33E-03  0.107  0   1   0  6.86E+00 2.721E+03 6.08E-02  7.464E-01    12020 3  1.00 0 50   1   77
+%7.50000E-01  15  3 6.09E-04 1.52E-01 1.42E-03  0.155  0   1   0  3.61E+00 2.725E+03 6.08E-02  7.469E-01    12020 3  1.00 0 51   1   78
+%7.50000E-01  15  4 5.18E-04 1.08E-01 1.56E-03  0.640  0   1   0  2.15E+00 2.726E+03 6.08E-02  7.469E-01    12020 3  1.00 0 52   1   79
+%7.50000E-01  15  5 3.63E-04 3.27E-02 3.28E-04  0.540  0   1   0  7.51E-01 2.726E+03 6.08E-02  7.468E-01    12020 3  1.00 0 53   1   80
+%7.50000E-01  15  6 6.91E-05 1.49E-02 6.42E-05  0.339  0   1   0  3.19E-01 2.726E+03 6.08E-02  7.468E-01    12020 3  1.00 0 53   1   81
+%7.50000E-01  15  7 8.81E-05 1.02E-02 4.18E-06  0.529  0   1   0  2.52E-01 2.726E+03 6.08E-02  7.468E-01    12020 3  1.00 0 53   1   82
+%7.50000E-01  15  8 3.06E-05 6.08E-03 2.07E-05  0.648  0   1   0  1.30E-01 2.725E+03 6.08E-02  7.468E-01    12020 3  1.00 0 53   1   83
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    55
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    56
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.375434E-14  7.111324E+03 -4.138549E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.111324E+03  3.955798E-14  3.478036E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.138549E+04 -3.478036E+04 -6.331231E-14 *
+                      *  2.375434E-14 -7.111324E+03  4.138549E+04  2.124454E+06 -1.542273E+06 -3.125427E+05 *
+                      *  7.111324E+03  3.955798E-14 -3.478036E+04 -1.542273E+06  1.540448E+06 -3.011645E+05 *
+                      * -4.138549E+04  3.478036E+04 -6.331231E-14 -3.125427E+05 -3.011645E+05  3.525495E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.093382E-17  3.647151E+01  6.266948E+00
+                                  Y            1.134735E+03      3.065064E+01  3.486098E-17  6.266948E+00
+                                  Z            1.134735E+03      3.065064E+01  3.647151E+01 -5.579481E-17
+                                                                I(S)
+                                           *  5.704964E+05  2.737812E+05  9.457602E+04 *
+                                           *  2.737812E+05  4.298418E+05  4.180381E+04 *
+                                           *  9.457602E+04  4.180381E+04  9.500631E+05 *
+                                                                I(Q)
+                                           *  7.704433E+05                             *
+                                           *                9.736542E+05               *
+                                           *                              2.063038E+05 *
+                                                                 Q
+                                           *  7.408825E-01  2.665821E-01  6.164634E-01 *
+                                           * -6.255445E-01 -6.026525E-02  7.778574E-01 *
+                                           *  2.445142E-01 -9.619262E-01  1.221095E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    57
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%8.00000E-01  16  1 6.47E-02 1.40E+00 9.08E-02  1.000  0   1   0  4.98E+01 3.105E+03 6.50E-02  7.949E-01    12020 3  1.00 0 53   1   84
+%8.00000E-01  16  2 9.28E-03 7.00E-01 4.48E-03  0.500  0   1   0  1.99E+01 3.112E+03 6.53E-02  7.968E-01    12020 3  1.00 0 53   1   85
+%8.00000E-01  16  3 1.74E-03 1.99E-01 3.46E-03  0.428  0   1   0  5.92E+00 3.118E+03 6.53E-02  7.979E-01    12020 3  1.00 0 54   1   86
+%8.00000E-01  16  4 8.39E-04 8.05E-02 2.74E-04  0.311  0   1   0  2.47E+00 3.118E+03 6.54E-02  7.975E-01    12020 3  1.00 0 55   1   87
+%8.00000E-01  16  5 5.11E-04 5.38E-02 2.23E-04  0.481  0   1   0  1.43E+00 3.118E+03 6.54E-02  7.975E-01    12020 3  1.00 0 56   1   88
+%8.00000E-01  16  6 4.03E-04 1.74E-02 1.31E-04  0.530  0   1   0  4.41E-01 3.118E+03 6.54E-02  7.974E-01    12020 3  1.00 0 57   1   89
+%8.00000E-01  16  7 4.86E-05 7.31E-03 3.72E-05  0.347  0   1   0  1.72E-01 3.118E+03 6.54E-02  7.974E-01    12020 3  1.00 0 57   1   90
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    58
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    59
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.450022E-14  7.141937E+03 -4.138744E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.141937E+03  3.875920E-14  3.477345E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.138744E+04 -3.477345E+04 -6.325942E-14 *
+                      *  2.450022E-14 -7.141937E+03  4.138744E+04  2.125122E+06 -1.542002E+06 -3.136378E+05 *
+                      *  7.141937E+03  3.875920E-14 -3.477345E+04 -1.542002E+06  1.540374E+06 -3.026538E+05 *
+                      * -4.138744E+04  3.477345E+04 -6.325942E-14 -3.136378E+05 -3.026538E+05  3.525162E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.159114E-17  3.647322E+01  6.293925E+00
+                                  Y            1.134735E+03      3.064456E+01  3.415706E-17  6.293925E+00
+                                  Z            1.134735E+03      3.064456E+01  3.647322E+01 -5.574819E-17
+                                                                I(S)
+                                           *  5.706379E+05  2.737022E+05  9.477628E+04 *
+                                           *  2.737022E+05  4.298056E+05  4.216429E+04 *
+                                           *  9.477628E+04  4.216429E+04  9.500120E+05 *
+                                                                I(Q)
+                                           *  7.704681E+05                             *
+                                           *                9.736756E+05               *
+                                           *                              2.063118E+05 *
+                                                                 Q
+                                           *  7.409685E-01  2.667077E-01  6.163057E-01 *
+                                           * -6.255532E-01 -5.964548E-02  7.778982E-01 *
+                                           *  2.442313E-01 -9.619300E-01  1.226444E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    60
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%8.50000E-01  17  1 6.61E-02 2.62E+00 1.68E-01  1.000  0   1   0  6.81E+01 3.545E+03 7.01E-02  8.512E-01    12020 3  1.00 0 57   1   91
+%8.50000E-01  17  2 3.73E-03 6.30E-01 5.39E-03  0.240  0   1   0  1.53E+01 3.531E+03 7.01E-02  8.471E-01    12020 3  1.00 0 57   1   92
+%8.50000E-01  17  3 9.80E-04 1.19E-01 2.87E-03  0.230  0   1   0  3.59E+00 3.539E+03 7.01E-02  8.483E-01    12020 3  1.00 0 58   1   93
+%8.50000E-01  17  4 3.35E-04 3.30E-02 6.15E-04  0.203  0   1   0  9.79E-01 3.540E+03 7.01E-02  8.484E-01    12020 3  1.00 0 59   1   94
+%8.50000E-01  17  5 6.29E-05 1.03E-02 4.12E-05  0.285  0   1   0  3.28E-01 3.540E+03 7.01E-02  8.483E-01    12020 3  1.00 0 60   1   95
+%8.50000E-01  17  6 2.28E-05 3.97E-03 4.12E-05  0.330  0   1   0  1.39E-01 3.540E+03 7.01E-02  8.483E-01    12020 3  1.00 0 60   1   96
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    61
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    62
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.525181E-14  7.172965E+03 -4.138938E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.172965E+03  3.795432E-14  3.476654E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.138938E+04 -3.476654E+04 -6.320613E-14 *
+                      *  2.525181E-14 -7.172965E+03  4.138938E+04  2.125798E+06 -1.541731E+06 -3.147507E+05 *
+                      *  7.172965E+03  3.795432E-14 -3.476654E+04 -1.541731E+06  1.540309E+06 -3.041596E+05 *
+                      * -4.138938E+04  3.476654E+04 -6.320613E-14 -3.147507E+05 -3.041596E+05  3.524827E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.225349E-17  3.647493E+01  6.321269E+00
+                                  Y            1.134735E+03      3.063847E+01  3.344774E-17  6.321269E+00
+                                  Z            1.134735E+03      3.063847E+01  3.647493E+01 -5.570123E-17
+                                                                I(S)
+                                           *  5.707812E+05  2.736240E+05  9.498207E+04 *
+                                           *  2.736240E+05  4.297729E+05  4.252621E+04 *
+                                           *  9.498207E+04  4.252621E+04  9.499591E+05 *
+                                                                I(Q)
+                                           *  7.704945E+05                             *
+                                           *                9.736986E+05               *
+                                           *                              2.063202E+05 *
+                                                                 Q
+                                           *  7.410467E-01  2.668508E-01  6.161497E-01 *
+                                           * -6.255639E-01 -5.903309E-02  7.779363E-01 *
+                                           *  2.439661E-01 -9.619281E-01  1.231859E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    63
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%9.00000E-01  18  1 6.28E-02 1.45E+00 8.87E-02  1.000  0   1   0  5.00E+01 3.980E+03 7.49E-02  8.960E-01    12020 3  1.00 0 60   1   97
+%9.00000E-01  18  2 2.07E-03 5.04E-01 2.29E-03  0.347  0   1   0  1.57E+01 3.986E+03 7.50E-02  8.977E-01    12020 3  1.00 0 60   1   98
+%9.00000E-01  18  3 1.94E-03 1.63E-01 2.67E-03  0.341  0   1   0  5.82E+00 3.993E+03 7.51E-02  8.990E-01    12020 3  1.00 0 61   1   99
+%9.00000E-01  18  4 6.25E-04 1.17E-01 6.95E-04  0.419  0   1   0  3.06E+00 3.995E+03 7.51E-02  8.994E-01    12020 3  1.00 0 62   1  100
+%9.00000E-01  18  5 4.93E-04 3.54E-02 3.82E-04  0.543  0   1   0  1.17E+00 3.994E+03 7.51E-02  8.994E-01    12020 3  1.00 0 63   1  101
+%9.00000E-01  18  6 3.03E-04 1.01E-02 1.90E-04  0.299  0   1   0  3.77E-01 3.994E+03 7.51E-02  8.994E-01    12020 3  1.00 0 64   1  102
+%9.00000E-01  18  7 3.41E-05 7.66E-03 4.69E-05  0.390  0   1   0  2.16E-01 3.994E+03 7.51E-02  8.994E-01    12020 3  1.00 0 64   1  103
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    64
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    65
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.600994E-14  7.204465E+03 -4.139130E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.204465E+03  3.714247E-14  3.475962E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.139130E+04 -3.475962E+04 -6.315241E-14 *
+                      *  2.600994E-14 -7.204465E+03  4.139130E+04  2.126483E+06 -1.541460E+06 -3.158842E+05 *
+                      *  7.204465E+03  3.714247E-14 -3.475962E+04 -1.541460E+06  1.540256E+06 -3.056846E+05 *
+                      * -4.139130E+04  3.475962E+04 -6.315241E-14 -3.158842E+05 -3.056846E+05  3.524489E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.292160E-17  3.647663E+01  6.349030E+00
+                                  Y            1.134735E+03      3.063237E+01  3.273229E-17  6.349030E+00
+                                  Z            1.134735E+03      3.063237E+01  3.647663E+01 -5.565389E-17
+                                                                I(S)
+                                           *  5.709268E+05  2.735468E+05  9.519439E+04 *
+                                           *  2.735468E+05  4.297445E+05  4.288995E+04 *
+                                           *  9.519439E+04  4.288995E+04  9.499042E+05 *
+                                                                I(Q)
+                                           *  7.705227E+05                             *
+                                           *                9.737235E+05               *
+                                           *                              2.063293E+05 *
+                                                                 Q
+                                           *  7.411160E-01  2.670142E-01  6.159955E-01 *
+                                           * -6.255773E-01 -5.842907E-02  7.779711E-01 *
+                                           *  2.437214E-01 -9.619197E-01  1.237353E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    66
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%9.50000E-01  19  1 6.35E-02 2.93E+00 1.75E-01  1.000  0   1   0  8.12E+01 4.477E+03 8.03E-02  9.492E-01    12020 3  1.00 0 64   1  104
+%9.50000E-01  19  2 3.34E-03 3.42E-01 2.48E-03  0.117  0   1   0  1.27E+01 4.467E+03 8.00E-02  9.502E-01    12020 3  1.00 0 64   1  105
+%9.50000E-01  19  3 1.91E-03 1.82E-01 2.88E-03  0.161  0   1   0  5.31E+00 4.478E+03 8.01E-02  9.507E-01    12020 3  1.00 0 65   1  106
+%9.50000E-01  19  4 4.69E-04 8.38E-02 1.37E-03  0.507  0   1   0  2.56E+00 4.481E+03 8.01E-02  9.509E-01    12020 3  1.00 0 66   1  107
+%9.50000E-01  19  5 1.58E-04 1.43E-02 1.60E-04  0.368  0   1   0  5.39E-01 4.480E+03 8.01E-02  9.510E-01    12020 3  1.00 0 67   1  108
+%9.50000E-01  19  6 5.87E-05 1.37E-02 1.14E-04  0.285  0   1   0  4.42E-01 4.480E+03 8.01E-02  9.509E-01    12020 3  1.00 0 68   1  109
+%9.50000E-01  19  7 3.04E-05 4.13E-03 2.40E-05  0.638  0   1   0  1.43E-01 4.480E+03 8.01E-02  9.509E-01    12020 3  1.00 0 68   1  110
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    67
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    68
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.677598E-14  7.236508E+03 -4.139322E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.236508E+03  3.632225E-14  3.475270E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.139322E+04 -3.475270E+04 -6.309823E-14 *
+                      *  2.677598E-14 -7.236508E+03  4.139322E+04  2.127179E+06 -1.541190E+06 -3.170415E+05 *
+                      *  7.236508E+03  3.632225E-14 -3.475270E+04 -1.541190E+06  1.540215E+06 -3.072320E+05 *
+                      * -4.139322E+04  3.475270E+04 -6.309823E-14 -3.170415E+05 -3.072320E+05  3.524147E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.359668E-17  3.647832E+01  6.377267E+00
+                                  Y            1.134735E+03      3.062627E+01  3.200946E-17  6.377267E+00
+                                  Z            1.134735E+03      3.062627E+01  3.647832E+01 -5.560614E-17
+                                                                I(S)
+                                           *  5.710747E+05  2.734706E+05  9.541428E+04 *
+                                           *  2.734706E+05  4.297208E+05  4.325633E+04 *
+                                           *  9.541428E+04  4.325633E+04  9.498468E+05 *
+                                                                I(Q)
+                                           *  7.705529E+05                             *
+                                           *                9.737505E+05               *
+                                           *                              2.063389E+05 *
+                                                                 Q
+                                           *  7.411752E-01  2.672002E-01  6.158437E-01 *
+                                           * -6.255940E-01 -5.783315E-02  7.780023E-01 *
+                                           *  2.434985E-01 -9.619040E-01  1.242943E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    69
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+%1.00000E+00  20  1 5.88E-02 2.34E+00 1.30E-01  1.000  0   1   0  7.64E+01 5.005E+03 8.52E-02  1.004E+00    12020 3  1.00 0 68   1  111
+%1.00000E+00  20  2 4.99E-03 1.04E+00 6.57E-03  0.446  0   1   0  2.69E+01 4.987E+03 8.53E-02  1.001E+00    12020 3  1.00 0 68   1  112
+%1.00000E+00  20  3 1.14E-03 1.20E-01 3.36E-03  0.344  0   1   0  4.57E+00 4.998E+03 8.53E-02  1.003E+00    12020 3  1.00 0 69   1  113
+%1.00000E+00  20  4 8.99E-04 4.41E-02 7.51E-04  0.141  0   1   0  2.00E+00 5.001E+03 8.54E-02  1.003E+00    12020 3  1.00 0 70   1  114
+%1.00000E+00  20  5 1.20E-04 2.02E-02 1.45E-04  0.393  0   1   0  6.47E-01 5.001E+03 8.54E-02  1.003E+00    12020 3  1.00 0 71   1  115
+%1.00000E+00  20  6 1.07E-04 1.11E-02 4.97E-05  0.488  0   1   0  4.02E-01 5.000E+03 8.54E-02  1.003E+00    12020 3  1.00 0 71   1  116
+%1.00000E+00  20  7 3.36E-05 5.18E-03 5.36E-06  0.520  0   1   0  1.64E-01 5.000E+03 8.54E-02  1.003E+00    12020 3  1.00 0 71   1  117
+
+ *** JOB CONVERGES FOR THE CURRENT STEP.
+ *** SUBCASE      1 STEP      1 IS COMPLETED.
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    70
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    71
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.134735E+03 -2.578861E-14 -3.426358E-15  2.755144E-14  7.269191E+03 -4.139512E+04 *
+                      * -2.578861E-14  1.134735E+03 -5.713745E-15 -7.269191E+03  3.549208E-14  3.474577E+04 *
+                      * -3.426358E-15 -5.713745E-15  1.134735E+03  4.139512E+04 -3.474577E+04 -6.304352E-14 *
+                      *  2.755144E-14 -7.269191E+03  4.139512E+04  2.127886E+06 -1.540921E+06 -3.182271E+05 *
+                      *  7.269191E+03  3.549208E-14 -3.474577E+04 -1.540921E+06  1.540191E+06 -3.088060E+05 *
+                      * -4.139512E+04  3.474577E+04 -6.304352E-14 -3.182271E+05 -3.088060E+05  3.523802E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.134735E+03      2.428007E-17  3.648000E+01  6.406070E+00
+                                  Y            1.134735E+03      3.062016E+01  3.127786E-17  6.406070E+00
+                                  Z            1.134735E+03      3.062016E+01  3.648000E+01 -5.555793E-17
+                                                                I(S)
+                                           *  5.712254E+05  2.733957E+05  9.564326E+04 *
+                                           *  2.733957E+05  4.297028E+05  4.362596E+04 *
+                                           *  9.564326E+04  4.362596E+04  9.497867E+05 *
+                                                                I(Q)
+                                           *  7.705856E+05                             *
+                                           *                9.737801E+05               *
+                                           *                              2.063492E+05 *
+                                                                 Q
+                                           *  7.412224E-01  2.674129E-01  6.156945E-01 *
+                                           * -6.256147E-01 -5.724661E-02  7.780290E-01 *
+                                           *  2.433014E-01 -9.618800E-01  1.248650E-01 *
+
+1    NONLINEAR                                                                MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    72
+                                                                                                                                    
+0                                                                                                SUBCASE 1           STEP 1         
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG, TRL =
+                    101                 0             72000                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =       16386 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        3600 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         210 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =       75105 WORDS.)
+ *** USER INFORMATION MESSAGE 4110 (OUTPX2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1                                                                             MARCH  12, 2013  MSC.NASTRAN  7/ 6/12   PAGE    73
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     F      F      F      0     F      0            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+

@@ -1,0 +1,43 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+SOL 103
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+ECHO=SORT
+$
+DISP(PUNCH)=ALL
+$DISP=ALL
+SPCF=NONE
+SPC = 1
+METHOD = 1
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+BEGIN BULK
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+$ Eigenvalue method
+EIGRL   1                       10                              MAX
+$
+PARAM    AUTOSPC NO
+PARAM    LGDISP  1
+PARAM    GRDPNT  1
+PARAM    POST    -1
+$
+$
+$ Include the model
+INCLUDE meshInputs_fw.bdf
+INCLUDE meshProps_fw.bdf
+$
+INCLUDE meshInputs_aw.bdf
+INCLUDE meshProps_aw.bdf
+$
+INCLUDE connect.bdf
+$
+ENDDATA

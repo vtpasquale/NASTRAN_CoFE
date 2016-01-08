@@ -1,0 +1,64 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+$ ASSIGN OUTPUT4='kdgg.out' STATUS=UNKNOWN UNIT=13 FORM=FORMATTED
+SOL 105
+
+$ COMPILE SEBUCKL
+$ ALTER 119 $
+$ OUTPUT4 KDGG//0/13///16 $
+$ ENDALTER
+
+$ DIAG 14
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+TITLE = LINEAR BUCKLING ANALYSIS
+SPC = 1
+DISP(PUNCH) = ALL
+
+$
+SUBCASE 1
+LOAD = 1025
+$
+SUBCASE 2
+METHOD = 20
+$
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+BEGIN BULK
+$
+PARAM,POST,-1
+PARAM,COUPMASS,1
+$
+$ PARAM,EXTOUT,DMIGPCH
+$
+$LANCZOS EIGENVALUE METHOD
+EIGRL,20,,,6,,,,MASS
+$
+$ Include the model
+INCLUDE meshInputs_fw.bdf
+INCLUDE meshProps_fw.bdf
+$
+INCLUDE meshInputs_aw.bdf
+INCLUDE meshProps_aw.bdf
+$
+INCLUDE connect.bdf
+$
+$$ Aeroelastic Loads
+INCLUDE airloads.bdf
+INCLUDE gravityloads.bdf
+$
+$ Adjust Load Factor
+$LOAD   SID     S       S1      L1      S2      L2
+LOAD    1025    1.0     1.0     88      1.0     9
+LOAD    1001    0.005   1.0     88      1.0     9
+$
+ENDDATA
