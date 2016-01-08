@@ -1,0 +1,57 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+SOL 101
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+TITLE = NONLINEAR
+ECHO = NONE
+NLPARM = 100
+DISP(PUNCH) = ALL
+SPCFORCES = NONE
+SUBCASE 1
+   SPC = 1
+   LOAD = 1025
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+BEGIN BULK
+$
+$
+PARAM    AUTOSPC NO
+PARAM    LGDISP  1
+PARAM    GRDPNT  0
+PARAM    POST    -1
+MDLPRM,OFFDEF,ELMOFF
+$
+NLPARM,2,1,,AUTO,,100,,YES
+NLPARM,100,20,,AUTO,,100,,YES
+$
+$
+$ Include the model
+INCLUDE meshInputs_fw.bdf
+INCLUDE meshProps_fw.bdf
+$
+INCLUDE meshInputs_aw.bdf
+INCLUDE meshProps_aw.bdf
+$
+INCLUDE connect.bdf
+$
+$$ Aeroelastic Loads
+INCLUDE airloads.bdf
+INCLUDE gravityloads.bdf
+$
+$ Adjust Load Factor
+$LOAD   SID     S       S1      L1      S2      L2
+LOAD    1025    1.0     1.0     88      1.0     9
+LOAD    1001    0.005   1.0     88      1.0     9
+$
+$
+ENDDATA
