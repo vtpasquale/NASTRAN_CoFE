@@ -1,7 +1,8 @@
-classdef grav
-    % Summary of this class goes here
-    %   Detailed explanation goes here
-
+% Class for GRAV entries
+% Anthony Ricciardi
+%
+classdef grav < entry
+    
     % entry data
     properties
         SID
@@ -13,6 +14,7 @@ classdef grav
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.SID = set_data('GRAV','SID',data{2},'int',[],1);
             obj.CID = set_data('GRAV','CID',data{3},'int',0);
@@ -25,6 +27,7 @@ classdef grav
 
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'GRAV,%d,%d,%f,%f,%f,%f\n',obj.SID,obj.CID,obj.A,obj.N1,obj.N2,obj.N3);
         end

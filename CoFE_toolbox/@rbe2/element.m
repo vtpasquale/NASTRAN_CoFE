@@ -13,6 +13,9 @@ ldofn = cm';
 obj.gdofn = FEM.gnum2gdof(cm,hn)';
 num_cm = size(cm,1);
 
+% plot indices
+obj.gdofn_plot = FEM.gnum2gdof(1:3,hn)';
+
 %% dependent degrees of freedom (m set) 
 
 % number dependant nodes 
@@ -27,6 +30,7 @@ RnRm(:,1:6) = repmat(eye(6),[numDep,1]);
 obj.xm = zeros(3,numDep);
 ldofm = zeros(1,num_cm*numDep);
 obj.gdofm = zeros(1,num_cm*numDep);
+obj.gdofm_plot = zeros(3,numDep);
 for j = 1:numDep
     hmj = find(FEM.gnum == obj.GMi(j));
     if size(hmj,2)~=1; error(['There should be one and only one GRID with ID#',num2str(obj.(obj.fields{4+j})),'']); end
@@ -35,6 +39,9 @@ for j = 1:numDep
     % dof
     ldofm((1:num_cm)+num_cm*(j-1)) = ldofg(cm + 6*(j-1));
     obj.gdofm((1:num_cm)+num_cm*(j-1)) = FEM.gnum2gdof(cm,hmj);
+    
+    % plot indices
+    obj.gdofm_plot(:,j) = FEM.gnum2gdof(1:3,hmj);
     
     % constraint equation matrix
     D = obj.xm(:,j) - obj.xn;

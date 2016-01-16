@@ -1,23 +1,15 @@
-classdef cord2r
-    % Defines a rectangular coordinate system using the coordinates of three points.
-    % Anthony Ricciardi
-    % Aug 2015
+% Class for CORD2R entries
+% Defines a rectangular coordinate system using the coordinates of three points.
+% Anthony Ricciardi
+%
+classdef cord2r < entry
     
-    %% input data
+    % input data
     properties
         CID
         A
         B
         C
-%         A1
-%         A2
-%         A3
-%         B1
-%         B2
-%         B3
-%         C1
-%         C2
-%         C3
     end
     
     properties (Access = private)
@@ -25,6 +17,8 @@ classdef cord2r
     end
     
     methods
+        
+        %%
         function obj = initialize(obj,data)
             obj.CID = set_data('CORD2R','CID',data{2},'int',[],1);
             RID = set_data('CORD2R','RID',data{3},'int',0,0);
@@ -58,11 +52,13 @@ classdef cord2r
             obj.R = [x,y,z];
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'CORD2R,%d,,%f,%f,%f,%f,%f,%f\n',obj.CID,obj.A',obj.B');
             fprintf(fid,',%f,%f,%f\n',obj.C');
         end
         
+        %%
         function pnew = rot(obj,p)
             pnew = obj.R*p + obj.A;
         end

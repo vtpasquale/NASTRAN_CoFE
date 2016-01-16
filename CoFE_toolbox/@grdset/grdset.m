@@ -1,6 +1,7 @@
-classdef grdset
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for GRDSET entries
+% Anthony Ricciardi
+%
+classdef grdset < entry
 
     % entry data
     properties
@@ -8,6 +9,7 @@ classdef grdset
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             CP = set_data('GRDSET','CP',data{3},'int',0 ,0);
             if CP ~= 0; error('Nonzero GRDSET CP not supported.'); end
@@ -18,6 +20,7 @@ classdef grdset
             if SEID ~= 0; error('Nonzero GRDSET SEID not supported.'); end
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'GRDSET,,,,,,,%d\n',obj.PS);
         end

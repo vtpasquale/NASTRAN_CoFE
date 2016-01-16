@@ -43,11 +43,11 @@ obj.M_G = spalloc(obj.ndof,obj.ndof,20*obj.ndof);
 
 %% Assemble Global Matricies
 % Loop through element types
-for j = 1:size(obj.elementList,2)
-    for i = 1:size(obj.(obj.elementList{j}),2)
-        gdof = obj.(obj.elementList{j})(i).gdof;
-        obj.K_G(gdof,gdof)=obj.K_G(gdof,gdof)+obj.(obj.elementList{j})(i).ke;
-        obj.M_G(gdof,gdof)=obj.M_G(gdof,gdof)+obj.(obj.elementList{j})(i).me;
+for j = 1:size(obj.structureList,2)
+    for i = 1:size(obj.(obj.structureList{j}),2)
+        gdof = obj.(obj.structureList{j})(i).gdof;
+        obj.K_G(gdof,gdof)=obj.K_G(gdof,gdof)+obj.(obj.structureList{j})(i).ke;
+        obj.M_G(gdof,gdof)=obj.M_G(gdof,gdof)+obj.(obj.structureList{j})(i).me;
     end
 end
 

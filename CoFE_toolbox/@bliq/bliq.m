@@ -1,6 +1,7 @@
-classdef bliq
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for BLIQ entries - Canfield membrane element
+% Anthony Ricciardi
+%
+classdef bliq  < structure & static_recover
     
     % fundamental data (from input file)
     properties
@@ -27,6 +28,8 @@ classdef bliq
         stress
     end
     methods
+        
+        %%
         function obj = initialize(obj,data)
             obj.EID  = set_data('BLIQ','EID',data{2},'int',[],1,100000000);
             obj.PID  = set_data('BLIQ','PID',data{3},'int',obj.EID ,1);
@@ -39,6 +42,17 @@ classdef bliq
             end
         end
         
+        %% 
+        function [obj,obj_prime] = differential(obj,obj_prime)
+            error('Buckling analysis not supported for BLIQ elements.')
+        end
+        
+        %%
+        function write_recover(obj_array,fid)
+            error('write_recover not implimented for BLIQ elements.  This could be implimented quickly. Alternatively, set CASE.WRITE_c06 = 0;')
+        end 
+        
+        %%
         function echo(obj,fid)
             fprintf(fid,'BLIQ,%d,%d,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.G2,obj.G3,obj.G4);
         end

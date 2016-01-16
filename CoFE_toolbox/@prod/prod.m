@@ -1,6 +1,7 @@
-classdef prod
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for PROD property entries
+% Anthony Ricciardi
+%
+classdef prod < entry
     
     % entry data
     properties
@@ -12,6 +13,7 @@ classdef prod
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.PID = set_data('PROD','PID',data{2},'int',[],1);
             obj.MID = set_data('PROD','MID',data{3},'int',[] ,1);
@@ -20,6 +22,7 @@ classdef prod
             obj.NSM = set_data('PROD','NSM',data{7},'dec',0.0);
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'PROD,%d,%d,%f,%f,,%f\n',obj.PID,obj.MID,obj.A,obj.J,obj.NSM);
         end

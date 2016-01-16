@@ -1,6 +1,7 @@
-classdef conm2
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for CONM2 entries
+% Anthony Ricciardi
+%
+classdef conm2 < structure
     
     % entry data
     properties
@@ -27,6 +28,8 @@ classdef conm2
         kd
     end
     methods
+        
+        %%
         function obj = initialize(obj,data)
             obj.EID = set_data('CONM2','EID',data{2},'int',[],1,100000000);
             obj.G = set_data('CONM2','G',data{3},'int',[] ,1);
@@ -56,11 +59,12 @@ classdef conm2
             
         end
         
-        function plot(obj,gnum,gnum2gdof,allDef,varargin)
-            if isempty(gnum2gdof);
+        %%
+        function plot(obj,allDef,varargin)
+            if isempty(allDef);
                 def = zeros(3,1);
             else
-                def = allDef(gnum2gdof(1:3,find(gnum==obj.G)));
+                def = allDef(obj.gdof(1:3));
             end
             
             % point
@@ -68,6 +72,7 @@ classdef conm2
             plot3(p(1,:),p(2,:),p(3,:),varargin{:})
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'CONM2,%d,%d,%d,%f,%f,%f,%f\n',obj.EID,obj.G,obj.CID,obj.M,obj.X1,obj.X2,obj.X3);
             if size(data,2)>10

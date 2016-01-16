@@ -1,6 +1,7 @@
-classdef pbeam
-    % Defines the properties of a beam element (CBEAM entry). Tapered beams are not supported.
-    % Anthony Ricciardi
+% Class for PBEAM property entries.  Tapered beams are not supported.
+% Anthony Ricciardi
+%
+classdef pbeam < entry
     
     % entry data
     properties

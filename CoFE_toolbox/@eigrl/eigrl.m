@@ -1,15 +1,8 @@
-classdef eigrl
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for FORCE entries
+% Anthony Ricciardi
+%
+classdef eigrl < entry
     
-    % file format data
-    properties (Constant = true)
-        minRows = 1;
-        maxRows = 1;
-        fields = {'EIGRL','SID','','','ND','','','',''};
-        dataType = {'str','int','int','int','int','int','int','int','int'};
-        default = {Inf,[],Inf,Inf,[],Inf,Inf,Inf,Inf};
-    end
     % entry data
     properties
         SID % Set identification number. (Unique Integer > 0)
@@ -17,11 +10,17 @@ classdef eigrl
     end
     
     methods
-        
+        %%
         function obj = initialize(obj,data)
             obj.SID = set_data('EIGRL','SID',data{2},'int',[],1);
             obj.ND = set_data('EIGRL','ND',data{5},'int',[],1);
         end
+        
+        %%
+        function echo(obj,fid)
+            fprintf(fid,'EIGRL,%d,,,%d\n',obj.SID,obj.ND);
+        end
+        
     end
 end
 

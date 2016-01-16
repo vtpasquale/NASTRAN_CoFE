@@ -1,6 +1,7 @@
-classdef cquad4
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for CQUAD4 entries
+% Anthony Ricciardi
+%
+classdef cquad4 < structure & static_recover
     
     % fundamental data (from input file)
     properties
@@ -48,6 +49,7 @@ classdef cquad4
         stress
     end
     methods
+        %%
         function obj = initialize(obj,data)
             obj.EID  = set_data('CQUAD4','EID',data{2},'int',[],1,100000000);
             obj.PID  = set_data('CQUAD4','PID',data{3},'int',obj.EID ,1);
@@ -82,6 +84,12 @@ classdef cquad4
             end      
         end
         
+        %% 
+        function [obj,obj_prime] = differential(obj,obj_prime)
+            error('Buckling analysis not supported for CQUAD4 elements')
+        end
+        
+        %%
         function echo(obj,fid)
             fprintf(fid,'CQUAD4,%d,%d,%d,%d,%d,%d,%f,%f\n',obj.EID,obj.PID,obj.G1,obj.G2,obj.G3,obj.G4,obj.THETA,obj.ZOFFS);
             fprintf(fid,',,%d,%f,%f,%f,%f\n',obj.TFLAG,obj.T1,obj.T2,obj.T3,obj.T4);

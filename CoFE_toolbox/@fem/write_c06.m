@@ -44,8 +44,8 @@ end
 
 %% Element static recovery data
 if obj.CASE.RECOVER == 1 && ( obj.CASE.SOL == 101 || obj.CASE.SOL == 105 )
-    for j = 1:size(obj.recoverList,2)
-        placeholderObj = obj.(obj.recoverList{j});
+    for j = 1:size(obj.static_recoverList,2)
+        placeholderObj = obj.(obj.static_recoverList{j});
         if size(placeholderObj,2) > 0
             placeholderObj.write_recover(fid);
         end

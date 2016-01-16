@@ -1,7 +1,8 @@
-classdef crod
-    % Defines a tension-compression-torsion element.
-    % Anthony Ricciardi
-    % Aug 2015
+% Class for CROD entries
+% A tension-compression-torsion element
+% Anthony Ricciardi
+%
+classdef crod < structure & static_recover
     
     %% input data
     properties
@@ -36,6 +37,7 @@ classdef crod
     
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.EID = set_data('CROD','EID',data{2},'int',[],1,100000000);
             obj.PID = set_data('CROD','PID',data{3},'int',[] ,1);
@@ -46,6 +48,7 @@ classdef crod
             end
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'CROD,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.G2);
         end

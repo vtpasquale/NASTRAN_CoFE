@@ -1,6 +1,7 @@
-classdef grid
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for GRID entries
+% Anthony Ricciardi
+%
+classdef grid < entry
     
     % entry data
     properties
@@ -35,6 +36,7 @@ classdef grid
                 plot3(obj.X1,obj.X2,obj.X3,'k.','markers',15)
             end
             
+            %%
             function echo(obj,fid)
                 if obj.PS == -999
                     fprintf(fid,'GRID,%d,%d,%f,%f,%f,%d\n',obj.ID,obj.CP,obj.X1,obj.X2,obj.X3,obj.CD);

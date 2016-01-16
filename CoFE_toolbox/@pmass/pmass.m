@@ -1,6 +1,7 @@
-classdef pmass
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for PMASS property entries
+% Anthony Ricciardi
+%
+classdef pmass < entry
     
     % entry data
     properties
@@ -9,6 +10,7 @@ classdef pmass
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             
             obj.PID1 = set_data('PMASS','PID1',data{2},'int',[],1);
@@ -18,6 +20,7 @@ classdef pmass
             end
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'PMASS,%d,%f\n',obj.PID1,obj.M1);
         end

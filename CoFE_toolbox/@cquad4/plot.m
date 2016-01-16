@@ -1,4 +1,4 @@
-function plot(obj,gnum,gnum2gdof,allDef,varargin)
+function plot(obj,allDef,varargin)
 
 x = [obj.x1,obj.x2,obj.x3,obj.x4];
 if isempty(allDef);

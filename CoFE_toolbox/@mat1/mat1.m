@@ -1,6 +1,7 @@
-classdef mat1
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for MAT1 entries
+% Anthony Ricciardi
+%
+classdef mat1 < entry
     
     % entry data
     properties
@@ -12,7 +13,7 @@ classdef mat1
     end
     
     methods
-        
+        %%
         function obj = initialize(obj,data)
             obj.MID = set_data('MAT1','MID',data{2},'int',[],1);
             obj.E = set_data('MAT1','E',data{3},'dec',[]);
@@ -21,6 +22,7 @@ classdef mat1
             obj.RHO = set_data('MAT1','RHO',data{6},'dec',0.0);
         end
         
+        %%
         function val = stress_strain_mat(obj)
             
             % check previous inputs
@@ -38,6 +40,8 @@ classdef mat1
             % isotropic stress strain matrix
             val = obj.E/(1-obj.NU.^2)*[1 obj.NU 0; obj.NU 1 0; 0 0 (1-obj.NU)./2];
         end
+        
+        %%
         function [E,G,NU] = getEGNU(obj)
             
             % check previous inputs
@@ -58,6 +62,7 @@ classdef mat1
             NU = obj.NU;
         end
         
+        %%
         function echo(obj,fid)
             [E,G,NU] = getEGNU(obj);
             fprintf(fid,'MAT1,%d,%f,%f,%f,%f\n',obj.MID,E,G,NU,obj.RHO);

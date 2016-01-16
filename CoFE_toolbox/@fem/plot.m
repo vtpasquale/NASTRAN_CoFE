@@ -89,13 +89,13 @@ for j = 1:size(obj.elementList,2)
     for i = 1:size(obj.(obj.elementList{j}),2)
         
         if undeformed
-            plot(obj.(obj.elementList{j})(i),[],[],undeformedStyle{:})
+            plot(obj.(obj.elementList{j})(i),[],undeformedStyle{:})
         end
         if deformed
-            plot(obj.(obj.elementList{j})(i),obj.gnum2gdof,xdef,deformedStyle{:})
+            plot(obj.(obj.elementList{j})(i),xdef,deformedStyle{:})
         end
         if nastran
-            plot(obj.(obj.elementList{j})(i),obj.gnum2gdof,xnasdef,nastranStyle{:})
+            plot(obj.(obj.elementList{j})(i),xnasdef,nastranStyle{:})
         end
     end
 end

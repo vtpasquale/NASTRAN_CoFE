@@ -1,10 +1,11 @@
-classdef rbe2
-    % Defines a rigid body with independent degrees-of-freedom that are 
-    % specified at a single grid point and with dependent degrees-of-
-    % freedom that are specified at an arbitrary number of grid points.
-    %
-    % Anthony Ricciardi
-    % Aug 2015
+% Class for RBE2 entries.
+% Defines a rigid body with independent degrees-of-freedom that are
+% specified at a single grid point and with dependent degrees-of-
+% freedom that are specified at an arbitrary number of grid points.
+%
+% Anthony Ricciardi
+%
+classdef rbe2 < constraint
     
     %% input data
     properties
@@ -22,9 +23,10 @@ classdef rbe2
         gdofm  % [#CM * #element m x 1] global index numbers of element m dof
     end
     properties (Access = private)
-        % element only
-        xn    % [3x1] independant node position
-        xm    % [3 x #element m] dependant node positions 
+        xn    % [3 x 1] independant node position
+        xm    % [3 x #m nodes] dependant node positions 
+        gdofn_plot % [3 x 1] global index of node with independant dof
+        gdofm_plot % [3 x #m nodes] global index of nodes with dependant dof
     end
     
     methods

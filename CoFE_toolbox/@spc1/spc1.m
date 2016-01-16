@@ -1,6 +1,7 @@
-classdef spc1
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for zero displacement single-point constraints
+% Anthony Ricciardi
+%
+classdef spc1 < entry
     
     % entry data
     properties

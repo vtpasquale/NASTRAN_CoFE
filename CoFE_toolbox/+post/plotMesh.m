@@ -108,17 +108,17 @@ end
 figure(figNumber)
 hold on
 % Loop through plotList
-for j = 1:size(FEM.plotList,2)
-    for i = 1:size(FEM.(FEM.plotList{j}),2)
+for j = 1:size(FEM.elementList,2)
+    for i = 1:size(FEM.(FEM.elementList{j}),2)
         
         if undeformed
-            plot(FEM.(FEM.plotList{j})(i),[],[],[],undeformedStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),[],undeformedStyle{:})
         end
         if deformed
-            plot(FEM.(FEM.plotList{j})(i),FEM.gnum,FEM.gnum2gdof,x_scaled,deformedStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),x_scaled,deformedStyle{:})
         end
         if nastran
-            plot(FEM.(FEM.plotList{j})(i),FEM.gnum,FEM.gnum2gdof,xnas_scaled,nastranStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),xnas_scaled,nastranStyle{:})
         end
     end
 end

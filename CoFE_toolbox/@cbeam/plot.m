@@ -1,11 +1,11 @@
-function plot(obj,gnum,gnum2gdof,allDef,varargin)
+function plot(obj,allDef,varargin)
 
 x = [obj.x1,obj.x2];
 
-if isempty(gnum2gdof);
+if isempty(allDef);
     def = zeros(3,2);
 else
-    def = allDef(gnum2gdof(1:3,[find(gnum==obj.GA),find(gnum==obj.GB)]));
+    def = allDef([obj.gdof(1:3),obj.gdof(7:9)]);
 end
 
 % line

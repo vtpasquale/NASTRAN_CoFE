@@ -1,25 +1,22 @@
-function plot(obj,gnum,gnum2gdof,allDef,varargin)
+function plot(obj,allDef,varargin)
 
 % dependent node
-if isempty(gnum2gdof);
+if isempty(allDef);
     def = zeros(3,1);
 else
-    def = allDef(gnum2gdof(1:3,find(gnum==obj.REFGRID)));
+    def = allDef(obj.gdofm_plot);
 end
 pm = obj.xm + def;
 
 % independent nodes
 nn = size(obj.xn,2);
-pn = zeros(3,nn);
-for i = 1:nn;
-    
-    if isempty(gnum2gdof);
-        def = zeros(3,1);
-    else
-        def = allDef(gnum2gdof(1:3,find(gnum==obj.G1i(i) )));
-    end
-    pn(:,i) = obj.xn(:,i) + def;
+if isempty(allDef);
+    def = zeros(3,nn);
+else
+    def = allDef(obj.gdofn_plot);
 end
+pn= obj.xn + def;
+
 
 % plot all
 p = zeros(3,2*nn-1);

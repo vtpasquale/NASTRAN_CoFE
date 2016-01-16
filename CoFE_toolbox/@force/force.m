@@ -1,15 +1,8 @@
-classdef force
-    % Summary of this class goes here
-    %   Detailed explanation goes here
-    
-    % file format data
-    properties (Constant = true)
-        minRows = 1;
-        maxRows = 1;
-        fields = {'FORCE','SID','G'  ,'CID' ,'F'  ,'N1' ,'N2' ,'N3' ,[]};
-        dataType = {'str','int','int','int' ,'dec','dec','dec','dec',[]};
-        default = {Inf,[],[],Inf,[],[],[],[],Inf};
-    end
+% Class for FORCE entries
+% Anthony Ricciardi
+%
+classdef force < entry
+   
     % entry data
     properties
         SID
@@ -21,6 +14,7 @@ classdef force
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.SID = set_data('FORCE','SID',data{2},'int',[],1);
             obj.G = set_data('FORCE','G',data{3},'int',[],1);
@@ -33,6 +27,7 @@ classdef force
             obj.N3 = set_data('FORCE','N3',data{8},'dec',[]);
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'FORCE,%d,%d,,%f,%f,%f,%f\n',obj.SID,obj.G,obj.F,obj.N1,obj.N2,obj.N3);
         end

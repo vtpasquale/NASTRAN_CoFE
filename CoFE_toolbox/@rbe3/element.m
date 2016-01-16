@@ -1,7 +1,5 @@
 function obj = element(obj,FEM)
 
-
-
 %% dependent degrees of freedom (m set) 
 % numbers and locations
 hm = find(FEM.gnum==obj.REFGRID);
@@ -12,11 +10,15 @@ obj.xm = [FEM.GRID(hm).X1;FEM.GRID(hm).X2;FEM.GRID(hm).X3];
 ldofm = str2num(num2str(obj.REFC)');
 obj.gdofm = FEM.gnum2gdof(ldofm,hm)';
 
+% plot indices
+obj.gdofm_plot = FEM.gnum2gdof(1:3,hm)';
+
 %% independent degrees of freedom (n set)
 nIndp = size(obj.G1i,2);
 cn = str2num(num2str(obj.C1)');
 ncn = size(cn,1);
 obj.gdofn = zeros(1,ncn*nIndp);
+obj.gdofn_plot = zeros(3,nIndp);
 ldofn = zeros(1,ncn*nIndp);
 ldofg = 1:6*nIndp;
 Li = zeros(3,nIndp);
@@ -31,6 +33,10 @@ for j = 1:nIndp
     % global and local dof
     obj.gdofn((1:ncn)+ncn*(j-1)) = FEM.gnum2gdof(cn,hnj);
         ldofn((1:ncn)+ncn*(j-1)) = ldofg(cn + ncn*(j-1));
+    
+    % plot indices
+    obj.gdofn_plot(:,j) = FEM.gnum2gdof(1:3,hnj);
+
 end
 
 %% following Salinas Theory Manual Version 4.22

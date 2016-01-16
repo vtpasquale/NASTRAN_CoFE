@@ -10,8 +10,11 @@
 %
 function FEM = importModel(filename)
 
-%% initialize FEM
+%% Initialize FEM
 FEM = fem;
+
+%% Create type lists
+FEM = FEM.typeLists();
 
 %% read data from input file
 data = importData(filename);

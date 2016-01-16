@@ -35,26 +35,26 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
     
     if obj.CASE.RECOVER == 1 || obj.CASE.SOL == 105
         
-        for j = 1:size(obj.recoverList,2)
-            placeholderObj = obj.(obj.recoverList{j});
+        for j = 1:size(obj.static_recoverList,2)
+            placeholderObj = obj.(obj.static_recoverList{j});
             for i = 1:size(placeholderObj,2)
                 placeholderObj(i) = placeholderObj(i).recover(obj.gnum2gdof,obj.x);
             end
-            obj.(obj.recoverList{j}) = placeholderObj;
+            obj.(obj.static_recoverList{j}) = placeholderObj;
             clear placeholderObj
         end
         
         % Recovery design derivatives
         if nargout > 1
             for dv = 1:ndv
-                for j = 1:size(obj.recoverList,2)
-                    placeholderObj = obj.(obj.recoverList{j}); % placeholder speeds code up rather than direct indexing
-                    placeholderObjPrime = obj_prime(dv).(obj.recoverList{j});
+                for j = 1:size(obj.static_recoverList,2)
+                    placeholderObj = obj.(obj.static_recoverList{j}); % placeholder speeds code up rather than direct indexing
+                    placeholderObjPrime = obj_prime(dv).(obj.static_recoverList{j});
                     for i = 1:size(placeholderObj,2)
                         [~,placeholderObjPrime(i)] = ...
                             recover(placeholderObj(i),obj.gnum2gdof,obj.x,placeholderObjPrime(i),obj_prime(dv).x);
                     end
-                    obj_prime(dv).(obj.recoverList{j}) = placeholderObjPrime;
+                    obj_prime(dv).(obj.static_recoverList{j}) = placeholderObjPrime;
                 end
                 clear placeholderObj
                 clear placeholderObjPrime

@@ -1,17 +1,15 @@
+% Defines a complete finite element model and solution
+% Anthony Ricciardi
+%
 classdef fem
-    % Defines a complete finite element model and solution
-    %
-    % Anthony Ricciardi
-    % Aug 2015
 
-    %% Input data format
-    properties (Constant = true)
-        entryList = {'BLIQ','CBEAM','CMASS1','CONM2','CORD2R','CQUAD4','CROD','EIGRL','FORCE','GRAV',...
-            'GRDSET','GRID','MAT1','MOMENT','PBEAM','PBEAML','PMASS','PROD','PSHELL','SPC1','RBE2','RBE3'};
-        constraintList = {'RBE3','RBE2'};
-        elementList = {'BLIQ','CBEAM','CMASS1','CONM2','CQUAD4','CROD'};
-        plotList = {'BLIQ','CBEAM','CMASS1','CONM2','CQUAD4','CROD','RBE2'};
-        recoverList = {'BLIQ','CBEAM','CQUAD4','CROD'};
+    %% Type lists - to be defined based on class metadata
+    properties
+        entryList = {};
+        elementList = {};
+        structureList = {};
+        constraintList = {};
+        static_recoverList = {};
     end
     
     %% Executive and Case Control Properties
@@ -21,7 +19,7 @@ classdef fem
     
     %% Entry/finite element object arrays - see class files for complete description
     properties
-        BLIQ@bliq
+        BLIQ@bliq;
         GRID@grid;
         GRDSET@grdset;
         CBEAM@cbeam;

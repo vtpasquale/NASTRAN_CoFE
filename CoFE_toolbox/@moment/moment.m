@@ -1,7 +1,8 @@
-classdef moment
-    % Summary of this class goes here
-    %   Detailed explanation goes here
-    
+% Class for MOMENT entries
+% Anthony Ricciardi
+%
+classdef moment < entry
+   
     % entry data
     properties
         SID
@@ -13,6 +14,7 @@ classdef moment
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.SID = set_data('MOMENT','SID',data{2},'int',[],1);
             obj.G = set_data('MOMENT','G',data{3},'int',[],1);
@@ -25,6 +27,7 @@ classdef moment
             obj.N3 = set_data('MOMENT','N3',data{8},'dec',[]);
         end
         
+        %%
         function echo(obj,fid)
             fprintf(fid,'MOMENT,%d,%d,,%f,%f,%f,%f\n',obj.SID,obj.G,obj.F,obj.N1,obj.N2,obj.N3);
         end

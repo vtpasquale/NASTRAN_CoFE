@@ -1,16 +1,8 @@
-classdef cbeam
-    % Defines a beam element.
-    % Anthony Ricciardi
-    
-    %% input data format
-    properties (Constant = true)
-        minRows = 1;
-        maxRows = 1;
-        fields = {'CBEAM','EID','PID','GA','GB','X1','X2','X3',[]};
-        dataType = {'str','int','int','int','int','dec','dec','dec',[]};
-        default = {Inf,[],[],[],[],[],[],[],Inf};
-    end
-    
+% Class for CBEAM entries
+% Anthony Ricciardi
+%
+classdef cbeam < structure & static_recover
+
     %% input data
     properties
         EID

@@ -9,6 +9,9 @@ obj.x1 = [FEM.GRID(h).X1;FEM.GRID(h).X2;FEM.GRID(h).X3];
 % global dof
 obj.gdof = FEM.gnum2gdof(obj.C1,obj.G1==FEM.gnum);
 
+% plot dof
+obj.gdof_plot = FEM.gnum2gdof(1:3,obj.G1==FEM.gnum);
+
 % find property
 pidH = [FEM.PMASS.PID1]==obj.PID;
 assert(sum(pidH)==1,['There should be one and only one PMASS with ID#',num2str(obj.PID),''])

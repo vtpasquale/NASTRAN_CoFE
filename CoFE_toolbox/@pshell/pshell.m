@@ -1,6 +1,7 @@
-classdef pshell
-    %PSHELL Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for PSHELL property entries
+% Anthony Ricciardi
+%
+classdef pshell < entry
 
     properties
         PID
@@ -17,6 +18,7 @@ classdef pshell
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.PID  = set_data('PSHELL','PID',data{2},'int',[],1);
             obj.MID1 = set_data('PSHELL','MID1',data{3},'int',-999);
@@ -36,6 +38,12 @@ classdef pshell
                 obj.Z2 = [];
                 obj.MID4 = [];
             end
+        end
+        
+        %%
+        function echo(obj,fid)
+            fprintf(fid,'PSHELL,%d,%d,%f,%d,%f,%d,%f,%f\n',obj.PID,obj.MID1,obj.T,obj.MID2,obj.n12I_Tpwr3,obj.MID3,obj.TS_T,obj.NSM);
+            fprintf(fid,',%f,%f,%d\n',obj.Z1,obj.Z2,obj.MID4);
         end
     end
     

@@ -1,6 +1,7 @@
-classdef pbeaml
-    % Summary of this class goes here
-    %   Detailed explanation goes here
+% Class for PBEAML property entries
+% Anthony Ricciardi
+%
+classdef pbeaml < entry
     
     % entry data
     properties
@@ -31,6 +32,7 @@ classdef pbeaml
     end
     
     methods
+        %%
         function obj = initialize(obj,data)
             obj.PID = set_data('PBEAML','PID',data{2},'int',[],1);
             obj.MID = set_data('PBEAML','MID',data{3},'int',[],1);
@@ -47,8 +49,17 @@ classdef pbeaml
             end
         end
         
+        %%
         function echo(obj,fid)
-            fprintf(fid,'RBE3,%d,,%d,%d,%f,%d,%d,%d\n',obj.EID,obj.REFGRID,obj.REFC,obj.WT1,obj.C1,obj.G1,obj.G2);
+            fprintf(fid,'PBEAML,%d,%d,,%s\n',obj.PID,obj.MID,obj.TYPE);
+            switch obj.TYPE
+                case 'BAR'
+                    fprintf(fid,',%f,%f,%f\n',obj.DIM1,obj.DIM2,obj.NSM);
+                case 'ROD'
+                    fprintf(fid,',%f,%f\n',obj.DIM1,obj.NSM);
+                otherwise
+                    error(['PBEAML TYPE ',obj.TYPE,' not supported'])
+            end
         end
     end
     
