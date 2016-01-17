@@ -66,7 +66,9 @@ else
     G2 = zeros(3);
 end
 
-if FEM.PSHELL(pidH).MID3 == FEM.PSHELL(pidH).MID1
+if FEM.PSHELL(pidH).MID2 == -999;
+    G3 = G2; % = zeros(3); % no transverse shear stiffness without bending stiffness
+elseif FEM.PSHELL(pidH).MID3 == FEM.PSHELL(pidH).MID1
     G3 = G1;
 elseif FEM.PSHELL(pidH).MID3 == FEM.PSHELL(pidH).MID2
     G3 = G2;
@@ -75,7 +77,7 @@ elseif FEM.PSHELL(pidH).MID3 ~= -999;
     if sum(mat3H)~=1; error(['There should be one and only one MAT1 with ID#',num2str(FEM.PSHELL(pidH).MID3),'']); end
     G3 = FEM.MAT1(mat3H).stress_strain_mat;
 else
-    G3 = G2;
+    G3 = G2; % Kirchhoff or classical plate theory (no shear flexibility) is not supported, so, if not defined, shear material properties based on bending material properties
 end
 
 % shell stress-strain matrix (bending relationship is scaled by t^3/12 at integration point)
@@ -93,6 +95,9 @@ obj.NSM = FEM.PSHELL(pidH).NSM;
 if obj.TFLAG  == 0
     obj.t = [obj.T1,obj.T2,obj.T3,obj.T4];
 else
+    if FEM.PSHELL(pidH).T == -999
+        error(['The PSHELL T property is blank for PSHELL EID=',FEM.PSHELL(pidH).EID,'; the PSHELL T property is referenced because TFLAG = 1 for CQUAD4 EID=',obj.EID,'.']);
+    end
     obj.t = FEM.PSHELL(pidH).T*[obj.T1,obj.T2,obj.T3,obj.T4];
 end
 
