@@ -4,6 +4,7 @@
   <title>PSHELL</title>
   <script type="text/javascript" src="headerCSI.js"></script>
   <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script type="text/javascript" src="mathJaxCSI.js"></script>
 </head>
 
 <body>
@@ -13,7 +14,7 @@
 <div class="container">
 
 <h1>PSHELL</h1>
-<p>Defines the properties of membrane elements.  In the near future, the entry will be expanded to support bending and transverse shear properties of thin shell elements.</p>
+<p>Defines the membrane, bending, and transverse shear properties CQUAD4 elements.</p>
 
 <h2>Format</h2>
 <table class="style1">
@@ -21,10 +22,10 @@
     <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
   </tr>
   <tr>
-	<td>PSHELL</td><td>PID</td><td>MID1</td><td>T</td><td class = "ghost">MID2</td><td class = "ghost">12I/T**3</td><td class = "ghost">MID3</td><td class = "ghost">TS/T</td><td class = "ghost">NSM</td>
+	<td>PSHELL</td><td>PID</td><td>MID1</td><td>T</td><td>MID2</td><td>12I/T**3</td><td>MID3</td><td>TS/T</td><td>NSM</td>
   </tr>
   <tr>
-	<td></td><td class = "ghost">Z1</td><td class = "ghost">Z2</td><td class = "ghost">MID4</td><td></td><td></td><td></td><td></td><td></td>
+	<td></td><td class = "ghost">Z1</td><td class = "ghost">Z2</td><td class = "ghost">MID4</td> <td></td><td></td><td></td><td></td><td></td>
   </tr>
 </table>
 
@@ -41,18 +42,39 @@ PSHELL,105,501,0.0833,501,,501,,4.0
   </tr>
   <tr>
     <td>PID</td>
-    <td>Property identification number. (Integer > 0)</td>
+    <td>Property identification number. (Integer &gt; 0)</td>
   </tr>
   <tr>
     <td>MID1</td>
-    <td>Material identification number for the membrane. (Integer > 0 or blank)</td>
+    <td>Material identification number for the membrane. (Integer &gt; 0 or blank)</td>
   </tr>
   <tr>
     <td>T</td>
-    <td>Membrane thickness. (Real)</td>
+    <td>Default membrane thickness for Ti on the connection entry. If T is blank then the thickness must be specified for Ti on the CQUAD4. (Real or blank) Thickness scale factor if TFLAG = 1 ($T_i=T_i * T$)</td>
+  </tr>
+  
+  <tr>
+    <td>MID2</td>
+    <td>Material identification number for bending. (Integer &geq; -1 or blank)</td>
   </tr>
   <tr>
-    <td class = "ghost">MID2, 12I/T**3, MID3, TS/T, NSM, Z1, Z2, MID4</td>
+    <td>12I/T**3</td>
+    <td>Bending moment of inertia ratio, $12I/T^3$. Ratio of the actual bending moment inertia of the shell, $I$, to the bending moment of inertia of a homogeneous shell, $T^3/12$. The default value is for a homogeneous shell. (Real &gt; 0.0; Default = 1.0)</td>
+  </tr>
+  <tr>
+    <td>MID3</td>
+    <td>Material identification number for transverse shear. (Integer &gt; 0 or blank)</td>
+  </tr>
+  <tr>
+    <td>TS/T</td>
+    <td>Transverse shear thickness ratio $T_s/T$. Ratio of the shear thickness, $T_s$, to the membrane thickness of the shell, $T$. The default value is for a homogeneous shell. (Real &gt; 0.0; Default = .833333)</td>
+  </tr>
+  <tr>
+    <td>NSM</td>
+    <td>Nonstructural mass per unit area. (Real)</td>
+  </tr>
+  <tr>
+    <td>Z1, Z2, MID4</td>
     <td>Not used.</td>
   </tr>
 </table>
@@ -63,7 +85,22 @@ PSHELL,105,501,0.0833,501,,501,,4.0
 <li> 
 The continuation is optional.
 </li>
+
+<li> 
+Mindlin-Reissner theory of plates (first-order shear plate theory) will be used if MID2 &geq; 1.  Kirchhoff or classical plate theory (no shear flexibility) is not supported.  
+</li>
+
+<li>
+The results of leaving an MID field blank (or MID2 = -1) are:
+</li>
 </ol>
+
+<ul>
+<li> MID1 - No membrane stiffness</li>
+<li> MID2 - No bending or transverse shear stiffness</li>
+<li> MID3 - MID2 used to define transverse shear material properties</li>
+</ul>
+
 </div>
 
 <script type="text/javascript" src="footerCSI.js"></script>

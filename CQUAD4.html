@@ -13,7 +13,7 @@
 <div class="container">
 
 <h1>CQUAD4</h1>
-<p>Defines an isoparametric membrane quadrilateral element.  In the near future, the entry will be expanded to support isoparametric membrane-bending quadrilateral plate elements.</p>
+<p>Defines an isoparametric membrane-bending-shear quadrilateral plate element.</p>
 
 <h2>Format</h2>
 <table class="style1">
@@ -66,7 +66,7 @@ CQUAD4,1,101,4001,4002,3002,3001
   <tr>
     <td>Ti</td>
     <td>
-		Membrane thickness of element at grid points G1 through G4. If "TFLAG" is zero or blank, then Ti are actual user specified thicknesses. See Remark 3. for default. (Real &gt; 0.0 or blank, not all zero.) If "TFLAG" is one, then the Ti are fractions relative to the T value of the PSHELL. (Real &gt; 0.0 or blank, not all zero. Default = 1.0) Ti are ignored for hyperelastic elements.
+		Membrane thickness of element at grid points G1 through G4. If "TFLAG" is zero or blank, then Ti are actual user specified thicknesses. See Remark 3. for default. (Real &gt; 0.0 or blank, not all zero.) If "TFLAG" is one, then the Ti are fractions relative to the T value of the PSHELL. (Real &gt; 0.0 or blank, not all zero. Default = 1.0)
     </td>
   </tr>
 </table>
