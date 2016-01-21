@@ -1,7 +1,7 @@
 function [obj,obj_prime] = recover(obj,gnum2gdof,globalDef,obj_prime,globalDef_prime)
 
 % analysis results
-elDef = globalDef([gnum2gdof(1:2,obj.G1);gnum2gdof(1:2,obj.G2);gnum2gdof(1:2,obj.G3);gnum2gdof(1:2,obj.G4)]) ;
+elDef = globalDef(obj.gdof([1,2,4,5,7,8,10,11]));
 obj.stress = bliqstr( elDef, [obj.x1(1:2),obj.x2(1:2),obj.x3(1:2),obj.x4(1:2)]', obj.G );
 
 % Design Derivatives

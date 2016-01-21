@@ -26,8 +26,8 @@ obj.x4 = [FEM.GRID(h4).X1;FEM.GRID(h4).X2;FEM.GRID(h4).X3];
 % element coordinate system
 x0 = .25*(obj.x1 + obj.x2 + obj.x3 + obj.x4);
 xE = .5*(obj.x2 + obj.x3) - x0; xE = xE./norm_cs(xE);
-yE = .5*(obj.x3 + obj.x4) - x0; yE = yE./norm_cs(yE);
-zE = cross3(xE,yE); zE = zE./norm_cs(zE);
+zE = cross3(obj.x2-x0,obj.x3-x0); zE = zE./norm_cs(zE);
+yE = cross3(zE,xE); yE = yE./norm_cs(yE);
 TEG = [xE,yE,zE].';
 
 % node positions in element coordinate system
