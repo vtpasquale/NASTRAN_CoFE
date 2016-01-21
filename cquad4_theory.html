@@ -37,7 +37,8 @@ The CoFE four node quadrilateral is most closely influenced by the ASTROS [1] CQ
 <p></p>
 
 <p>
-The origin of the element coordinate system, reference frame $E$, is located at the average of the element node locations.  The $\V{x}_{\small E}$ vector points from the $E$ reference frame origin to the midpoint of nodes 2 and 3, and the $\V{y}_{\small E}$ vector points from the $E$ reference frame origin to the midpoint of nodes 3 and 4.  The vectors $\V{x}_{\small E}$, $\V{y}_{\small E}$, and $\V{z}_{\small E}$ (perpendicular to $\V{x}_{\small E}$ and $\V{y}_{\small E}$) are used to define transformation matrices to other reference frames.  There is a local $I$ reference frame that is defined uniquely at any point on the element midsurface.  
+The origin of the element coordinate system, reference frame $E$, is located at the average of the element node locations.  The $\V{x}_{\small E}$ axis points from the $E$ reference frame origin to the midpoint of nodes 2 and 3,
+the $\V{z}_{\small E}$ axis is perpendicular to the vectors that point from the $E$ reference frame origin to nodes 2 and 3, and $\V{y}_{\small E}$ is orthogonal to $\V{z}_{\small E}$ and $\V{x}_{\small E}$.  These axes and origin define the $E$ reference frame and  are used to define transformations with respect to other reference frames.  There is a local $I$ reference frame that is defined uniquely at any point on the element midsurface.  
 </p>
 
 <h2>Interpolation Functions and Derivatives</h2>
