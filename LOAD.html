@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LOAD</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>LOAD</h1>
+<p>
+Defines a static load as a linear combination of load sets defined via FORCE, MOMENT, and GRAV entries. 
+</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>LOAD</td><td>SID</td><td>S</td><td>S1</td><td>L1</td><td>S2</td><td>L2</td><td>S3</td><td>L3</td>
+  </tr>
+  <tr>
+    <td></td><td>S4</td><td>L4</td><td>-etc.-</td><td></td><td></td><td></td><td></td><td></td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+LOAD,1025,1.0,1.0,88,1.0,9
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>EID</td>
+    <td>Load set identification number. (Integer &gt; 0)</td>
+  </tr>
+  <tr>
+    <td>S</td>
+    <td>Overall scale factor. (Real)</td>
+  </tr>
+  <tr>
+    <td>Si</td>
+    <td>Scale factor on Li. (Real)</td>
+  </tr>
+  <tr>
+    <td>Li</td>
+    <td>Load set identification numbers defined on entry types listed above. (Integer &gt; 0)</td>
+  </tr>
+</table>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>

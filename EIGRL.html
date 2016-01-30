@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EIGRL</title>
+  <script type="text/javascript" src="headerCSI.js"></script>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+
+<script type="text/javascript" src="navbarCSI.js"></script>
+
+<div class="container">
+
+<h1>EIGRL</h1>
+<p>Defines data needed to perform real eigenvalue (vibration or buckling) analysis.</p>
+
+<h2>Format</h2>
+<table class="style1">
+  <tr>
+    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+  </tr>
+  <tr>
+    <td>EIGRL</td><td>SID</td><td class = "ghost">V1</td><td class = "ghost">V2</td><td>ND</td><td class = "ghost">MSGLVL</td><td class = "ghost">MAXSET</td><td class = "ghost">SHFSCL</td><td class = "ghost">NORM</td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p class="cn">
+EIGRL,1,,,10
+</p>
+</p>
+
+<h2>Fields</h2>
+<table class="style2">
+  <tr>
+    <th>Field</th>
+    <th>Contents</th>
+  </tr>
+  <tr>
+    <td>SID</td>
+    <td>Set identification number. (Unique Integer &gt; 0)</td>
+  </tr>
+  <tr>
+    <td class = "ghost">V1, V2</td>
+    <td>Not used.</td>
+  </tr>
+  <tr>
+    <td>ND</td>
+    <td>Number of roots desired. (Integer &gt; 0)</td>
+  </tr>
+  <tr>
+    <td class = "ghost">MSGLVL, MAXSET, SHFSCL, NORM</td>
+    <td>Not used.</td>
+  </tr>
+</table>
+
+<h2>Remarks:</h2>
+<ol>
+<li>Vibration eigenvectors are mass normalized.</li>
+<li>Buckling eigenvectors are elastic-stiffness normalized.</li>
+
+</ol>
+
+</div>
+
+<script type="text/javascript" src="footerCSI.js"></script>
+
+</body>
+</html>
