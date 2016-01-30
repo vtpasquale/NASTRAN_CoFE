@@ -52,7 +52,9 @@ for j = 1:size(obj.structureList,2)
 end
 
 %% Loads
-obj = obj.loads(); % obj.p
+if obj.CASE.SOL ~= 103
+    obj = obj.loads(); % obj.p
+end
 
 %% Loop through contraint types to determine dependent degrees of freedom (m set)
 m = [];

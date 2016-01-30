@@ -1,7 +1,7 @@
 % Class for GRID entries
 % Anthony Ricciardi
 %
-classdef grid < entry
+classdef grid_obj < entry
     
     % entry data
     properties

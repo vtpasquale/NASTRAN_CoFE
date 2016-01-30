@@ -10,6 +10,7 @@ classdef fem
         structureList = {};
         constraintList = {};
         static_recoverList = {};
+        applied_loadList = [];
     end
     
     %% Executive and Case Control Properties
@@ -20,11 +21,12 @@ classdef fem
     %% Entry/finite element object arrays - see class files for complete description
     properties
         BLIQ@bliq;
-        GRID@grid;
+        GRID@grid_obj; % special naming (grid_obj) because 'grid' name overlaps with MATLAB plotting functionality
         GRDSET@grdset;
         CBEAM@cbeam;
         CQUAD4@cquad4;
         CORD2R@cord2r;
+        LOAD@load_obj; % special naming (load_obj) because 'load' name overlaps with MATLAB built-in function
         MAT1@mat1;
         MOMENT@moment;
         PBEAM@pbeam;

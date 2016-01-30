@@ -43,8 +43,16 @@ placeholder_count = placeholder_count(1:placeholders);
 %% initialize placeholders
 for i = 1:placeholders
     entry = placeholder_list{i};
-    eval(['placeholder_',entry,'(placeholder_count(i)) = ', lower(entry) ,';']); 
-    
+    if strcmp(lower(entry),'grid') || strcmp(lower(entry),'load')
+        % special treatment for entries names that overlap with MATLAB
+        % built-in function names
+        eval(['placeholder_',entry,'(placeholder_count(i)) = ', lower(entry) ,'_obj;']); 
+        
+    else % standard treatment
+        eval(['placeholder_',entry,'(placeholder_count(i)) = ', lower(entry) ,';']); 
+        
+    end
+
     if any(strcmp(entry,FEM.entryList)) == 0
         error(strcat(entry,' entry not supported.'))
     end

@@ -79,12 +79,12 @@ end
 if strcmp(type,'int') || strcmp(type,'dec')
     if nargin > 5
         if out < min
-            error([fieldName,' field on ',entryName,' should be greater than ',num2str(min),'.']);
+            error([fieldName,' field on ',entryName,' should be greater than or equal to',num2str(min),'.']);
         end
     end
     if nargin > 6
         if out > max
-            error([fieldName,' field on ',entryName,' should be less than ',num2str(max),'.']);
+            error([fieldName,' field on ',entryName,' should be less than or equal to',num2str(max),'.']);
         end
     end
 end

@@ -38,5 +38,11 @@ for i = 1:size(mObj.PropertyList,1)
     if bool
         obj.static_recoverList{1,size(obj.static_recoverList,2)+1}= mObj.PropertyList(i).Name;
     end
+    
+    % isa applied_load
+    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''applied_load'');'])
+    if bool
+        obj.applied_loadList{1,size(obj.applied_loadList,2)+1}= mObj.PropertyList(i).Name;
+    end
         
 end

@@ -1,7 +1,7 @@
 % Class for GRAV entries
 % Anthony Ricciardi
 %
-classdef grav < entry
+classdef grav < applied_load
     
     % entry data
     properties
@@ -31,6 +31,24 @@ classdef grav < entry
         function echo(obj,fid)
             fprintf(fid,'GRAV,%d,%d,%f,%f,%f,%f\n',obj.SID,obj.CID,obj.A,obj.N1,obj.N2,obj.N3);
         end
+        
+        %%
+        function [p,gdof]=apply(obj,FEM)
+ 
+            % gdof
+            gdof = 1:FEM.ndof;
+            
+            % gravitational acceleration
+            gAccel = zeros(FEM.ndof,1);
+            gAccel(1:6:FEM.ndof) = obj.A * obj.N1;
+            gAccel(2:6:FEM.ndof) = obj.A * obj.N2;
+            gAccel(3:6:FEM.ndof) = obj.A * obj.N3;
+            
+            % applied load
+            p = FEM.M_G*gAccel;
+            
+        end
+        
     end
 end
 

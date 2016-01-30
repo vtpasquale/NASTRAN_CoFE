@@ -1,7 +1,7 @@
 % Class for FORCE entries
 % Anthony Ricciardi
 %
-classdef force < entry
+classdef force < applied_load
    
     % entry data
     properties
@@ -31,6 +31,19 @@ classdef force < entry
         function echo(obj,fid)
             fprintf(fid,'FORCE,%d,%d,,%f,%f,%f,%f\n',obj.SID,obj.G,obj.F,obj.N1,obj.N2,obj.N3);
         end
+        
+        %%
+        function [p,gdof]=apply(obj,FEM)
+            
+            % gdof
+            h = find(FEM.gnum==obj.G);
+            if size(h,2)~=1; error(['A FORCE entry references a GRID entry with ID#',num2str(obj.G),'.  There should be one and only one GRID with ID# ',num2str(obj.G)]); end
+            gdof = FEM.gnum2gdof(1:3,h);
+            
+            % applied load
+            p = obj.F*[obj.N1;obj.N2;obj.N3];
+        end
+            
     end
     
 end

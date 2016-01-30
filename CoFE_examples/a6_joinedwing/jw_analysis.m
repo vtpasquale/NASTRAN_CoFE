@@ -6,9 +6,9 @@ addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
 CASE.inputFile = 'model_N.bdf';
-CASE.SOL = 103; % SOL = 101, SOL = 103, and SOL = 105 are options
+CASE.SOL = 101; % SOL = 101, SOL = 103, and SOL = 105 are options
 CASE.SPC = 1;
-CASE.LOAD = 88;
+CASE.LOAD = 1025;
 CASE.METHOD = 1;
 
 %% Run CoFE
