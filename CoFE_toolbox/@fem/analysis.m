@@ -130,9 +130,12 @@ elseif obj.CASE.SOL == 103
     
     % determine number of roots desired from EIGRL input cooresponding to
     % the METHOD specified in the case control
-    assert(isempty(obj.CASE.METHOD) == 0,'fem.CASE.METHOD must be specified for SOL = 103 cases.');
-    assert(isempty(obj.EIGRL) == 0,'An EIGRL entry must be specified for SOL = 103 cases.');
-    obj.ND = obj.EIGRL(obj.CASE.METHOD == [obj.EIGRL.SID]).ND;
+    if isempty(obj.CASE.METHOD) ~= 0; error('CASE.METHOD must be specified for SOL = 103 cases.'); end
+    
+    NDn = find(obj.CASE.METHOD == [obj.EIGRL.SID]);
+    if size(NDn,2)~=1; error(['There should be one and only one EIGRL with SID = ',num2str(obj.CASE.METHOD),'']); end
+    obj.ND = obj.EIGRL(NDn).ND;
+    clear NDn
     
     % solve
     if nargout < 2

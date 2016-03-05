@@ -43,6 +43,7 @@ classdef fem
         CONM2@conm2;
         RBE2@rbe2;
         RBE3@rbe3;
+        CELAS2@celas2;
     end
 
     %% Global finite element model properties
