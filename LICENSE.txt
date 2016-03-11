@@ -35,7 +35,7 @@ article:
 
 Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N., 
 ``Nonlinear Aeroelastic Scaled-Model Design,'' doi: 10.2514/1.C033171. 
-Journal of Aircraft Early Edition Online.
+Journal of Aircraft, Vol. 53, No. 1 (2016), pp. 20-32.
 
 If the Software is used to generate results for published work, the user is 
-encouraged to cite the author's associated work.  
+asked to cite the author's associated work.  
