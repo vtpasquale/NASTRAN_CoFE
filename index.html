@@ -12,22 +12,22 @@
 
 <div class="container">
 
-<h1>About CoFE</h1>
+<h1>NASTRAN CoFE</h1>
 
 <p>
-NASTRAN Compatible Finite Elements (CoFE) is an open-source MATLAB-based program for structural analysis and design.  The structural mesh, properties, multipoint constraints, loads, and boundary conditions are defined using the NASTRAN free field or small field bulk data input format.  Definition of the objective function and constraint functions for optimization is done in MATLAB.  Examples are provided to illustrate the straightforward process of creating analysis and optimization cases. 
+NASTRAN Compatible Finite Elements (CoFE) is an open-source MATLAB-based program for structural analysis and design.  The structural mesh, properties, multipoint constraints, loads, and boundary conditions are defined using the NASTRAN free field, small field, or large field bulk data input format.  Definition of the objective function and constraint functions for optimization problems is done in MATLAB.  Examples are provided to illustrate the straightforward process of creating analysis and optimization cases. 
 </p>
 
 <p>
-CoFE supports linear statics, vibration eigenpair (eigenvalues and eigenvectors), and buckling eigenpair analysis.  Responses and semi-analytic sensitivities (design derivatives) are provided for displacement, internal force, stress, vibration eigenvalues and eigenvectors and buckling eigenvalues and eigenvectors.  CoFE's semi-analytic sensitivities are valid for any sizing design problem and most shape design problems.  The primary element types are space truss/rod elements (CROD) and three-dimensional frame/beam (CBEAM) elements.  Multipoint constraints (RBE2, RBE3) are supported.  Detailed bulk-data descriptions are provided in the user's manual.  
+CoFE supports linear statics, vibration eigenpair (eigenvalues and eigenvectors), and buckling eigenpair analysis.  Responses and semi-analytic sensitivities (design derivatives) are provided for displacement, internal force, stress, vibration eigenvalues and eigenvectors and buckling eigenvalues and eigenvectors.  CoFE's semi-analytic sensitivities are valid for any sizing design problem and most shape design problems.  The primary element types are space truss/rod elements (CROD), three-dimensional frame/beam (CBEAM) elements, isoparametric membrane-bending-shear quadrilaterals (CQUAD4), and more (CELAS2, CMASS1, CONM2).  Multipoint constraints (RBE2, RBE3) are also supported.  Detailed bulk-data descriptions are provided on this web page - see the "Bulk Data Inputs" drop down menu.  
 </p>
 
 <p>
-Since the code uses NASTRAN formatted input, commercial preprocessing tools (e.g. FEMAP or PATRAN) can be used to create or check the bulk data inputs.  New analysis models can easily be verified using NASTRAN.  CoFE's dedicated postprocesser can read NASTRAN .pch output for direct response comparison and verification. 
+Since the code uses NASTRAN formatted input, commercial preprocessing tools (e.g. FEMAP or PATRAN) can be used to create or check the bulk data inputs.  New analysis models can easily be verified using a commercial version of NASTRAN, if desired.  CoFE's dedicated postprocesser can read commercial-NASTRAN .pch output for direct response comparison and verification. 
 </p>
 
 <p>
-CoFE seamlessly integrates with MATLAB-based optimization tools.  A gradient-based optimizer by Spillman and Canfield, included in the download, is used for the example optimization problems.  MATLAB's optimization toolbox is required for the optimization examples to run.  Users are encouraged to run the analysis and optimization examples and read through the user's manual.  Users who are experienced with finite element analysis, especially NASTRAN, will find the program intuitive.   
+CoFE seamlessly integrates with MATLAB-based optimization tools.  A gradient-based optimizer by Spillman and Canfield is integrated and used for the example optimization problems.  MATLAB's optimization toolbox is required for the optimization examples to run.  Users are encouraged to run the analysis and optimization examples.  Users who are experienced with finite element analysis, especially NASTRAN, will find the program intuitive.   
 </p>
 
 <p>
@@ -36,7 +36,7 @@ The code was originally developed to support optimization for aeroelastic scalin
 
 <div style="margin-left: 3em;">
 <p>
-Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N., ``Nonlinear Aeroelastic Scaled-Model Design,'' doi:&nbsp;<a target="_blank" href="https://dx.doi.org/10.2514/1.C033171">10.2514/1.C033171</a><em> Journal of Aircraft</em> Early Edition Online.
+Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N., ``Nonlinear Aeroelastic Scaled-Model Design,'' doi:&nbsp;<a target="_blank" href="https://dx.doi.org/10.2514/1.C033171">10.2514/1.C033171</a><em> Journal of Aircraft</em>, Vol. 53, No. 1 (2016), pp. 20-32.
 </p>
 </div>
 
