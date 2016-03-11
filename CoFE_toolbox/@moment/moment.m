@@ -21,7 +21,7 @@ classdef moment < applied_load
             CID = set_data('MOMENT','CID',data{4},'int',0);
             if CID ~= 0; error('Nonzero MOMENT CID not supported.'); end
             
-            obj.F = set_data('MOMENT','M',data{5},'dec',[]);
+            obj.M = set_data('MOMENT','M',data{5},'dec',[]);
             obj.N1 = set_data('MOMENT','N1',data{6},'dec',[]);
             obj.N2 = set_data('MOMENT','N2',data{7},'dec',[]);
             obj.N3 = set_data('MOMENT','N3',data{8},'dec',[]);
