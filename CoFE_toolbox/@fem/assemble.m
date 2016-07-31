@@ -1,4 +1,4 @@
-function obj = assemble(obj)
+function objNew = assemble(obj,CASE)
 
 %% Node and DOF data
 obj.nnodes = size(obj.GRID,2);
@@ -51,11 +51,6 @@ for j = 1:size(obj.structureList,2)
     end
 end
 
-%% Loads
-if obj.CASE.SOL ~= 103
-    obj = obj.loads(); % obj.p
-end
-
 %% Loop through contraint types to determine dependent degrees of freedom (m set)
 m = [];
 for j = 1:size(obj.constraintList,2)   
@@ -67,10 +62,10 @@ obj.m = m;
 
 %% determine independent degrees of freedom (n set)
 if isempty(obj.m)
-    n = (1:obj.ndof)';
+    n = (1:obj.ndof).';
 else
     allDof = 1:obj.ndof;
-    n = allDof(~sum(repmat(1:obj.ndof,[size(m,1),1]) == repmat(m,[1,obj.ndof])))';
+    n = allDof(~sum(repmat(1:obj.ndof,[size(m,1),1]) == repmat(m,[1,obj.ndof]))).';
 end
 assert(size(unique(n),1) == size(n,1),'There is an issue with your n set.  n set DOF should be unique.')
 obj.n = n;
@@ -120,4 +115,28 @@ nf_g = n(nfBoolean==true);
 nf_n = 1:size(nfBoolean,2) ;
 nf_n = nf_n(nfBoolean==true);
 obj.nf_g = nf_g;
-obj.nf_n = nf_n';
+obj.nf_n = nf_n.';
+
+%% Loads
+if any([CASE.SOL]~=103)
+    [lc,p] = loads(obj);
+else
+    % skip loads
+end
+
+%% Loop through SUBCASES
+warning('off','MATLAB:structOnObject');
+nSubCases = size(CASE,2);
+for sc = 1:nSubCases
+    objNew(sc) = obj;
+    objNew(sc).CASE=struct(CASE(sc)); % convert to structure for execution speed
+    % assign load case
+    if CASE(sc).SOL ~= 103
+        lind = find(lc==CASE(sc).LOAD);
+        if isempty(lind)
+            objNew(sc).p=zeros(obj.ndof,1);
+        else
+            objNew(sc).p=p(:,lind);
+        end
+    end
+end

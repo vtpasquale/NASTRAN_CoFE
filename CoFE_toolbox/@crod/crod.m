@@ -2,7 +2,7 @@
 % A tension-compression-torsion element
 % Anthony Ricciardi
 %
-classdef crod < structure & static_recover
+classdef crod < structure
     
     %% input data
     properties
@@ -26,15 +26,22 @@ classdef crod < structure & static_recover
         x1    % [3x1] node 1 position
         x2    % [3x1] node 2 position
         force_stress % [1x12] force -> stress matrix
+        stress_strain % [2x1] stress -> strain constants
         R % [12x12] rotation matrix from element to global reference frame
     end
     
     %% solution
     properties
-        force % [12x1] element forces in element reference frame
-        stress %[scaler] element axail stress
+        force % [nm x 1] element static or modal axial force
+        stress % [nm x 1] static or modal longitudinal (s11) stresses
+        strain % [nm x 1 x 2] static or modal longitudinal and transverse strains where strain(:,:,1) are longitudinal strains and strain(:,:,2) are transverse strains
+        eke % [nm x 1] element modal kinetic energy
+        ese % [nm x 1] element static or modal strain energy
     end
-    
+    properties (Dependent=true)
+        voigtStress % [6 x nm] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm ], where nm is the number of response modes.
+        voigtStrain % [6 x nm] Matrix of strain vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm ], where nm is the number of response modes.
+    end
     
     methods
         %%
@@ -51,6 +58,22 @@ classdef crod < structure & static_recover
         %%
         function echo(obj,fid)
             fprintf(fid,'CROD,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.G2);
+        end
+        
+        %% Get functions
+        function out = get.voigtStress(obj)
+            if isempty(obj.stress)
+                out = [];
+            else
+                out=[obj.stress.';zeros(5,size(obj.stress,1))];
+            end
+        end
+        function out = get.voigtStrain(obj)
+            if isempty(obj.strain)
+                out = [];
+            else
+                out=[obj.strain(1).';obj.strain(2).';obj.strain(2).';zeros(3,size(obj.strain,1))];
+            end
         end
     end
     

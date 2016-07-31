@@ -1,7 +1,7 @@
-% Class for CBEAM entries
+% Class for CBEAM entries 
 % Anthony Ricciardi
 %
-classdef cbeam < structure & static_recover
+classdef cbeam < structure
 
     %% input data
     properties
@@ -21,7 +21,7 @@ classdef cbeam < structure & static_recover
         me;     % [12x12] element mass matrix in global reference frame
         kd;     % [12x12] element differential matrix in global reference frame
         
-        kdp     % [12x12] element unit-load differential stiffness matricies in global reference frame
+        kdp     % [12x12] element unit-load differential stiffness matrices in global reference frame
         kdvy
         kdvz
         kdmy2
@@ -34,13 +34,17 @@ classdef cbeam < structure & static_recover
         x1    % [3x1] node 1 position
         x2    % [3x1] node 2 position
         force_stress % [1x12] force -> stress matrix
+        stress_strain % [2x1] stress -> strain constants
         R % [12x12] rotation matrix from element to global reference frame
     end
     
     %% solution
     properties
-        force % [12x1] element forces in element reference frame
-        stress % [] element stresses
+        force % [12 x nm] element forces in element reference frame
+        stress % [8 x nm] element longitudinal stresses [[C1 D1 E1 F1 C2 D2 E2 F2] x nm]
+        strain % [8 x nm x 2] element longitudinal and transverse strains [[C1 D1 E1 F1 C2 D2 E2 F2] x nm x 2], where strain(:,:,1) are longitudinal strains and strain(:,:,2) are transverse strains
+        eke % [nm x 1] Element modal kinetic energy
+        ese % [nm x 1] Element static or modal strain energy
     end
     
     methods

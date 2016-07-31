@@ -34,11 +34,18 @@ for i = 1:obj.nnodes
     end
 end
 
+% multiple boundary condions not supported through subcases
+if isempty([obj.CASE.SPC]); error('Boundary contions (CASE.SPC) undefined'); end
+CASE_SPC = unique([obj.CASE.SPC]);
+if size(CASE_SPC,2)~=1;
+    error('Multiple boundary conditions (unique CASE.SPC numbers) not supported through subcases.  Run the separate boundary conditions with separate CoFE_analysis.m calls.')
+end
+
 % Single-point constraints specified using SPC1
 if isempty(obj.SPC1) == 0
     nspc1 = size(obj.SPC1,2);
     for i = 1:nspc1
-        if obj.SPC1(i).SID == obj.CASE.SPC
+        if obj.SPC1(i).SID == CASE_SPC
             edof = num2str(obj.SPC1(i).C);
             for j = 1:length(edof)
                 gdof = obj.gnum2gdof(str2double(edof(j)),find(obj.SPC1(i).G1==obj.gnum));

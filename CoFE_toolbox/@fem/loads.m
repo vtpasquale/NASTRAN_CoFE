@@ -1,13 +1,12 @@
-function obj = loads(obj)
+function [lc,p] = loads(obj)
 
 %% Checks
 % Determine load case IDs referenced
-
 % “simple loads” (e.g., FORCE, MOMENT) SIDs
 slc = [];
 for j = 1:size(obj.applied_loadList,2)
     if strcmp(obj.applied_loadList{j},'GRAV')==0
-        slc = [slc,unique([obj.(obj.applied_loadList{j}).SID])];
+        slc = unique([slc,[obj.(obj.applied_loadList{j}).SID]]);
     end
 end
 
@@ -50,7 +49,11 @@ for j = 1:size(obj.applied_loadList,2)
         lc_indx = find(obj.(obj.applied_loadList{j})(i).SID == lc);
         
         % apply load to load vector
+        try
         p(gdof,lc_indx)=p(gdof,lc_indx)+pl;
+        catch
+            keyboard
+        end
     end
 end
 
@@ -92,9 +95,3 @@ if ~isempty(llc)
     end
     
 end
-
-%%
-if any(obj.CASE.LOAD==lc) == 0
-    error('No loads input for user specified load case.')
-end
-obj.p = p(:,obj.CASE.LOAD==lc);

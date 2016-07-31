@@ -1,4 +1,4 @@
-function plot(obj,allDef,varargin)
+function ph = plot(obj,allDef,varargin)
 
 x = [obj.x1,obj.x2];
 
@@ -8,6 +8,6 @@ else
     def = allDef([obj.gdof(1:3),obj.gdof(7:9)]);
 end
 
-% line
+% points
 p = x + def;
-plot3(p(1,:),p(2,:),p(3,:),varargin{:})
+ph = plot3(p(1,:),p(2,:),p(3,:),varargin{1:end});

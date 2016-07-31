@@ -1,7 +1,7 @@
 % Class for BLIQ entries - Canfield membrane element
 % Anthony Ricciardi
 %
-classdef bliq  < structure & static_recover
+classdef bliq  < structure
     
     % fundamental data (from input file)
     properties

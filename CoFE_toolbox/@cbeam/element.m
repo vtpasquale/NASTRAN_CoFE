@@ -39,15 +39,15 @@ end
 mat1H = find([FEM.MAT1.MID]==obj_pbeam.MID);
 if size(mat1H,2)~=1; error(['There should be one and only one MAT1 with ID# ',num2str(FEM.PROD(pidH).MID),'']); end
 obj_mat1 = FEM.MAT1(mat1H);
-[E,G] = getEGNU(obj_mat1);
+[E,G,NU] = getEGNU(obj_mat1);
 
-% element matricies
+% element matrices
 nuVec = [obj.X1;obj.X2;obj.X3];
 
-if FEM.CASE.SOL == 101 || FEM.CASE.SOL == 103
-    [obj.R,obj.ke,obj.me] = legacy.cbeamMat(obj.x1,obj.x2,nuVec,E,G,obj_pbeam.A,obj_pbeam.I2,obj_pbeam.I1,obj_pbeam.J,obj_mat1.RHO,obj_pbeam.NSM,obj_pbeam.K1,obj_pbeam.K2);
-else
+if any([FEM.CASE.SOL] == 105)
     [obj.R,obj.ke,obj.me,obj.kdp,obj.kdvy,obj.kdvz,obj.kdmy2,obj.kdmz2,obj.kdmx] = legacy.cbeamMat(obj.x1,obj.x2,nuVec,E,G,obj_pbeam.A,obj_pbeam.I2,obj_pbeam.I1,obj_pbeam.J,obj_mat1.RHO,obj_pbeam.NSM,obj_pbeam.K1,obj_pbeam.K2);
+else
+    [obj.R,obj.ke,obj.me] = legacy.cbeamMat(obj.x1,obj.x2,nuVec,E,G,obj_pbeam.A,obj_pbeam.I2,obj_pbeam.I1,obj_pbeam.J,obj_mat1.RHO,obj_pbeam.NSM,obj_pbeam.K1,obj_pbeam.K2);
 end
 
 % force-stress matrix
@@ -60,4 +60,6 @@ obj.force_stress = [-StressC StressC;
     -StressE StressE;
     -StressF StressF];
 
+% stress-strain matrix
+obj.stress_strain = [1/E; -NU/E];
 end

@@ -1,7 +1,7 @@
 % Class for CQUAD4 entries
 % Anthony Ricciardi
 %
-classdef cquad4 < structure & static_recover
+classdef cquad4 < structure
     
     % fundamental data (from input file)
     properties
@@ -37,9 +37,27 @@ classdef cquad4 < structure & static_recover
         t % [4x1] element thicknesses at nodes
         NSM % nonstructural mass
         rho % material density
-        GB1 % displacement-stress matricies at top (1) and bottom (1) of element midpoint
-        GB2
-        tc  % thickness at element midpoint
+        CBB % strain-displacement matricies at the bottom of the element midpoint
+        CBT % strain-displacement matricies at the top of the element midpoint
+        N1BB % strain-displacement matricies at nodes
+        N1BT
+        N2BB
+        N2BT
+        N3BB
+        N3BT
+        N4BB
+        N4BT
+        tc  % thickness at element element center
+        centerBot % [responsePoint] response recovery point at element center bottom surface
+        centerTop % [responsePoint] response recovery point at element center top surface
+        N1Bot % [responsePoint] response recovery points at nodes
+        N1Top
+        N2Bot
+        N2Top
+        N3Bot
+        N3Top
+        N4Bot
+        N4Top
     end
     
     % physical quantities

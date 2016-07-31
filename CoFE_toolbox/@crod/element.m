@@ -31,17 +31,19 @@ if size(pidH,2)~=1; error(['There should be one and only one PROD with ID# ',num
 % find MAT1
 mat1H = find([FEM.MAT1.MID]==FEM.PROD(pidH).MID);
 if size(mat1H,2)~=1; error(['There should be one and only one MAT1 with ID# ',num2str(FEM.PROD(pidH).MID),'']); end
-[E,G] = getEGNU(FEM.MAT1(mat1H));
+[E,G,NU] = getEGNU(FEM.MAT1(mat1H));
 
 % element matricies
-if FEM.CASE.SOL == 101 || FEM.CASE.SOL == 103
-    [obj.R,obj.ke,obj.me] = legacy.crodMat(obj.x1,obj.x2,E,G,FEM.PROD(pidH).A,FEM.PROD(pidH).J,FEM.MAT1(mat1H).RHO,FEM.PROD(pidH).NSM);
-else
+if any([FEM.CASE.SOL] == 105)
     [obj.R,obj.ke,obj.me,obj.kd_unit_p] = legacy.crodMat(obj.x1,obj.x2,E,G,FEM.PROD(pidH).A,FEM.PROD(pidH).J,FEM.MAT1(mat1H).RHO,FEM.PROD(pidH).NSM);
+else
+    [obj.R,obj.ke,obj.me] = legacy.crodMat(obj.x1,obj.x2,E,G,FEM.PROD(pidH).A,FEM.PROD(pidH).J,FEM.MAT1(mat1H).RHO,FEM.PROD(pidH).NSM);
 end
 
 % force-stress matrix
-obj.force_stress = [0 0 0 0 0 0 1./FEM.PROD(pidH).A 0 0 0 0 0];
+obj.force_stress = 1./FEM.PROD(pidH).A;
 
+% stress-strain matrix
+obj.stress_strain = [1/E; -NU/E];
 
 end

@@ -33,12 +33,6 @@ for i = 1:size(mObj.PropertyList,1)
         obj.constraintList{1,size(obj.constraintList,2)+1}= mObj.PropertyList(i).Name;
     end
     
-    % isa static_recover
-    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''static_recover'');'])
-    if bool
-        obj.static_recoverList{1,size(obj.static_recoverList,2)+1}= mObj.PropertyList(i).Name;
-    end
-    
     % isa applied_load
     eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''applied_load'');'])
     if bool
