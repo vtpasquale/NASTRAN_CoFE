@@ -42,7 +42,6 @@ switch type
     case 'int'
         out = sscanf(data, '%f'); % out = str2double(data);
         if mod(out,1) ~= 0
-            keyboard
             error([fieldName,' field on ',entryName,' entry should be an integer.']);
         end
         out = int32(out);

@@ -1,45 +1,41 @@
 % Function to execute CoFE analysis
 % Anthony Ricciardi
 %
-%  Input
-%  CASE - structure varable containing executive and case control data
-%      .inputFile [string] name of NASTRAN-formatted bulk data input file
-%      .SOL [int] solution sequence (101, 103, or 105)
-%      .SPC [int] identification number of single-point constraint set
-%      .LOAD [int] identification number of load set
-%      .METHOD [int] identification number of eigenpair solution method
-%      .RECOVER [bool] element staic solution data recovery option
-%           = 1 recover element static solution quantities (e.g. stress, internal force)
-%           = 0 skip element data recovery
-%         Notes:
-%           Default = 1
-%           Element staic solution data always recovered when CASE.SOL=105.
-%      .WRITE_c06 [bool] text output file (.c06) option
-%           = 1 write .c06 output file
-%           = 0 skip writing output file
-%         Notes:
-%           Default = 1
+%  Inputs
+%  inputFile  - [string] name of NASTRAN-formatted bulk data input file
+%  CASE - [1x#subcases case_obj] array of objects containing case control data
 %
 % Output
-% FEM - [1x1 fem] Finite element model and solution object
+% FEM - [1x#subcases fem] Array of finite element model and solution objects
 %
-function FEM = CoFE_analysis(CASE)
+function FEM = CoFE_analysis(inputFile,CASE)
 
 %% Instantiate FEM object and read model data from input file
-FEM = importModel(CASE.inputFile);
+FEM0 = importModel(inputFile);
+FEM0.CASE = CASE;
 
-%% Write CASE structure FEM object (this must be done after FEM object is instantiated)
-if isfield(CASE,'RECOVER')==0; CASE.RECOVER=1; end
-FEM.CASE = CASE;
+%% Assemble array of subcases
+FEM = assemble(FEM0,CASE);
 
-%% Assemble and solve
-FEM = FEM.analysis();
-
-%% Write output file
-if isfield(CASE,'WRITE_c06')==0; CASE.WRITE_c06=1; end
-if CASE.WRITE_c06 == 1
-    FEM.write_c06(CASE.inputFile);
+%% Solve array of subcases
+for sc = 1:size(FEM,2)
+    switch FEM(sc).CASE.SOL
+        case 101
+            FEM(sc) = FEM(sc).analysis_101();
+        case 103
+            FEM(sc) = FEM(sc).analysis_103();
+        case 105
+            FEM(sc) = FEM(sc).analysis_105( FEM(FEM(sc).CASE.REF_LC) );
+        otherwise
+            error('FEM.CASE.SOL should be set to 101, 103, or 105.')
+    end
 end
+
+% %% Write output file
+% if isfield(CASE,'WRITE_c06')==0; CASE.WRITE_c06=1; end
+% if CASE.WRITE_c06 == 1
+%     FEM.write_c06(CASE.inputFile);
+% end
 
 end
 

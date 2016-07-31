@@ -62,16 +62,22 @@ image(imread('CoFE.png'));
 axis image
 axis off
 
+%% Process varargin
+% CoFE model and Results
+handles.FEM = varargin{1};
+handles.FEMxplot = [handles.FEM.u];
+isemptyFEMu = isempty(handles.FEMxplot);
+
 %% Checkboxes and legend
 set(handles.checkbox1,'Value',1)
-if isempty(varargin{1}.x) && isempty(varargin{1}.xm) && isempty(varargin{1}.xb) && size(varargin,2) < 2
+if isemptyFEMu && size(varargin,2) < 2
     % preprocess only
     set(handles.checkbox1,'Visible','off')
 else
     set(handles.checkbox1,'String','Show Undeformed')
 end
 
-if isempty(varargin{1}.x) && isempty(varargin{1}.xm) && isempty(varargin{1}.xb)
+if isemptyFEMu
     % no CoFE results
     set(handles.checkbox2,'Visible','off')
 else
@@ -85,22 +91,25 @@ if size(varargin,2) > 1
 else
     set(handles.checkbox3,'Visible','off')
 end
-
 updateLengend(handles) 
 
 %% CoFE List
-if (isempty(varargin{1}.x) && isempty(varargin{1}.xm) && isempty(varargin{1}.xb)) == 0
+if isemptyFEMu == 0
     set(handles.text6,'String','CoFE Results')
     j = 1;
-    if isempty(varargin{1}.x) == 0
-        list1{j} = 'Linear Static'; j = j + 1;
-    end
-    for i = 1:size(varargin{1}.xm,2)
-        
-        list1{j} = sprintf('Vibration Mode %d: %.4f Hz',i,varargin{1}.wHz(i)); j = j + 1;
-    end
-    for i = 1:size(varargin{1}.xb,2)
-        list1{j} = sprintf('Buckling Mode %d: ev = %.4f',i,varargin{1}.Db(i)); j = j + 1;
+    for sc =1:size(handles.FEM,2)
+        switch handles.FEM(sc).CASE.SOL
+            case 101
+                list1{j} = 'Linear Static'; j = j + 1;
+            case 103
+                for i = 1:size(handles.FEM(sc).u,2)
+                    list1{j} = sprintf('Vibration Mode %d: %.4f Hz',i,handles.FEM(sc).fHz(i)); j = j + 1;
+                end
+            case 105
+                for i = 1:size(handles.FEM(sc).u,2)
+                    list1{j} = sprintf('Buckling Mode %d: ev = %.4f',i,handles.FEM(sc).eVal(i)); j = j + 1;
+                end
+        end
     end
     if j == 1;
         list1{2} = '';
@@ -131,14 +140,8 @@ else
     set(handles.text12,'String','')
 end
 
-%% Process varargin
-% CoFE model and Results
-handles.FEM = varargin{1};
-
-% combine results for plotting
-handles.FEMxplot = [handles.FEM.x,handles.FEM.xm,handles.FEM.xb];
-handles.xplot_scaleOption = [ones(1,size(handles.FEM.x,2)),2*ones(1,size(handles.FEM.xm,2)),2*ones(1,size(handles.FEM.xb,2))];
-
+%% combine results for plotting
+    
 if size(varargin,2) > 1
     handles.nas_response = varargin{2};
 else
@@ -334,7 +337,7 @@ else
     nas_response = [];
 end
 
-post.plotMesh(handles.FEM,xplot,nas_response,handles.CoFE_scaleFactor,handles.nas_scaleFactor,handles.figure1,undeformed)
+post.plotMesh(handles.FEM(1),xplot,nas_response,handles.CoFE_scaleFactor,handles.nas_scaleFactor,handles.figure1,undeformed)
 
 
 
@@ -394,7 +397,7 @@ axis off
 %%
 function handles=updateScales(handles)
 
-model_size = max(max(handles.FEM.gcoord,[],2)-min(handles.FEM.gcoord,[],2));
+model_size = max(max(handles.FEM(1).gcoord,[],2)-min(handles.FEM(1).gcoord,[],2));
 
 if get(handles.checkbox2,'Value')
     max_def = max(abs(  handles.FEMxplot(:,get(handles.listbox1,'Value'))  ));
