@@ -1,11 +1,7 @@
 function [obj,obj_prime]= analysis(obj,obj_prime)
 
-%% assemble
-if nargin < 2
-    obj = obj.assemble();
-end
+% assembly must already be complete
 
-% assembly must already be complete for design cases
 if nargin > 1
     ndv = size(obj_prime,2);
 end
@@ -15,30 +11,26 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
     
     % Displacements
     if nargout < 2
-        obj.x = legacy.SOL_101_CoFE(obj.K_G,obj.Gm,obj.p,obj.n,obj.m,obj.nf_g,obj.nf_n);
+        obj.u = legacy.SOL_101_CoFE(obj.K_G,obj.Gm,obj.p,obj.n,obj.m,obj.nf_g,obj.nf_n);
     else
         % Displacements & Design derivatives 
-        [obj.x,x_prime] = legacy.SOL_101_CoFE(obj.K_G,obj.Gm,obj.p,...
+        [obj.u,u_prime] = legacy.SOL_101_CoFE(obj.K_G,obj.Gm,obj.p,...
                 obj.n,obj.m,obj.nf_g,obj.nf_n,d([obj_prime.K_G]),...
                 d([obj_prime.Gm]),d([obj_prime.p]));
         % loop through design varaiables
         for dv = 1:ndv
-            obj_prime(dv).x = x_prime(:,dv);
+            obj_prime(dv).u = u_prime(:,dv);
         end
-        clear x_prime
+        clear u_prime
     end
     
     % Element Recovery
-    if isfield(obj.CASE,'RECOVER') == 0
-        obj.CASE.RECOVER = 1;
-    end
-    
     if obj.CASE.RECOVER == 1 || obj.CASE.SOL == 105
         
         for j = 1:size(obj.static_recoverList,2)
             placeholderObj = obj.(obj.static_recoverList{j});
             for i = 1:size(placeholderObj,2)
-                placeholderObj(i) = placeholderObj(i).recover(obj.gnum2gdof,obj.x);
+                placeholderObj(i) = placeholderObj(i).recover(obj);
             end
             obj.(obj.static_recoverList{j}) = placeholderObj;
             clear placeholderObj
@@ -52,7 +44,7 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
                     placeholderObjPrime = obj_prime(dv).(obj.static_recoverList{j});
                     for i = 1:size(placeholderObj,2)
                         [~,placeholderObjPrime(i)] = ...
-                            recover(placeholderObj(i),obj.gnum2gdof,obj.x,placeholderObjPrime(i),obj_prime(dv).x);
+                            recover(placeholderObj(i),obj.gnum2gdof,obj.u,placeholderObjPrime(i),obj_prime(dv).u);
                     end
                     obj_prime(dv).(obj.static_recoverList{j}) = placeholderObjPrime;
                 end
@@ -108,20 +100,20 @@ if obj.CASE.SOL == 101 || obj.CASE.SOL == 105
         
         % Solve
         if nargout < 2
-            [obj.xb,obj.Db] = legacy.SOL_105_CoFE(obj.K_G,obj.KD_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,obj.ndof);
+            [obj.u,obj.Db] = legacy.SOL_105_CoFE(obj.K_G,obj.KD_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,obj.ndof);
         else
             % Response & Design derivatives
-            [obj.xb,obj.Db,xb_prime,Db_prime] = legacy.SOL_105_CoFE(...
+            [obj.u,obj.Db,u_prime,Db_prime] = legacy.SOL_105_CoFE(...
             obj.K_G,obj.KD_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,...
                 obj.ndof,d([obj_prime.K_G]),[obj_prime.KD_G],...
                 d([obj_prime.Gm]));
             
             % loop through design varaiables
             for dv = 1:ndv
-                obj_prime(dv).xb = xb_prime(:,:,dv);
+                obj_prime(dv).u = u_prime(:,:,dv);
                 obj_prime(dv).Db = Db_prime(:,dv);
             end
-            clear xb_prime Db_prime
+            clear u_prime Db_prime
         end
     end
 
@@ -139,20 +131,33 @@ elseif obj.CASE.SOL == 103
     
     % solve
     if nargout < 2
-        [obj.xm,obj.wHz] = legacy.SOL_103_CoFE(obj.K_G,obj.M_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,obj.ndof);
+        [obj.u,obj.wHz] = legacy.SOL_103_CoFE(obj.K_G,obj.M_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,obj.ndof);
+        
+        if obj.CASE.RECOVER == 1
+            for j = 1:size(obj.static_recoverList,2)
+                placeholderObj = obj.(obj.static_recoverList{j});
+                for i = 1:size(placeholderObj,2)
+                    placeholderObj(i) = placeholderObj(i).recover(obj);
+                end
+                obj.(obj.static_recoverList{j}) = placeholderObj;
+                clear placeholderObj
+            end
+        end
+        
+        
     else
         % Displacements & Design derivatives
-        [obj.xm,obj.wHz,xm_prime,wHz_prime] = legacy.SOL_103_CoFE(...
+        [obj.u,obj.wHz,u_prime,wHz_prime] = legacy.SOL_103_CoFE(...
             obj.K_G,obj.M_G,obj.Gm,obj.ND,obj.nf_n,obj.nf_g,obj.n,obj.m,...
             obj.ndof,d([obj_prime.K_G]),d([obj_prime.M_G]),...
             d([obj_prime.Gm]));
 
         % loop through design varaiables
         for dv = 1:ndv
-            obj_prime(dv).xm = xm_prime(:,:,dv);
+            obj_prime(dv).u = u_prime(:,:,dv);
             obj_prime(dv).wHz = wHz_prime(:,dv);
         end
-        clear xm_prime wHz_prime
+        clear u_prime wHz_prime
     end
     
     
