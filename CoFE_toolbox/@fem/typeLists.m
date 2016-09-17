@@ -20,6 +20,18 @@ for i = 1:size(mObj.PropertyList,1)
     if bool
         obj.elementList{1,size(obj.elementList,2)+1}= mObj.PropertyList(i).Name;
     end
+
+    % isa plot0D
+    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''plot0D'');'])
+    if bool
+        obj.plot0DList{1,size(obj.plot0DList,2)+1}= mObj.PropertyList(i).Name;
+    end
+    
+    % isa plot1D
+    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''plot1D'');'])
+    if bool
+        obj.plot1DList{1,size(obj.plot1DList,2)+1}= mObj.PropertyList(i).Name;
+    end
     
     % isa structure
     eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''structure'');'])

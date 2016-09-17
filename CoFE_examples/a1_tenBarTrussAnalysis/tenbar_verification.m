@@ -5,12 +5,11 @@ home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
-inputFile = 'svanberg.bdf';
-
-CASE=case_obj;
+inputFile = 'tenBar_analysis.bdf';
+CASE = case_obj;
 CASE.SOL = 103; % SOL = 101, SOL = 103, and SOL = 105 are options
 CASE.SPC = 1;
-CASE.LOAD = 1;
+CASE.LOAD = 88;
 CASE.METHOD = 30;
 
 %% Run CoFE
@@ -39,5 +38,5 @@ switch CASE.SOL
 end
 
 %% Plot results
-post_gui(FEM,nas_response,nas_comment,nas_scaleOption)
+verification_gui(FEM,nas_response,nas_comment,nas_scaleOption);
 view(0,0)

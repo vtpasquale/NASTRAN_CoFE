@@ -1,7 +1,7 @@
 % Class for CMASS1 entries
 % Anthony Ricciardi
 %
-classdef cmass1 < structure
+classdef cmass1 < structure & plot0D
     
     % entry data
     properties
@@ -19,6 +19,16 @@ classdef cmass1 < structure
         me
         kd
     end
+    % solution
+    properties
+        eke % [nm x 1] element modal kinetic energy
+        ese % [nm x 1] element static or modal strain energy
+    end
+    properties
+        voigtStress	= [];
+        voigtStrain	= [];
+    end
+    
     methods
         
         %%
@@ -33,7 +43,7 @@ classdef cmass1 < structure
         end
         
         %%
-        function plot(obj,allDef,varargin)
+        function ph = plot(obj,allDef,varargin)
             if isempty(allDef);
                 def = zeros(3,1);
             else
@@ -42,7 +52,7 @@ classdef cmass1 < structure
             
             % point
             p = obj.x1 + def;
-            plot3(p(1,:),p(2,:),p(3,:),varargin{:})
+            ph = plot3(p(1,:),p(2,:),p(3,:),varargin{:});
         end
         
         %%

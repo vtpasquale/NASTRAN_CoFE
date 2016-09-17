@@ -1,5 +1,4 @@
 function plot(obj,figHand,varargin)
-
 figure(figHand)
 hold on
 

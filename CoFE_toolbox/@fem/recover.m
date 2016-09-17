@@ -1,4 +1,4 @@
-function [obj,obj_prime] = recover(obj,obj_prime)
+function [obj,obj_prime] = recover(obj,obj_prime,ndv)
 
 %% Element Recovery
 for j = 1:size(obj.structureList,2)

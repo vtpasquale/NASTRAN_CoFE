@@ -24,7 +24,7 @@ if obj.CASE.RECOVER == 1
     if nargout < 2
         obj = recover(obj);
     else
-        [obj,obj_prime] = recover(obj,obj_prime);
+        [obj,obj_prime] = recover(obj,obj_prime,ndv);
     end
 end
 

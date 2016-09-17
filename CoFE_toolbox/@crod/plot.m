@@ -1,5 +1,4 @@
 function ph = plot(obj,allDef,varargin)
-
 x = [obj.x1,obj.x2];
 
 if isempty(allDef);

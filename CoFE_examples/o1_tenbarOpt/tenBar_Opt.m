@@ -5,19 +5,20 @@ home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
-CASE.inputFile = 'tenBar_initial.bdf';
+inputFile = 'tenBar_initial.bdf';
+CASE=case_obj;
 CASE.SOL = 101;
 CASE.SPC = 1;
 CASE.LOAD = 88;
-CASE.METHOD = 30;
+CASE.STRESS = 1;
 
 %% Initialize model
-FEM = CoFE_design_initialize(CASE);
+FEM = CoFE_design_initialize(inputFile,CASE);
 
 %% SQP options
 sqpOptions = optimset('fmincon');
 % sqpOptions.ComplexStep = 'on';
-% sqpOptions.DerivativeCheck = 'on';
+sqpOptions.DerivativeCheck = 'on';
 sqpOptions.Display = 'on';
 sqpOptions.Termination = -1; 
 sqpOptions.TolCon = 1e-11;

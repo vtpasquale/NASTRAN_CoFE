@@ -13,7 +13,7 @@ end
 
 % displacement constraints
 for i = 1:10
-    disp = FEM_prime(i).x(3:6:(4*6));
+    disp = FEM_prime(i).u(3:6:(4*6));
     con(21:24,i) =   disp;
     con(25:28,i) = - disp;
 end

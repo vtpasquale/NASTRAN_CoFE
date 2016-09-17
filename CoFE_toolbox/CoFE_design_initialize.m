@@ -9,6 +9,7 @@
 % FEM0 - [1x1 fem] Initial finite element model inputs all subcases as CASE
 %
 function FEM0 = CoFE_design_initialize(inputFile,CASE)
+if nargin < 2; error('Two input arguments required for CoFE_design_initialize()'); end
 
 %% Instantiate FEM object and read model data from input file
 FEM0 = importModel(inputFile);

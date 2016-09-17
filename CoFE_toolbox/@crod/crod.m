@@ -2,7 +2,7 @@
 % A tension-compression-torsion element
 % Anthony Ricciardi
 %
-classdef crod < structure
+classdef crod < structure & plot1D
     
     %% input data
     properties
@@ -72,7 +72,7 @@ classdef crod < structure
             if isempty(obj.strain)
                 out = [];
             else
-                out=[obj.strain(1).';obj.strain(2).';obj.strain(2).';zeros(3,size(obj.strain,1))];
+                out=[obj.strain(:,:,1).';obj.strain(:,:,2).';obj.strain(:,:,2).';zeros(3,size(obj.strain,1))];
             end
         end
     end

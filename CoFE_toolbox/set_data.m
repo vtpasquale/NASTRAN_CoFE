@@ -12,8 +12,8 @@
 %
 % default: [type] default value, will enforce data is defined if not empty.
 %                   Set to [] if input is required.
-% min:     [real] minimum value - optional - only used for reals
-% max:     [real] maximum value - optional - only used for reals
+% min:     [real] minimum value - optional - only used for integers or reals
+% max:     [real] maximum value - optional - only used for integers or reals
 %
 % Outputs
 % out: [type] formatted field data

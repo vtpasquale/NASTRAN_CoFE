@@ -1,3 +1,17 @@
+% Function to plot element and results
+% Anthony Ricciardi
+%
+% Inputs:
+% obj = element object
+% allDef = fem.u [fem.ndof,1] static deformation, vibration
+%          eigenvector, or buckling eigenvector.  Optional. Omit for
+%          undeformed.  
+% mode_number = [int] response number for plotting.  
+% fopts = [struct] plotting options
+% 
+% Outputs
+% ph = [graphics handle] handle of contour plot
+%
 function ph = contour(obj,allDef,mode_number,fopts)
 
 %% Points
@@ -58,11 +72,55 @@ switch fopts.contourType
                  r(3,1),r(3,2)];
         end        
     case 'Element Nodal Forces'
-        contourValues = obj.force(mode_number)*[1 1; 1 1];
+        switch fopts.contourTypeSpecificOpt
+            case 'Magnitude'
+                contourValues = obj.force(mode_number)*[1 1; 1 1];
+            case 'X Component'
+                contourValues = obj.force(mode_number)*[1 1; 1 1];
+            case 'Y Component'
+                contourValues = [0 0; 0 0];
+            case 'Z Component'
+                contourValues = [0 0; 0 0];
+        end        
+        
     case 'Stress'
-        contourValues = obj.stress(mode_number)*[1 1; 1 1];
+        switch fopts.contourTypeSpecificOpt
+            case 'von Mises'
+                contourValues = obj.vonMisesStress(mode_number)*[1 1; 1 1];
+            case 'X Component'
+                contourValues = obj.voigtStress(1,mode_number)*[1 1; 1 1];
+            case 'Y Component'
+                contourValues = obj.voigtStress(2,mode_number)*[1 1; 1 1];
+            case 'Z Component'
+                contourValues = obj.voigtStress(3,mode_number)*[1 1; 1 1];
+            case 'XY Component'
+                contourValues = obj.voigtStress(6,mode_number)*[1 1; 1 1];
+            case 'YZ Component'
+                contourValues = obj.voigtStress(4,mode_number)*[1 1; 1 1];
+            case 'ZX Component'
+                contourValues = obj.voigtStress(5,mode_number)*[1 1; 1 1];
+            otherwise
+                error(['fopts.contourTypeSpecificOpt type ',fopts.contourTypeSpecificOpt,' not supported.']);
+        end
     case 'Strain'
-        contourValues = obj.strain(mode_number,1)*[1 1; 1 1];
+        switch fopts.contourTypeSpecificOpt
+            case 'von Mises'
+                contourValues = obj.vonMisesStrain(mode_number)*[1 1; 1 1];
+            case 'X Component'
+                contourValues = obj.voigtStrain(1,mode_number)*[1 1; 1 1];
+            case 'Y Component'
+                contourValues = obj.voigtStrain(2,mode_number)*[1 1; 1 1];
+            case 'Z Component'
+                contourValues = obj.voigtStrain(3,mode_number)*[1 1; 1 1];
+            case 'XY Component'
+                contourValues = obj.voigtStrain(6,mode_number)*[1 1; 1 1];
+            case 'YZ Component'
+                contourValues = obj.voigtStrain(4,mode_number)*[1 1; 1 1];
+            case 'ZX Component'
+                contourValues = obj.voigtStrain(5,mode_number)*[1 1; 1 1];
+            otherwise
+                error(['fopts.contourTypeSpecificOpt type ',fopts.contourTypeSpecificOpt,' not supported.']);
+        end
     case 'Element Strain Energy'
         contourValues = obj.ese(mode_number)*[1 1; 1 1];
     case 'Element Kinetic Energy'
@@ -71,15 +129,23 @@ switch fopts.contourType
         error([fopts.contourType, 'Contour type not supported'])
 end
 
-    
-%% Contour Plot
-ph = surf([p(1,:);p(1,:)],...
-    [p(2,:);p(2,:)],...
-    [p(3,:);p(3,:)],...
-    contourValues,...
-    'facecolor','none',...
-    'edgecolor','interp',...
-    'linewidth',fopts.defLineWidth);
+
+%% Plot
+switch fopts.contourType
+    case 'None'
+        ph = plot3(p(1,:),p(2,:),p(3,:),...
+            'color',fopts.def1DLineRgb,...
+            'linewidth',fopts.def1DLineWidth);
+    otherwise
+        % Contour Plot
+        ph = surf([p(1,:);p(1,:)],...
+            [p(2,:);p(2,:)],...
+            [p(3,:);p(3,:)],...
+            contourValues,...
+            'facecolor','none',...
+            'edgecolor','interp',...
+            'linewidth',fopts.def1DLineWidth);
+end
 
 end
 

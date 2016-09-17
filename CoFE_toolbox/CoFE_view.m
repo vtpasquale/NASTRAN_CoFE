@@ -287,8 +287,10 @@ uicontrol('style','text','String','Marker Size  ',...
     'Position',[.01,.93-2.*dvs,.48,.057]);
 uicontrol('style','popup',...
     'Units','normalized','Position',[.5,.93-2.*dvs,.48,.057],'Parent',ele_tab1,...
-    'String',{'5','10','15'},'Callback',{@setUnd0DMarkerSize});
-    h.fopts.und0DMarkerSize = 5;
+    'Value',4,...
+    'String',{'1','4','8','12','16','20','24','28','32','36'},...
+    'Callback',{@setUnd0DMarkerSize});
+    h.fopts.und0DMarkerSize = 12;
 % Marker Color
 uicontrol('style','text','String','Marker Color  ',...
     'Parent',ele_tab1,'FontSize',h.fs,...
@@ -298,8 +300,9 @@ uicontrol('style','text','String','Marker Color  ',...
     'Position',[.01,.93-3.*dvs,.48,.057]);
 uicontrol('style','popup',......
     'Units','normalized','Position',[.5,.93-3.*dvs,.48,.057],'Parent',ele_tab1,...
+    'Value',6,...
     'String',chooseLineRgbValue,'Callback',{@setUnd0DMarkerRgb});
-    h.fopts.und0DMarkerRgb = h.lineRgbValues(1,:);
+    h.fopts.und0DMarkerRgb = h.lineRgbValues(6,:);
 % Deformed
 uicontrol('style','text','String','Deformed',...
     'Parent',ele_tab1,'FontSize',h.fs,...
@@ -316,8 +319,10 @@ uicontrol('style','text','String','Marker Size  ',...
     'Position',[.01,.93-6.*dvs,.48,.057]);
 uicontrol('style','popup',...
     'Units','normalized','Position',[.5,.93-6.*dvs,.48,.057],'Parent',ele_tab1,...
-    'String',{'5','10','15'},'Callback',{@setDef0DMarkerSize});
-    h.fopts.def0DMarkerSize = 5;
+    'Value',4,...
+    'String',{'1','4','8','12','16','20','24','28','32','36'},...
+    'Callback',{@setDef0DMarkerSize});
+    h.fopts.def0DMarkerSize = 12;
 % Marker Color
 uicontrol('style','text','String','Marker Color  ',...
     'Parent',ele_tab1,'FontSize',h.fs,...
@@ -327,8 +332,8 @@ uicontrol('style','text','String','Marker Color  ',...
     'Position',[.01,.93-7.*dvs,.48,.057]);
 uicontrol('style','popup',......
     'Units','normalized','Position',[.5,.93-7.*dvs,.48,.057],'Parent',ele_tab1,...
-    'String',chooseLineRgbValue,'Value',2,'Callback',{@setDef0DMarkerRgb});
-    h.fopts.def0DMarkerRgb = h.lineRgbValues(2,:);
+    'String',chooseLineRgbValue,'Value',7,'Callback',{@setDef0DMarkerRgb});
+    h.fopts.def0DMarkerRgb = h.lineRgbValues(7,:);
     
 %% ELEMENT TAB 2 - 1D Element Options
 ele_tab2 = uitab('Parent',ele_tgroup, 'Title','1D');
@@ -439,11 +444,7 @@ plotSig(f);
 
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Functions
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Plot function
+%% Plot Function
 function plotSig(source,eventdata,dontUpdateScaleFactor)
 
 h = guidata(source);
@@ -467,25 +468,27 @@ hold on
 
 % loop through 0D elements
 iter0D = 0;
-for j = 1:size(FEMP.element0DList,2)
-    for i = 1:size(FEMP.(FEMP.element0DList{j}),2)
+for j = 1:size(FEMP.plot0DList,2)
+    for i = 1:size(FEMP.(FEMP.plot0DList{j}),2)
         iter0D = iter0D + 1;
-        h.und0D(iter0D) = plot(FEMP.(FEMP.element0DList{j})(i),[],...
+        h.und0D(iter0D) = plot(FEMP.(FEMP.plot0DList{j})(i),[],...
+            'o',...
             'color',h.fopts.und0DMarkerRgb,...
+            'MarkerFaceColor',h.fopts.und0DMarkerRgb,...
             'MarkerSize',h.fopts.und0DMarkerSize);
-        h.def0D(iter0D) = contour(FEMP.(FEMP.element0DList{j})(i),u_plot,h.mode_number,h.fopts);
+        h.def0D(iter0D) = contour(FEMP.(FEMP.plot0DList{j})(i),u_plot,h.mode_number,h.fopts);
     end
 end
 
 % loop through 1D elements
 iter1D = 0;
-for j = 1:size(FEMP.element1DList,2)
-    for i = 1:size(FEMP.(FEMP.element1DList{j}),2)
+for j = 1:size(FEMP.plot1DList,2)
+    for i = 1:size(FEMP.(FEMP.plot1DList{j}),2)
         iter1D = iter1D + 1;
-        h.und1D(iter1D) = plot(FEMP.(FEMP.element1DList{j})(i),[],...
+        h.und1D(iter1D) = plot(FEMP.(FEMP.plot1DList{j})(i),[],...
             'color',h.fopts.und1DLineRgb,...
             'LineWidth',h.fopts.und1DLineWidth);
-        h.def1D(iter1D) = contour(FEMP.(FEMP.element1DList{j})(i),u_plot,h.mode_number,h.fopts);
+        h.def1D(iter1D) = contour(FEMP.(FEMP.plot1DList{j})(i),u_plot,h.mode_number,h.fopts);
     end
 end
 xlabel('x')
@@ -510,12 +513,22 @@ display_text = uicontrol('style','text','String','SUBCASE 1 - Linear Statics',..
 set(h.und,'Visible',h.undeformedVisibility);
 set(h.def,'Visible',h.deformedVisibility);
 
+% Apply 0D marker size
+if iter0D > 0
+    switch h.fopts.contourType
+        case 'None'
+            set(h.def0D,'MarkerSize',h.fopts.def0DMarkerSize);
+        otherwise
+            setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize)
+    end
+end
+
 % Save plot handles to guidata
 guidata(source,h);
 
 end
 
-%% Contour List Function
+%% Helper Functions
 function contourLists = createContourList(FEM)
 nsc = size(FEM,2);
 contourLists = cell(nsc,1);
@@ -542,6 +555,15 @@ for i = 1:nsc
     contourLists{i}=list;
     clear list
 end
+end
+function setContourMarkerSize(graphicsHandle,markerSize)
+currentunits = get(gcf,'Units');
+set(gcf, 'Units', 'Points');
+axpos = get(gcf,'Position');
+set(gcf, 'Units', currentunits);
+markerS = markerSize/diff(xlim)*axpos(3);
+set(graphicsHandle,'SizeData', markerS);
+set(graphicsHandle,'SizeData',markerSize^2);
 end
 
 %% Callbacks
@@ -631,6 +653,40 @@ guidata(source,h);
 set(h.def,'Visible',h.deformedVisibility);
 end
 
+function setUnd0DMarkerRgb(source,eventdata)
+h = guidata(source);
+h.fopts.und0DMarkerRgb = h.lineRgbValues(source.Value,:);
+guidata(source,h);
+set(h.und0D,'Color',h.fopts.und0DMarkerRgb);
+set(h.und0D,'MarkerFaceColor',h.fopts.und0DMarkerRgb);
+end
+function setDef0DMarkerRgb(source,eventdata)
+h = guidata(source);
+h.fopts.def0DMarkerRgb = h.lineRgbValues(source.Value,:);
+guidata(source,h);
+if strcmp(h.fopts.contourType,'None')
+    set(h.def0D,'Color',h.fopts.def0DMarkerRgb);
+    set(h.def0D,'MarkerFaceColor',fopts.def0DMarkerRgb);
+end
+end
+function setUnd0DMarkerSize(source,eventdata)
+h = guidata(source);
+h.fopts.und0DMarkerSize = str2double(source.String{source.Value});
+set(h.und0D,'MarkerSize',h.fopts.und0DMarkerSize);
+guidata(source,h);
+end
+function setDef0DMarkerSize(source,eventdata)
+h = guidata(source);
+h.fopts.def0DMarkerSize = str2double(source.String{source.Value});
+switch h.fopts.contourType
+    case 'None'
+        set(h.def0D,'MarkerSize',h.fopts.def0DMarkerSize);
+    otherwise
+        setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize)
+end
+guidata(source,h);
+end
+
 function setUnd1DLineRgb(source,eventdata)
 h = guidata(source);
 h.fopts.und1DLineRgb = h.lineRgbValues(source.Value,:);
@@ -641,7 +697,9 @@ function setDef1DLineRgb(source,eventdata)
 h = guidata(source);
 h.fopts.def1DLineRgb = h.lineRgbValues(source.Value,:);
 guidata(source,h);
-set(h.def1D,'Color',h.fopts.def1DLineRgb);
+if strcmp(h.fopts.contourType,'None')
+    set(h.def1D,'Color',h.fopts.def1DLineRgb);
+end
 end
 function setUnd1DLineWidth(source,eventdata)
 h = guidata(source);
@@ -653,31 +711,6 @@ function setDef1DLineWidth(source,eventdata)
 h = guidata(source);
 h.fopts.def1DLineWidth = source.Value;
 set(h.def1D,'LineWidth',h.fopts.def1DLineWidth);
-guidata(source,h);
-end
-
-function setUnd0DMarkerRgb(source,eventdata)
-h = guidata(source);
-h.fopts.und0DMarkerRgb = h.lineRgbValues(source.Value,:);
-guidata(source,h);
-set(h.und0D,'Color',h.fopts.und0DMarkerRgb);
-end
-function setDef0DMarkerRgb(source,eventdata)
-h = guidata(source);
-h.fopts.def0DMarkerRgb = h.lineRgbValues(source.Value,:);
-guidata(source,h);
-set(h.def0D,'Color',h.fopts.def0DMarkerRgb);
-end
-function setUnd0DMarkerSize(source,eventdata)
-h = guidata(source);
-h.fopts.und0DMarkerSize = source.Value;
-set(h.und0D,'LineWidth',h.fopts.und0DMarkerSize);
-guidata(source,h);
-end
-function setDef0DMarkerSize(source,eventdata)
-h = guidata(source);
-h.fopts.def0DMarkerSize = source.Value;
-set(h.def0D,'LineWidth',h.fopts.def0DMarkerSize);
 guidata(source,h);
 end
 

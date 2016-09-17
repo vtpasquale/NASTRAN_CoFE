@@ -12,7 +12,7 @@ con(11:20) = -[FEM.CROD.stress].' - allowableStress;
 
 % displacement constraints
 displacementLimit = 2;
-disp = FEM.x(3:6:(4*6));
+disp = FEM.u(3:6:(4*6));
 con(21:24) =   disp - displacementLimit;
 con(25:28) = - disp - displacementLimit;
 

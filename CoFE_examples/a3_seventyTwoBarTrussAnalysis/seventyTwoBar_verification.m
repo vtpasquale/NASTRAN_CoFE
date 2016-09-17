@@ -36,9 +36,6 @@ CASE(4).REF_LC = 1;
 %% Run CoFE
 FEM = CoFE_analysis(inputFile,CASE);
 
-%% Pick case to post
-postCase = 1;
-
 %% Read MSC Nastran Results for Comparison
 % SOL 101
 nas_response1 = nastran.punchRead('l_static');
@@ -68,7 +65,6 @@ nas_response(:,:,size(nas_response,3)+(1:size(nas_response2,3))) = nas_response2
 nas_response(:,:,size(nas_response,3)+(1:size(nas_response3,3))) = nas_response3;
 
 %% Plot results
-CoFE_view(FEM);
+post_gui(FEM,nas_response,nas_comment,nas_scaleOption);
 view(28,20)
 axis equal
-

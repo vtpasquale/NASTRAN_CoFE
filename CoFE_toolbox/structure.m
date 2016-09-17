@@ -57,6 +57,7 @@ classdef (Abstract) structure < element
         vonMisesStress  % [nm x nrp] von Mises stresses or derivatives
         %         principalStress % [3x1] Principal stresses or derivatives [s1 s2 s3]'
         %         principalAngle  % [real] Principal angle or derivative - this only makes sense for 2D elements
+        vonMisesStrain  % [nm x nrp] von Mises strains or derivatives
     end
     
     %% Abstract Methods
@@ -131,7 +132,41 @@ classdef (Abstract) structure < element
             end
         end
         
-        
+        %% von Mises straines or derivativees
+        function svm = get.vonMisesStrain(obj)
+            VoigtStrain = obj.voigtStrain;
+            if size(VoigtStrain,1)~=6
+                error('structure.get.vonMisesStrain failed.  structure.voigtStrain must be a matrix of 6x1 Voigt-notation vectors [[s11 s22 s33 s23 s13 s12]'' x nm x nrp], where nm is the number of response modes and nrp is the number of element recovery points. ')
+            end
+            
+            nm = size(VoigtStrain,2);
+            nrp = size(VoigtStrain,3);
+            svm = zeros(nm,nrp);
+            
+            if isempty(obj.voigtStrain_fromAnalysis)
+                % von Mises
+                for m = 1:nm
+                    for rp = 1:nrp
+                        s = VoigtStrain(:,m,rp);
+                        svm(m,rp) = sqrt( .5*((s(1)-s(2))^2+(s(2)-s(3))^2+(s(3)-s(1))^2) ...
+                            + 3*(s(4)^2 + s(5)^2 + s(6)^2) );
+                    end
+                end
+            else
+                % von Mises derivative
+                VoigtStrain_Prime = VoigtStrain;
+                VoigtStrain = obj.voigtStrain_fromAnalysis;
+                
+                for m = 1:nm
+                    for rp = 1:nrp
+                        s = VoigtStrain(:,m,rp);
+                        s_prime = VoigtStrain_Prime(:,m,rp);
+                        svm(m,rp) = (0.5*(2*(s(1) - s(2))*(s_prime(1) - s_prime(2)) + 2*(s(2) - s(3))*(s_prime(2) - s_prime(3)) + 2*(-s(1) + s(3))*(-s_prime(1) + s_prime(3))) + 3*(2*s(4)*s_prime(4) + 2*s(5)*s_prime(5) + 2*s(6)*s_prime(6)))/(2*sqrt(0.5*((s(1) - s(2))^2 + (s(2) - s(3))^2 + (-s(1) + s(3))^2) + 3*(s(4)^2 + s(5)^2 + s(6)^2)));
+                    end
+                end
+                
+            end
+        end        
         
     end
     

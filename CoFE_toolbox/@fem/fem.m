@@ -7,6 +7,8 @@ classdef fem
     properties
         entryList = {};
         elementList = {};
+        plot0DList = {};
+        plot1DList = {};
         structureList = {};
         constraintList = {};
         applied_loadList = {};

@@ -1,4 +1,4 @@
-% Function to apply specifed design to finite element model data
+% Function to apply specified design to finite element model data
 % User must customize this function for each problem
 %
 % Inputs:
