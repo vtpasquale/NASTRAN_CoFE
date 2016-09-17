@@ -1,33 +1,33 @@
-function varargout = post_gui(varargin)
-% POST_GUI MATLAB code for post_gui.fig
-%      POST_GUI, by itself, creates a new POST_GUI or raises the existing
+function varargout = verification_gui(varargin)
+% VERIFICATION_GUI MATLAB code for verification_gui.fig
+%      VERIFICATION_GUI, by itself, creates a new VERIFICATION_GUI or raises the existing
 %      singleton*.
 %
-%      H = POST_GUI returns the handle to a new POST_GUI or the handle to
+%      H = VERIFICATION_GUI returns the handle to a new VERIFICATION_GUI or the handle to
 %      the existing singleton*.
 %
-%      POST_GUI('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in POST_GUI.M with the given input arguments.
+%      VERIFICATION_GUI('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in VERIFICATION_GUI.M with the given input arguments.
 %
-%      POST_GUI('Property','Value',...) creates a new POST_GUI or raises the
+%      VERIFICATION_GUI('Property','Value',...) creates a new VERIFICATION_GUI or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before post_gui_OpeningFcn gets called.  An
+%      applied to the GUI before verification_gui_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to post_gui_OpeningFcn via varargin.
+%      stop.  All inputs are passed to verification_gui_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
 %      instance to run (singleton)".
 %
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
-% Edit the above text to modify the response to help post_gui
+% Edit the above text to modify the response to help verification_gui
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 0;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @post_gui_OpeningFcn, ...
-                   'gui_OutputFcn',  @post_gui_OutputFcn, ...
+                   'gui_OpeningFcn', @verification_gui_OpeningFcn, ...
+                   'gui_OutputFcn',  @verification_gui_OutputFcn, ...
                    'gui_LayoutFcn',  [] , ...
                    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
@@ -42,18 +42,18 @@ end
 % End initialization code - DO NOT EDIT
 
 
-% --- Executes just before post_gui is made visible.
-function post_gui_OpeningFcn(hObject, eventdata, handles, varargin)
+% --- Executes just before verification_gui is made visible.
+function verification_gui_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to post_gui (see VARARGIN)
+% varargin   command line arguments to verification_gui (see VARARGIN)
 
-% Choose default command line output for post_gui
+% Choose default command line output for verification_gui
 handles.output = hObject;
 
-% UIWAIT makes post_gui wait for user response (see UIRESUME)
+% UIWAIT makes verification_gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
 %% Plot Logo
@@ -169,7 +169,7 @@ updatePlot(handles)
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = post_gui_OutputFcn(hObject, eventdata, handles) 
+function varargout = verification_gui_OutputFcn(hObject, eventdata, handles) 
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -419,4 +419,3 @@ if get(handles.checkbox3,'Value')
 else
     handles.nas_scaleFactor = [];
 end
-

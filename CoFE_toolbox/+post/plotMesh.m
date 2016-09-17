@@ -32,7 +32,6 @@
 % void
 %
 function [] = plotMesh(FEM,x,nastran_response,CoFE_scaleFactor,nas_scaleFactor,figNumber,undeformed)
-
 %% Check inputs
 if nargin < 2 || isempty(x)
     x = [];
@@ -112,13 +111,13 @@ for j = 1:size(FEM.elementList,2)
     for i = 1:size(FEM.(FEM.elementList{j}),2)
         
         if undeformed
-            plot(FEM.(FEM.elementList{j})(i),[],undeformedStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),[],undeformedStyle{:});
         end
         if deformed
-            plot(FEM.(FEM.elementList{j})(i),x_scaled,deformedStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),x_scaled,deformedStyle{:});
         end
         if nastran
-            plot(FEM.(FEM.elementList{j})(i),xnas_scaled,nastranStyle{:})
+            plot(FEM.(FEM.elementList{j})(i),xnas_scaled,nastranStyle{:});
         end
     end
 end
