@@ -65,6 +65,6 @@ nas_response(:,:,size(nas_response,3)+(1:size(nas_response2,3))) = nas_response2
 nas_response(:,:,size(nas_response,3)+(1:size(nas_response3,3))) = nas_response3;
 
 %% Plot results
-post_gui(FEM,nas_response,nas_comment,nas_scaleOption);
+verification_gui(FEM,nas_response,nas_comment,nas_scaleOption);
 view(28,20)
 axis equal
