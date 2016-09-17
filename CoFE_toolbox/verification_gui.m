@@ -57,7 +57,7 @@ handles.output = hObject;
 % uiwait(handles.figure1);
 
 %% Plot Logo
-axis(handles.axes9)
+axis(handles.axes9);
 image(imread('CoFE.png'));
 axis image
 axis off
@@ -314,7 +314,7 @@ end
 
 %% 
 function updatePlot(handles)
-updateLengend(handles) 
+updateLengend(handles);
 
 axes(handles.axes1)
 cla
@@ -337,7 +337,7 @@ else
     nas_response = [];
 end
 
-post.plotMesh(handles.FEM(1),xplot,nas_response,handles.CoFE_scaleFactor,handles.nas_scaleFactor,handles.figure1,undeformed)
+post.plotMesh(handles.FEM(1),xplot,nas_response,handles.CoFE_scaleFactor,handles.nas_scaleFactor,handles.figure1,undeformed);
 
 
 
