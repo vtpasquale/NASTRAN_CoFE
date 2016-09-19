@@ -9,6 +9,7 @@
 % FEM - [1x#subcases fem] Array of finite element model and solution objects
 %
 function FEM = CoFE_analysis(inputFile,CASE)
+if nargin < 2; error('Two input arguments required for CoFE_analysis()'); end
 
 %% Instantiate FEM object and read model data from input file
 FEM0 = importModel(inputFile);

@@ -13,7 +13,7 @@ classdef crod < structure & plot1D
     end
     
     %% model
-    properties (Access = public)
+    properties (GetAccess = public, SetAccess = private)
         % element universal
         ke;   % [12x12] element stiffness matrix in global reference frame
         me;   % [12x12] element mass matrix in global reference frame
@@ -21,10 +21,11 @@ classdef crod < structure & plot1D
         kd_unit_p;   % [12x12] element differential stiffness for unit axial force in global reference frame
         gdof;         % [12x1] global index numbers of element dof
     end
-    properties (Access = private)
-        % element only
+    properties (SetAccess = private, GetAccess = ?plot1D)
         x1    % [3x1] node 1 position
         x2    % [3x1] node 2 position
+    end
+    properties (Access = private)
         force_stress % [1x12] force -> stress matrix
         stress_strain % [2x1] stress -> strain constants
         R % [12x12] rotation matrix from element to global reference frame
@@ -40,7 +41,7 @@ classdef crod < structure & plot1D
     end
     properties (Dependent=true)
         voigtStress % [6 x nm] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm ], where nm is the number of response modes.
-        voigtStrain % [6 x nm] Matrix of strain vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm ], where nm is the number of response modes.
+        voigtStrain % [6 x nm] Matrix of strain vectors in Voigt notation [[e11 e22 e33 e23 e13 e12]' x nm ], where nm is the number of response modes.
     end
     
     methods

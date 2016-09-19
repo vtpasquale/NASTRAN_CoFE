@@ -43,19 +43,6 @@ classdef cmass1 < structure & plot0D
         end
         
         %%
-        function ph = plot(obj,allDef,varargin)
-            if isempty(allDef);
-                def = zeros(3,1);
-            else
-                def = allDef(obj.gdof_plot);
-            end
-            
-            % point
-            p = obj.x1 + def;
-            ph = plot3(p(1,:),p(2,:),p(3,:),varargin{:});
-        end
-        
-        %%
         function echo(obj,fid)
             fprintf(fid,'CMASS1,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.C1);
         end

@@ -5,13 +5,14 @@ home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
-CASE.inputFile = 'svanberg.bdf';
+inputFile = 'svanberg.bdf';
+CASE = case_obj;
 CASE.SOL = 101;
 CASE.SPC = 1;
 CASE.LOAD = 1;
 
 %% Initialize model
-FEM = CoFE_design_initialize(CASE);
+FEM = CoFE_design_initialize(inputFile,CASE);
 
 %% SQP options
 sqpOptions = optimset('fmincon');

@@ -15,15 +15,15 @@ obj.ND = obj.EIGRL(obj.CASE.METHOD == [obj.EIGRL.SID]).ND;
 obj.KD_G = spalloc(obj.ndof,obj.ndof,20*obj.ndof);
 
 % Loop through element types
-for j = 1:size(obj.elementList,2)
-    for i = 1:size(obj.(obj.elementList{j}),2)
+for j = 1:size(obj.structureList,2)
+    for i = 1:size(obj.(obj.structureList{j}),2)
         
         % element calculations
-        obj_ref.(obj.elementList{j})(i) = obj_ref.(obj.elementList{j})(i).differential();
+        obj_ref.(obj.structureList{j})(i) = obj_ref.(obj.structureList{j})(i).differential();
         
         % global assembly
-        gdof = obj.(obj.elementList{j})(i).gdof;
-        obj.KD_G(gdof,gdof)=obj.KD_G(gdof,gdof) + obj_ref.(obj.elementList{j})(i).kd;
+        gdof = obj.(obj.structureList{j})(i).gdof;
+        obj.KD_G(gdof,gdof)=obj.KD_G(gdof,gdof) + obj_ref.(obj.structureList{j})(i).kd;
     end
 end
 
@@ -31,13 +31,13 @@ end
 if nargout > 1
     for dv = 1:ndv
         obj_prime(dv).KD_G = spalloc(obj.ndof,obj.ndof,20*obj.ndof);
-        for j = 1:size(obj.elementList,2)
-            for i = 1:size(obj.(obj.elementList{j}),2)
-                [~,obj_ref_prime(dv).(obj.elementList{j})(i)] = ...
-                    differential(obj_ref.(obj.elementList{j})(i),obj_ref_prime(dv).(obj.elementList{j})(i));
+        for j = 1:size(obj.structureList,2)
+            for i = 1:size(obj.(obj.structureList{j}),2)
+                [~,obj_ref_prime(dv).(obj.structureList{j})(i)] = ...
+                    differential(obj_ref.(obj.structureList{j})(i),obj_ref_prime(dv).(obj.structureList{j})(i));
                 % global assembly
-                gdof = obj.(obj.elementList{j})(i).gdof;
-                obj_prime(dv).KD_G(gdof,gdof)=obj_prime(dv).KD_G(gdof,gdof) + obj_ref_prime(dv).(obj.elementList{j})(i).kd;
+                gdof = obj.(obj.structureList{j})(i).gdof;
+                obj_prime(dv).KD_G(gdof,gdof)=obj_prime(dv).KD_G(gdof,gdof) + obj_ref_prime(dv).(obj.structureList{j})(i).kd;
             end
         end
     end

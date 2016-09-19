@@ -5,7 +5,7 @@ classdef (Abstract) structure < element
     
     properties (Abstract)
         voigtStress % [6 x nm x nrp] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm x nrp], where nm is the number of response modes and nrp is the number of element recovery points.
-        voigtStrain % [6 x nm x nrp] Matrix of strain vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm x nrp], where nm is the number of response modes and nrp is the number of element recovery points.
+        voigtStrain % [6 x nm x nrp] Matrix of strain vectors in Voigt notation [[e11 e22 e33 e23 e13 e12]' x nm x nrp], where nm is the number of response modes and nrp is the number of element recovery points.
     end
     properties (GetAccess = private)
         voigtStress_fromAnalysis = []; % = voigtStress, but only defined for FEM_prime objects.

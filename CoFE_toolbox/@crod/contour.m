@@ -71,17 +71,17 @@ switch fopts.contourType
                 [r(3,1),r(3,2);
                  r(3,1),r(3,2)];
         end        
-    case 'Element Nodal Forces'
-        switch fopts.contourTypeSpecificOpt
-            case 'Magnitude'
-                contourValues = obj.force(mode_number)*[1 1; 1 1];
-            case 'X Component'
-                contourValues = obj.force(mode_number)*[1 1; 1 1];
-            case 'Y Component'
-                contourValues = [0 0; 0 0];
-            case 'Z Component'
-                contourValues = [0 0; 0 0];
-        end        
+%     case 'Element Nodal Forces'
+%         switch fopts.contourTypeSpecificOpt
+%             case 'Magnitude'
+%                 contourValues = obj.force(mode_number)*[1 1; 1 1];
+%             case 'X Component'
+%                 contourValues = obj.force(mode_number)*[1 1; 1 1];
+%             case 'Y Component'
+%                 contourValues = [0 0; 0 0];
+%             case 'Z Component'
+%                 contourValues = [0 0; 0 0];
+%         end        
         
     case 'Stress'
         switch fopts.contourTypeSpecificOpt

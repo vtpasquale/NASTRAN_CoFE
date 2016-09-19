@@ -6,6 +6,6 @@ function [obj_prime,con_prime] = grd(X,FEM)
 
 t = 0.062/21.483152759999999;  
 
-cp = [FEM_prime.x];
+cp = [FEM_prime.u];
 con_prime = -cp(33,:)';
 obj_prime = 4*t*ones(1,5)';

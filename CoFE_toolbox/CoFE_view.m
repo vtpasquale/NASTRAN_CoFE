@@ -127,7 +127,7 @@ uicontrol('style','popup','Parent',tab1,...
     'String',{'Opt. 1','Opt. 2','Opt. 3'},'Callback',{@quad_option});
 %
 % Beam Options:
-uicontrol('Style','text','String','Beam Options:',...
+uicontrol('Style','text','String','Beam Recovery Point:',...
     'Parent',tab1,...
     'HorizontalAlignment','left',...
     'FontSize',h.fs,...
@@ -136,7 +136,8 @@ uicontrol('Style','text','String','Beam Options:',...
 uicontrol('style','popup','Parent',tab1,...
     'FontSize',h.fs,...
     'Units','normalized','Position',[subcase_text.Position(1) .23 subcase_text.Position(3) .03],...
-    'String',{'Opt. 1','Opt. 2','Opt. 3'},'Callback',{@quad_option});
+    'String',{'  C','  D','  E','  F'},'Callback',{@setBeamRecoveryPoint});
+h.fopts.beamRP = [1 5]; % option "C"
 %
 % Deformation Options
 uicontrol('Style','text','String','DEFORMATION Options:',...
@@ -468,6 +469,8 @@ hold on
 
 % loop through 0D elements
 iter0D = 0;
+h.und0D = [];
+h.def0D = [];
 for j = 1:size(FEMP.plot0DList,2)
     for i = 1:size(FEMP.(FEMP.plot0DList{j}),2)
         iter0D = iter0D + 1;
@@ -482,6 +485,8 @@ end
 
 % loop through 1D elements
 iter1D = 0;
+h.und1D = [];
+h.def1D = [];
 for j = 1:size(FEMP.plot1DList,2)
     for i = 1:size(FEMP.(FEMP.plot1DList{j}),2)
         iter1D = iter1D + 1;
@@ -537,9 +542,9 @@ for i = 1:nsc
     list{2} = 'Displacements';
     list{3} = 'Rotations';
     ln = 4;
-    if FEM(i).CASE.FORCE == 1
-        list{ln} = 'Element Nodal Forces'; ln = ln + 1;
-    end
+%     if FEM(i).CASE.FORCE == 1
+%         list{ln} = 'Element Nodal Forces'; ln = ln + 1;
+%     end
     if FEM(i).CASE.STRESS == 1
         list{ln} = 'Stress'; ln = ln + 1;
     end
@@ -651,6 +656,25 @@ else
 end
 guidata(source,h);
 set(h.def,'Visible',h.deformedVisibility);
+end
+function setBeamRecoveryPoint(source,eventdata)
+h = guidata(source);
+beamOption = source.String{source.Value};
+% Recovery Point Options
+switch beamOption
+    case '  C'
+        h.fopts.beamRP = [1 5];
+    case '  D'
+        h.fopts.beamRP = [2 6];
+    case '  E'
+        h.fopts.beamRP = [3 7];
+    case '  F'
+        h.fopts.beamRP = [4 8];
+    otherwise
+        error(['Beam Recovery Point Option',beamOption,' not supported.'])
+end
+guidata(source,h);
+plotSig(source,eventdata,'Use Existing Scale Factor')
 end
 
 function setUnd0DMarkerRgb(source,eventdata)
