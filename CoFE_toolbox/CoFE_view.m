@@ -68,6 +68,7 @@ end
 h.rm_key = rm_key;
 h.subcase = 1;
 h.mode_number = 1;
+h.subcaseTitleText = ['Subcase: ',rm_list{1}];
 uicontrol('Parent',tab1, 'Style','listbox', ...
     'FontSize',h.fs,...
     'Callback',{@setSubcase},...
@@ -105,7 +106,7 @@ h.uiContourTypeSpecificText = uicontrol('Style','text',...
     'Units','normalized','Position',[subcase_text.Position(1) .47 subcase_text.Position(3) .03]);
 %
 % Contour Type Specific Options Dropdown
-h.fopts.contourTypeSpecificOpt = 'None';
+h.fopts.contourTypeSpecificOpt = '';
 h.uiContourTypeSpecificOpt = ...
     uicontrol('style','popup','Parent',tab1,...
     'FontSize',h.fs,...
@@ -424,7 +425,6 @@ uicontrol('Style', 'pushbutton', 'String', 'Save Figure as Image',...
     'Units','normalized','Position',[.01,.02,.22,.05],...
     'Callback', {@figureSave});
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Initial Figure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -506,13 +506,9 @@ hold off
 h.und = [h.und0D,h.und1D];
 h.def = [h.def0D,h.def1D];
 
-display_text = uicontrol('style','text','String','SUBCASE 1 - Linear Statics',...
-    'FontSize',h.fs+2,...
-    'FontWeight','bold',...
-    'HorizontalAlignment','center',...
-    'BackgroundColor',[1 1 1],...
-    'Units','normalized',...
-    'Position',[.05 .95 .65 .04]);
+% display text
+h.figTitle = title(titleString(h),...
+    'Units','Normalized');
 
 % Apply visibilities
 set(h.und,'Visible',h.undeformedVisibility);
@@ -570,6 +566,20 @@ markerS = markerSize/diff(xlim)*axpos(3);
 set(graphicsHandle,'SizeData', markerS);
 set(graphicsHandle,'SizeData',markerSize^2);
 end
+function tStr = titleString(h)
+% h.subcaseTitleText = ['Subcase: ',rm_list{1}];
+% h.contourTitleText = '';
+% set(h.contourTitleText,'String',['Contours: ',h.fopts.contourType,' - ',h.fopts.contourTypeSpecificOpt])
+
+if strcmp(h.fopts.contourType,'None')
+    tStr = h.subcaseTitleText;
+elseif strcmp(h.fopts.contourType,'Element Strain Energy') || ...
+        strcmp(h.fopts.contourType,'Element Kinetic Energy')
+    tStr = [h.subcaseTitleText,' | Contours: ',h.fopts.contourType];
+else
+    tStr = [h.subcaseTitleText,' | Contours: ',h.fopts.contourType,' - ',h.fopts.contourTypeSpecificOpt];
+end
+end
 
 %% Callbacks
 function setSubcase(source,eventdata)
@@ -578,6 +588,7 @@ h = guidata(source);
 h.subcase = h.rm_key(source.Value,1);
 h.mode_number = h.rm_key(source.Value,2);
 
+h.subcaseTitleText=['Subcase: ',source.String{source.Value}];
 set(h.uiCountorList,'String',h.contourLists{h.subcase})
 
 % pick same contour option - if available
@@ -603,7 +614,7 @@ h.fopts.contourType = h.contourLists{h.subcase}{source.Value};
 set(h.uiContourTypeSpecificOpt,'Visible','on');
 set(h.uiContourTypeSpecificText,'Visible','on');
 set(h.uiContourTypeSpecificText,'String',[h.fopts.contourType,' Contour Options']);
-colorbar('Visible','on')
+
 switch h.fopts.contourType
     case {'Displacements','Rotations','Element Nodal Forces'}
         set(h.uiContourTypeSpecificOpt,'String',...
@@ -620,11 +631,15 @@ switch h.fopts.contourType
           'None'}
         set(h.uiContourTypeSpecificOpt,'Visible','off');
         set(h.uiContourTypeSpecificText,'Visible','off');
-        if strcmp(h.fopts.contourType,'None')
-            colorbar('Visible','off')
-        end
+        h.fopts.contourTypeSpecificOpt = '';
     otherwise
         error([fopts.contourType, 'Contour type not supported'])
+end
+
+if strcmp(h.fopts.contourType,'None')
+    colorbar('Visible','off')
+else
+    colorbar('Visible','on')
 end
 
 guidata(source,h);
