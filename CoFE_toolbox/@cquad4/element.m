@@ -137,7 +137,7 @@ for i = 1:2
         xi = XI(i,j);
         eta = ETA(i,j);
         
-        [kn,~,mp] = ele_p(obj,xi,eta);
+        [kn,~,mp] = ele_p(obj,xi,eta,1);
         ke = ke + kn;
         
         me(mi1,mi1) = me(mi1,mi1) + mp;
@@ -145,8 +145,16 @@ for i = 1:2
         me(mi3,mi3) = me(mi3,mi3) + mp;
     end
 end
-[~,ks,~,GB1,GB2,tc] = ele_p(obj,0,0);
+
+% if centerpoint recovery - save GBCT, GBCB
+[~,ks,~,CBB,CBT,obj.tc] = ele_p(obj,0,0,2);
 ke = ke + 4*ks;
+
+% if grid point recovery - save N#BT,N#BB
+[~,~,~,N1BB,N1BT] = ele_p(obj,-1,-1,0);
+[~,~,~,N2BB,N2BT] = ele_p(obj,1,-1,0);
+[~,~,~,N3BB,N3BT] = ele_p(obj,1,1,0);
+[~,~,~,N4BB,N4BT] = ele_p(obj,-1,1,0);
 
 %% single point Gauss quadrature
 % [kn,ks,mp] = ele_p(obj,0,0);
@@ -162,9 +170,21 @@ RGE = REG.';
 
 obj.ke =  sparse(RGE*ke*REG);
 obj.me =  sparse(RGE*me*REG);
-obj.GB1 = sparse(GB1*REG);
-obj.GB2 = sparse(GB2*REG);
-obj.tc = tc;
+
+
+% strain-displacement matricies at centerpoint
+obj.CBB = sparse(CBB*REG);
+obj.CBT = sparse(CBT*REG);
+
+% strain-displacement matricies at nodes
+obj.N1BB=sparse(N1BB*REG);
+obj.N1BT=sparse(N1BT*REG);
+obj.N2BB=sparse(N2BB*REG);
+obj.N2BT=sparse(N2BT*REG);
+obj.N3BB=sparse(N3BB*REG);
+obj.N3BT=sparse(N3BT*REG);
+obj.N4BB=sparse(N4BB*REG);
+obj.N4BT=sparse(N4BT*REG);
 
 end
 

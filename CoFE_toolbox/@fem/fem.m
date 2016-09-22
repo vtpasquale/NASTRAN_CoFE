@@ -9,6 +9,7 @@ classdef fem
         elementList = {};
         plot0DList = {};
         plot1DList = {};
+        plot2DList = {};
         structureList = {};
         constraintList = {};
         applied_loadList = {};

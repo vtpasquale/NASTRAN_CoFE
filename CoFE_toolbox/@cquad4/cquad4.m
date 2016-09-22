@@ -1,7 +1,7 @@
 % Class for CQUAD4 entries
 % Anthony Ricciardi
 %
-classdef cquad4 < structure
+classdef cquad4 < structure & plot2D
     
     % fundamental data (from input file)
     properties
@@ -21,13 +21,17 @@ classdef cquad4 < structure
     end
     
     % mesh quantities
-    properties
+    properties (SetAccess = private)
+        gdof
+    end
+    properties  (SetAccess = private, GetAccess = ?plot2D)
         x1 % undeformed global position of nodes
         x2
         x3
         x4
+    end
+    properties
         XE
-        gdof
         n1 % surface normals and nodes
         n2
         n3
@@ -48,16 +52,19 @@ classdef cquad4 < structure
         N4BB
         N4BT
         tc  % thickness at element element center
-        centerBot % [responsePoint] response recovery point at element center bottom surface
-        centerTop % [responsePoint] response recovery point at element center top surface
-        N1Bot % [responsePoint] response recovery points at nodes
-        N1Top
-        N2Bot
-        N2Top
-        N3Bot
-        N3Top
-        N4Bot
-        N4Top
+        voigtStress % [6 x nm x 10] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm x [recovery points]], where nm is the number of response modes.
+        voigtStrain % [6 x nm x 10] Matrix of strain vectors in Voigt notation [[e11 e22 e33 e23 e13 e12]' x nm x [recovery points]], where nm is the number of response modes.
+                    % were recovery points are:
+                    % [centerBot % [responsePoint] response recovery point at element center bottom surface
+                    %  centerTop % [responsePoint] response recovery point at element center top surface
+                    %  N1Bot % [responsePoint] response recovery points at nodes
+                    %  N1Top
+                    %  N2Bot
+                    %  N2Top
+                    %  N3Bot
+                    %  N3Top
+                    %  N4Bot
+                    %  N4Top]
     end
     
     % physical quantities

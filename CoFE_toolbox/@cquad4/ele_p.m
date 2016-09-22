@@ -1,7 +1,10 @@
 % Function to calculate integration point contributions for cquad4 element mass and stiffness matricies
 % Anthony Ricciardi
 %
-function [kn,ks,mp,GB1,GB2,tc] = ele_p(obj,xi,eta)
+function  [kn,ks,mp,BB,BT,tg]= ele_p(obj,xi,eta,matrixOption)
+kn=[];
+ks=[];
+mp=[];
 
 %% shape function evaluations
 Ni      = .25*[(1-xi)*(1-eta),(1+xi)*(1-eta),(1+xi)*(1+eta),(1-xi)*(1+eta)];
@@ -25,10 +28,10 @@ T = [x_i;y_i;z_i];
 %% Partial derivatives wrt physical coordinates
 dNdxzy = T/Jac*[dNdxii; dNdetai; 0 0 0 0];
 
-%% element thickness at location
+%% Element thickness at integration point
 tg = Ni * obj.t.';
 
-%% calculate strain displacement matrix at the integration point
+%% Calculate strain displacement matrix at xi & eta
 
 e1=[dNdxzy(1,1)     0           0;
     0               dNdxzy(2,1) 0; 
@@ -57,44 +60,50 @@ s4=[0 0 dNdxzy(2,4) 0    Ni(4) 0
 
 z3 = zeros(3);
 
-B  = [[e1  z3
-       z3  e1
-       s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
-      [e2  z3
-       z3  e2
-       s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
-      [e3  z3
-       z3  e3
-       s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
-      [e4  z3
-       z3  e4
-       s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
 
-%% Modify constitutive (stress-strain) matrix for bending 
-G = obj.G;
-G(4:6,4:6) = tg^2/12*G(4:6,4:6); % << not tg^3/12 because membrane and shear terms dimensionalized with tg in integral lines
+%% Element matricies
+if matrixOption == 1 || matrixOption == 2
+    
+    B  = [[e1  z3
+        z3  e1
+        s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
+        [e2  z3
+        z3  e2
+        s2                  ] * [T z3; z3 T*obj.A(:,:,2)],...
+        [e3  z3
+        z3  e3
+        s3                  ] * [T z3; z3 T*obj.A(:,:,3)],...
+        [e4  z3
+        z3  e4
+        s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
+    
+    %% Modify constitutive (stress-strain) matrix for bending
+    G = obj.G;
+    G(4:6,4:6) = tg^2/12*G(4:6,4:6); % << not tg^3/12 because membrane and shear terms dimensionalized with tg in integral lines
+    
+    %% Stiffness matrix contributions at integration point
+    if matrixOption == 2
+        % shear stiffness
+        ks = B([3,6:8]  ,:).'*G([3,6:8]  ,[3,6:8]  )*B([3,6:8]  ,:) *tg*detJ;
+    end
+    
+    if matrixOption == 1
+        % normal stiffness
+        kn = B([1:2,4:5],:).'*G([1:2,4:5],[1:2,4:5])*B([1:2,4:5],:) *tg*detJ;
+        
+        %% Mass matrix
+        % consistant
+        mp = (tg*obj.rho + obj.NSM) *(Ni.')*Ni*detJ;
+        
+        % lumped
+        % mp = (tg*obj.rho + obj.NSM) *diag(Ni)*detJ;
+    end
+end
 
-%% Stiffness matrix contributions at integration point
-kn = B([1:2,4:5],:).'*G([1:2,4:5],[1:2,4:5])*B([1:2,4:5],:) *tg*detJ;
-ks = B([3,6:8]  ,:).'*G([3,6:8]  ,[3,6:8]  )*B([3,6:8]  ,:) *tg*detJ;
-
-% ks3  = B( 3     ,:).'*G(3      ,3      )*B(3      ,:) *tg*detJ;
-% ks68 = B( 6:8   ,:).'*G( 6:8   , 6:8   )*B( 6:8   ,:) *tg*detJ;
-% keyboard
-
-%% Mass matrix
-% consistant
-mp = (tg*obj.rho + obj.NSM) *(Ni.')*Ni*detJ;
-
-% lumped
-% mp = (tg*obj.rho + obj.NSM) *diag(Ni)*detJ;
-
-
-%% displacement-stress matrix (no membrane-bending coupling)
+%% strain-displacement matrix at xi & eta
 if nargout > 3
    zeta = [-1 1];
-   GB1 = obj.G*...
-        [[e1  z3
+   BB=[[e1  z3
         z3  .5*tg*zeta(1)*e1
         s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
         [e2  z3
@@ -106,8 +115,7 @@ if nargout > 3
         [e4  z3
         z3  .5*tg*zeta(1)*e4
         s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
-   GB2 = obj.G*...
-        [[e1  z3
+   BT=[[e1  z3
         z3  .5*tg*zeta(2)*e1
         s1                  ] * [T z3; z3 T*obj.A(:,:,1)],...
         [e2  z3
@@ -119,8 +127,6 @@ if nargout > 3
         [e4  z3
         z3  .5*tg*zeta(2)*e4
         s4                  ] * [T z3; z3 T*obj.A(:,:,4)]];
-    
-    tc=tg;
 end
 
 
