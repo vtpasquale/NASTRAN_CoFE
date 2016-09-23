@@ -32,11 +32,29 @@ for sc = 1:size(FEM,2)
     end
 end
 
-% %% Write output file
-% if isfield(CASE,'WRITE_c06')==0; CASE.WRITE_c06=1; end
-% if CASE.WRITE_c06 == 1
-%     FEM.write_c06(CASE.inputFile);
-% end
+%% Write output file
+if FEM(1).CASE.PRINT
+    % File extension
+    ext = strfind(inputFile,'.bdf');
+    if isempty(ext)
+        ext = strfind(inputFile,'.dat');
+        if isempty(ext) % can't find extension
+            ext = length(inputFile)+1;
+        end
+    end
+    outFile = [inputFile(1:ext-1),'.c06'];
+    % Open file
+    fid = fopen(outFile,'w');
+    % Title Sheet
+    titleString = legacy.titleSheet();
+    for i = 1:size(titleString,1)
+        fprintf(fid,[titleString{i},'\n']);
+    end
+    % fprintf(fid,[titleString{i},'\n']);
+    fprintf(fid,'  This case was run %s \n',datestr(now));
 
+    for sc = 1:size(FEM,2)
+        FEM.write_c06(fid);
+    end
 end
 

@@ -71,6 +71,8 @@ classdef cquad4 < structure & plot2D
     properties
         ke
         me
+        ese
+        eke
         stress
     end
     methods

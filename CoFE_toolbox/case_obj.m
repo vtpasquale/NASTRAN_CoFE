@@ -16,6 +16,7 @@ classdef case_obj
         ESE=0; % (0 or 1) Requests element strain energy output
         EKE=0; % (0 or 1) Requests element kinetic energy output
         REF_LC % (int > 1 or blank) Subcase index of static reference solution for buckling analysis
+        PRINT = 0; % (0 or 1) Requests output printed to .c06 file
     end
     
     properties (Dependent=true)
@@ -76,6 +77,9 @@ classdef case_obj
         end
         function obj = set.ESE(obj,in)
             obj.ESE=setEleRecover(in,'CASE.ESE');
+        end
+        function obj = set.PRINT(obj,in)
+            obj.PRINT=setEleRecover(in,'CASE.PRINT');
         end
         
     end

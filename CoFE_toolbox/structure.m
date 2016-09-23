@@ -55,9 +55,10 @@ classdef (Abstract) structure < element
     % accessible properties - should have derivative support
     properties (Dependent=true)
         vonMisesStress  % [nm x nrp] von Mises stresses or derivatives
-        %         principalStress % [3x1] Principal stresses or derivatives [s1 s2 s3]'
-        %         principalAngle  % [real] Principal angle or derivative - this only makes sense for 2D elements
         vonMisesStrain  % [nm x nrp] von Mises strains or derivatives
+        
+        principalStress % [3 x nm x nrp] Principal stresses or derivatives [[s1 s2 s3]' x nm x nrp]
+        principalAngle % [nm x nrp] Principal angle or derivative - this only makes sense for 2D elements
     end
     
     %% Abstract Methods
@@ -167,6 +168,62 @@ classdef (Abstract) structure < element
                 
             end
         end        
+        
+        
+        %% Principal stresses
+        function principalStress = get.principalStress(obj)
+            
+            if isempty(obj.voigtStrain_fromAnalysis)
+                % lambdas = roots([-1,obj.I1,-obj.I2,obj.I3]);
+                % S1 = max(lambdas);
+                % S3 = min(lambdas);
+                % principalStresses=[S1,obj.I1-S1-S3,S3];
+                
+                vs = obj.voigtStress; % [6 x nm x nrp]
+                nm = size(vs,2);
+                nrp = size(vs,3);
+                principalStress = zeros(3,nm,nrp);
+                
+                for m = 1:nm
+                    for rp = 1:nrp
+                        S = [vs(1,m,rp) vs(6,m,rp) vs(5,m,rp); ...
+                            vs(6,m,rp) vs(2,m,rp) vs(4,m,rp); ...
+                            vs(5,m,rp) vs(4,m,rp) vs(3,m,rp)]; % stress tensor
+                        eVal = eig(S); % faster than algebra
+                        [~,ind] = sort(real(eVal),'descend');
+                        principalStress(1:3,m,rp) = eVal(ind);
+                    end
+                end
+            else
+                % Principal stress derivatives
+                [eVec,eVal] = eig(obj.S);
+                [~,ind] = sort(real(diag(eVal)),'descend');
+                principalStress=...
+                [(eVec(:,ind(1)).'*obj.S_prime*eVec(:,ind(1)))/(eVec(:,ind(1)).'*eVec(:,ind(1)));...
+                 (eVec(:,ind(2)).'*obj.S_prime*eVec(:,ind(2)))/(eVec(:,ind(2)).'*eVec(:,ind(2)));...
+                 (eVec(:,ind(3)).'*obj.S_prime*eVec(:,ind(3)))/(eVec(:,ind(3)).'*eVec(:,ind(3)))];
+            end
+            
+        end
+        
+        %% Principal angles - this only makes sense for 2D elements
+        function principleAngle = get.principalAngle(obj)
+            if isempty(obj.voigtStrain_fromAnalysis)
+                vs = obj.voigtStress; % [6 x nm x nrp]
+                nm = size(vs,2);
+                nrp = size(vs,3);
+                principleAngle = zeros(nm,nrp);
+                for m = 1:nm
+                    for rp = 1:nrp
+                        principleAngle(m,rp) = .5*atan(2*vs(6,nm,nrp)/(vs(1,nm,nrp)-vs(2,nm,nrp)));
+                    end
+                end
+            else
+                % Principal angle derivative
+                principleAngle = (obj.s(6)*(obj.s_prime(2)-obj.s_prime(1)) + (obj.s(1)-obj.s(2))*obj.s_prime(6))/(obj.s(1)^2 - 2*obj.s(1)*obj.s(2) + obj.s(2)^2 + 4*obj.s(6)^2);
+            end
+        end
+        
         
     end
     

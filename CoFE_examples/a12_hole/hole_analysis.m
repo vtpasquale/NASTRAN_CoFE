@@ -5,19 +5,20 @@ home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
-inputFile = 'topex3a.dat';
+inputFile = 'mesh.bdf';
 CASE = case_obj;
 CASE.SOL = 101;
-CASE.SPC = 2;
-CASE.LOAD = 2;
+CASE.SPC = 1;
+CASE.LOAD = 1;
 CASE.METHOD = 10;
-% CASE.RECOVER = 0;
-% CASE.WRITE_c06 = 0;
+CASE.STRESS = 1;
+CASE.STRAIN = 1;
+CASE.ESE = 1;
+CASE.EKE = 1;
+CASE.PRINT = 0;
 
 %% Run CoFE
 FEM = CoFE_analysis(inputFile,CASE);
 
 %% Post process
 CoFE_view(FEM);
-% view(-45,30)
-axis equal

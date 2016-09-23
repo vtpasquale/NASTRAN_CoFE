@@ -125,7 +125,7 @@ uicontrol('Style','text','String','Quadrilateral Options:',...
 uicontrol('style','popup','Parent',tab1,...
     'FontSize',h.fs,...
     'Units','normalized','Position',[subcase_text.Position(1) .33 subcase_text.Position(3) .03],...
-    'String',{'  Top Surface','  Bottom Surface'},'Callback',{@setQuad4RecoveryPoint});
+    'String',{'  Top Corners','  Bottom Corners','  Top Center','  Bottom Center'},'Callback',{@setQuad4RecoveryPoint});
 h.fopts.quad4RP = [4 6 8 10];
 %
 % Beam Options:
@@ -845,10 +845,14 @@ h = guidata(source);
 quad4Option = source.String{source.Value};
 % Recovery Point Options
 switch quad4Option
-    case '  Top Surface'
+    case '  Top Corners'
         h.fopts.quad4RP = [4 6 8 10];
-    case '  Bottom Surface'
+    case '  Bottom Corners'
         h.fopts.quad4RP = [3 5 7 9];
+    case '  Top Center'
+        h.fopts.quad4RP = [2 2 2 2];
+    case '  Bottom Center'
+        h.fopts.quad4RP = [1 1 1 1];
     otherwise
         error(['Beam Recovery Point Option',beamOption,' not supported.'])
 end
