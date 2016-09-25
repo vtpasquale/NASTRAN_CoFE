@@ -5,17 +5,18 @@ home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))
 
 %% CASE data
-CASE.inputFile = 'tenFloor.bdf';
+inputFile = 'tenFloor.bdf';
+CASE = case_obj;
 CASE.SOL = 103; % SOL = 101, SOL = 103, and SOL = 105 are options
 CASE.SPC = 10;
 CASE.LOAD = 88;
 CASE.METHOD = 30;
 
 %% Run CoFE
-FEM = CoFE_analysis(CASE);
+FEM = CoFE_analysis(inputFile,CASE);
 
 %% Plot results
-post_gui(FEM)
+CoFE_view(FEM)
 
 % %% Show matricies
 % stiffness_freeDofs = full(FEM.K_G(FEM.nf_g,FEM.nf_g))

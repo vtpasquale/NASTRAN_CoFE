@@ -8,7 +8,7 @@
 %          undeformed.
 % mode_number = [int] response number for plotting.
 % fopts = [struct] plotting options
-% ph = [graphics handle] (Optional) handle of existing contour plot
+% ph = [graphics handle] handle of contour plot.  Optional
 %
 % Outputs
 % ph = [graphics handle] handle of contour plot
@@ -47,7 +47,7 @@ switch fopts.contourType
         if isempty(allDef);
             r = zeros(3,2);
         else
-            r = allDef([obj.gdof(4:6),obj.gdof(10:12),obj.gdof(16:18),obj.gdof(22:24)]);
+            r = allDef([obj.gdof(1:3),obj.gdof(4:6),obj.gdof(7:9),obj.gdof(10:12)]+3);
         end
         switch fopts.contourTypeSpecificOpt
             case 'Magnitude'
@@ -66,24 +66,24 @@ switch fopts.contourType
     case 'Stress'
         switch fopts.contourTypeSpecificOpt
             case 'von Mises'
-                contourValues = obj.vonMisesStress(mode_number,fopts.quad4RP);
+                contourValues = obj.vonMisesStress(mode_number,fopts.bliqRP);
             case 'X Component'
-                vs = obj.voigtStress(1,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(1,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             case 'Y Component'
-                vs = obj.voigtStress(2,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(2,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             case 'Z Component'
-                vs = obj.voigtStress(3,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(3,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             case 'XY Component'
-                vs = obj.voigtStress(6,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(6,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             case 'YZ Component'
-                vs = obj.voigtStress(4,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(4,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             case 'ZX Component'
-                vs = obj.voigtStress(5,mode_number,fopts.quad4RP);
+                vs = obj.voigtStress(5,mode_number,fopts.bliqRP);
                 contourValues = [vs(1,1,1) vs(1,1,2) vs(1,1,3) vs(1,1,4)];
             otherwise
                 error(['fopts.contourTypeSpecificOpt type ',fopts.contourTypeSpecificOpt,' not supported.']);
@@ -164,7 +164,6 @@ else
 end
 
 end
-
 
 %% complex step friendly norm
 function p = norm_cs(v)

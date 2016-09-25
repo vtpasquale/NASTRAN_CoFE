@@ -22,6 +22,10 @@ classdef celas2 < structure
         me
         kd
     end
+    properties
+        voigtStress	= [];
+        voigtStrain	= [];
+    end
     methods
         
         %%

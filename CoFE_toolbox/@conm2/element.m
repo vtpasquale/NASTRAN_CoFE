@@ -9,6 +9,9 @@ obj.x1 = [FEM.GRID(h).X1;FEM.GRID(h).X2;FEM.GRID(h).X3];
 % global dof
 obj.gdof = FEM.gnum2gdof(:,obj.G==FEM.gnum);
 
+% plot dof
+obj.gdof_plot = FEM.gnum2gdof(1:3,obj.G==FEM.gnum);
+
 % element matricies
 obj.ke = zeros(6);
 

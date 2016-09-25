@@ -13,11 +13,13 @@ classdef cmass1 < structure & plot0D
     % derived properties
     properties
         gdof
-        gdof_plot
-        x1
         ke
         me
         kd
+    end
+    properties (SetAccess = private, GetAccess = ?plot0D)
+        x1
+        gdof_plot
     end
     % solution
     properties

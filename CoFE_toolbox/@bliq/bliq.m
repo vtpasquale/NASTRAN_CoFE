@@ -1,7 +1,7 @@
 % Class for BLIQ entries - Canfield membrane element
 % Anthony Ricciardi
 %
-classdef bliq  < structure
+classdef bliq < structure & plot2D
     
     % fundamental data (from input file)
     properties
@@ -13,19 +13,28 @@ classdef bliq  < structure
         G4
     end
     % mesh quantities
-    properties
+    properties (SetAccess = private)
+        gdof
+    end
+    properties (Access = private)
+        gdofTranslational = [(1:3)',(4:6)',(7:9)',(10:12)']; % used for plotting
+    end
+    properties (SetAccess = private, GetAccess = ?plot2D)
         x1 % undeformed global position of nodes
         x2
         x3
         x4
-        gdof % global degrees of freedom
-        G    % stress-strain matrix -> from MAT1
     end
     % derived physical quantities
     properties
         ke
         me
-        stress
+        G    % stress-strain matrix -> from MAT1
+        ese
+        eke
+        voigtStress % [6 x nm x 5] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm x [recovery points]], where nm is the number of response modes.
+        voigtStrain % [6 x nm x 5] Matrix of strain vectors in Voigt notation [[e11 e22 e33 e23 e13 e12]' x nm x [recovery points]], where nm is the number of response modes.
+                    % were recovery points are: [center N1 N2 N3 N4]
     end
     methods
         

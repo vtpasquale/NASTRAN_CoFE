@@ -24,7 +24,10 @@ axes('position',[0,0,0.12*normSize]);
 imshow(im);
 
 %% Main Axis
-axes('Units','normalized','Position',[.05 .15 .65 .8]);
+h.ax = axes('Units','normalized','Position',[.05 .15 .65 .8]);
+h.cb = colorbar('peer',h.ax);
+set(h.cb,'visible','off');
+
 
 %% Tabs
 tgroup = uitabgroup('Parent',f,'Position',[.75 0 1 1]);
@@ -127,6 +130,8 @@ uicontrol('style','popup','Parent',tab1,...
     'Units','normalized','Position',[subcase_text.Position(1) .33 subcase_text.Position(3) .03],...
     'String',{'  Top Corners','  Bottom Corners','  Top Center','  Bottom Center'},'Callback',{@setQuad4RecoveryPoint});
 h.fopts.quad4RP = [4 6 8 10];
+h.fopts.bliqRP = 2:5;
+
 %
 % Beam Options:
 uicontrol('Style','text','String','Beam Recovery Point:',...
@@ -444,7 +449,7 @@ uicontrol('style','text','String','Undeformed',...
     'Position',[.01,.93-1.*dvs,.9,.057]);
 % Line Width
 h.fopts.und2DLineWidth = 2;
-uicontrol('style','text','String','Line Width  ',...
+uicontrol('style','text','String','Edge Width  ',...
     'Parent',ele_tab3,'FontSize',h.fs,...
     'HorizontalAlignment','right',...
     'BackgroundColor',h.textBackgroundColor,...
@@ -456,7 +461,7 @@ uicontrol('style','popup',...
     'String',chooseLineWidth,'Callback',{@setUnd2DLineWidth});
 % Line Color
 h.fopts.und2DLineRgb = h.lineRgbValues(6,:);
-uicontrol('style','text','String','Line Color  ',...
+uicontrol('style','text','String','Edge Color  ',...
     'Parent',ele_tab3,'FontSize',h.fs,...
     'HorizontalAlignment','right',...
     'BackgroundColor',h.textBackgroundColor,...
@@ -501,7 +506,7 @@ uicontrol('style','text','String','Deformed',...
     'Position',[.01,.93-7.*dvs,.9,.057]);
 % Line Width
 h.fopts.def2DLineWidth = 2;
-uicontrol('style','text','String','Line Width  ',...
+uicontrol('style','text','String','Edge Width  ',...
     'Parent',ele_tab3,'FontSize',h.fs,...
     'HorizontalAlignment','right',...
     'BackgroundColor',h.textBackgroundColor,...
@@ -513,7 +518,7 @@ uicontrol('style','popup',...
     'String',chooseLineWidth,'Callback',{@setDef2DLineWidth});
 % Line Color
 h.fopts.def2DLineRgb = h.lineRgbValues(7,:);
-uicontrol('style','text','String','Line Color  ',...
+uicontrol('style','text','String','Edge Color  ',...
     'Parent',ele_tab3,'FontSize',h.fs,...
     'HorizontalAlignment','right',...
     'BackgroundColor',h.textBackgroundColor,...
@@ -536,15 +541,17 @@ uicontrol('style','popup',......
     'Units','normalized','Position',[.5,.93-10.*dvs,.48,.057],'Parent',ele_tab3,...
     'String',chooseLineRgbValue,'Callback',{@setDef2DFaceRgb});
 % Face Alpha
-h.fopts.def2DFaceAlpha = .25;
+h.fopts.def2DFaceAlpha = .25; h.fopts.def2DFaceAlphaUIValue = 2;
+h.fopts.def2DFaceAlphaContour = 1.0; h.fopts.def2DFaceAlphaContourUIValue = 5;
 uicontrol('style','text','String','Transparency ',...
     'Parent',ele_tab3,'FontSize',h.fs,...
     'HorizontalAlignment','right',...
     'BackgroundColor',h.textBackgroundColor,...
     'Units','normalized',...
     'Position',[.01,.93-11.*dvs,.48,.057]);
+h.def2DFaceAlphaUI = ...
 uicontrol('style','popup',......
-    'Value',2,...
+    'Value',h.fopts.def2DFaceAlphaUIValue,...
     'Units','normalized','Position',[.5,.93-11.*dvs,.48,.057],'Parent',ele_tab3,...
     'String',{'0','25','50','75','100'},'Callback',{@setDef2DFaceAlpha});
 
@@ -568,6 +575,7 @@ h.model_size = max(max(FEM(1).gcoord,[],2)-min(FEM(1).gcoord,[],2));
 guidata(f,h); 
 
 %% Startup
+plotUnd(f);
 plotSig(f);
 % deformedVisibility();
 % undeformedVisibility();
@@ -577,7 +585,75 @@ plotSig(f);
 
 end
 
-%% Plot Function
+%% Plot Functions
+function plotUnd(source,eventdata)
+% Plot Undeformed - This should only execute once
+
+h = guidata(source);
+
+% Pick subcase and mode number
+FEMP = h.FEM(h.subcase); % select subcase
+
+% Loop through plotList
+cla
+hold on
+
+% loop through 0D elements
+iter0D = 0;
+h.und0D = [];
+for j = 1:size(FEMP.plot0DList,2)
+    for i = 1:size(FEMP.(FEMP.plot0DList{j}),2)
+        iter0D = iter0D + 1;
+        h.und0D(iter0D) = plot(FEMP.(FEMP.plot0DList{j})(i),[],...
+            'o',...
+            'color',h.fopts.und0DMarkerRgb,...
+            'MarkerFaceColor',h.fopts.und0DMarkerRgb,...
+            'MarkerSize',h.fopts.und0DMarkerSize);
+    end
+end
+
+% loop through 1D elements
+iter1D = 0;
+h.und1D = [];
+for j = 1:size(FEMP.plot1DList,2)
+    for i = 1:size(FEMP.(FEMP.plot1DList{j}),2)
+        iter1D = iter1D + 1;
+        h.und1D(iter1D) = plot(FEMP.(FEMP.plot1DList{j})(i),[],...
+            'color',h.fopts.und1DLineRgb,...
+            'LineWidth',h.fopts.und1DLineWidth);
+    end
+end
+
+% loop through 2D elements
+iter2D = 0;
+h.und2D = [];
+for j = 1:size(FEMP.plot2DList,2)
+    for i = 1:size(FEMP.(FEMP.plot2DList{j}),2)
+        iter2D = iter2D + 1;
+        h.und2D(iter2D) = plot(FEMP.(FEMP.plot2DList{j})(i),[],...
+            'color',h.fopts.und2DLineRgb,...
+            'LineWidth',h.fopts.und2DLineWidth,...
+            'FaceColor',h.fopts.und2DFaceRgb,...
+            'FaceAlpha',h.fopts.und2DFaceAlpha);
+    end
+end
+
+xlabel('x')
+ylabel('y')
+zlabel('z')
+axis('on')
+hold off
+
+% assemble arrays
+h.und = [h.und0D,h.und1D,h.und2D];
+
+% Apply visibilities
+set(h.und,'Visible',h.undeformedVisibility);
+
+% Save plot handles to guidata
+guidata(source,h);
+
+end
 function plotSig(source,eventdata,dontUpdateScaleFactor)
 
 h = guidata(source);
@@ -596,81 +672,78 @@ end
 u_plot = FEMP.u(:,h.mode_number);
 
 % Loop through plotList
-cla
+initialFlag = 0;
+if isfield(h,'def') == 0
+    h.def0D = [];
+    h.def1D = [];
+    h.def2D = [];
+    initialFlag = 1;
+end
 hold on
 
 % loop through 0D elements
 iter0D = 0;
-h.und0D = [];
-h.def0D = [];
 for j = 1:size(FEMP.plot0DList,2)
     for i = 1:size(FEMP.(FEMP.plot0DList{j}),2)
         iter0D = iter0D + 1;
-        h.und0D(iter0D) = plot(FEMP.(FEMP.plot0DList{j})(i),[],...
-            'o',...
-            'color',h.fopts.und0DMarkerRgb,...
-            'MarkerFaceColor',h.fopts.und0DMarkerRgb,...
-            'MarkerSize',h.fopts.und0DMarkerSize);
-        h.def0D(iter0D) = contour(FEMP.(FEMP.plot0DList{j})(i),u_plot,h.mode_number,h.fopts);
+        if initialFlag
+            h.def0D(iter0D) = contour(FEMP.(FEMP.plot0DList{j})(i),u_plot,h.mode_number,h.fopts);
+        else
+            h.def0D(iter0D) = contour(FEMP.(FEMP.plot0DList{j})(i),u_plot,h.mode_number,h.fopts,h.def0D(iter0D));
+        end
     end
 end
 
 % loop through 1D elements
 iter1D = 0;
-h.und1D = [];
-h.def1D = [];
 for j = 1:size(FEMP.plot1DList,2)
     for i = 1:size(FEMP.(FEMP.plot1DList{j}),2)
         iter1D = iter1D + 1;
-        h.und1D(iter1D) = plot(FEMP.(FEMP.plot1DList{j})(i),[],...
-            'color',h.fopts.und1DLineRgb,...
-            'LineWidth',h.fopts.und1DLineWidth);
-        h.def1D(iter1D) = contour(FEMP.(FEMP.plot1DList{j})(i),u_plot,h.mode_number,h.fopts);
+        if initialFlag
+            h.def1D(iter1D) = contour(FEMP.(FEMP.plot1DList{j})(i),u_plot,h.mode_number,h.fopts);
+        else
+            h.def1D(iter1D) = contour(FEMP.(FEMP.plot1DList{j})(i),u_plot,h.mode_number,h.fopts,h.def1D(iter1D));
+        end
     end
 end
 
 % loop through 2D elements
 iter2D = 0;
-h.und2D = [];
-h.def2D = [];
 for j = 1:size(FEMP.plot2DList,2)
     for i = 1:size(FEMP.(FEMP.plot2DList{j}),2)
         iter2D = iter2D + 1;
-        h.und2D(iter2D) = plot(FEMP.(FEMP.plot2DList{j})(i),[],...
-            'color',h.fopts.und2DLineRgb,...
-            'LineWidth',h.fopts.und2DLineWidth,...
-            'FaceColor',h.fopts.und2DFaceRgb,...
-            'FaceAlpha',h.fopts.und2DFaceAlpha);
-        h.def2D(iter2D) = contour(FEMP.(FEMP.plot2DList{j})(i),u_plot,h.mode_number,h.fopts);
+        if initialFlag
+            h.def2D(iter2D) = contour(FEMP.(FEMP.plot2DList{j})(i),u_plot,h.mode_number,h.fopts);
+        else
+            h.def2D(iter2D) = contour(FEMP.(FEMP.plot2DList{j})(i),u_plot,h.mode_number,h.fopts,h.def2D(iter2D));
+        end
     end
 end
 
-xlabel('x')
-ylabel('y')
-zlabel('z')
-axis('on')
-hold off
 
 % assemble arrays
-h.und = [h.und0D,h.und1D,h.und2D];
 h.def = [h.def0D,h.def1D,h.def2D];
 
-% display text
-h.figTitle = title(titleString(h),...
-    'Units','Normalized');
+% display text 
+% ax = get(gca);
+h.ax.XLabel.String='x';
+h.ax.YLabel.String='y';
+h.ax.ZLabel.String='z';
+h.ax.Title.String=titleString(h);
 
-% Apply visibilities
-set(h.und,'Visible',h.undeformedVisibility);
-set(h.def,'Visible',h.deformedVisibility);
+% axis('on')
+hold off
 
 % Apply 0D marker size
 if iter0D > 0
-    switch h.fopts.contourType
-        case 'None'
-            set(h.def0D,'MarkerSize',h.fopts.def0DMarkerSize);
-        otherwise
-            setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize)
-    end
+    setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize)
+end
+
+if strcmp(h.fopts.contourType,'None')~=1    
+    C0 = cell2mat(get(h.def0D,'CData'));
+    C1 = cell2mat(get(h.def1D,'CData'));
+    C2 = cell2mat(get(h.def2D,'CData'));
+    caxis(h.ax,[min([min(C0),min(min(C1)),min(min(C2))]),max([max(C0),max(max(C1)),max(max(C2))])]);
 end
 
 % Save plot handles to guidata
@@ -786,9 +859,17 @@ switch h.fopts.contourType
 end
 
 if strcmp(h.fopts.contourType,'None')
-    colorbar('Visible','off')
+    set(h.cb,'Visible','off')
+    if isfield(h,'def2D')
+        set(h.def2D,'FaceAlpha',h.fopts.def2DFaceAlpha);
+        set(h.def2DFaceAlphaUI,'Value',h.fopts.def2DFaceAlphaUIValue);
+    end
 else
-    colorbar('Visible','on')
+    set(h.cb,'Visible','on')
+    if isfield(h,'def2D')
+        set(h.def2D,'FaceAlpha',h.fopts.def2DFaceAlphaContour);
+        set(h.def2DFaceAlphaUI,'Value',h.fopts.def2DFaceAlphaContourUIValue);
+    end
 end
 
 guidata(source,h);
@@ -847,12 +928,16 @@ quad4Option = source.String{source.Value};
 switch quad4Option
     case '  Top Corners'
         h.fopts.quad4RP = [4 6 8 10];
+        h.fopts.bliqRP = 2:5;
     case '  Bottom Corners'
         h.fopts.quad4RP = [3 5 7 9];
+        h.fopts.bliqRP = 2:5;
     case '  Top Center'
         h.fopts.quad4RP = [2 2 2 2];
+        h.fopts.bliqRP = [1 1 1 1];
     case '  Bottom Center'
         h.fopts.quad4RP = [1 1 1 1];
+        h.fopts.bliqRP = [1 1 1 1];
     otherwise
         error(['Beam Recovery Point Option',beamOption,' not supported.'])
 end
@@ -873,7 +958,7 @@ h.fopts.def0DMarkerRgb = h.lineRgbValues(source.Value,:);
 guidata(source,h);
 if strcmp(h.fopts.contourType,'None')
     set(h.def0D,'Color',h.fopts.def0DMarkerRgb);
-    set(h.def0D,'MarkerFaceColor',fopts.def0DMarkerRgb);
+    set(h.def0D,'MarkerFaceColor',h.fopts.def0DMarkerRgb);
 end
 end
 function setUnd0DMarkerSize(source,eventdata)
@@ -885,12 +970,7 @@ end
 function setDef0DMarkerSize(source,eventdata)
 h = guidata(source);
 h.fopts.def0DMarkerSize = str2double(source.String{source.Value});
-switch h.fopts.contourType
-    case 'None'
-        set(h.def0D,'MarkerSize',h.fopts.def0DMarkerSize);
-    otherwise
-        setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize)
-end
+setContourMarkerSize(h.def0D,h.fopts.def0DMarkerSize);
 guidata(source,h);
 end
 
@@ -965,9 +1045,17 @@ set(h.und2D,'FaceAlpha',h.fopts.und2DFaceAlpha);
 end
 function setDef2DFaceAlpha(source,eventdata)
 h = guidata(source);
-h.fopts.def2DFaceAlpha = str2double(source.String(source.Value))/100;
+
+if strcmp(h.fopts.contourType,'None')
+    h.fopts.def2DFaceAlphaUIValue = source.Value;
+    h.fopts.def2DFaceAlpha = str2double(source.String(source.Value))/100;
+    set(h.def2D,'FaceAlpha',h.fopts.def2DFaceAlpha);
+else
+    h.fopts.def2DFaceAlphaContourUIValue = source.Value;
+    h.fopts.def2DFaceAlphaContour = str2double(source.String(source.Value))/100;
+    set(h.def2D,'FaceAlpha',h.fopts.def2DFaceAlphaContour);
+end
 guidata(source,h);
-set(h.def2D,'FaceAlpha',h.fopts.def2DFaceAlpha);
 end
 
 function setContourColorMap(source,eventdata)
@@ -976,9 +1064,33 @@ colormap(h.colorMaps{source.Value});
 end
 function setDeformedScaleFactor(source,eventdata)
 h = guidata(source);
-h.fopts.scaleFac = str2double(source.String);
-guidata(source,h);
-plotSig(source,eventdata,'Use Prescribed Scale Factor')
+% plotSig(source,eventdata,'Use Prescribed Scale Factor')
+oldSF = h.fopts.scaleFac;
+newSF = str2double(source.String);
+if oldSF ~= 0
+    SF = newSF/oldSF;
+    for i = 1:size(h.def0D,2)
+        set(h.def0D(i),'XData',SF*get(h.def0D(i),'XData')+(1-SF)*get(h.und0D(i),'XData'));
+        set(h.def0D(i),'YData',SF*get(h.def0D(i),'YData')+(1-SF)*get(h.und0D(i),'YData'));
+        set(h.def0D(i),'ZData',SF*get(h.def0D(i),'ZData')+(1-SF)*get(h.und0D(i),'ZData'));
+    end
+    for i = 1:size(h.def1D,2)
+        set(h.def1D(i),'XData',SF*get(h.def1D(i),'XData')+(1-SF)*get(h.und1D(i),'XData'));
+        set(h.def1D(i),'YData',SF*get(h.def1D(i),'YData')+(1-SF)*get(h.und1D(i),'YData'));
+        set(h.def1D(i),'ZData',SF*get(h.def1D(i),'ZData')+(1-SF)*get(h.und1D(i),'ZData'));
+    end
+    for i = 1:size(h.def2D,2)
+        set(h.def2D(i),'XData',SF*get(h.def2D(i),'XData')+(1-SF)*get(h.und2D(i),'XData'));
+        set(h.def2D(i),'YData',SF*get(h.def2D(i),'YData')+(1-SF)*get(h.und2D(i),'YData'));
+        set(h.def2D(i),'ZData',SF*get(h.def2D(i),'ZData')+(1-SF)*get(h.und2D(i),'ZData'));
+    end
+    h.fopts.scaleFac = newSF;
+    guidata(source,h);
+else
+    h.fopts.scaleFac = newSF;
+    guidata(source,h);
+    plotSig(source,eventdata,'Use Prescribed Scale Factor')
+end
 end
 function figureSave(source,eventdata)
 [filename, pathname] = uiputfile({'*.pdf';'*.png'},'Save CoFE Display as High-Quality Image');

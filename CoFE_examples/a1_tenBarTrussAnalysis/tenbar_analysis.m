@@ -12,10 +12,16 @@ CASE.SPC = 1;
 CASE.LOAD = 88;
 CASE.METHOD = 30;
 CASE.STRESS = 1;
+CASE.STRAIN = 1;
+CASE.ESE = 1;
+CASE.EKE = 1;
 
-CASE(2) = CASE;
+CASE(2) = CASE(1);
 CASE(2).SOL = 103;
-CASE(2).REF_LC = 1;
+
+CASE(3) = CASE(1);
+CASE(3).SOL = 105;
+CASE(3).REF_LC = 1;
 
 %% Run CoFE
 FEM = CoFE_analysis(inputFile,CASE);

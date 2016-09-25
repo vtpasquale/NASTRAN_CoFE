@@ -3,10 +3,12 @@
 %
 classdef (Abstract) plot0D
     properties (Abstract)
-        gdof_plot
-        x1
         eke
         ese
+    end
+    properties (Abstract, SetAccess = private, GetAccess = ?plot0D)
+        x1
+        gdof_plot
     end
     methods
         
@@ -24,7 +26,7 @@ classdef (Abstract) plot0D
         end
         
         %%
-        function ph = contour(obj,allDef,mode_number,fopts)
+        function ph = contour(obj,allDef,mode_number,fopts,ph)
             % Points
             if isempty(allDef);
                 def = zeros(3,1);
@@ -35,17 +37,17 @@ classdef (Abstract) plot0D
             % Contour Values
             switch fopts.contourType
                 case 'None'
-                    contourValues = 1;
+                    contourValue = 1;
                 case 'Displacements'
                     switch fopts.contourTypeSpecificOpt
                         case 'Magnitude'
-                            contourValues = norm_cs(def);
+                            contourValue = norm_cs(def);
                         case 'X Component'
-                            contourValues = def(1);
+                            contourValue = def(1);
                         case 'Y Component'
-                            contourValues = def(2);
+                            contourValue = def(2);
                         case 'Z Component'
-                            contourValues = def(3);
+                            contourValue = def(3);
                     end
                 case 'Rotations'
                     % extract deformed rotations
@@ -56,33 +58,38 @@ classdef (Abstract) plot0D
                     end
                     switch fopts.contourTypeSpecificOpt
                         case 'Magnitude'
-                            contourValues = norm_cs(r);
+                            contourValue = norm_cs(r);
                         case 'X Component'
-                            contourValues = r(1);
+                            contourValue = r(1);
                         case 'Y Component'
-                            contourValues = r(2);
+                            contourValue = r(2);
                         case 'Z Component'
-                            contourValues = r(3);
+                            contourValue = r(3);
                     end
                 case {'Stress','Strain'}
-                    contourValues = 0; % no stress/strain definition
+                    contourValue = 0; % no stress/strain definition
                 case 'Element Strain Energy'
-                    contourValues = obj.ese(mode_number);
+                    contourValue = obj.ese(mode_number);
                 case 'Element Kinetic Energy'
-                    contourValues = obj.eke(mode_number);
+                    contourValue = obj.eke(mode_number);
                 otherwise
                     error([fopts.contourType, 'Contour type not supported'])
             end
             % Plot
             switch fopts.contourType
                 case 'None'
-                    ph = plot3(p(1),p(2),p(3),'o',...
-                        'color',fopts.def0DMarkerRgb,...
-                        'MarkerFaceColor',fopts.def0DMarkerRgb,...
-                        'MarkerSize',fopts.def0DMarkerSize);
+                    MarkerFaceColor=fopts.def0DMarkerRgb;
                 otherwise
-                    % Contour Plot
-                    ph = scatter3(p(1),p(2),p(3),[],contourValues,'filled');
+                    MarkerFaceColor = 'flat';
+            end
+            if nargin < 5
+                ph = scatter3(p(1),p(2),p(3),[],contourValue,'filled',...
+                            'MarkerFaceColor',MarkerFaceColor,...
+                            'MarkerEdgeColor','none');
+            else
+                set(ph,'XData',p(1),'YData',p(2),'ZData',p(3),...
+                'CData',contourValue,...
+                'MarkerFaceColor',MarkerFaceColor);
             end
         end
         

@@ -24,7 +24,10 @@ classdef cquad4 < structure & plot2D
     properties (SetAccess = private)
         gdof
     end
-    properties  (SetAccess = private, GetAccess = ?plot2D)
+    properties (Access = private)
+        gdofTranslational = [(1:3)',(7:9)',(13:15)',(19:21)'];  % used for plotting
+    end
+    properties (SetAccess = private, GetAccess = ?plot2D)
         x1 % undeformed global position of nodes
         x2
         x3

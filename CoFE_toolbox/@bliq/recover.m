@@ -1,8 +1,43 @@
-function [obj,obj_prime] = recover(obj,gnum2gdof,globalDef,obj_prime,globalDef_prime)
+function [obj,obj_prime] = recover(obj,FEM,obj_prime,FEM_prime)
 
 % analysis results
-elDef = globalDef(obj.gdof([1,2,4,5,7,8,10,11]));
-obj.stress = bliqstr( elDef, [obj.x1(1:2),obj.x2(1:2),obj.x3(1:2),obj.x4(1:2)]', obj.G );
+u_ee = FEM.u(obj.gdof);
+u_e = u_ee([1,2,4,5,7,8,10,11],:);
+
+nm = size(u_e,2);
+FEMCASE=FEM.CASE; % speeds up execution
+
+XN = [obj.x1(1:2),obj.x2(1:2),obj.x3(1:2),obj.x4(1:2)]';
+XC = sum(XN)./4;
+
+% element kinetic energy
+if FEMCASE.EKE && FEMCASE.SOL == 103
+    obj.eke= (pi*FEM.fHz).*diag(u_ee.'*obj.me*u_ee);
+end
+
+% element strain energy
+if FEMCASE.ESE
+    obj.ese=.5*diag(u_ee.'*obj.ke*u_ee);
+end
+
+% stress and strain
+[sigma,strain] = bliqstr(u_e, XN, obj.G, [XC;XN]);
+
+% [6 x nm x 5], [s11 s22 s33 s23 s13 s12]
+m = 1;
+obj.voigtStress = zeros(6,1,5);
+obj.voigtStress([1,6,5],m,1) = sigma(:,1);
+obj.voigtStress([1,6,5],m,2) = sigma(:,2);
+obj.voigtStress([1,6,5],m,3) = sigma(:,3);
+obj.voigtStress([1,6,5],m,4) = sigma(:,4);
+obj.voigtStress([1,6,5],m,5) = sigma(:,5);
+
+obj.voigtStrain = zeros(6,1,5);
+obj.voigtStrain([1,6,5],m,1) = strain(:,1);
+obj.voigtStrain([1,6,5],m,2) = strain(:,2);
+obj.voigtStrain([1,6,5],m,3) = strain(:,3);
+obj.voigtStrain([1,6,5],m,4) = strain(:,4);
+obj.voigtStrain([1,6,5],m,5) = strain(:,5);
 
 % Design Derivatives
 if nargin > 3
@@ -16,7 +51,7 @@ end
 end
 
 %%
-function [sigma,centroid,dStress] = bliqstr( d, xy, EE, StressPoints )
+function [sigma,strain] = bliqstr( d, xy, EE, StressPoints )
 % bliqstr.m - Bilinear Isoparametric Quadrilateral element stress.
 %
 % Written by: Robert A. Canfield
@@ -62,7 +97,9 @@ elseif size(StressPoints,1)~=2 & size(StressPoints,2)==2
 end
 npt = size(StressPoints,2);
 sigma = zeros(3,npt);
-if nargout>=3, dStress = zeros(3,2,npt); end
+strain = zeros(3,npt);
+
+% if nargout>=3, dStress = zeros(3,2,npt); end
 %
 %  Loop for each stress recovery point
 %
@@ -74,26 +111,25 @@ for j=1:npt;
         -(1-xi), -(1+xi),  (1+xi),   (1-xi) ];
     J = DN*xy;
     B = expandB( J \ DN );
+    strain(:,j) = B*d;
     sigma(:,j) = EE*B*d;
     
-    % Derivatives of stress w.r.t. x and y
-    if nargout>2
-        Jinv = inv(J);
-        DNxi  = [0  0  0  0
-            1 -1  1 -1]/4;
-        DNeta = [1 -1  1 -1
-            0  0  0  0]/4;
-        Bxi  = expandB( Jinv * (DNxi  - DNxi*xy*Jinv*DN) );
-        Beta = expandB( Jinv * (DNeta - DNeta*xy*Jinv*DN) );
-        dStress(:,:,j) = EE*[(Bxi*Jinv(1,1) + Beta*Jinv(1,2) )*d, ...
-            (Bxi*Jinv(2,1) + Beta*Jinv(2,2) )*d];
-    end
+% %     % Derivatives of stress w.r.t. x and y
+% %     if nargout>2
+% %         Jinv = inv(J);
+% %         DNxi  = [0  0  0  0
+% %             1 -1  1 -1]/4;
+% %         DNeta = [1 -1  1 -1
+% %             0  0  0  0]/4;
+% %         Bxi  = expandB( Jinv * (DNxi  - DNxi*xy*Jinv*DN) );
+% %         Beta = expandB( Jinv * (DNeta - DNeta*xy*Jinv*DN) );
+% %         dStress(:,:,j) = EE*[(Bxi*Jinv(1,1) + Beta*Jinv(1,2) )*d, ...
+% %             (Bxi*Jinv(2,1) + Beta*Jinv(2,2) )*d];
+% %     end
 end
-if nargout > 1
-    centroid = [mean(xy(:,1)) mean(xy(:,2))];
-end
-
-
+% % if nargout > 1
+% %     centroid = [mean(xy(:,1)) mean(xy(:,2))];
+% % end
 
     function B = expandB( Nxy )
         B(1,[1 3 5 7]) = Nxy(1,:);

@@ -17,43 +17,45 @@ if nargin < 3
     end
     
     if FEMCASE.STRESS || FEMCASE.STRAIN
+        % initialize
+        obj.voigtStress = zeros(6,nm,10);
+        obj.voigtStrain = zeros(6,nm,10);
         
-        m = 1;
         % center bottom
-        [e2,s2] = processResponse(obj.G,obj.CBB,u_e);
-        obj.voigtStrain(:,m,1) = e2;
-        obj.voigtStress(:,m,1) = s2;
+        [ecb,scb] = processResponse(obj.G,obj.CBB,u_e);
+        obj.voigtStrain(:,:,1) = ecb;
+        obj.voigtStress(:,:,1) = scb;
         
         % center top
-        [e2,s2] = processResponse(obj.G,obj.CBT,u_e);
-        obj.voigtStrain(:,m,2) = e2;
-        obj.voigtStress(:,m,2) = s2;
+        [ect,sct] = processResponse(obj.G,obj.CBT,u_e);
+        obj.voigtStrain(:,:,2) = ect;
+        obj.voigtStress(:,:,2) = sct;
         
         % responses at nodes
-        [e2,s2] = processResponse(obj.G,obj.N1BB,u_e);
-        obj.voigtStrain(:,m,3) = e2;
-        obj.voigtStress(:,m,3) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N1BT,u_e);
-        obj.voigtStrain(:,m,4) = e2;
-        obj.voigtStress(:,m,4) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N2BB,u_e);
-        obj.voigtStrain(:,m,5) = e2;
-        obj.voigtStress(:,m,5) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N2BT,u_e);
-        obj.voigtStrain(:,m,6) = e2;
-        obj.voigtStress(:,m,6) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N3BB,u_e);
-        obj.voigtStrain(:,m,7) = e2;
-        obj.voigtStress(:,m,7) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N3BT,u_e);
-        obj.voigtStrain(:,m,8) = e2;
-        obj.voigtStress(:,m,8) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N4BB,u_e);
-        obj.voigtStrain(:,m,9) = e2;
-        obj.voigtStress(:,m,9) = s2;
-        [e2,s2] = processResponse(obj.G,obj.N4BT,u_e);
-        obj.voigtStrain(:,m,10) = e2;
-        obj.voigtStress(:,m,10) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N1BB,u_e,ecb,scb);
+        obj.voigtStrain(:,:,3) = e2;
+        obj.voigtStress(:,:,3) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N1BT,u_e,ect,sct);
+        obj.voigtStrain(:,:,4) = e2;
+        obj.voigtStress(:,:,4) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N2BB,u_e,ecb,scb);
+        obj.voigtStrain(:,:,5) = e2;
+        obj.voigtStress(:,:,5) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N2BT,u_e,ect,sct);
+        obj.voigtStrain(:,:,6) = e2;
+        obj.voigtStress(:,:,6) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N3BB,u_e,ecb,scb);
+        obj.voigtStrain(:,:,7) = e2;
+        obj.voigtStress(:,:,7) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N3BT,u_e,ect,sct);
+        obj.voigtStrain(:,:,8) = e2;
+        obj.voigtStress(:,:,8) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N4BB,u_e,ecb,scb);
+        obj.voigtStrain(:,:,9) = e2;
+        obj.voigtStress(:,:,9) = s2;
+        [e2,s2] = processResponse(obj.G,obj.N4BT,u_e,ect,sct);
+        obj.voigtStrain(:,:,10) = e2;
+        obj.voigtStress(:,:,10) = s2;
         
     end
     
@@ -97,13 +99,15 @@ end
 function [e2,s2] = processResponse(G,B,U,ec,sc)
 e1 = B*U;
 s1 = G*e1;
-e2 = [e1(1:2)+e1(4:5);0;e1(7:8);e1(3)+e1(6)];
-s2 = [s1(1:2)+s1(4:5);0;s1(7:8);s1(3)+s1(6)];
-resPoint = responsePoint;
-resPoint.strain = e2;
-resPoint.stress = s2;
-if nargin >3 % use reduced order shear stress and strain
-    e2(4:6)=ec(4:6);
-    s2(4:6)=sc(4:6);
+
+if nargin >3 % use reduced order integration for shear stress and strain
+    e2(4:6,:)=ec(4:6,:);
+    s2(4:6,:)=sc(4:6,:);
+else
+    e2(4:6,:)= [e1(7:8,:);e1(3,:)+e1(6,:)];
+    s2(4:6,:)= [s1(7:8,:);s1(3,:)+s1(6,:)];
 end
+e2(1:2,:)= e1(1:2,:)+e1(4:5,:);
+s2(1:2,:)= s1(1:2,:)+s1(4:5,:);
+
 end

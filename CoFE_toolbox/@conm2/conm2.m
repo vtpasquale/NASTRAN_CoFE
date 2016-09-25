@@ -1,7 +1,7 @@
 % Class for CONM2 entries
 % Anthony Ricciardi
 %
-classdef conm2 < structure
+classdef conm2 < structure & plot0D
     
     % entry data
     properties
@@ -22,10 +22,19 @@ classdef conm2 < structure
     % derived properties
     properties
         gdof
-        x1
         ke
         me
         kd
+    end
+    properties (SetAccess = private, GetAccess = ?plot0D)
+        x1
+        gdof_plot
+    end
+    properties
+        eke % [nm x 1] element modal kinetic energy
+        ese % [nm x 1] element static or modal strain energy
+        voigtStress	= [];
+        voigtStrain	= [];
     end
     methods
         
@@ -57,19 +66,6 @@ classdef conm2 < structure
                 obj.I33 = 0.0;
             end
             
-        end
-        
-        %%
-        function plot(obj,allDef,varargin)
-            if isempty(allDef);
-                def = zeros(3,1);
-            else
-                def = allDef(obj.gdof(1:3));
-            end
-            
-            % point
-            p = obj.x1 + [obj.X1;obj.X2;obj.X3] + def;
-            plot3(p(1,:),p(2,:),p(3,:),varargin{:})
         end
         
         %%
