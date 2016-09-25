@@ -8,11 +8,12 @@
 %          undeformed.
 % mode_number = [int] response number for plotting.
 % fopts = [struct] plotting options
+% ph = [graphics handle] (Optional) handle of existing line plot
 %
 % Outputs
 % ph = [graphics handle] handle of contour plot
 %
-function ph = contour(obj,allDef,mode_number,fopts)
+function ph = contour(obj,allDef,mode_number,fopts,ph)
 
 %% Points
 x = [obj.x1,obj.x2];
@@ -71,17 +72,7 @@ switch fopts.contourType
                     [r(3,1),r(3,2);
                     r(3,1),r(3,2)];
         end
-        %     case 'Element Nodal Forces'
-        %         switch fopts.contourTypeSpecificOpt
-        %             case 'Magnitude'
-        %                 contourValues = obj.force(mode_number)*[1 1; 1 1];
-        %             case 'X Component'
-        %                 contourValues = obj.force(mode_number)*[1 1; 1 1];
-        %             case 'Y Component'
-        %                 contourValues = [0 0; 0 0];
-        %             case 'Z Component'
-        %                 contourValues = [0 0; 0 0];
-        %         end
+        
     case 'Stress'
         switch fopts.contourTypeSpecificOpt
             case 'von Mises'
@@ -170,18 +161,26 @@ end
 %% Plot
 switch fopts.contourType
     case 'None'
-        ph = plot3(p(1,:),p(2,:),p(3,:),...
-            'color',fopts.def1DLineRgb,...
-            'linewidth',fopts.def1DLineWidth);
+        EdgeColor = fopts.def1DLineRgb;
     otherwise
+        EdgeColor = 'interp';
+end
+
+if nargin < 5
         % Contour Plot
         ph = surf([p(1,:);p(1,:)],...
             [p(2,:);p(2,:)],...
             [p(3,:);p(3,:)],...
             contourValues,...
-            'facecolor','none',...
-            'edgecolor','interp',...
-            'linewidth',fopts.def1DLineWidth);
+            'FaceColor','none',...
+            'EdgeColor',EdgeColor,...
+            'LineWidth',fopts.def1DLineWidth);
+else
+    set(ph,'XData',[p(1,:);p(1,:)],...
+        'YData',[p(2,:);p(2,:)],...
+        'ZData',[p(3,:);p(3,:)],...
+        'CData',contourValues,...
+        'EdgeColor',EdgeColor);
 end
 
 end
