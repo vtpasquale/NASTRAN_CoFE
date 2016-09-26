@@ -5,7 +5,7 @@ classdef (Abstract) plot2D
     properties (Abstract, SetAccess = private)
         gdof
     end
-    properties (Access = private)
+    properties (Abstract, SetAccess = private, GetAccess = ?plot2D)
         gdofTranslational
     end
     properties (Abstract, SetAccess = private, GetAccess = ?plot2D)

@@ -107,17 +107,45 @@ end
 figure(figNumber)
 hold on
 % Loop through plotList
-for j = 1:size(FEM.elementList,2)
-    for i = 1:size(FEM.(FEM.elementList{j}),2)
+for j = 1:size(FEM.plot0DList,2)
+    for i = 1:size(FEM.(FEM.plot0DList{j}),2)
         
         if undeformed
-            plot(FEM.(FEM.elementList{j})(i),[],undeformedStyle{:});
+            plot(FEM.(FEM.plot0DList{j})(i),[],undeformedStyle{:});
         end
         if deformed
-            plot(FEM.(FEM.elementList{j})(i),x_scaled,deformedStyle{:});
+            plot(FEM.(FEM.plot0DList{j})(i),x_scaled,deformedStyle{:});
         end
         if nastran
-            plot(FEM.(FEM.elementList{j})(i),xnas_scaled,nastranStyle{:});
+            plot(FEM.(FEM.plot0DList{j})(i),xnas_scaled,nastranStyle{:});
+        end
+    end
+end
+for j = 1:size(FEM.plot1DList,2)
+    for i = 1:size(FEM.(FEM.plot1DList{j}),2)
+        
+        if undeformed
+            plot(FEM.(FEM.plot1DList{j})(i),[],undeformedStyle{:});
+        end
+        if deformed
+            plot(FEM.(FEM.plot1DList{j})(i),x_scaled,deformedStyle{:});
+        end
+        if nastran
+            plot(FEM.(FEM.plot1DList{j})(i),xnas_scaled,nastranStyle{:});
+        end
+    end
+end
+for j = 1:size(FEM.plot2DList,2)
+    for i = 1:size(FEM.(FEM.plot2DList{j}),2)
+        
+        if undeformed
+            plot(FEM.(FEM.plot2DList{j})(i),[],undeformedStyle{:});
+        end
+        if deformed
+            plot(FEM.(FEM.plot2DList{j})(i),x_scaled,deformedStyle{:});
+        end
+        if nastran
+            plot(FEM.(FEM.plot2DList{j})(i),xnas_scaled,nastranStyle{:});
         end
     end
 end

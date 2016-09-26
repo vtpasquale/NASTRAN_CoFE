@@ -49,11 +49,7 @@ for j = 1:size(obj.applied_loadList,2)
         lc_indx = find(obj.(obj.applied_loadList{j})(i).SID == lc);
         
         % apply load to load vector
-        try
         p(gdof,lc_indx)=p(gdof,lc_indx)+pl;
-        catch
-            keyboard
-        end
     end
 end
 
