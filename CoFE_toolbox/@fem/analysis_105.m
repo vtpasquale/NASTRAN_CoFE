@@ -4,6 +4,11 @@ if nargout > 1
     ndv = size(obj_prime,1);
 end
 
+%% Check reference load case
+if obj_ref.CASE.SOL~=101
+    error('CASE.REF_LC must reference a linear statics subcase (CASE.SOL=101)')
+end
+
 %% Determine number of roots desired from EIGRL input cooresponding to
 % the METHOD specified in the case
 assert(isempty(obj.CASE.METHOD) == 0,'fem.CASE.METHOD must be specified for SOL = 105 cases.');
