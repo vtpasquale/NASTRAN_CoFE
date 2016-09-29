@@ -16,7 +16,7 @@ classdef bliq < structure & plot2D
     properties (SetAccess = private)
         gdof
     end
-    properties (Access = private)
+    properties (SetAccess = private, GetAccess = ?plot2D)
         gdofTranslational = [(1:3)',(4:6)',(7:9)',(10:12)']; % used for plotting
     end
     properties (SetAccess = private, GetAccess = ?plot2D)
