@@ -1,6 +1,6 @@
 # NASTRAN CoFE 
 
-The master branch is occupied by NASTRAN CoFE Version 4, which is currently in active development and alpha testing.  It is strongly recommended that you navigate to "releases" to download Version 3.0, which is a stable release.  
+NASTRAN Compatible Finite Elements (CoFE) is an object-oriented MATLAB-based program for structural analysis and design. The structural mesh, properties, multipoint constraints, loads, and boundary conditions are defined using the NASTRAN free field, small field, or large field bulk data input format. Definition of the objective function and constraint functions for optimization problems is done in MATLAB. Examples are provided to illustrate the straightforward process of creating analysis and optimization cases.
 
 Web user manual hosted at:
 http://vtpasquale.github.io/NASTRAN_CoFE/
