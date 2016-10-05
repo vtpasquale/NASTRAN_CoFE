@@ -48,6 +48,11 @@ classdef fem
         SPC1@spc1;
     end
 
+    %% used defined design data ... for passing data to X_2_FEM.m function
+    properties
+        designData;
+    end
+        
     %% Global finite element model properties
     properties
         nnodes

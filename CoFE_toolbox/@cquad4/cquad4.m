@@ -122,7 +122,9 @@ classdef cquad4 < structure & plot2D
         %%
         function echo(obj,fid)
             fprintf(fid,'CQUAD4,%d,%d,%d,%d,%d,%d,%f,%f\n',obj.EID,obj.PID,obj.G1,obj.G2,obj.G3,obj.G4,obj.THETA,obj.ZOFFS);
-            fprintf(fid,',,%d,%f,%f,%f,%f\n',obj.TFLAG,obj.T1,obj.T2,obj.T3,obj.T4);
+            if obj.TFLAG ~= -999
+                fprintf(fid,',,%d,%f,%f,%f,%f\n',obj.TFLAG,obj.T1,obj.T2,obj.T3,obj.T4);
+            end
         end
     end    
 end

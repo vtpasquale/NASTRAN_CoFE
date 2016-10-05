@@ -1,5 +1,6 @@
 
 %% Clear memory and set path
+
 clearvars; close all; clc
 home = pwd; cd ..; cd ..; base = pwd; cd(home);
 addpath(fullfile(base,'CoFE_toolbox'))

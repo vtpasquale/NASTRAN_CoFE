@@ -4,6 +4,7 @@ function [obj,obj_prime] = recover(obj,FEM,obj_prime,FEM_prime)
 u_e = FEM.u(obj.gdof,:);
 FEMCASE=FEM.CASE; % speeds up execution
 
+if nargin < 3
 % force
 if FEMCASE.FORCE || FEMCASE.STRESS || FEMCASE.STRAIN
     obj.force = ([0 0 0 0 0 0 1 0 0 0 0 0]*obj.R*obj.ke*u_e).';
@@ -30,9 +31,8 @@ if FEMCASE.ESE
     obj.ese=.5*diag(u_e.'*obj.ke*u_e);
 end
 
-
 %% Design Sensitivities
-if nargin > 2
+else
     u_e_prime = FEM_prime.u(obj.gdof,:);
     
     % force
@@ -46,12 +46,14 @@ if nargin > 2
     
     % stress
     if FEMCASE.STRESS || FEMCASE.STRAIN
+        obj_prime.voigtStress_fromAnalysis = obj.voigtStress;
         obj_prime.stress = d(obj_prime.force_stress)*obj.force + ...
                             obj.force_stress*obj_prime.force;
     end
     
     % strain
     if FEMCASE.STRAIN
+        obj_prime.voigtStrain_fromAnalysis = obj.voigtStrain;
         obj_prime.strain(:,:,1) = d(obj_prime.stress_strain(1))*obj.stress + obj.stress_strain(1)*obj_prime.stress;
         obj_prime.strain(:,:,2) = d(obj_prime.stress_strain(2))*obj.stress + obj.stress_strain(2)*obj_prime.stress;
     end

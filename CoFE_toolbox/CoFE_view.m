@@ -30,9 +30,9 @@ set(h.cb,'visible','off');
 
 
 %% Tabs
-tgroup = uitabgroup('Parent',f,'Position',[.75 0 1 1]);
-tab1 = uitab('Parent', tgroup, 'Title', 'Results');
-tab2 = uitab('Parent', tgroup, 'Title', 'Options');
+h.tgroup = uitabgroup('Parent',f,'Position',[.75 0 1 1]);
+tab1 = uitab('Parent',h.tgroup, 'Title', 'Results');
+tab2 = uitab('Parent',h.tgroup, 'Title', 'Options');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% TAB 1 - Results
@@ -1093,7 +1093,12 @@ else
 end
 end
 function figureSave(source,eventdata)
-[filename, pathname] = uiputfile({'*.pdf';'*.png'},'Save CoFE Display as High-Quality Image');
+[filename, pathname] = uiputfile({'*.pdf';'*.svg';'*.png'},'Save CoFE Display as High-Quality Image');
+%
+% % hide ui from image
+H = guidata(source);
+set(H.tgroup,'Visible','off');
+%
 DPI = 300; % Dots per square inch.  Higher dpi will give higher resolution
 f= gcf;
 set(f, 'PaperPositionMode','manual');
@@ -1103,8 +1108,11 @@ set(f, 'PaperPosition', [0,0,h(3),h(4)]);
 set(f, 'PaperSize', [.75*h(3), h(4)])
 if strcmp(filename(end-3:end),'.pdf')
     print('-dpdf',strcat('-r',num2str(DPI)),fullfile(pathname,filename))
+elseif strcmp(filename(end-3:end),'.svg')
+    print('-dsvg',strcat('-r',num2str(DPI)),fullfile(pathname,filename))
 else
     print('-dpng',strcat('-r',num2str(DPI)),fullfile(pathname,filename))
 end
 set(f,'Units','normalized')
+set(H.tgroup,'Visible','on');
 end

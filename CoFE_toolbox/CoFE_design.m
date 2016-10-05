@@ -31,7 +31,7 @@ if nargout < 2 % no design derivatives
     
 else % with design derivatives
     [FEM, FEM_prime] = FEM.update_design(X,X_2_FEM);
-        
+    
     %% Solve array of subcases
     ndv = size(X,1); % number of design varaibles
     nsc = size(FEM,2); % number of subcases
