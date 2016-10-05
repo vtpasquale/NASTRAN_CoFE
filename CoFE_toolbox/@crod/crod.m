@@ -33,7 +33,7 @@ classdef crod < structure & plot1D
     
     %% solution
     properties
-        force % [nm x 1] element static or modal axial force
+        force % [nm x 2] element static or modal element forces [nm x [axial force, torsional moment]]
         stress % [nm x 1] static or modal longitudinal (s11) stresses
         strain % [nm x 1 x 2] static or modal longitudinal and transverse strains where strain(:,:,1) are longitudinal strains and strain(:,:,2) are transverse strains
         eke % [nm x 1] element modal kinetic energy

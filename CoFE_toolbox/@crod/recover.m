@@ -7,12 +7,13 @@ FEMCASE=FEM.CASE; % speeds up execution
 if nargin < 3
 % force
 if FEMCASE.FORCE || FEMCASE.STRESS || FEMCASE.STRAIN
-    obj.force = ([0 0 0 0 0 0 1 0 0 0 0 0]*obj.R*obj.ke*u_e).';
+    obj.force = ([0 0 0 0 0 0 1 0 0 0 0 0
+                  0 0 0 0 0 0 0 0 0 1 0 0 ]*obj.R*obj.ke*u_e).';
 end
 
 % stress
 if FEMCASE.STRESS || FEMCASE.STRAIN
-    obj.stress = obj.force_stress*obj.force;
+    obj.stress = obj.force_stress*obj.force(:,1);
 end
 
 % strains
@@ -38,7 +39,8 @@ else
     % force
     if FEMCASE.FORCE || FEMCASE.STRESS || FEMCASE.STRAIN
         obj_prime.force = (...
-            [0 0 0 0 0 0 1 0 0 0 0 0]*(...
+            [0 0 0 0 0 0 1 0 0 0 0 0
+             0 0 0 0 0 0 0 0 0 1 0 0 ]*(...
             (obj.R*obj.ke)*u_e_prime + ...
             (d(obj_prime.R)*obj.ke + obj.R*d(obj_prime.ke))*u_e ...
             ) ).';
@@ -47,8 +49,8 @@ else
     % stress
     if FEMCASE.STRESS || FEMCASE.STRAIN
         obj_prime.voigtStress_fromAnalysis = obj.voigtStress;
-        obj_prime.stress = d(obj_prime.force_stress)*obj.force + ...
-                            obj.force_stress*obj_prime.force;
+        obj_prime.stress = d(obj_prime.force_stress)*obj.force(:,1) + ...
+                            obj.force_stress*obj_prime.force(:,1);
     end
     
     % strain

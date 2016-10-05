@@ -15,7 +15,7 @@ for i = 1:1:numCrod
     ct = ct - 1;
     
     % nodes and coordinates
-    fprintf(fid,' %8d \t\t %+E \t %+E',obj_array(i).EID,obj_array(i).force(7),obj_array(i).force(10));
+    fprintf(fid,' %8d \t\t %+E \t %+E',obj_array(i).EID,obj_array(i).force(1),obj_array(i).force(2));
     if mod(i,2) == 1
         fprintf(fid,'\t');
     else

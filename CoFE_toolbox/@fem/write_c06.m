@@ -35,7 +35,7 @@ if obj.CASE.SOL == 103
 fprintf(fid,'\n\n                          V I B R A T I O N     F R E Q U E N C I E S \n');
 fprintf(fid,' MODE NO. \t FREQUENCY (Hz) \n');
 for mn = 1:obj.ND
-    fprintf(fid,'\t %d \t %E \n',mn,obj.wHz(mn));
+    fprintf(fid,'\t %d \t %E \n',mn,obj.fHz(mn));
 end
 end
 
@@ -47,7 +47,7 @@ for i = 1:obj.nnodes
     
     if ct == 0
         fprintf(fid,'\n\n                          V I B R A T I O N     E I G E N V E C T O R     N O.  %d \n',mn);
-        fprintf(fid,' Frequency = %g Hz \n',obj.wHz(mn));
+        fprintf(fid,' Frequency = %g Hz \n',obj.fHz(mn));
         fprintf(fid,'     GRID\n');
         fprintf(fid,'      ID.              T1             T2               T3             R1               R2             R3\n');
         ct = 24;
@@ -67,7 +67,7 @@ if obj.CASE.SOL == 105
 fprintf(fid,'\n\n                          B U C K L I N G     E I G E N V A L U E S  \n');
 fprintf(fid,' MODE NO. \t EIGENVALUE \n');
 for mn = 1:obj.ND
-    fprintf(fid,'\t %d \t %+E \n',mn,obj.Db(mn));
+    fprintf(fid,'\t %d \t %+E \n',mn,obj.eVal(mn));
 end
 end
 
@@ -79,7 +79,7 @@ for i = 1:obj.nnodes
     
     if ct == 0
         fprintf(fid,'\n\n                          B U C K L I N G     E I G E N V E C T O R     N O.  %d \n',mn);
-        fprintf(fid,' Buckling Load Factor = %g \n',obj.Db(mn) );
+        fprintf(fid,' Buckling Load Factor = %g \n',obj.eVal(mn) );
         fprintf(fid,'     GRID\n');
         fprintf(fid,'      ID.              T1             T2               T3             R1               R2             R3\n');
         ct = 24;

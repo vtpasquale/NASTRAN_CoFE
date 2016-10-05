@@ -46,15 +46,18 @@ if FEM(1).CASE.PRINT
     % Open file
     fid = fopen(outFile,'w');
     % Title Sheet
-    titleString = legacy.titleSheet();
-    for i = 1:size(titleString,1)
-        fprintf(fid,[titleString{i},'\n']);
-    end
-    % fprintf(fid,[titleString{i},'\n']);
+    titleString = fileread('titleSheet.m');
+    fprintf(fid,titleString);
     fprintf(fid,'  This case was run %s \n',datestr(now));
 
     for sc = 1:size(FEM,2)
-        FEM.write_c06(fid);
+        if FEM(sc).CASE.PRINT
+            fprintf(fid,'\n');
+            fprintf(fid,' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n');
+            fprintf(fid,' |                        S U B C A S E  %d                               | \n',sc);
+            fprintf(fid,' - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n\n');
+            FEM(sc).write_c06(fid);
+        end
     end
 end
-
+fclose('all');
