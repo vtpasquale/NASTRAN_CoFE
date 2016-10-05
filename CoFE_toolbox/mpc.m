@@ -1,7 +1,7 @@
-% Abstract superclass for constraints
+% Abstract superclass for multipoint constraints
 % Anthony Ricciardi
 %
-classdef (Abstract) constraint < entry
+classdef (Abstract) mpc < entry
     
     properties (Abstract)
     end

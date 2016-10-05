@@ -6,12 +6,11 @@ classdef fem
     %% Type lists - to be defined based on class metadata
     properties
         entryList = {};
-        elementList = {};
         plot0DList = {};
         plot1DList = {};
         plot2DList = {};
         structureList = {};
-        constraintList = {};
+        mpcList = {};
         applied_loadList = {};
     end
     

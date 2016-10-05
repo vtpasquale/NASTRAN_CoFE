@@ -39,10 +39,10 @@ for i = 1:size(mObj.PropertyList,1)
         obj.structureList{1,size(obj.structureList,2)+1}= mObj.PropertyList(i).Name;
     end
     
-    % isa constraint
-    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''constraint'');'])
+    % isa mpc
+    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''mpc'');'])
     if bool
-        obj.constraintList{1,size(obj.constraintList,2)+1}= mObj.PropertyList(i).Name;
+        obj.mpcList{1,size(obj.mpcList,2)+1}= mObj.PropertyList(i).Name;
     end
     
     % isa applied_load

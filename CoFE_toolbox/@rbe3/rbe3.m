@@ -5,7 +5,7 @@
 %
 % Anthony Ricciardi
 %
-classdef rbe3 < constraint
+classdef rbe3 < mpc
     
     %% input data
     properties

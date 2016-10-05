@@ -27,9 +27,9 @@ for j = 1:size(obj.structureList,2)
     clear placeholderObj
 end
 
-for j = 1:size(obj.constraintList,2)
-    for i = 1:size(obj.(obj.constraintList{j}),2)
-        obj.(obj.constraintList{j})(i) = obj.(obj.constraintList{j})(i).element(obj);
+for j = 1:size(obj.mpcList,2)
+    for i = 1:size(obj.(obj.mpcList{j}),2)
+        obj.(obj.mpcList{j})(i) = obj.(obj.mpcList{j})(i).element(obj);
     end
 end
 
@@ -53,8 +53,8 @@ end
 
 %% Loop through contraint types to determine dependent degrees of freedom (m set)
 m = [];
-for j = 1:size(obj.constraintList,2)   
-    gdofm_type = [obj.(obj.constraintList{j}).gdofm];
+for j = 1:size(obj.mpcList,2)   
+    gdofm_type = [obj.(obj.mpcList{j}).gdofm];
     m = [m;gdofm_type(:)];
 end
 assert(size(unique(m),1) == size(m,1),'There is an issue with your m set.  m set DOF should be unique.')
@@ -70,16 +70,16 @@ end
 assert(size(unique(n),1) == size(n,1),'There is an issue with your n set.  n set DOF should be unique.')
 obj.n = n;
 
-% assemble constraint matrix
+% assemble constraint matrix for MPCs
 if isempty(obj.m)
     obj.Gm = [];
 else
     RnRm = spalloc(obj.ndof,obj.ndof,72*size(m,1));
-    for j = 1:size(obj.constraintList,2)
-        for i = 1:size(obj.(obj.constraintList{j}),2)
-            gdofn = obj.(obj.constraintList{j})(i).gdofn;
-            gdofm = obj.(obj.constraintList{j})(i).gdofm;
-            RnRm(gdofm,[gdofn,gdofm]) = obj.(obj.constraintList{j})(i).RnRm;
+    for j = 1:size(obj.mpcList,2)
+        for i = 1:size(obj.(obj.mpcList{j}),2)
+            gdofn = obj.(obj.mpcList{j})(i).gdofn;
+            gdofm = obj.(obj.mpcList{j})(i).gdofm;
+            RnRm(gdofm,[gdofn,gdofm]) = obj.(obj.mpcList{j})(i).RnRm;
         end
     end
     obj.Gm = -RnRm(m,m)\RnRm(m,n);
