@@ -7,7 +7,7 @@ addpath(fullfile(base,'CoFE_toolbox'))
 %% CASE data
 inputFile = 'tenBar_analysis.bdf';
 CASE = case_obj;
-CASE.SOL = 103;
+CASE.SOL = 101;
 CASE.SPC = 1;
 CASE.LOAD = 88;
 CASE.METHOD = 30;
@@ -33,8 +33,7 @@ FEM = CoFE_analysis(inputFile,CASE);
 nas_response1 = nastran.punchRead('l_static');
 k = 1;
 nas_comment{k} = 'Linear Static 1';  k = k + 1;
-nas_comment{k} = 'Linear Static 2';  k = k + 1;
-nas_scaleOption = [2,2];
+nas_scaleOption = 2;
 
 % SOL 103
 [nas_response2,freq] = nastran.punchRead('modes');
