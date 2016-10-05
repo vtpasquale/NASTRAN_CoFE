@@ -978,7 +978,7 @@ function setUnd1DLineRgb(source,eventdata)
 h = guidata(source);
 h.fopts.und1DLineRgb = h.lineRgbValues(source.Value,:);
 guidata(source,h);
-set(h.und1D,'Color',h.fopts.und1DLineRgb);
+set(h.und1D,'EdgeColor',h.fopts.und1DLineRgb);
 end
 function setDef1DLineRgb(source,eventdata)
 h = guidata(source);

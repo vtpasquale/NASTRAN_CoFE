@@ -22,8 +22,12 @@ classdef (Abstract) plot1D
             end
             
             % points
-            p = x + def;
-            ph = plot3(p(1,:),p(2,:),p(3,:),varargin{1:end});
+            p = x + def;           
+            ph = surf([p(1,:);p(1,:)],...
+            [p(2,:);p(2,:)],...
+            [p(3,:);p(3,:)],...
+            'facecolor','none','edgecolor',varargin{2:end});
+            
         end
     end
 end
