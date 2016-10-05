@@ -14,12 +14,6 @@ for i = 1:size(mObj.PropertyList,1)
     if bool
         obj.entryList{1,size(obj.entryList,2)+1}= mObj.PropertyList(i).Name;
     end
-    
-    % isa element
-    eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''element'');'])
-    if bool
-        obj.elementList{1,size(obj.elementList,2)+1}= mObj.PropertyList(i).Name;
-    end
 
     % isa plot0D
     eval(['bool=isa(obj.',mObj.PropertyList(i).Name,',''plot0D'');'])

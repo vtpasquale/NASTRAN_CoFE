@@ -1,7 +1,7 @@
 % Abstract superclass for structure
 % Anthony Ricciardi
 %
-classdef (Abstract) structure < element
+classdef (Abstract) structure < entry
     
     properties (Abstract)
         voigtStress % [6 x nm x nrp] Matrix of stress vectors in Voigt notation [[s11 s22 s33 s23 s13 s12]' x nm x nrp], where nm is the number of response modes and nrp is the number of element recovery points.

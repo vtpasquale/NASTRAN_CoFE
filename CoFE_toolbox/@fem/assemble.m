@@ -18,12 +18,12 @@ end
 
 %% Calculate element matricies
 % Loop through element types and elements
-for j = 1:size(obj.elementList,2)
-    placeholderObj = obj.(obj.elementList{j}); % placeholder speeds code up rather than direct indexing
+for j = 1:size(obj.structureList,2)
+    placeholderObj = obj.(obj.structureList{j}); % placeholder speeds code up rather than direct indexing
     for i = 1:size(placeholderObj,2)
         placeholderObj(i) = placeholderObj(i).element(obj);
     end
-    obj.(obj.elementList{j}) = placeholderObj;
+    obj.(obj.structureList{j}) = placeholderObj;
     clear placeholderObj
 end
 

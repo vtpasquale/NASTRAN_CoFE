@@ -1,7 +1,7 @@
 % Abstract superclass for constraints
 % Anthony Ricciardi
 %
-classdef (Abstract) constraint < element
+classdef (Abstract) constraint < entry
     
     properties (Abstract)
     end
