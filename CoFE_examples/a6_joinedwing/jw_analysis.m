@@ -17,6 +17,7 @@ CASE.STRESS = 1; % request stress output
 CASE.STRAIN = 1; % request strain output
 CASE.EKE = 1; % request element kinetic energy output
 CASE.ESE = 1; % request element strain energy output
+CASE.PRINT = 1; % request text output
 
 % subcase 2
 CASE(2) = CASE(1);

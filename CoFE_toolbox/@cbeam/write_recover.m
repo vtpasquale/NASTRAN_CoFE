@@ -42,8 +42,8 @@ for i = 1:numCbeam
     EID = obj_array(i).EID;
     
     fprintf(fid,' %d\n',EID);
-    fprintf(fid,'\t\t %d \t %+E \t %+E \t %+E \t %+E\n',nnum1,obj_array(i).stress(:,1));
-    fprintf(fid,'\t\t %d \t %+E \t %+E \t %+E \t %+E\n',nnum2,obj_array(i).stress(:,2));
+    fprintf(fid,'\t\t %d \t %+E \t %+E \t %+E \t %+E\n',nnum1,obj_array(i).stress(1:4,1));
+    fprintf(fid,'\t\t %d \t %+E \t %+E \t %+E \t %+E\n',nnum2,obj_array(i).stress(5:8,1));
 end
 
 end

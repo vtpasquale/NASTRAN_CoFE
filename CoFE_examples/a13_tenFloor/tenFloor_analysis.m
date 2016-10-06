@@ -11,6 +11,7 @@ CASE.SOL = 103; % SOL = 101, SOL = 103, and SOL = 105 are options
 CASE.SPC = 10;
 CASE.LOAD = 88;
 CASE.METHOD = 30;
+CASE.PRINT = 1;
 
 %% Run CoFE
 FEM = CoFE_analysis(inputFile,CASE);

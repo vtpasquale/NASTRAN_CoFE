@@ -24,13 +24,13 @@ FEM = CoFE_analysis(inputFile,CASE);
 
 %% Read MSC Nastran Results for Comparison
 % SOL 101
-nas_response1 = nastran.punchRead('l_static');
+nas_response1 = nastran.punchRead(fullfile('nastran_comp','l_static'));
 k = 1;
 nas_comment{k} = 'Linear Static 1';  k = k + 1;
 nas_scaleOption = 2;
 
 % SOL 103
-[nas_response2,freq] = nastran.punchRead('modes');
+[nas_response2,freq] = nastran.punchRead(fullfile('nastran_comp','modes'));
 for i = 1:size(freq,2)
     nas_comment{k} = sprintf('Vibration Mode %d: %.4f Hz',i,freq(i)); k = k + 1;
 end

@@ -11,13 +11,10 @@ CASE.SOL = 101;
 CASE.SPC = 2;
 CASE.LOAD = 2;
 CASE.METHOD = 10;
-% CASE.RECOVER = 0;
-% CASE.WRITE_c06 = 0;
 
 %% Run CoFE
 FEM = CoFE_analysis(inputFile,CASE);
 
 %% Post process
 CoFE_view(FEM);
-% view(-45,30)
 axis equal

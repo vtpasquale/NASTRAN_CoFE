@@ -7,7 +7,7 @@ addpath(fullfile(base,'CoFE_toolbox'))
 %% CASE data
 inputFile = 'tenBar_analysis.bdf';
 CASE = case_obj;
-CASE.SOL = 101; % SOL = 101, SOL = 103, and SOL = 105 are options
+CASE.SOL = 101;
 CASE.SPC = 1;
 CASE.LOAD = 88;
 CASE.METHOD = 30;
@@ -15,6 +15,7 @@ CASE.STRESS = 1;
 CASE.STRAIN = 1;
 CASE.ESE = 1;
 CASE.EKE = 1;
+CASE.PRINT = 1;
 
 CASE(2) = CASE(1);
 CASE(2).SOL = 103;
