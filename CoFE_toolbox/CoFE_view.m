@@ -740,10 +740,10 @@ if iter0D > 0
 end
 
 if strcmp(h.fopts.contourType,'None')~=1    
-    C0 = cell2mat(get(h.def0D,'CData'));
-    C1 = cell2mat(get(h.def1D,'CData'));
-    C2 = cell2mat(get(h.def2D,'CData'));
-    caxis(h.ax,[min([min(C0),min(min(C1)),min(min(C2))]),max([max(C0),max(max(C1)),max(max(C2))])]);
+    C0 = get(h.def0D,'CData'); if iscell(C0); C0 = cell2mat(C0); end
+    C1 = get(h.def1D,'CData'); if iscell(C1); C1 = cell2mat(C1); end
+    C2 = get(h.def2D,'CData'); if iscell(C2); C2 = cell2mat(C2); end
+    caxis(h.ax,[min([min(C0),min(min(C1)),min(min(C2))])-eps,max([max(C0),max(max(C1)),max(max(C2))])+eps]);
 end
 
 % Save plot handles to guidata
