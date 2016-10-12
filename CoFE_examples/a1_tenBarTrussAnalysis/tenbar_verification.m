@@ -30,20 +30,20 @@ FEM = CoFE_analysis(inputFile,CASE);
 
 %% Read MSC Nastran Results for Comparison
 % SOL 101
-nas_response1 = nastran.punchRead(fullfile('NASTRAN_Comparisons','l_static'));
+nas_response1 = nastran.punchRead(fullfile('NASTRAN_comparisons','l_static'));
 k = 1;
 nas_comment{k} = 'Linear Static 1';  k = k + 1;
 nas_scaleOption = 2;
 
 % SOL 103
-[nas_response2,freq] = nastran.punchRead(fullfile('NASTRAN_Comparisons','modes'));
+[nas_response2,freq] = nastran.punchRead(fullfile('NASTRAN_comparisons','modes'));
 for i = 1:size(freq,2)
     nas_comment{k} = sprintf('Vibration Mode %d: %.4f Hz',i,freq(i)); k = k + 1;
 end
 nas_scaleOption = [nas_scaleOption, ones(1,size(freq,2))];
 
 % SOL 105
-[nas_response3,~,ev] = nastran.punchRead(fullfile('NASTRAN_Comparisons','l_buck'));
+[nas_response3,~,ev] = nastran.punchRead(fullfile('NASTRAN_comparisons','l_buck'));
 nas_response3=nas_response3(:,:,2:end);
 for i = 2:size(ev,2)
     nas_comment{k} = sprintf('Buckling Mode %d: ev = %.4f',i,ev(i)); k = k + 1;
