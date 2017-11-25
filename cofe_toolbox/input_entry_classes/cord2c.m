@@ -14,18 +14,12 @@ classdef cord2c < cordc & cord2
     end
     
     methods
-        %% Inherits from cordc
-        % function XP_0 = XP_0(XP_C) % Returns location XP ([3,1] Float) expressed in _0 from XP expressed in _C
-        % function XP_C = XP_C(XP_0) % Returns location XP ([3,1] Float) expressed in _C from XP expressed in _0
-        % function T_C0 = T_C0(XP_C) % Returns transformation matrix ([3,3] Symmetric Float) from basic coordinate system to current coordinate system at XP_C
-        
         %% Inherits from cord2
-        % function obj = initialize(obj,data) % Initialize property values based on bulk data inputs
+        % function obj = initialize(obj,data) % Initialize entry properties based on input file entry data in cell format 
         % function obj = preprocess(obj,Robj) % Preprocess coordinate system
         
-        %%
         function echo(obj,fid)
-            % Echo bulk data entry
+		    % Print the entry in NASTRAN free field format to a text file with file id fid
             fprintf(fid,'CORD2C,%d,%d,%f,%f,%f,%f,%f,%f\n',obj.CID,obj.RID,obj.A',obj.B');
             fprintf(fid,',%f,%f,%f\n',obj.C');
         end
