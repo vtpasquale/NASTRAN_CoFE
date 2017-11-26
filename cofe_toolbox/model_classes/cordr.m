@@ -1,7 +1,7 @@
 % Superclass for rectangular coordinate systems
 % Anthony Ricciardi
 %
-classdef (Abstract) cordr < cord
+classdef cordr < cord
 
     properties (Abstract)
         XC_0 % ([3,1] Float) Csys location in basic coordinate system.

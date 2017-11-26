@@ -30,15 +30,39 @@ classdef (Abstract) entry < matlab.mixin.Heterogeneous
             [n,m]=size(obj);
             if m > 1; error('entry.entry2model_all(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
             MODEL = model;
-            for i=1:n
+            for i = 1:n
                 MODEL = entry2model(obj(i),MODEL);
             end
+% % %             %% Categorize subclasses heterogeneous entry array - avoiding handle superclass
+% % %             obj_classes = cell(n,1);
+% % %             for i=1:n
+% % %                 obj_classes{i}=class(obj(i));
+% % %             end
+% % %             
+% % %             %% GRDSET Processing
+% % %             grdset_id = find(strcmp(obj_classes,'grdset'));
+% % %             if isempty(grdset_id)
+% % %                 GRDSET = grdset;
+% % %             elseif size(grdset_id,1)>1
+% % %                 error('Only one GRDSET entry may appear in the Bulk Data Section.')
+% % %             else
+% % %                 GRDSET=obj(grdset_id);
+% % %             end
+% % %             
+% % %             %% Node processing using GRDSET as default
+% % %             grid_id = find(strcmp(obj_classes,'grid_obj'));
+% % %             for i=grid_id
+% % %                 MODEL = entry2model(obj(i),MODEL,GRDSET);
+% % %             end
+% % %             
+% % %             %% Processing Everything else
+% % %             id = setdiff(1:n,[grid_id;grdset_id]);
         end
     end
     methods (Sealed = true, Static = true)
         % Read input file and create heterogeneous entry array from input data
         function ENTRY = import_entries(filename)
-            data = import_data('grids.bdf');
+            data = import_data(filename);
             nData = size(data,2);
             for i = 1:nData
                 fields = data(i).fields;

@@ -1,7 +1,15 @@
-classdef fem
+classdef model
     % Class that defines a finite element model
+    % Anthony Ricciardi
     
     properties
+        %% Model entities
+        coord
+        NODE@node;
+        elem
+        mat
+        prop
+        spc
         
         %% Sets
 %         sb % ([:,1] int) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions

@@ -3,23 +3,24 @@
 %
 classdef prod_obj < entry
     
-    % entry data
     properties
-        PID
-        MID
-        A
-        J
-        NSM
+        PID % Property identification number. (Integer > 0)
+        MID % Material identification number. (Integer > 0)
+        A % Area of the rod. (Real)
+        J % Torsional constant. (Real)
+        C % Coefficient to determine torsional stress. (Real; Default = 0.0)
+        NSM % Nonstructural mass per unit length. (Real)
     end
     
     methods (Static = true)
 		% Initialize entry properties based on input file entry data in cell format
         function PROD = initialize(data)
             PROD = prod_obj;
-            PROD.PID = set_data('PROD','PID',data{2},'int',[],1);
-            PROD.MID = set_data('PROD','MID',data{3},'int',[] ,1);
-            PROD.A = set_data('PROD','A',data{4},'dec',[]);
-            PROD.J = set_data('PROD','J',data{5},'dec',[]);
+            PROD.PID = set_data('PROD','PID',data{2},'int',NaN,1);
+            PROD.MID = set_data('PROD','MID',data{3},'int',NaN,1);
+            PROD.A = set_data('PROD','A',data{4},'dec',NaN);
+            PROD.J = set_data('PROD','J',data{5},'dec',NaN);
+            PROD.C = set_data('PROD','C',data{6},'dec',[],0.0);
             PROD.NSM = set_data('PROD','NSM',data{7},'dec',0.0);
         end
     end

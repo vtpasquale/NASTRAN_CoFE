@@ -16,20 +16,20 @@ classdef (Abstract) cord2
     methods
         function obj = initialize(obj,data)
             % Initialize property values based on bulk data inputs
-            obj.CID = set_data('CORD2R','CID',data{2},'int',[],1);
+            obj.CID = set_data('CORD2R','CID',data{2},'int',NaN,1);
             obj.RID = set_data('CORD2R','RID',data{3},'int',0,0);
             obj.A = zeros(3,1);
             obj.B = zeros(3,1);
             obj.C = zeros(3,1);
-            obj.A(1) = set_data('CORD2R','A1',data{4},'dec',[]);
-            obj.A(2) = set_data('CORD2R','A2',data{5},'dec',[]);
-            obj.A(3) = set_data('CORD2R','A3',data{6},'dec',[]);
-            obj.B(1) = set_data('CORD2R','B1',data{7},'dec',[]);
-            obj.B(2) = set_data('CORD2R','B2',data{8},'dec',[]);
-            obj.B(3) = set_data('CORD2R','B3',data{9},'dec',[]);
-            obj.C(1) = set_data('CORD2R','C1',data{12},'dec',[]);
-            obj.C(2) = set_data('CORD2R','C2',data{13},'dec',[]);
-            obj.C(3) = set_data('CORD2R','C3',data{14},'dec',[]);
+            obj.A(1) = set_data('CORD2R','A1',data{4},'dec',NaN);
+            obj.A(2) = set_data('CORD2R','A2',data{5},'dec',NaN);
+            obj.A(3) = set_data('CORD2R','A3',data{6},'dec',NaN);
+            obj.B(1) = set_data('CORD2R','B1',data{7},'dec',NaN);
+            obj.B(2) = set_data('CORD2R','B2',data{8},'dec',NaN);
+            obj.B(3) = set_data('CORD2R','B3',data{9},'dec',NaN);
+            obj.C(1) = set_data('CORD2R','C1',data{12},'dec',NaN);
+            obj.C(2) = set_data('CORD2R','C2',data{13},'dec',NaN);
+            obj.C(3) = set_data('CORD2R','C3',data{14},'dec',NaN);
         end
         function obj = preprocess(obj,Robj)
             % Preprocess coordinate system

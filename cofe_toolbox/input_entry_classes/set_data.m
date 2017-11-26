@@ -2,16 +2,16 @@
 % Anthony Ricciardi
 %
 % Inputs
-% entryName[string] entry name, for error messages
-% fieldName[string] field name, for error messages
+% entryName[string] entry name, used for potential error messages
+% fieldName[string] field name, used for potential error messages
 % data:    [string] raw field data
 % type:    [string] data type.
 %             'str' for string
 %             'int' for integer
 %             'dec' for real
 %
-% default: [type] default value, will enforce data is defined if not empty.
-%                   Set to [] if input is required.
+% default: [type or [] ] default value, will enforce data is defined if not empty.
+%                        Set to NaN if explicit user input is required.
 % min:     [real] minimum value - optional - only used for integers or reals
 % max:     [real] maximum value - optional - only used for integers or reals
 %
@@ -22,8 +22,12 @@ function out = set_data(entryName,fieldName,data,type,default,min,max)
 
 %% check for empty field
 if strcmp(data,'');
-    if isempty(default)
+    if isnan(default)
         error([fieldName,' is required for ',entryName,' entries.'])
+    end
+    if isempty(default)
+        out = default;
+        return
     end
     if strcmp(type,'str')
         data = default;
@@ -78,12 +82,12 @@ end
 if strcmp(type,'int') || strcmp(type,'dec')
     if nargin > 5
         if out < min
-            error([fieldName,' field on ',entryName,' should be greater than or equal to',num2str(min),'.']);
+            error([fieldName,' field on ',entryName,' should be greater than or equal to ',num2str(min),'.']);
         end
     end
     if nargin > 6
         if out > max
-            error([fieldName,' field on ',entryName,' should be less than or equal to',num2str(max),'.']);
+            error([fieldName,' field on ',entryName,' should be less than or equal to ',num2str(max),'.']);
         end
     end
 end

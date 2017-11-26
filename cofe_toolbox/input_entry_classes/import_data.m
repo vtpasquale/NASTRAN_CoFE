@@ -35,7 +35,7 @@ while 1
         
         % check for end of file
         if iscell(C) == 0 % end of file 
-            fclose(fid);
+            fclose('all');
             return %%%%%%%%%%%%%%%%%%%% EXIT  WHILE and FUNCTION %%%%%%%%%%
         end
         
@@ -61,7 +61,7 @@ while 1
         end
     end
 end
-fclose(fid);
+fclose('all');
 end
 
 %%
