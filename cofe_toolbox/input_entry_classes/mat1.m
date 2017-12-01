@@ -29,8 +29,26 @@ classdef mat1 < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function mat = entry2model(obj)
-            mat = [];
+        function MODEL = entry2model(obj,MODEL)
+            MAT_1 = mat_1;
+            MAT_1.MID = obj.MID;
+            seg = size([obj.E,obj.G],2);
+            if seg<1
+                error('Error with MAT1 MID = %d: E and G may not both be blank.',obj.MID)
+            elseif seg<2 && isempty(obj.NU)
+                error('Error with MAT1 MID = %d: NU must be defined if either E or G is blank.',obj.MID)
+            elseif seg==1
+                if isempty(obj.G)
+                    obj.G=obj.E/(2*(1+obj.NU));
+                else % isempty(obj.E) 
+                    obj.E=obj.G*2*(1+obj.NU);
+                end
+            end
+            MAT_1.E = obj.E;
+            MAT_1.G = obj.G;
+            MAT_1.NU = obj.NU;
+            MAT_1.RHO = obj.RHO;
+            MODEL.MAT=[MODEL.MAT;MAT_1];
         end
 		% Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)

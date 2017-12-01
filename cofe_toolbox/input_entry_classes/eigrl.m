@@ -11,7 +11,7 @@ classdef eigrl < entry
 %         MSGLVL % Diagnostic level. (0 < Integer < 4; Default = 0)
 %         MAXSET % Number of vectors in block or set. Default is machine dependent. See Remark 14.
 %         SHFSCL % Estimate of the first flexible mode natural frequency. See Remark 10. (Real or blank)
-        NORM % Method for normalizing eigenvectors (Character: "MASS" or "MAX")
+%        NORM % Method for normalizing eigenvectors (Character: "MASS" or "MAX")
     end
         methods (Static = true)
             % Initialize entry properties based on input file entry data in cell format
@@ -29,8 +29,11 @@ classdef eigrl < entry
         end
         methods
             % Write appropriate model object(s) based on entry data
-            function node = entry2model(obj)
-                node = [];
+            function MODEL = entry2model(obj,MODEL)
+                if isempty(obj.ND)
+                    error('ND is blank for EIGRL SID = %s. A nonblank integer is required.',obj.SID)
+                end
+                MODEL.eigTab = [MODEL.eigTab;obj.SID,obj.ND];
             end
             % Print the entry in NASTRAN free field format to a text file with file id fid
             function echo(obj,fid)

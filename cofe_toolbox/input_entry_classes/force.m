@@ -31,8 +31,13 @@ classdef force < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function FORCE = entry2model(obj)
-            FORCE = [];
+        function MODEL = entry2model(obj,MODEL)
+            FORCES = forces;
+            FORCES.SID = obj.SID;
+            FORCES.G = obj.G;
+            FORCES.CID = obj.CID;
+            FORCES.F = obj.F*[obj.N1;obj.N2;obj.N3];
+            MODEL.LOADS = [MODEL.LOADS;FORCES];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)

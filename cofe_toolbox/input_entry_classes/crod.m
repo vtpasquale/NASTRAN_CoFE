@@ -23,15 +23,18 @@ classdef crod < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-            function MODEL = entry2model(obj,MODEL)
-                C_ROD = c_rod;
-
-            end
-		% Print the entry in NASTRAN free field format to a text file with file id fid
+        function MODEL = entry2model(obj,MODEL)
+            C_ROD = c_rod;
+            C_ROD.EID = obj.EID;
+            C_ROD.PID = obj.PID;
+            C_ROD.G = [obj.G1,obj.G2];
+            MODEL.ELEM = [MODEL.ELEM;C_ROD];
+        end
+        % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)
             fprintf(fid,'CROD,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.G2);
         end
     end
-
+    
     
 end

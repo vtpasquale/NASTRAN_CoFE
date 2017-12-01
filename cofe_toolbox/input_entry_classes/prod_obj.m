@@ -26,8 +26,14 @@ classdef prod_obj < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function p_rod = entry2model(obj)
-            p_rod = [];
+        function MODEL = entry2model(obj,MODEL)
+            P_ROD = p_rod;
+            P_ROD.PID = obj.PID;
+            P_ROD.MID = obj.MID;
+            P_ROD.A = obj.A;
+            P_ROD.J = obj.J;
+            P_ROD.NSM = obj.NSM;
+            MODEL.PROP = [MODEL.PROP;P_ROD];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)

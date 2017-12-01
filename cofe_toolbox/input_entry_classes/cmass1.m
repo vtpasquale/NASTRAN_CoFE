@@ -26,8 +26,16 @@ classdef cmass1 < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function c_mass = entry2model(obj)
-            c_mass = [];
+        function MODEL = entry2model(obj,MODEL)
+            C_MASS1 = c_mass1;
+            C_MASS1.EID = obj.EID;
+            C_MASS1.PID = obj.PID;
+            C_MASS1.G = obj.G1;
+            C_MASS1.C = obj.C1;
+            if ~isempty(obj.G2)
+                error('Nonblank G2 on CMASS1 EID = %d. Nonblank G2 is not supported.',C_MASS1.EID)
+            end
+            MODEL.ELEM = [MODEL.ELEM;C_MASS1];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)

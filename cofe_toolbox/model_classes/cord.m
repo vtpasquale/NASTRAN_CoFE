@@ -17,36 +17,43 @@ classdef (Abstract) cord < matlab.mixin.Heterogeneous
     end
     
     methods (Sealed = true)
-        function obj = prep(obj)
-            % function to preprocess coordinate systems from input data
-            [n,m]=size(obj);
-            if m > 1; error('cord.prep() can only handel nx1 arrays of cord objects. The second dimension exceeds 1.'); end
+        function obj = preprocess(obj)
+            % function to preprocess coordinate systems
+            [ncord,m]=size(obj);
+            if m > 1; error('cord.preprocess() can only handel nx1 arrays of cord objects. The second dimension exceeds 1.'); end
             
+            % check that element id numbers are unique
+            CIDS=[obj.CID];
+            [~,ia] = unique(CIDS,'stable');
+            if size(ia,1)~=ncord
+                nonunique=setxor(ia,1:ncord);
+                error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',CIDS(nonunique)))
+            end
+            
+            % Create basic coordinate system and add to array
             Robj = cord2r; Robj.XC_0=zeros(3,1); Robj.TC_C0=eye(3); % Basic Csys
             Robj.CID = 0; Robj.RID = -1;
             obj = [Robj;obj];
-            % rid = [obj.RID];
-            cid = [obj.CID];
             
             % preprocess coordinate systems accounting for dependency
-            unresolved = cid; % unresolved coordinate systems
+            unresolved = CIDS; % unresolved coordinate systems
             iter = 1;
             while ~all(unresolved==0) % keep trying until dependencies resolved
-                for i = 2:n+1
+                for i = 2:ncord+1
                     if unresolved(i) ~= 0
-                        r = find(cid==obj(i).RID);
+                        r = find(CIDS==obj(i).RID);
                         if isempty(r)==1
                             error('Coordinate systems CID = %d references an undefined coodinate system CID = %d',obj(i).CID,obj(i).RID)
                         else
                             if unresolved(r) == 0
-                                obj(i)=obj(i).preprocess(obj(r));
+                                obj(i)=obj(i).prep(obj(r));
                                 unresolved(i) = 0;
                             end
                         end
                     end
                 end
                 iter = iter + 1;
-                if iter > n+2
+                if iter > ncord+2
                     error('There are dependency issues with coordinate system(s) CID = %s',sprintf('%d, ',unresolved(unresolved~=0)'))
                 end
             end

@@ -30,8 +30,23 @@ classdef pmass < entry
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function p_mass = entry2model(obj)
-            p_mass = [];
+        function MODEL = entry2model(obj,MODEL)
+            P_MASS = p_mass;
+            P_MASS.PID = obj.PID1;
+            P_MASS.M = obj.M1;
+            if ~isempty(obj.PID2)
+                P_MASS(2,1).PID = obj.PID2;
+                P_MASS(2,1).M = obj.M2;
+                if ~isempty(obj.PID3)
+                    P_MASS(3,1).PID = obj.PID3;
+                    P_MASS(3,1).M = obj.M3;
+                    if ~isempty(obj.PID4)
+                        P_MASS(4,1).PID = obj.PID4;
+                        P_MASS(4,1).M = obj.M4;
+                    end
+                end
+            end
+            MODEL.PROP = [MODEL.PROP;P_MASS];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo(obj,fid)

@@ -31,7 +31,7 @@ classdef (Abstract) cord2
             obj.C(2) = set_data('CORD2R','C2',data{13},'dec',NaN);
             obj.C(3) = set_data('CORD2R','C3',data{14},'dec',NaN);
         end
-        function obj = preprocess(obj,Robj)
+        function obj = prep(obj,Robj)
             % Preprocess coordinate system
             dAB = obj.B-obj.A;
             nu = (obj.C-obj.A);
