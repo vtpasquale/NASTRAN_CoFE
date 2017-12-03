@@ -7,9 +7,9 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
         EID % [int] Element identification number.
         G % [1,: int] Node identification numbers of connection points.
     end
-%     methods (Abstract)
-%         obj = assemble(obj,MODEL) % Calculate element matricies
-%     end
+    methods (Abstract)
+        obj = assemble(obj,MODEL) % Calculate element matricies
+    end
     methods (Sealed=true)
         function obj = preprocess(obj)
             % preprocess elements
@@ -23,7 +23,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
                 error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',EIDS(nonunique)))
             end
         end
-        function MODELout = assemble_all(obj,MODEL)
+        function MODEL = assemble_all(obj,MODEL)
             % assemble element and global matricies
             
             % Preallocate Sparse Matrices
@@ -33,13 +33,14 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
             % Loop through elements
             nelem = size(obj,1);
             for i=1:nelem
-                obj_i=obj(i).assemble(MODEL);
-                K(gdof,gdof)=K(gdof,gdof)+obj_i.kg;
-                M(gdof,gdof)=M(gdof,gdof)+obj_i.mg;
+                oi=obj(i).assemble(MODEL);
+                K(oi.gdof,oi.gdof)=K(oi.gdof,oi.gdof)+oi.k_0;
+                M(oi.gdof,oi.gdof)=M(oi.gdof,oi.gdof)+oi.m_0;
+                obj(i)=oi;
             end
-            MODELout.ELEM=objout;
-            MODELout.K=K;
-            MODELout.M=M;
+            MODEL.ELEM=obj;
+            MODEL.K=K;
+            MODEL.M=M;
         end
     end
 end

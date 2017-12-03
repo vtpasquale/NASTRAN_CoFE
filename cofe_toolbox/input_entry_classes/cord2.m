@@ -1,7 +1,7 @@
 % Helper superclass for defining coordinate systems using the coordinates of three points.
 % Anthony Ricciardi
 %
-classdef (Abstract) cord2
+classdef (Abstract) cord2 < entry
     
     properties (Abstract)
         CID % (Integer > 0) Coordinate system identification number. 
@@ -9,8 +9,6 @@ classdef (Abstract) cord2
         A % ([3,1] Float) Coordinates of point A in coordinate system RID.
         B % ([3,1] Float) Coordinates of point B in coordinate system RID. 
         C % ([3,1] Float) Coordinates of point C in coordinate system RID.
-        XC_0 % ([3,1] Float) Csys location in basic coordinate system.
-        TC_C0 % ([3,3] Symmetric Float) Transformation matrix from basic coordinate system to current coordinate system at current coordinate system origin
     end
     
     methods
@@ -30,23 +28,6 @@ classdef (Abstract) cord2
             obj.C(1) = set_data('CORD2R','C1',data{12},'dec',NaN);
             obj.C(2) = set_data('CORD2R','C2',data{13},'dec',NaN);
             obj.C(3) = set_data('CORD2R','C3',data{14},'dec',NaN);
-        end
-        function obj = prep(obj,Robj)
-            % Preprocess coordinate system
-            dAB = obj.B-obj.A;
-            nu = (obj.C-obj.A);
-            
-            if (dAB < 1e5*eps) | (nu < 1e5*eps)
-                error(['Coordinate system CID = ',num2str(obj.CID),'has coincident or close to coincident points.']);
-            end
-            
-            z = dAB./norm_cs(dAB);
-            y = cross3(z,nu); y = y./norm(y);
-            x = cross3(y,z); x = x./norm(x);
-            T_CR = [x,y,z];
-            
-            obj.TC_C0 = T_CR*Robj.TC_C0;
-            obj.XC_0 = Robj.XC_0 + Robj.TC_C0.'*obj.A;
         end
     end
 end

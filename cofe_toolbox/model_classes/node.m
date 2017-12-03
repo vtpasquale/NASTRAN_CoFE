@@ -33,6 +33,7 @@ classdef node
             % psGrid(7,:)==false, explicit values where psGrid(7,:)==true.
             
             [~,~,PSdefault]=obj.setgetGRDSET(); % load default values from GRDSET entry
+            if isempty(PSdefault); PSdefault=false(6,1); end
             psDefault = repmat(PSdefault,[1,nnodes]); % arrange default ps values as [6,nnodes logical]
             
             ps = false(6,nnodes); % initialize ps matrix [6,nnodes logical]

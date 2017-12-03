@@ -29,6 +29,8 @@ classdef model
         KD
         M
         G
+        p
+        
     end
     properties (Hidden=true)
         cordCIDs
@@ -51,7 +53,7 @@ classdef model
             obj.node2gdof(:)= 1:obj.ngdof;
             
             % Preprocess model entities
-            obj.CORD = obj.CORD.preprocess();
+            obj.CORD = obj.CORD.preprocess_all();
             obj.MAT  = obj.MAT.preprocess();
             obj.PROP = obj.PROP.preprocess();
             obj.NODE = obj.NODE.preprocess();
@@ -69,8 +71,9 @@ classdef model
             
             % Process MAT references in PROP entries to speed things up?
             
-            % Assemble element and global matricies
-            obj = obj.ELEM.assemble_all();
+            % Assemble 
+            obj = obj.ELEM.assemble_all(obj); % element and global matricies
+            obj = obj.LOADS.assemble_all(obj); %  loads vectors
             
             % Process single-point constraints
             obj.sg = obj.NODE.process_ps(); % DOF eliminated by perminant single-point constraints
@@ -78,9 +81,8 @@ classdef model
             % obj.s = obj.sg | obj.sb; % All DOF eliminated single-point constraints
             
             
-            %% process free degrees of freedom
-            obj.f  = ~obj.sb;
-        
+            % process free degrees of freedom
+            obj.f  = ~obj.sg;        
         end
     end
     

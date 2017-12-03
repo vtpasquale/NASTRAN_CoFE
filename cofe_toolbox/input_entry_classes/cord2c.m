@@ -1,7 +1,7 @@
 % Defines a cylindrical coordinate system using the coordinates of three points.
 % Anthony Ricciardi
 %
-classdef cord2c < cordc & cord2
+classdef cord2c < cord2
     
     properties
         CID % (Integer > 0) Coordinate system identification number. 
@@ -9,15 +9,22 @@ classdef cord2c < cordc & cord2
         A % ([3,1] Float) Coordinates of point A in coordinate system RID.
         B % ([3,1] Float) Coordinates of point B in coordinate system RID. 
         C % ([3,1] Float) Coordinates of point C in coordinate system RID.
-        XC_0 % ([3,1] Float) Csys location in basic coordinate system.
-        TC_C0 % ([3,3] Symmetric Float) Transformation matrix from basic coordinate system to current coordinate system at current coordinate system origin
     end
     
     methods
         %% Inherits from cord2
         % function obj = initialize(obj,data) % Initialize entry properties based on input file entry data in cell format 
-        % function obj = preprocess(obj,Robj) % Preprocess coordinate system
-        
+
+        function MODEL = entry2model(obj,MODEL)
+            % Write appropriate model object(s) based on entry data
+            CORD = cordc;
+            CORD.CID = obj.CID;
+            CORD.RID = obj.RID;
+            CORD.A = obj.A;
+            CORD.B = obj.B;
+            CORD.C = obj.C;
+            MODEL.CORD = [MODEL.CORD;CORD];
+        end
         function echo(obj,fid)
 		    % Print the entry in NASTRAN free field format to a text file with file id fid
             fprintf(fid,'CORD2C,%d,%d,%f,%f,%f,%f,%f,%f\n',obj.CID,obj.RID,obj.A',obj.B');
