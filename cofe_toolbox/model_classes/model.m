@@ -71,7 +71,8 @@ classdef model
             
             % Process MAT references in PROP entries to speed things up?
             
-            % Assemble 
+            % Assemble
+            obj = obj.NODE.assemble(obj);
             obj = obj.ELEM.assemble_all(obj); % element and global matricies
             obj = obj.LOADS.assemble_all(obj); %  loads vectors
             
