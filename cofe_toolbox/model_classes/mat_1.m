@@ -1,4 +1,4 @@
-% Class for linear isotropic materials..
+% Class for linear isotropic materials.
 % Anthony Ricciardi
 %
 classdef mat_1 < mat
