@@ -16,13 +16,14 @@ classdef model
         %% Simple entities
         eigTab=[]; % [:,2 int] table with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
         
-        %% Sets
-        sb % ([:,1] int) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
-        sg % ([:,1] int) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries.
-        s  % ([:,1] int) All degrees-of-freedom eliminated by single point constraints -> sb + sg
-        f  % ([:,1] int) Unconstrained (free) structural degrees-of-freedom -> a + o 
-        m  % ([:,1] int) All degrees-of-freedom eliminated by multiple constraints
-        n  % ([:,1] int) All degrees-of-freedom not constrained by multipoint constraints
+        %% Sets and related
+        sb % ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
+        sd % ([ngdof,num SID] sparse real) Enforce displacement values due to single-point constraints that are included in boundary conditions
+        sg % ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries.
+        s  % ([ngdof,1] logical) All degrees-of-freedom eliminated by single point constraints -> sb + sg
+        f  % ([ngdof,1] logical) Unconstrained (free) structural degrees-of-freedom -> a + o 
+        m  % ([ngdof,1] logical) All degrees-of-freedom eliminated by multiple constraints
+        n  % ([ngdof,1] logical) All degrees-of-freedom not constrained by multipoint constraints
         
         %% Matricies
         K
@@ -66,24 +67,25 @@ classdef model
             obj.propPIDs=[obj.PROP.PID];
             obj.nodeIDs=[obj.NODE.ID];
             obj.elemEIDs=[obj.ELEM.EID];
-            obj.spcsSIDs=[obj.SPCS.SID];
             obj.loadsSIDs=[obj.LOADS.SID];
+            
+            % Process single-point constraints
+            obj.sg = obj.NODE.process_ps(); % DOF eliminated by perminant single-point constraints
+            [obj.sb,obj.sd,obj.spcsSIDs]=obj.SPCS.process_sb(obj.node2gdof); % SID numbers and DOF eliminated by boundary single-point constraints      
+            
+            % assemble loads vectors
+            obj = obj.LOADS.process(obj); 
+            
+        end
+        function obj = assemble(obj,SID,LSID)
             
             % Process MAT references in PROP entries to speed things up?
             
             % Assemble
             obj = obj.NODE.assemble(obj);
             obj = obj.ELEM.assemble_all(obj); % element and global matricies
-            obj = obj.LOADS.assemble_all(obj); %  loads vectors
-            
-            % Process single-point constraints
-            obj.sg = obj.NODE.process_ps(); % DOF eliminated by perminant single-point constraints
-            % obj.sb = obj.SPCS.process_sb(); % DOF eliminated by boundary single-point constraints
-            % obj.s = obj.sg | obj.sb; % All DOF eliminated single-point constraints
             
             
-            % process free degrees of freedom
-            obj.f  = ~obj.sg;        
         end
     end
     

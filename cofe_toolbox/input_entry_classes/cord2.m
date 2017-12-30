@@ -11,8 +11,8 @@ classdef (Abstract) cord2 < entry
         C % ([3,1] Float) Coordinates of point C in coordinate system RID.
     end
     
-    methods
-        function obj = initialize(obj,data)
+    methods (Hidden=true)
+        function obj = initialize_cord2(obj,data)
             % Initialize property values based on bulk data inputs
             obj.CID = set_data('CORD2R','CID',data{2},'int',NaN,1);
             obj.RID = set_data('CORD2R','RID',data{3},'int',0,0);

@@ -44,7 +44,7 @@ classdef node
             % Loop through nodes
             for i=1:nn
                 oi = obj(i);
-                oi.X_0=CORD(oi.CP==cordCIDs).XP_0(oi.X_P);
+                oi.X_0=CORD(oi.CP==cordCIDs).X_0(oi.X_P);
                 oi.T_G0=CORD(oi.CD==cordCIDs).TC_C0;
                 obj(i)=oi;
             end

@@ -11,10 +11,14 @@ classdef cord2s < cord2
         C % ([3,1] Float) Coordinates of point C in coordinate system RID.
     end
     
-    methods       
-        %% Inherits from cord2
-        % function obj = initialize(obj,data) % Initialize entry properties based on input file entry data in cell format 
-        
+    methods (Static=true)   
+        function CORD2S = initialize(data) 
+            % Initialize entry properties based on input file entry data in cell format 
+            CORD2S=cord2s;
+            CORD2S=CORD2S.initialize_cord2(data);
+        end
+    end
+    methods
         function MODEL = entry2model(obj,MODEL)
             % Write appropriate model object(s) based on entry data
             CORD = cords;

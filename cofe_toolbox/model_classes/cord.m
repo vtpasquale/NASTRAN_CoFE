@@ -15,9 +15,9 @@ classdef (Abstract) cord < matlab.mixin.Heterogeneous
         C % ([3,1] Float) Coordinates of point C in coordinate system RID.
     end
     methods (Abstract)
-        XP_0 = XP_0(obj,XP_C) % Returns location XP ([3,1] Float) expressed in _0 from XP expressed in _C
-        XP_C = XP_C(obj,XP_0) % Returns location XP ([3,1] Float) expressed in _C from XP expressed in _0
-        T_C0 = T_C0(obj,XP_C) % Returns transformation matrix ([3,3] Symmetric Float) from basic coordinate system to current coordinate system at XP_C
+        X_0 = X_0(obj,X_C) % Returns location X ([3,1] Float) expressed in _0 from X expressed in _C
+        X_C = X_C(obj,X_0) % Returns location X ([3,1] Float) expressed in _C from X expressed in _0
+        T_C0 = T_C0(obj,X_C) % Returns transformation matrix ([3,3] Symmetric Float) from basic coordinate system to current coordinate system at X_C
     end
     methods (Sealed = true)
         function obj = preprocess_all(obj)
@@ -61,6 +61,31 @@ classdef (Abstract) cord < matlab.mixin.Heterogeneous
                     error('There are dependency issues with coordinate system(s) CID = %s',sprintf('%d, ',unresolved(unresolved~=0)'))
                 end
             end
+        end
+    end
+    methods
+        function obj = preprocess(obj,Robj)
+            % Preprocess coordinate system
+            
+            % convert definition points to basic coordiate system
+            A_0=Robj.X_0(obj.A);
+            B_0=Robj.X_0(obj.B);
+            C_0=Robj.X_0(obj.C);
+            
+            % Direction vectors
+            dAB = B_0-A_0;
+            nu = (C_0-A_0);
+            if all(abs(dAB) < 1e5*eps) || all(abs(nu) < 1e5*eps)
+                error(['Coordinate system CID = ',num2str(obj.CID),'is defined using coincident or close to coincident points.']);
+            end
+            
+            % rotation matrix
+            z = dAB./norm_cs(dAB);
+            y = cross3(z,nu); y = y./norm_cs(y);
+            x = cross3(y,z); x = x./norm_cs(x);
+            
+            obj.TC_C0 = [x,y,z].';
+            obj.XC_0 = A_0;
         end
     end
 end

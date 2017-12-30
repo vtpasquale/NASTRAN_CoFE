@@ -7,7 +7,7 @@ classdef (Abstract) loads < matlab.mixin.Heterogeneous
         SID % [int] Load set identification number.
     end
     methods
-        function MODEL = assemble_all(obj,MODEL)
+        function MODEL = process(obj,MODEL)
             p = zeros(MODEL.ngdof,1);
             % Loop through loads
             nloads = size(obj,1);
