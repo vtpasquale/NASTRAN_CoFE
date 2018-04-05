@@ -30,7 +30,7 @@ classdef (Abstract) spcs < matlab.mixin.Heterogeneous
                 error('SPCADD SID(s): %s is(are) also used as SID(s) defined for SPC type entries. This is not allowed.',sprintf('%d,',spcconID(lia)))
             end
             spcsSIDs=[spcconID;spcaddID];
-            sb=false(size(node2gdof,2)*6,size(spcsSIDs,1));
+            sb=false(size(node2gdof,2)*6,max([size(spcsSIDs,1),1]));
             sd=spalloc(size(sb,1),size(sb,2),ceil(size(sb,1)/10)*size(sb,2));
             
             %% Single point contraints
@@ -41,6 +41,7 @@ classdef (Abstract) spcs < matlab.mixin.Heterogeneous
                     gdof = node2gdof(oj.C,oj.G);
                     gdof = gdof(:);
                     sd(gdof,i)=oj.D;
+                    sb(gdof,i)=true;
                 end
             end
             

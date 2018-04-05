@@ -55,14 +55,15 @@ classdef model
             
             % Preprocess model entities
             obj.CORD = obj.CORD.preprocess_all();
+            obj.cordCIDs=[obj.CORD.CID]; % Store vectors of ID numbers as
+                                         % seperate varables. This speeds 
+                                         % up assembly because concatenation
+                                         % gets expensive.
             obj.MAT  = obj.MAT.preprocess();
             obj.PROP = obj.PROP.preprocess();
-            obj.NODE = obj.NODE.preprocess();
+            obj.NODE = obj.NODE.preprocess(obj);
             obj.ELEM = obj.ELEM.preprocess();
             
-            % Store vectors of ID numbers as seperate varables. This
-            % speeds up assembly because concatenation gets expensive.
-            obj.cordCIDs=[obj.CORD.CID];
             obj.matMIDs=[obj.MAT.MID];
             obj.propPIDs=[obj.PROP.PID];
             obj.nodeIDs=[obj.NODE.ID];
@@ -76,13 +77,16 @@ classdef model
             % assemble loads vectors
             obj = obj.LOADS.process(obj); 
             
+            % define sets (in progress)
+            obj.s = obj.sg | obj.sb;
+            obj.f = ~obj.s;
         end
         function obj = assemble(obj,SID,LSID)
             
             % Process MAT references in PROP entries to speed things up?
             
             % Assemble
-            obj = obj.NODE.assemble(obj);
+%             obj = obj.NODE.assemble(obj);
             obj = obj.ELEM.assemble_all(obj); % element and global matricies
             
             

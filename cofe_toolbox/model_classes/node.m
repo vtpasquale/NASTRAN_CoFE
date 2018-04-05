@@ -14,7 +14,7 @@ classdef node
         T_G0 % [3,3 real] Transoformation matrix from the basic coordinate system to node deformation coordinate system (defined in CD field)
     end
     methods
-        function obj = preprocess(obj)
+        function obj = preprocess(obj,MODEL)
             % Function to preprocess nodes            
             
             % check that element id numbers are unique
@@ -34,8 +34,9 @@ classdef node
                 if isempty(obj(i).CP); obj(i).CP=CPdefault; end
                 if isempty(obj(i).CD); obj(i).CD=CDdefault; end
             end
-        end
-        function MODEL = assemble(obj,MODEL)
+%         end
+
+%         function MODEL = assemble(obj,MODEL)
             % set X_0 and T_G0 for all nodes
             nn = size(obj,1);
             CORD = MODEL.CORD;
@@ -48,7 +49,7 @@ classdef node
                 oi.T_G0=CORD(oi.CD==cordCIDs).TC_C0;
                 obj(i)=oi;
             end
-            MODEL.NODE=obj;
+%             MODEL.NODE=obj;
         end
         function sg = process_ps(obj)
             % Process perminant single point constraints. Returns sg [nnodes,1 logical] set.
