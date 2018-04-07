@@ -13,10 +13,12 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
     methods (Sealed=true)
         function obj = preprocess(obj)
             % preprocess elements
+            [nelem,m] = size(obj);
+            if m > 1; error('elem.preprocess() can only handel nx1 arrays of elem objects. The second dimension exceeds 1.'); end
             
             % check that element id numbers are unique
             EIDS=[obj.EID];
-            nelem = size(obj,1);
+            
             [~,ia] = unique(EIDS,'stable');
             if size(ia,1)~=nelem
                 nonunique=setxor(ia,1:nelem);

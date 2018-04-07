@@ -14,5 +14,8 @@ MODEL = ENTRY.entry2model_all();
 MODEL = MODEL.preprocess();
 
 %%
+MODEL = MODEL.assemble();
+
+%%
 STATIC=static();
 STATIC=STATIC.solve(MODEL);

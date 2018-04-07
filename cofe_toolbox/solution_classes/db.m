@@ -6,7 +6,9 @@ classdef db < matlab.mixin.Heterogeneous
     methods (Sealed=true)
         function writeNeu_all(obj,fid) 
             % Writes all data blocks in array to FEMAP Neutral File
-            ndb = size(obj,1);
+            [ndb,m] = size(obj);
+            if m > 1; error('db.writeNeu_all() can only handel nx1 arrays of db objects. The second dimension exceeds 1.'); end
+            
             for i=1:ndb
                 writeNeu(obj(i),fid)
             end

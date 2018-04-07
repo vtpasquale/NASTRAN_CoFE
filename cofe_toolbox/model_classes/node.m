@@ -16,10 +16,11 @@ classdef node
     methods
         function obj = preprocess(obj,MODEL)
             % Function to preprocess nodes            
+            [nnodes,m]=size(obj);
+            if m > 1; error('node.preprocess() can only handel nx1 arrays of node objects. The second dimension exceeds 1.'); end
             
             % check that element id numbers are unique
             NIDS = [obj.ID];
-            nnodes = size(obj,1);
             [~,ia] = unique(NIDS,'stable');
             if size(ia,1)~=nnodes
                 nonunique=setxor(ia,1:nnodes);
