@@ -5,7 +5,7 @@ addpath(genpath(fullfile('..','..','cofe_toolbox')));
 ENTRY = entry.import_entries('rt.bdf');
 
 %% 
-ENTRY.echo_all(1)
+% ENTRY.echo_all(1)
 
 %%
 MODEL = ENTRY.entry2model_all();
@@ -18,4 +18,5 @@ MODEL = MODEL.assemble();
 
 %%
 STATIC=static();
+STATIC.SID = 1;
 STATIC=STATIC.solve(MODEL);

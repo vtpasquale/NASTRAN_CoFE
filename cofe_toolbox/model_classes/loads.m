@@ -8,12 +8,15 @@ classdef (Abstract) loads < matlab.mixin.Heterogeneous
     end
     methods
         function MODEL = process(obj,MODEL)
-            p = zeros(MODEL.ngdof,1);
-            % Loop through loads
             nloads = size(obj,1);
+            ncases = size(MODEL.loadsSIDs,1);
+            p = zeros(MODEL.ngdof,ncases);
+            
+            % Loop through loads
             for i=1:nloads
                 oi=obj(i).assemble(MODEL);
-                p(oi.gdof)=p(oi.gdof)+oi.p;
+                lc = find(oi.SID==MODEL.loadsSIDs);
+                p(oi.gdof,lc)=p(oi.gdof,lc)+oi.p;
                 obj(i)=oi;
             end
             MODEL.LOADS=obj;

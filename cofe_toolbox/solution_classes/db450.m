@@ -24,6 +24,8 @@ classdef db450 < db
     methods
         function writeNeu(obj,fid)
             % Writes single data block to FEMAP Neutral File
+            fprintf(fid,'   -1\n');
+            fprintf(fid,'   450\n');
             fprintf(fid,'%d\n',obj.ID);
             fprintf(fid,'%s\n',obj.title);
             fprintf(fid,'%d,%d,%d,%d\n',obj.from_prog,obj.anal_type,obj.ProcessType,obj.IntegerFormat);
@@ -33,6 +35,7 @@ classdef db450 < db
             fprintf(fid,'%d,%d,%d\n',obj.AttachID,obj.LocationID,obj.StudyID);
             fprintf(fid,'-1,-1,0\n');
             fprintf(fid,'%d,%d\n',obj.nas_case,obj.nas_rev);
+             fprintf(fid,'   -1\n');
         end
         function obj = db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev)
             % db450 class constructor method

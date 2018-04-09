@@ -64,11 +64,11 @@ classdef model
             obj.NODE = obj.NODE.preprocess(obj);
             obj.ELEM = obj.ELEM.preprocess();
             
-            obj.matMIDs=[obj.MAT.MID];
-            obj.propPIDs=[obj.PROP.PID];
-            obj.nodeIDs=[obj.NODE.ID];
-            obj.elemEIDs=[obj.ELEM.EID];
-            obj.loadsSIDs=[obj.LOADS.SID];
+            obj.matMIDs=[obj.MAT.MID]';
+            obj.propPIDs=[obj.PROP.PID]';
+            obj.nodeIDs=[obj.NODE.ID]';
+            obj.elemEIDs=[obj.ELEM.EID]';
+            obj.loadsSIDs=unique([obj.LOADS.SID])';
             
             % Process single-point constraints
             obj.sg = obj.NODE.process_ps(); % DOF eliminated by perminant single-point constraints

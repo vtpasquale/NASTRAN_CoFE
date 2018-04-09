@@ -6,13 +6,19 @@ classdef static
     properties
         u
         DB@db;
+        SID; % Load case identification number
     end
     
     methods 
         function obj=solve(obj,MODEL)
             obj.u=zeros(MODEL.ngdof,1);
+            
+            if isempty(obj.SID); error('No load case identification number specified.'); end
+            lc = find(obj.SID==MODEL.loadsSIDs);
+            if isempty(lc); error('No applied loads found for this case.'); end
+            
             f=MODEL.f;
-            obj.u(f)=MODEL.K(f,f)\MODEL.p(f);
+            obj.u(f)=MODEL.K(f,f)\MODEL.p(f,lc);
             
             %% Write output to FEMAP data blocks
             ID = 1;% [int] ID of output set
@@ -22,8 +28,8 @@ classdef static
             value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.
             notes = 'Notes text. '; % [1xN char] One line of text.
             StudyID = 1; % [int] ID of Analysis Study
-            nas_case = 1; % [int] Nastran SUBCASE ID associated with these results
-            nas_rev = 1; % [int] Revision of Nastran SUBCASE
+            nas_case = 0; % [int] Nastran SUBCASE ID associated with these results
+            nas_rev = 0; % [int] Revision of Nastran SUBCASE
             
             obj.DB(1,1)=db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
 
@@ -37,20 +43,21 @@ classdef static
             
             out_type = 1; % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             ent_type = 7; % [int] Either nodal (7) or elemental (8) output
-            compute_type = 1; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
+            compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
             
-            calc_warn = false; % [logical] If 1, can not linearly combine this output
+            calc_warn = true; % [logical] If 1, can not linearly combine this output
             comp_dir = 1; % [int] If 1, comp[0..2] are the X,Y,Z component values. If 2, data at end of Beams. If 3, reverse data at second end of beam.
             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             
-            entityID =MODEL.nodeIDs';% [Nx1 int] Node/element IDs of the for results
+            entityID =MODEL.nodeIDs;% [Nx1 int] Node/element IDs of the for results
             value = sqrt(sum(obj.u( MODEL.node2gdof(1:3,:) ).^2)).'; % [Nx1 real] result values
             
             obj.DB(2,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value);
 
+            calc_warn = false; % [logical] If 1, can not linearly combine this output
             vecID = 2; % [int] ID of output vector, must be unique in each output set
             title = 'T1 Translation'; % [max 79 char] Output Vector title
             comp = [2,0,0,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
@@ -75,9 +82,18 @@ classdef static
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value);
             
+            ID = 1;
+            Title = 'Analysis Study Title';
+            Analysis_Type = 1;
+            Analysis_Set = 1;
+            Study_Notes = 'Study nodes';
+            obj.DB(6,1) = db1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes);
+            
             %% Write FEMAP data blocks to file
-            obj.DB.writeNeu_all(1) ;
-        
+            fid = fopen('myNeu.neu','w+');
+%             fid = 1;
+            obj.DB.writeNeu_all(fid) ;
+            fclose('all');
         end
     end
 end

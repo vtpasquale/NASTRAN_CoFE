@@ -34,6 +34,8 @@ classdef db1051 < db
     methods
         function writeNeu(obj,fid)
             % Writes single data block to FEMAP Neutral File
+%             fprintf(fid,'   -1\n');
+%             fprintf(fid,'  1051\n');
             fprintf(fid,'%d,%d,1\n',obj.setID,obj.vecID);
             fprintf(fid,'%s\n',obj.title);
             fprintf(fid,'%G,%G,%G\n',obj.min_val,obj.max_val,obj.abs_max);
@@ -49,11 +51,12 @@ classdef db1051 < db
             if mv ~= 1; error('size(db1051.value) should be Nx1. size(db1051.value,2)~=1'); end
             if ne~=nv; error('db1051.entityID and db1051.value should be the same length'); end
             fprintf(fid,'%d,%f\n',[double(obj.entityID),obj.value]');
+            fprintf(fid,'-1,0.\n');
         end
         function obj = db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value)
-            % db450 class constructor method
+            % db1051 class constructor method
             if nargin~=0
                 obj.setID=setID; % [int] ID of output set
                 obj.vecID=vecID; % [int] ID of output vector, must be unique in each output set
