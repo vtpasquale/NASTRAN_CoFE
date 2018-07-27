@@ -22,8 +22,8 @@ classdef c_rod < elem
             n1 = MODEL.NODE(g1ind);
             n2 = MODEL.NODE(g2ind);
             obj.gdof = [MODEL.node2gdof(:,g1ind);MODEL.node2gdof(:,g2ind)];
-            p1 = n1.X_P;
-            p2 = n2.X_P;
+            p1 = n1.X_0;
+            p2 = n2.X_0;
             
             pty=MODEL.PROP(obj.PID==MODEL.propPIDs);
             if ~isa(pty,'p_rod');

@@ -57,9 +57,9 @@ classdef node
             % reference frame to the basic reference frame
             R_0g=spalloc(6*nnodes,6*nnodes,18*nnodes);
             for i = 1:nnodes
-                t_g0 = obj(i).T_G0;
-                R_0g(1+6*(i-1):3+6*(i-1),1+6*(i-1):3+6*(i-1))= t_g0;
-                R_0g(4+6*(i-1):6+6*(i-1),4+6*(i-1):6+6*(i-1))= t_g0;
+                t_0g = obj(i).T_G0.';
+                R_0g(1+6*(i-1):3+6*(i-1),1+6*(i-1):3+6*(i-1))= t_0g;
+                R_0g(4+6*(i-1):6+6*(i-1),4+6*(i-1):6+6*(i-1))= t_0g;
             end
             MODEL.R_0g = R_0g;
         end
