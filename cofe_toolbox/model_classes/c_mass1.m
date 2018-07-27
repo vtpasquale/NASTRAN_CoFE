@@ -10,14 +10,14 @@ classdef c_mass1 < elem
         C % Component number. (0 < Integer < 6; blank or zero if scalar point)
         
         gdof
-        T_e0 % [3  x 3 ] rotation matrix from the basic reference frame to the element reference frame        
-        m_0 % [1 x 1] element mass matrix in the basic reference frame
+        m_e % [1 x 1] element mass matrix in the element reference frame
     end
     properties (Hidden=true)
         gdof_plot
     end
     properties (Constant=true)
-        k_0 = 0; % [1 x 1] element stiffness matrix in the basic reference frame
+        k_e = 0; % [1 x 1] element stiffness matrix in the element reference frame
+        R_eg = 1;% [1 x 1] rotation matrix from the element reference frame to the nodal displacement reference frame
     end
     methods
         function obj=assemble(obj,MODEL)
@@ -29,7 +29,7 @@ classdef c_mass1 < elem
             if ~isa(pty,'p_mass');
                 error('CMASS1 EID=%d references property PID = %d, which is not type PMASS. Only PMASS properties are supported for CMASS1 elements.',obj.EID,obj.PID);
             end
-            obj.m_0 = pty.M;
+            obj.m_e = pty.M;
         end
     end
 end

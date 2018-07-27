@@ -15,7 +15,10 @@ classdef node
     end
     methods
         function obj = preprocess(obj,MODEL)
-            % Function to preprocess nodes            
+            % Function to preprocess nodes
+            % Output:
+            %        R_0g ([ngdof,ngdof] int sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
+            
             [nnodes,m]=size(obj);
             if m > 1; error('node.preprocess() can only handel nx1 arrays of node objects. The second dimension exceeds 1.'); end
             
@@ -35,22 +38,30 @@ classdef node
                 if isempty(obj(i).CP); obj(i).CP=CPdefault; end
                 if isempty(obj(i).CD); obj(i).CD=CDdefault; end
             end
-%         end
-
-%         function MODEL = assemble(obj,MODEL)
+            
             % set X_0 and T_G0 for all nodes
-            nn = size(obj,1);
             CORD = MODEL.CORD;
             cordCIDs=MODEL.cordCIDs;
             
             % Loop through nodes
-            for i=1:nn
+            for i=1:nnodes
                 oi = obj(i);
                 oi.X_0=CORD(oi.CP==cordCIDs).X_0(oi.X_P);
                 oi.T_G0=CORD(oi.CD==cordCIDs).TC_C0;
                 obj(i)=oi;
             end
-%             MODEL.NODE=obj;
+        end
+        function MODEL = assemble(obj,MODEL)
+            nnodes = size(obj,1);
+            % Create transformation matrix from the nodal displacement
+            % reference frame to the basic reference frame
+            R_0g=spalloc(6*nnodes,6*nnodes,18*nnodes);
+            for i = 1:nnodes
+                t_g0 = obj(i).T_G0;
+                R_0g(1+6*(i-1):3+6*(i-1),1+6*(i-1):3+6*(i-1))= t_g0;
+                R_0g(4+6*(i-1):6+6*(i-1),4+6*(i-1):6+6*(i-1))= t_g0;
+            end
+            MODEL.R_0g = R_0g;
         end
         function sg = process_ps(obj)
             % Process perminant single point constraints. Returns sg [nnodes,1 logical] set.

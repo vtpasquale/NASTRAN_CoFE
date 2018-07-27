@@ -29,20 +29,20 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
             % assemble element and global matricies
             
             % Preallocate Sparse Matrices
-            K = spalloc(MODEL.ngdof,MODEL.ngdof,20*MODEL.ngdof);
-            M = K;
+            K_g = spalloc(MODEL.ngdof,MODEL.ngdof,20*MODEL.ngdof);
+            M_g = K_g;
             
             % Loop through elements
             nelem = size(obj,1);
             for i=1:nelem
                 oi=obj(i).assemble(MODEL);
-                K(oi.gdof,oi.gdof)=K(oi.gdof,oi.gdof)+oi.k_0;
-                M(oi.gdof,oi.gdof)=M(oi.gdof,oi.gdof)+oi.m_0;
+                K_g(oi.gdof,oi.gdof)=K_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
+                M_g(oi.gdof,oi.gdof)=M_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
                 obj(i)=oi;
             end
             MODEL.ELEM=obj;
-            MODEL.K=K;
-            MODEL.M=M;
+            MODEL.K_g=K_g;
+            MODEL.M_g=M_g;
         end
     end
 end

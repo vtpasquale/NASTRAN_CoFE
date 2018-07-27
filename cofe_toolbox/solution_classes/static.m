@@ -4,21 +4,24 @@
 classdef static
     
     properties
-        u
+        u_g
+        u_0
         DB@db;
         SID; % Load case identification number
     end
     
     methods 
         function obj=solve(obj,MODEL)
-            obj.u=zeros(MODEL.ngdof,1);
+            obj.u_g=zeros(MODEL.ngdof,1);
+            obj.u_0=zeros(MODEL.ngdof,1);
             
             if isempty(obj.SID); error('No load case identification number specified.'); end
             lc = find(obj.SID==MODEL.loadsSIDs);
             if isempty(lc); error('No applied loads found for this case.'); end
             
             f=MODEL.f;
-            obj.u(f)=MODEL.K(f,f)\MODEL.p(f,lc);
+            obj.u_g(f) = MODEL.K_g(f,f)\MODEL.p_g(f,lc);
+            obj.u_0    = MODEL.R_0g*obj.u_g;
             
             %% Write output to FEMAP data blocks
             ID = 1;% [int] ID of output set
@@ -51,7 +54,7 @@ classdef static
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             
             entityID =MODEL.nodeIDs;% [Nx1 int] Node/element IDs of the for results
-            value = sqrt(sum(obj.u( MODEL.node2gdof(1:3,:) ).^2)).'; % [Nx1 real] result values
+            value = sqrt(sum(obj.u_0( MODEL.node2gdof(1:3,:) ).^2)).'; % [Nx1 real] result values
             
             obj.DB(2,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
@@ -61,7 +64,7 @@ classdef static
             vecID = 2; % [int] ID of output vector, must be unique in each output set
             title = 'T1 Translation'; % [max 79 char] Output Vector title
             comp = [2,0,0,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-            value = obj.u( MODEL.node2gdof(1,:) ); % [Nx1 real] result values
+            value = obj.u_0( MODEL.node2gdof(1,:) ); % [Nx1 real] result values
             obj.DB(3,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value);
@@ -69,7 +72,7 @@ classdef static
             vecID = 3; % [int] ID of output vector, must be unique in each output set
             title = 'T2 Translation'; % [max 79 char] Output Vector title
             comp = [0,3,0,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-            value = obj.u( MODEL.node2gdof(2,:) ); % [Nx1 real] result values
+            value = obj.u_0( MODEL.node2gdof(2,:) ); % [Nx1 real] result values
             obj.DB(4,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value);
@@ -77,7 +80,7 @@ classdef static
             vecID = 4; % [int] ID of output vector, must be unique in each output set
             title = 'T3 Translation'; % [max 79 char] Output Vector title
             comp = [0,0,4,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-            value = obj.u( MODEL.node2gdof(3,:) ); % [Nx1 real] result values
+            value = obj.u_0( MODEL.node2gdof(3,:) ); % [Nx1 real] result values
             obj.DB(5,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value);

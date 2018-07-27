@@ -25,12 +25,12 @@ classdef (Abstract) cord < matlab.mixin.Heterogeneous
             [ncord,m]=size(obj);
             if m > 1; error('cord.preprocess() can only handel nx1 arrays of cord objects. The second dimension exceeds 1.'); end
             
-            % check that element id numbers are unique
+            % check that id numbers are unique
             CIDS=[obj.CID];
             [~,ia] = unique(CIDS,'stable');
             if size(ia,1)~=ncord
                 nonunique=setxor(ia,1:ncord);
-                error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',CIDS(nonunique)))
+                error('Coordinate systems identification numbers should be unique. Nonunique identification number(s): %s',sprintf('%d,',CIDS(nonunique)))
             end
             
             % Create basic coordinate system and add to array

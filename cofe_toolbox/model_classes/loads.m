@@ -6,21 +6,29 @@ classdef (Abstract) loads < matlab.mixin.Heterogeneous
     properties (Abstract)
         SID % [int] Load set identification number.
     end
-    methods
-        function MODEL = process(obj,MODEL)
-            nloads = size(obj,1);
-            ncases = size(MODEL.loadsSIDs,1);
-            p = zeros(MODEL.ngdof,ncases);
+    methods (Sealed=true)
+        function obj = preprocess(obj,MODEL)
+            % preprocess loads
+            [nloads,m] = size(obj);
+            if m > 1; error('loads.preprocess() can only handel nx1 arrays of loads objects. The second dimension exceeds 1.'); end
             
             % Loop through loads
             for i=1:nloads
-                oi=obj(i).assemble(MODEL);
-                lc = find(oi.SID==MODEL.loadsSIDs);
-                p(oi.gdof,lc)=p(oi.gdof,lc)+oi.p;
-                obj(i)=oi;
+                obj(i)=obj(i).preprocess_sub(MODEL);
             end
-            MODEL.LOADS=obj;
-            MODEL.p=p;
+        end
+        function MODEL = assemble(obj,MODEL)
+            nloads = size(obj,1);
+            ncases = size(MODEL.loadsSIDs,1);
+            p_g = zeros(MODEL.ngdof,ncases);
+            
+            % Loop through loads
+            for i=1:nloads
+                oi=obj(i);
+                lc = find(oi.SID==MODEL.loadsSIDs);
+                p_g(oi.gdof,lc)=p_g(oi.gdof,lc)+oi.p_g;
+            end
+            MODEL.p_g=p_g;
         end
     end
     

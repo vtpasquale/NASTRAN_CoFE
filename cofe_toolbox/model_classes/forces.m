@@ -10,10 +10,10 @@ classdef forces < loads
         F % [3,1 real] Force vector expressed in coordinate system defined by CID.
         
         gdof
-        p % [3,1 real] Force vector expressed in the nodal displacement coordinate system defined at grind point G.
+        p_g % [3,1 real] Force vector expressed in the nodal displacement coordinate system defined at grind point G.
     end
     methods
-        function obj=assemble(obj,MODEL)
+        function obj=preprocess_sub(obj,MODEL)
             gind = obj.G==MODEL.nodeIDs;
             cind = obj.CID==MODEL.cordCIDs;
             obj.gdof = MODEL.node2gdof(1:3,gind);
@@ -21,9 +21,9 @@ classdef forces < loads
             fnode = MODEL.NODE(gind);
             fcord = MODEL.CORD(cind);
             
-            obj.p = fnode.T_G0*...
-                    fcord.T_C0(fcord.X_C(fnode.X_0)).'*...
-                    obj.F;
+            obj.p_g = fnode.T_G0*...
+                      fcord.T_C0(fcord.X_C(fnode.X_0)).'*...
+                      obj.F;
         end
     end
 end
