@@ -3,12 +3,6 @@
 %
 classdef cordr < cord
 
-    properties
-        CID % (Integer >= 0) Coordinate system identification number.
-        XC_0 % ([3,1] Float) Csys location in basic coordinate system.
-    end
-    
-    %%
     methods
         function X_0 = X_0(obj,X_C) 
             % Returns location X ([3,1] Float) expressed in _0 from X expressed in _C

@@ -1,0 +1,682 @@
+CORD2C*                1               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              1.                
+*       
+CORD2S*                2               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              1.                
+*       
+$ Femap with NX Nastran Coordinate System 3 : Cylindrical Coordinate System
+CORD2C*                3               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              0.                
+*       
+$ Femap with NX Nastran Coordinate System 4 : Spherical Coordinate System
+CORD2S*                4               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              0.                
+*       
+$ Femap with NX Nastran Coordinate System 120 : Cylindrical Coordinate System
+CORD2C*              120            5853       47.844411      -21.812503
+*              30.08202946.8602375686779-21.84711654109330.2569130007875*       
+*       47.6821519862499-21.20379480025929.2357520990465                
+*       
+$ Femap with NX Nastran Coordinate System 319 : Spherical Coordinate System
+CORD2S*              319            1869        7.37097682.3182050000001
+*              36.0440566.3822862536446981.878123874482236.1844740373634*       
+*       7.4172120122645489.888945228149936.2554884769966                
+*       
+$ Femap with NX Nastran Coordinate System 345 : Rectangular Coordinate System
+CORD2R*              345            3500      -40.662948       -19.26331
+*              -4.394233-39.160628180424105.287422067115-26.835220274482*       
+*        50.505621773592-35.894111498662-90.594279752295                
+*       
+$ Femap with NX Nastran Coordinate System 358 : Spherical Coordinate System
+CORD2S*              358            5853       24.870572      -65.331272
+*             -38.82942624.3971453272685-63.288322953372-38.762177623807*       
+*        24.473762289454-66.013236872971-37.959764164926                
+*       
+$ Femap with NX Nastran Coordinate System 462 : Rectangular Coordinate System
+CORD2R*              462             358       20.446617      126.648574
+*             -79.374142 19.520032513137125.585288375044-79.598452462351*       
+*       20.1135513715427129.295539346088-79.758522405148                
+*       
+$ Femap with NX Nastran Coordinate System 540 : Spherical Coordinate System
+CORD2S*              540            7923       47.295833      -31.079316
+*               16.7120346.7374740966432-30.37738439165916.2698452509937*       
+*       47.8493233936974-31.161157780141 15.883205345982                
+*       
+$ Femap with NX Nastran Coordinate System 759 : Rectangular Coordinate System
+CORD2R*              759            7578        13.38432      176.253962
+*               80.8998413.7821898216895174.921746865232130.189294757857*       
+*       12.4592670954046176.079855763893106.186235491916                
+*       
+$ Femap with NX Nastran Coordinate System 972 : Rectangular Coordinate System
+CORD2R*              972            3500       -5.397335      -44.576052
+*             -32.28924736.37342671701318.71890042854562106.710374905126*       
+*         -88.281029136883.6718983944596 -56.55444521485                
+*       
+$ Femap with NX Nastran Coordinate System 976 : Cylindrical Coordinate System
+CORD2C*              976            3404       16.783273      100.987075
+*             108.390688 16.94702796050798.5714851325223106.032336869109*       
+*       15.917241867621999.4956466933981109.326439387385                
+*       
+$ Femap with NX Nastran Coordinate System 1190 : Cylindrical Coordinate System
+CORD2C*             1190            6551       30.375108       78.322791
+*              126.5801829.527510364410278.7170379198264125.625547646484*       
+*       29.887283779501577.2048665446148127.835926570871                
+*       
+$ Femap with NX Nastran Coordinate System 1270 : Rectangular Coordinate System
+CORD2R*             1270            1627       46.864933      141.973487
+*            -103.77847545.8656647720055141.956162740602-103.70709558694*       
+*       46.8663397352609140.974280125685-104.90957265407                
+*       
+$ Femap with NX Nastran Coordinate System 1300 : Cylindrical Coordinate System
+CORD2C*             1300            3372        22.01658       29.675867
+*             144.06697721.077649343558830.3534912251796145.296944641031*       
+*       21.985079502124231.2009613226152139.900846886969                
+*       
+$ Femap with NX Nastran Coordinate System 1387 : Spherical Coordinate System
+CORD2S*             1387            3171       13.118873       -99.29826
+*             -11.27545713.1183593121013-100.38774192485-12.243845228008*       
+*       12.3710099529057-96.399050223487-11.434349348221                
+*       
+$ Femap with NX Nastran Coordinate System 1419 : Spherical Coordinate System
+CORD2S*             1419            3171         2.54044-5.4528000000001
+*              24.1257942.54185273188402-7.128071592269223.1285589123783*       
+*       2.99760247930908 13.034689024597 24.055062426807                
+*       
+$ Femap with NX Nastran Coordinate System 1493 : Cylindrical Coordinate System
+CORD2C*             1493            4898       -7.888775      -31.589971
+*              22.577527-7.9657300962773-30.59301886470122.5903470265198*       
+*       -7.3491043886704-31.559132236171 23.418838239621                
+*       
+$ Femap with NX Nastran Coordinate System 1577 : Cylindrical Coordinate System
+CORD2C*             1577            1190       38.060375      165.141178
+*             -14.97819971.51030778724056.5501858754524564.2673707655634*       
+*       80.1388894932396-73.469194900524-97.814300011838                
+*       
+$ Femap with NX Nastran Coordinate System 1627 : Spherical Coordinate System
+CORD2S*             1627            6161       22.292252       47.435894
+*             -40.14059121.306554581036647.4466643646114-39.972116032299*       
+*       22.4606982508579 47.615644805056-39.157383071094                
+*       
+$ Femap with NX Nastran Coordinate System 1712 : Spherical Coordinate System
+CORD2S*             1712            47333.58010599999999-3.4713740000001
+*             -22.9705673.62126853660013-12.346285580657-23.799946573421*       
+*       4.18534276799097-13.028445354969-22.503925019119                
+*       
+$ Femap with NX Nastran Coordinate System 1869 : Cylindrical Coordinate System
+CORD2C*             1869            6161       29.896028     -153.761292
+*              44.30081429.6512591565139-153.5957970159643.3350539425507*       
+*       29.8715787691749-151.8538316509444.3993860929436                
+*       
+$ Femap with NX Nastran Coordinate System 1966 : Cylindrical Coordinate System
+CORD2C*             1966            1577       10.263822       18.645305
+*             -41.74072749.821814785707133.9387766998696 126.71928658133*       
+*       159.021690829245-137.69372933873-1.7825465261646                
+*       
+$ Femap with NX Nastran Coordinate System 2239 : Rectangular Coordinate System
+CORD2R*             2239             120        7.5665228.79624600000002
+*              15.3690137.3131745584334110.506556303574416.3105606287597*       
+*       7.3705074412316816.002873819623415.0853788682474                
+*       
+$ Femap with NX Nastran Coordinate System 2436 : Rectangular Coordinate System
+CORD2R*             2436            6551       18.383861      138.729402
+*              24.81641919.2734665023762139.49469173031726.5896621504978*       
+*       17.9742052790072139.100768659098 29.156148550486                
+*       
+$ Femap with NX Nastran Coordinate System 2511 : Spherical Coordinate System
+CORD2S*             2511            3500       -14.54657       47.125882
+*             -15.355124 64.177547413921-29.312672673416-5.4439756741469*       
+*       -89.963170334732-32.187408688597-28.016422448262                
+*       
+$ Femap with NX Nastran Coordinate System 2543 : Cylindrical Coordinate System
+CORD2C*             2543            6551       11.669368      169.181386
+*             -98.70502110.9821298799912166.154185873382-108.56462718146*       
+*       11.1540516887276 168.46738557853 -76.65957307871                
+*       
+$ Femap with NX Nastran Coordinate System 2551 : Cylindrical Coordinate System
+CORD2C*             2551            1190       28.783679       63.003505
+*              39.43893829.068631537814362.859739849408438.4831481641252*       
+*       27.840170604827162.605352798248139.1723004002267                
+*       
+$ Femap with NX Nastran Coordinate System 2576 : Rectangular Coordinate System
+CORD2R*             2576            9341       23.467796      134.482971
+*             -31.93831123.1807502909246136.720650910875 -32.23488160356*       
+*        23.137643472785 134.95684179857-31.014266923979                
+*       
+$ Femap with NX Nastran Coordinate System 2761 : Cylindrical Coordinate System
+CORD2C*             2761            9172       25.809928       -6.735767
+*              15.54980425.1228882017863-6.204740943329315.0538325867036*       
+*       25.3727317318137-6.492678990499116.4156952418548                
+*       
+$ Femap with NX Nastran Coordinate System 2770 : Rectangular Coordinate System
+CORD2R*             2770            3404       35.893882      116.063114
+*            -174.439881 34.921367089345115.708362597673-174.29867010962*       
+*       35.6787961934872 117.58303604952-174.85130706179                
+*       
+$ Femap with NX Nastran Coordinate System 2785 : Rectangular Coordinate System
+CORD2R*             2785            2551       49.884894      165.929892
+*              28.47392959.3870086290755-21.253546168784-38.057529800388*       
+*        117.20415652067150.379472636059-78.111038273783                
+*       
+$ Femap with NX Nastran Coordinate System 2859 : Spherical Coordinate System
+CORD2S*             2859            2239       43.602733      -37.522596
+*              23.05853643.2556775375343-36.67353185928422.6602363754415*       
+*        44.398684492862-37.480541439387 22.454638132027                
+*       
+$ Femap with NX Nastran Coordinate System 3171 : Cylindrical Coordinate System
+CORD2C*             3171            6161       41.213247       85.056284
+*               9.72113540.426262770590485.72071213724029.32540136255105*       
+*       41.008652555879383.91857377397479.18097755525837                
+*       
+$ Femap with NX Nastran Coordinate System 3372 : Spherical Coordinate System
+CORD2S*             3372            6161       38.401674       82.219257
+*              -5.34690238.117274364041780.9613977283701-4.8846734662613*       
+*       37.471856095995282.7681367621313-5.2887493497681                
+*       
+$ Femap with NX Nastran Coordinate System 3404 : Spherical Coordinate System
+CORD2S*             3404             120       34.563019      -87.079525
+*              18.553571 34.023885931113 -86.8046532187517.7275743754068*       
+*       33.8006465129159-87.930740805617 18.954745245681                
+*       
+$ Femap with NX Nastran Coordinate System 3500 : Rectangular Coordinate System
+CORD2R*             3500            1627       48.830226        58.45747
+*             122.43210757.1791785656374102.955649831945-76.155109859341*       
+*       103.492776306917114.37681909411868.0799468095009                
+*       
+$ Femap with NX Nastran Coordinate System 3517 : Cylindrical Coordinate System
+CORD2C*             3517            6551       32.964339      141.159994
+*             -91.84251632.3668602121711140.831539375247 -94.01574442383*       
+*       32.2976467881766142.267965083453-90.717969319763                
+*       
+$ Femap with NX Nastran Coordinate System 3805 : Cylindrical Coordinate System
+CORD2C*             3805            5473       21.849844       135.15375
+*            -171.440159 131.28289588977125.256596377027-58.185999623151*       
+*       107.95731743619658.249493087137919.6056610854353                
+*       
+$ Femap with NX Nastran Coordinate System 3816 : Cylindrical Coordinate System
+CORD2C*             3816            9158       39.084579      105.830299
+*       8.7205210000000138.2301196023288105.8929328430189.51840359809937*       
+*       38.6713613554977104.9060120242237.71134947498912                
+*       
+$ Femap with NX Nastran Coordinate System 3923 : Cylindrical Coordinate System
+CORD2C*             3923            7432        5.229134       12.988339
+*             -46.8008985.4559428227869512.0164874761186-46.737161248943*       
+*       4.3204666421515712.8007384199315-46.427897121799                
+*       
+$ Femap with NX Nastran Coordinate System 4218 : Cylindrical Coordinate System
+CORD2C*             4218            3171       35.000275       16.003473
+*              -5.75976934.215487376725916.3372218737664-5.1737019405323*       
+*       34.641892707101617.0244604146261-6.4573113707879                
+*       
+$ Femap with NX Nastran Coordinate System 4388 : Spherical Coordinate System
+CORD2S*             4388            7952       45.364874       -132.8148
+*              27.72405444.4032296318712-132.8186432563527.9983367845816*       
+*       45.1021716869584-133.1550202258526.7973150690838                
+*       
+$ Femap with NX Nastran Coordinate System 4456 : Rectangular Coordinate System
+CORD2R*             4456            4733       26.517309      -47.905095
+*              -13.0801225.8999611785036-48.927148591721-12.447389713908*       
+*       27.2225146809359-47.858896562671-12.371448263698                
+*       
+$ Femap with NX Nastran Coordinate System 4694 : Cylindrical Coordinate System
+CORD2C*             4694            7952       14.680967       -8.793744
+*              28.02958213.8188182634691-7.251974760602727.6982070664227*       
+*        14.795443147674-10.78074169162827.1777099739225                
+*       
+$ Femap with NX Nastran Coordinate System 4733 : Cylindrical Coordinate System
+CORD2C*             4733            3404       20.433962       83.140297
+*             -67.73104619.682600324093582.1730307570117-66.099303714928*       
+*       20.008317417029885.6953128687646-67.950425140673                
+*       
+$ Femap with NX Nastran Coordinate System 4854 : Spherical Coordinate System
+CORD2S*             4854            24362.24953099999999       49.370462
+*             -28.1323371.8284221628147248.4770953775468-28.289064231619*       
+*       2.6243528748194949.0417059068038-27.265487535939                
+*       
+$ Femap with NX Nastran Coordinate System 4898 : Rectangular Coordinate System
+CORD2R*             4898            6551       22.272454       50.658452
+*             134.84366322.010084007885352.8877383117543133.410578020562*       
+*        21.31535577961349.9689435163849135.265105324092                
+*       
+$ Femap with NX Nastran Coordinate System 4984 : Cylindrical Coordinate System
+CORD2C*             4984             358       28.796916      105.582522
+*            -150.083359104.972961549956148.774753032817-14.950313612197*       
+*       88.234648703032240.25182332542178.42640026674726                
+*       
+$ Femap with NX Nastran Coordinate System 5060 : Rectangular Coordinate System
+CORD2R*             5060            3923       34.640962     -115.295797
+*              24.86188734.5555921174605-116.1082631680523.9946976305952*       
+*       33.6727180826789-114.88134421744 24.823548735559                
+*       
+$ Femap with NX Nastran Coordinate System 5308 : Spherical Coordinate System
+CORD2S*             5308            1190       41.612649       83.245614
+*             -23.15611893.9154601600065-49.413491391673-24.901024390787*       
+*       106.710721340571-172.33087948355-.34559905121573                
+*       
+$ Femap with NX Nastran Coordinate System 5469 : Cylindrical Coordinate System
+CORD2C*             5469            7513       32.412558       54.979632
+*              34.51414631.664118959804254.501163443873233.1849182456044*       
+*        31.76647519946655.603328723550535.9883183810595                
+*       
+$ Femap with NX Nastran Coordinate System 5473 : Spherical Coordinate System
+CORD2S*             5473            1577       31.4539772.02918200000001
+*              -5.60358463.390611896251895.2729235827581-120.90041830071*       
+*       94.7581315261167162.129947303347 48.739280311099                
+*       
+$ Femap with NX Nastran Coordinate System 5498 : Spherical Coordinate System
+CORD2S*             5498            6551       40.636432       39.292289
+*            -102.29018939.649589858540839.4897677954356 -102.1019716538*       
+*       40.747289905020740.6017837826002-103.05886916042                
+*       
+$ Femap with NX Nastran Coordinate System 5679 : Spherical Coordinate System
+CORD2S*             5679            4694         25.9095       101.34277
+*              33.67227825.8318233893727101.13139461777132.6798782776432*       
+*        25.081784534147102.60370853683533.6846854198627                
+*       
+$ Femap with NX Nastran Coordinate System 5689 : Rectangular Coordinate System
+CORD2R*             5689            3923       48.477624      -24.026198
+*             -23.090846 47.982552906302-23.918335507535-22.226750548101*       
+*       48.1603589173091-22.952163255829-23.371867284661                
+*       
+$ Femap with NX Nastran Coordinate System 5853 : Cylindrical Coordinate System
+CORD2C*             5853            6161       33.242339      -72.278992
+*             -14.03936832.4523366721631-71.875132049841-13.471655138391*       
+*        33.186461871832-73.928246599116 -13.75150675928                
+*       
+$ Femap with NX Nastran Coordinate System 6161 : Cylindrical Coordinate System
+CORD2C*             6161               0       22.610443       28.287207
+*              19.37876121.660812878227628.367203807461919.6817513341996*       
+*       22.427899801546927.360103177962119.0514133501516                
+*       
+$ Femap with NX Nastran Coordinate System 6324 : Rectangular Coordinate System
+CORD2R*             6324            2239       45.769394      -25.929296
+*               17.6122344.9291813040312-25.387565919144 17.636128640729*       
+*       45.3719134818989 -26.5146041472616.9055309052775                
+*       
+$ Femap with NX Nastran Coordinate System 6464 : Rectangular Coordinate System
+CORD2R*             6464            2551       28.936394     -148.800043
+*             -11.17283728.1807529695468-148.00930177395-10.649681612716*       
+*       28.2950147044807-149.91303714596-11.701691988315                
+*       
+$ Femap with NX Nastran Coordinate System 6551 : Spherical Coordinate System
+CORD2S*             6551            6161       18.418856       45.119585
+*             -49.21797117.679010859705145.0762427829974-48.545332291601*       
+*       19.074789499143245.7677505071381-48.493547520835                
+*       
+$ Femap with NX Nastran Coordinate System 6555 : Rectangular Coordinate System
+CORD2R*             6555            6551       29.450583       15.354868
+*              96.94740228.510071608133414.826836935760495.3517098212346*       
+*       29.195479383919617.2442734600581 96.942510516957                
+*       
+$ Femap with NX Nastran Coordinate System 6558 : Rectangular Coordinate System
+CORD2R*             6558            7578       33.274645      174.807556
+*            -152.14457732.9818835027073176.441232300511 -155.5773474872*       
+*       32.3515608658757174.220533608692-155.56332349131                
+*       
+$ Femap with NX Nastran Coordinate System 6788 : Spherical Coordinate System
+CORD2S*             6788            3816        2.047661      179.313945
+*              34.5178192.84930529159678167.80489852866334.1674707294653*       
+*       2.43026175045923-163.0751893493633.8955920787353                
+*       
+$ Femap with NX Nastran Coordinate System 6798 : Rectangular Coordinate System
+CORD2R*             6798            8910       26.895826      -10.399325
+*             -22.706121-101.8933458851538.40559401014184.86124119555566*       
+*       17.010318888014437.8205354401323 -154.2570699937                
+*       
+$ Femap with NX Nastran Coordinate System 6949 : Spherical Coordinate System
+CORD2S*             6949            4898      -14.036509      -44.329531
+*               2.188567-14.107378023777-43.975082672961 1.2561808327237*       
+*       -13.328709957862-43.6530262166522.39194299183705                
+*       
+$ Femap with NX Nastran Coordinate System 6991 : Cylindrical Coordinate System
+CORD2C*             6991            1577       17.416637      149.433619
+*             -47.94642320.5979509420341 -57.29103729982133.031759134772*       
+*       185.837668579104 66.819907269559-37.232437137253                
+*       
+$ Femap with NX Nastran Coordinate System 7061 : Cylindrical Coordinate System
+CORD2C*             7061            4854       14.031183      161.255924
+*              25.56740213.0812927771486159.93552960511725.7625681854005*       
+*       14.0379072495302161.405960847073 38.338742685191                
+*       
+$ Femap with NX Nastran Coordinate System 7094 : Rectangular Coordinate System
+CORD2R*             7094            9172       14.194062       -1.551963
+*             -34.81544747.5336454211853-92.973332343201-.94490981446875*       
+*       -82.696126594662-36.599071183028-34.041207619302                
+*       
+$ Femap with NX Nastran Coordinate System 7432 : Rectangular Coordinate System
+CORD2R*             7432            1419        8.144649      173.886142
+*             -92.8266288.82650345299416170.983149672979-61.467899007362*       
+*       7.72762736770095175.065251239732-20.692683449933                
+*       
+$ Femap with NX Nastran Coordinate System 7513 : Spherical Coordinate System
+CORD2S*             7513            3404        4.211367       86.642142
+*            -160.9343253.9403160003581187.3567040562586-147.36401565301*       
+*       3.3092325517130885.9069662155658-167.53301267248                
+*       
+$ Femap with NX Nastran Coordinate System 7538 : Cylindrical Coordinate System
+CORD2C*             7538            1190       19.474323      121.609146
+*             -46.807737111.65649309872574.505650679405949.9140825849386*       
+*       91.7883240543088-73.68112268938736.7897027249878                
+*       
+$ Femap with NX Nastran Coordinate System 7547 : Rectangular Coordinate System
+CORD2R*             7547            54699.46845799999999      -77.605959
+*              46.4422678.79159586279533-77.76573944412245.7065970447723*       
+*       9.92649773777682-82.40629108627746.0805409433828                
+*       
+$ Femap with NX Nastran Coordinate System 7573 : Rectangular Coordinate System
+CORD2R*             7573            24365.22616200000001       47.912913
+*               4.9308534.7467996021704547.13574088620064.52315801955546*       
+*        6.013883580891847.32708917051025.12139210831959                
+*       
+$ Femap with NX Nastran Coordinate System 7578 : Spherical Coordinate System
+CORD2S*             7578            7952       25.326547     -134.654477
+*              39.07521224.3536307768769-134.8543234833539.2895251427715*       
+*       25.1835304089913-132.5639810855738.7138733852126                
+*       
+$ Femap with NX Nastran Coordinate System 7656 : Cylindrical Coordinate System
+CORD2C*             7656            25512.61024699999999      101.295739
+*               5.6669831.76353465198595100.2704880533385.13631898574506*       
+*       3.1420360036097997.52531326389234.84133360435196                
+*       
+$ Femap with NX Nastran Coordinate System 7792 : Cylindrical Coordinate System
+CORD2C*             7792            6551       34.776599       41.704899
+*            -108.17640633.879950221144741.0939517899144-107.54759786294*       
+*       35.074892943128940.2200255385883-108.93482855479                
+*       
+$ Femap with NX Nastran Coordinate System 7923 : Rectangular Coordinate System
+CORD2R*             7923            7952        30.29462      -40.402456
+*             -10.32084835.2654683889861-37.450818777788  98.08740639853*       
+*       78.9258383241309155.194618122987-5.1364371541319                
+*       
+$ Femap with NX Nastran Coordinate System 7952 : Cylindrical Coordinate System
+CORD2C*             7952            6551       28.017553       86.851458
+*              98.91721927.207499902755685.650351987972798.7217544214763*       
+*       27.482470633263688.550448457268598.5213842053468                
+*       
+$ Femap with NX Nastran Coordinate System 8003 : Rectangular Coordinate System
+CORD2R*             8003            6161       26.350464      155.827285
+*              -36.11258 26.107936853067155.948242880985-35.144016888365*       
+*       25.6683741225072157.368877856294-36.325038453454                
+*       
+$ Femap with NX Nastran Coordinate System 8143 : Spherical Coordinate System
+CORD2S*             8143            9649       48.610424      148.652201
+*            -167.94967347.6798040532172149.018317600049-167.49369469908*       
+*       48.2579064781338147.762261406452-169.19959630552                
+*       
+$ Femap with NX Nastran Coordinate System 8148 : Rectangular Coordinate System
+CORD2R*             8148            6788       18.728111      152.238848
+*              84.76636617.9478457959592150.46268871703386.4695065424363*       
+*       18.1333314424549154.44077740508582.1276377885881                
+*       
+$ Femap with NX Nastran Coordinate System 8235 : Rectangular Coordinate System
+CORD2R*             8235            2770       20.691742       49.949162
+*             -21.21506620.313639267455349.2577912715946-20.599399824588*       
+*       21.095296379545249.2275477454887-21.777575315866                
+*       
+$ Femap with NX Nastran Coordinate System 8309 : Rectangular Coordinate System
+CORD2R*             8309            9172      -40.091035      -45.583443
+*       5.7295159999999987.74483592330515.24950862696175-66.087445213543*       
+*       -20.05892036386660.9444565550578116.788940558967                
+*       
+$ Femap with NX Nastran Coordinate System 8408 : Rectangular Coordinate System
+CORD2R*             8408            2551       15.256235     -134.155259
+*              30.05586615.0557141219937-137.4026038833729.5845358653051*       
+*       14.3085752068213-132.9625065352829.9701770905161                
+*       
+$ Femap with NX Nastran Coordinate System 8492 : Rectangular Coordinate System
+CORD2R*             8492            7578         .48229853.1389599999999
+*             100.900715 1.368659881518325.9456200897901 132.48091576712*       
+*       .76780575582277452.1234148984953-63.559499429088                
+*       
+$ Femap with NX Nastran Coordinate System 8910 : Rectangular Coordinate System
+CORD2R*             8910            4984       43.261357      106.076839
+*             -24.23862672.9395633801166-126.2364227065462.3862723392965*       
+*       102.111141172179-15.560141487855-64.503739197354                
+*       
+$ Femap with NX Nastran Coordinate System 9058 : Spherical Coordinate System
+CORD2S*             9058            1270       13.853076      -46.639616
+*              -43.11939-40.59125262747238.247112198470856.8544394008034*       
+*       104.64023029921155.8719953547122-80.719526445361                
+*       
+$ Femap with NX Nastran Coordinate System 9134 : Cylindrical Coordinate System
+CORD2C*             9134            1387       34.634328      170.228613
+*              -86.7506233.7546292752349170.732778150591-90.483970904086*       
+*       34.1793108026029169.076131891951-81.545331568651                
+*       
+$ Femap with NX Nastran Coordinate System 9158 : Spherical Coordinate System
+CORD2S*             9158            3171       23.634007       73.457075
+*             -16.91421222.785550249306874.4411068670923-16.565957257036*       
+*       23.375813495799774.0992056806301-17.843698652641                
+*       
+$ Femap with NX Nastran Coordinate System 9172 : Rectangular Coordinate System
+CORD2R*             9172             759       -1.434833       39.444776
+*             -36.245341-14.33056792802943.881714345320268.9123545130276*       
+*       68.0062208400784-39.810593256662 -24.38558499938                
+*       
+$ Femap with NX Nastran Coordinate System 9293 : Rectangular Coordinate System
+CORD2R*             9293            7952       45.818014      -21.722036
+*              48.43494244.8500333720675-21.41040823050948.3877773511657*       
+*       45.7800717126586  -22.144378597347.4944160069895                
+*       
+$ Femap with NX Nastran Coordinate System 9340 : Spherical Coordinate System
+CORD2S*             9340            79238.27909700000001       31.539721
+*               37.901398.7251036486427730.644815527964437.8864814290682*       
+*       8.5265135112689531.679003232102236.9425440635889                
+*       
+$ Femap with NX Nastran Coordinate System 9341 : Cylindrical Coordinate System
+CORD2C*             9341            6551       23.596616       67.040447
+*              54.65904823.028933018616268.850413464382253.6826865174352*       
+*       22.794874573684565.852858524674555.6162520818692                
+*       
+$ Femap with NX Nastran Coordinate System 9503 : Cylindrical Coordinate System
+CORD2C*             9503            3517       28.739847       87.295161
+*              -48.6716848.2882970417034-155.24801481134 54.800204591931*       
+*       116.588903987492163.858843386534-96.443841432283                
+*       
+$ Femap with NX Nastran Coordinate System 9572 : Rectangular Coordinate System
+CORD2R*             9572            9595       38.078546      172.606761
+*              14.73114879.256575143655237.9851721125354-.98896469571824*       
+*       76.9326513839381-84.58562985746574.3220005694373                
+*       
+$ Femap with NX Nastran Coordinate System 9576 : Spherical Coordinate System
+CORD2S*             9576            5689       41.742434      -23.093841
+*              26.550002-57.874958099484-20.573672396844-65.634548220379*       
+*       27.6949757600042110.60683025251445.3852556868201                
+*       
+$ Femap with NX Nastran Coordinate System 9593 : Rectangular Coordinate System
+CORD2R*             9593            2543       43.581291     -102.523495
+*             -10.92379242.7445699578388 -102.3265046521-10.396651131248*       
+*       43.1474096600376-101.98741281652-11.728237203933                
+*       
+$ Femap with NX Nastran Coordinate System 9595 : Cylindrical Coordinate System
+CORD2C*             9595            8003      -12.260446      -28.398108
+*              29.040722-11.298836837517-28.21055322429528.8403947059542*       
+*       -12.446992575031-27.41595682944329.0647938407611                
+*       
+$ Femap with NX Nastran Coordinate System 9598 : Cylindrical Coordinate System
+CORD2C*             9598            7792       32.956798       26.638117
+*               48.2835232.305814143968926.292154445992347.5504431634384*       
+*        32.683027098714 28.31725656741748.2844916372279                
+*       
+$ Femap with NX Nastran Coordinate System 9649 : Spherical Coordinate System
+CORD2S*             9649            6551        7.427116      115.553969
+*            -142.3917146.83139055553361111.454220171496-147.84364187776*       
+*       6.97952175278945122.571709760997-143.77470944426                
+*       
+$ Femap with NX Nastran Coordinate System 9706 : Rectangular Coordinate System
+CORD2R*             9706            1419       34.192915       40.845865
+*             156.58938633.709510904803939.6298881300953155.290254101549*       
+*       33.330042058311341.6223012228906157.142682615683                
+*       
+$ Femap with NX Nastran Load Set 1 : NASTRAN 1
+FORCE          1       1       0      1.   5000.   5000.  -5000.
+$ Femap with NX Nastran Constraint Set 1 : NASTRAN SPC 1
+SPC1           1     456       1
+SPC1           1     456       2
+SPC1           1     456       3
+SPC1           1     456       4
+SPC1           1     456       5
+SPC1           1     456       6
+SPC1           1     456       7
+SPC1           1     456       8
+SPC1           1     456       9
+SPC1           1     456      10
+SPC1           1     456      11
+SPC1           1     456      12
+SPC1           1     456      13
+SPC1           1     456      14
+SPC1           1     456      15
+SPC1           1     456      16
+SPC1           1  123456      17
+SPC1           1  123456      18
+SPC1           1  123456      19
+SPC1           1  123456      20
+$ Femap with NX Nastran Property 1 : ROD Property
+PROD           1     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 2 : ROD Property
+PROD           2     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 3 : ROD Property
+PROD           3     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 4 : ROD Property
+PROD           4     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 5 : ROD Property
+PROD           5     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 6 : ROD Property
+PROD           6     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 7 : ROD Property
+PROD           7     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 8 : ROD Property
+PROD           8     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 9 : ROD Property
+PROD           9     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 10 : ROD Property
+PROD          10     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 11 : ROD Property
+PROD          11     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 12 : ROD Property
+PROD          12     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 13 : ROD Property
+PROD          13     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 14 : ROD Property
+PROD          14     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 15 : ROD Property
+PROD          15     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 16 : ROD Property
+PROD          16     101      .5    999.      0.      0.
+$ Femap with NX Nastran Material 101 : ISOTROPIC Material
+MAT1         101    1.+73759398.     .33  2.59-4      0.      0.        
+GRID*                  1            2543209.32278691009929.2835940409917
+*       -120.32074066119            6788
+GRID*                  2            7656233.43211517550231.1314107224514
+*       -42.210885512896            1270
+GRID*                  3            6555199.022577272398122.843556728387
+*       -91.058837361264            2859
+GRID*                  4            6558169.816742769981-216.20567542444
+*       -3.5397546572616            2859
+GRID*                  5               0              0.              0.
+*                   180.               0
+GRID*                  6               0            120.              0.
+*                   180.               0
+GRID*                  7               0            120.            120.
+*                   180.               0
+GRID*                  8               0              0.            120.
+*                   180.               0
+GRID*                  9               0              0.              0.
+*                   120.               0
+GRID*                 10               0            120.              0.
+*                   120.               0
+GRID*                 11               0            120.            120.
+*                   120.               0
+GRID*                 12               0              0.            120.
+*                   120.               0
+GRID*                 13            254391.42382555863481.98831913366842
+*       -.99681847124014               0
+GRID*                 14               0            120.              0.
+*                    60.               0
+GRID*                 15            6551132.04429823992571.2101106569209
+*       112.611070346112            1190
+GRID*                 16               0              0.            120.
+*                    60.            8143
+GRID*                 17               0              0.              0.
+*                     0.               0
+GRID*                 18               0            120.              0.
+*                     0.            9706
+GRID*                 19               0            120.            120.
+*                     0.               0
+GRID*                 20               0              0.            120.
+*                     0.               0
+CROD           1       1       1       5
+CROD           2       1       2       6
+CROD           3       1       3       7
+CROD           4       1       4       8
+CROD           5       2       5       2
+CROD           6       2       1       6
+CROD           7       2       6       3
+CROD           8       2       2       7
+CROD           9       2       7       4
+CROD          10       2       3       8
+CROD          11       2       8       1
+CROD          12       2       4       5
+CROD          13       3       1       2
+CROD          14       3       2       3
+CROD          15       3       3       4
+CROD          16       3       4       1
+CROD          17       4       1       3
+CROD          18       4       2       4
+CROD          19       5       5       9
+CROD          20       5       6      10
+CROD          21       5       7      11
+CROD          22       5       8      12
+CROD          23       6       9       6
+CROD          24       6       5      10
+CROD          25       6      10       7
+CROD          26       6       6      11
+CROD          27       6      11       8
+CROD          28       6       7      12
+CROD          29       6      12       5
+CROD          30       6       8       9
+CROD          31       7       5       6
+CROD          32       7       6       7
+CROD          33       7       7       8
+CROD          34       7       8       5
+CROD          35       8       5       7
+CROD          36       8       6       8
+CROD          37       9       9      13
+CROD          38       9      10      14
+CROD          39       9      11      15
+CROD          40       9      12      16
+CROD          41      10      13      10
+CROD          42      10       9      14
+CROD          43      10      14      11
+CROD          44      10      10      15
+CROD          45      10      15      12
+CROD          46      10      11      16
+CROD          47      10      16       9
+CROD          48      10      12      13
+CROD          49      11       9      10
+CROD          50      11      10      11
+CROD          51      11      11      12
+CROD          52      11      12       9
+CROD          53      12       9      11
+CROD          54      12      10      12
+CROD          55      13      13      17
+CROD          56      13      14      18
+CROD          57      13      15      19
+CROD          58      13      16      20
+CROD          59      14      17      14
+CROD          60      14      13      18
+CROD          61      14      18      15
+CROD          62      14      14      19
+CROD          63      14      19      16
+CROD          64      14      15      20
+CROD          65      14      20      13
+CROD          66      14      16      17
+CROD          67      15      13      14
+CROD          68      15      14      15
+CROD          69      15      15      16
+CROD          70      15      16      13
+CROD          71      16      13      15
+CROD          72      16      14      16

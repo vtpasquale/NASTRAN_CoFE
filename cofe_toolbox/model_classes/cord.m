@@ -3,7 +3,7 @@
 %
 classdef (Abstract) cord < matlab.mixin.Heterogeneous
     
-    properties (Abstract)
+    properties
         CID % (Integer >= 0) Coordinate system identification number.
         XC_0 % ([3,1] Float) Csys location in basic coordinate system.
     end
