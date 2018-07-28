@@ -6,7 +6,6 @@ classdef cordc < cord
     properties
         CID % (Integer >= 0) Coordinate system identification number.
         XC_0 % ([3,1] Float) Csys location in basic coordinate system.
-        TC_C0 % ([3,3] Symmetric Float) Transformation matrix from basic coordinate system to current coordinate system at current coordinate system origin
     end
     
     %%
@@ -30,7 +29,6 @@ classdef cordc < cord
                    -sind(X_C(2)), cosd(X_C(2)), 0; 
                     0            , 0            , 1] ...
                    * obj.TC_C0;
-                
         end
     end
 end

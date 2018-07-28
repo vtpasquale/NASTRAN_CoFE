@@ -47,7 +47,8 @@ classdef node
             for i=1:nnodes
                 oi = obj(i);
                 oi.X_0=CORD(oi.CP==cordCIDs).X_0(oi.X_P);
-                oi.T_G0=CORD(oi.CD==cordCIDs).TC_C0;
+                CORD_CD = CORD(oi.CD==cordCIDs)
+                oi.T_G0=CORD_CD.T_C0(CORD_CD.X_C(oi.X_0));
                 obj(i)=oi;
             end
         end
