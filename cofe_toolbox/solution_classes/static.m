@@ -23,6 +23,13 @@ classdef static
             obj.u_g(f) = MODEL.K_g(f,f)\MODEL.p_g(f,lc);
             obj.u_0    = MODEL.R_0g*obj.u_g;
             
+            % save node output data to node_output_data object
+            node_ouput = node_output_data.from_u(MODEL.nodeIDs,obj.u_0,obj.u_g);
+            
+            % recover element quantities and save element output data
+            
+            
+            
             %% Write output to FEMAP data blocks
             ID = 1;% [int] ID of output set
             title = 'Static Case 1'; % [max 79 char] Output Set title
