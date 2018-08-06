@@ -3,15 +3,11 @@
 classdef output_request
     
     properties
-        all % [logical] Response at all relevant points will be output if true
-        none % [logical] No response will be output if true
+        none = true % [logical] No response will be output if true
+        all  = false % [logical] Response at all relevant points will be output if true
         n % [uint32] Set ID of a defined output_set object. Only response of points that appear on this output_set will be output.
     end
-    
     methods
-        function obj = output_request()
-            obj.none = true;
-        end
         function obj = set.none(obj,in)
             if ~islogical(in); error('output_request.none must be a logical (true/false) variable.'); end
             if in == true
