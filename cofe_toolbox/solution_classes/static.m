@@ -45,53 +45,7 @@ classdef static
             obj.DB(1,1)=db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
 
                        
-            obj.DB = [obj.DB;obj.displacement.write_db1051(ID)]
-%             vecID = 1; % [int] ID of output vector, must be unique in each output set
-%             
-%             title = 'Total Translation'; % [max 79 char] Output Vector title
-%             comp = [2,3,4,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-%             DoubleSidedContourVectorID = 0; % ?
-%             
-%             out_type = 1; % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
-%             ent_type = 7; % [int] Either nodal (7) or elemental (8) output
-%             compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
-%             
-%             calc_warn = true; % [logical] If 1, can not linearly combine this output
-%             comp_dir = 1; % [int] If 1, comp[0..2] are the X,Y,Z component values. If 2, data at end of Beams. If 3, reverse data at second end of beam.
-%             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
-%             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
-%             
-%             entityID =MODEL.nodeIDs;% [Nx1 int] Node/element IDs of the for results
-%             value = sqrt(sum(obj.u_0( MODEL.node2gdof(1:3,:) ).^2)).'; % [Nx1 real] result values
-%             
-%             obj.DB(2,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
-%                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
-%                 integer_format,entityID,value);
-% 
-%             calc_warn = false; % [logical] If 1, can not linearly combine this output
-%             vecID = 2; % [int] ID of output vector, must be unique in each output set
-%             title = 'T1 Translation'; % [max 79 char] Output Vector title
-%             comp = [2,0,0,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-%             value = obj.u_0( MODEL.node2gdof(1,:) ); % [Nx1 real] result values
-%             obj.DB(3,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
-%                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
-%                 integer_format,entityID,value);
-%             
-%             vecID = 3; % [int] ID of output vector, must be unique in each output set
-%             title = 'T2 Translation'; % [max 79 char] Output Vector title
-%             comp = [0,3,0,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-%             value = obj.u_0( MODEL.node2gdof(2,:) ); % [Nx1 real] result values
-%             obj.DB(4,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
-%                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
-%                 integer_format,entityID,value);
-%             
-%             vecID = 4; % [int] ID of output vector, must be unique in each output set
-%             title = 'T3 Translation'; % [max 79 char] Output Vector title
-%             comp = [0,0,4,zeros(1,17)]; % [1x20 int] Component vectors. Either zero, or the IDs of the X,Y,Z components, or the IDs of the corresponding elemental corner output. See below.
-%             value = obj.u_0( MODEL.node2gdof(3,:) ); % [Nx1 real] result values
-%             obj.DB(5,1)=db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
-%                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
-%                 integer_format,entityID,value);
+            obj.DB = [obj.DB;obj.displacement.convert_2_db1051(ID)]
             
             ID = 1;
             Title = 'Analysis Study Title';
