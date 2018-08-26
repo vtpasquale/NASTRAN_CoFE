@@ -4,11 +4,17 @@
 classdef static
     
     properties
+        CASE_CONTROL=case_control();
+
         u_g
         u_0
         DB@db;
-        SID; % Load case identification number
-        displacement
+        displacement_0
+        displacement_g
+        force
+        stress
+        strain
+        strain_energy
     end
     
     methods 
@@ -16,19 +22,29 @@ classdef static
             obj.u_g=zeros(MODEL.ngdof,1);
             obj.u_0=zeros(MODEL.ngdof,1);
             
-            if isempty(obj.SID); error('No load case identification number specified.'); end
-            lc = find(obj.SID==MODEL.loadsSIDs);
+            if isempty(obj.CASE_CONTROL.LOAD); error('No load case identification number specified.'); end
+            lc = find(obj.CASE_CONTROL.LOAD==MODEL.loadsSIDs);
             if isempty(lc); error('No applied loads found for this case.'); end
             
             f=MODEL.f;
             obj.u_g(f) = MODEL.K_g(f,f)\MODEL.p_g(f,lc);
             obj.u_0    = MODEL.R_0g*obj.u_g;
             
+            %%
             % save node output data to node_output_data object
-            obj.displacement = node_output_data.from_response(obj.u_0,MODEL.nodeIDs,1);
+            response_type = 1; % 1=DISPLACEMENT
+            ID = MODEL.nodeIDs;
+            keep_ind = obj.CASE_CONTROL.DISPLACEMENT.get_member_ID_indices(ID,obj.CASE_CONTROL.OUTPUT_SETS);
+            
+            resp = obj.u_0;
+            obj.displacement_0 = node_output_data.from_response(response_type,resp,ID,keep_ind);
+            
+            resp = obj.u_g;
+            obj.displacement_g = node_output_data.from_response(response_type,resp,ID,keep_ind);
+            clear response_type resp ID keep_ind
             
             % recover element quantities and save element output data
-            
+            obj = MODEL.ELEM.recover(obj);
             
             
             %% Write output to FEMAP data blocks
@@ -45,7 +61,7 @@ classdef static
             obj.DB(1,1)=db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
 
                        
-            obj.DB = [obj.DB;obj.displacement.convert_2_db1051(ID)]
+            obj.DB = [obj.DB;obj.displacement_0.convert_2_db1051(ID)];
             
             ID = 1;
             Title = 'Analysis Study Title';

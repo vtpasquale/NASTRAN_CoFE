@@ -6,7 +6,7 @@ classdef element_output_data
     properties
         ID % [uint32] Output element identification number
         elem_type % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
-        response_type % [uint8] CoFE code specifying response type [1=STRESS,2=STRAIN,3=STRAIN ENERGY,4=KINETIC ENERGY]
+        response_type % [uint8] CoFE code specifying response type [1=FORCE,2=STRESS,3=STRAIN,4=STRAIN ENERGY,5=KINETIC ENERGY]
         values % [n_items,n_response_vectors] Element output data
         %         stress % [n_element_stress_item_codes,n_response_vectors] Stress values according to NASTRAN item codes documentation
         %         strain % [n_element_strain_item_codes,n_response_vectors] Strain values according to NASTRAN item codes documentation

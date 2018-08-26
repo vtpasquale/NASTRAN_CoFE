@@ -53,7 +53,7 @@ classdef output_request
                 
                 if obj.all == true
                     % Finished if Request = ALL
-                    rind = (1:nids).';
+                    rind = uint32(1:nids).';
                 elseif isempty(obj.n)
                     error('The output request is undefined.');
                 elseif isempty(OUTPUT_SETS)

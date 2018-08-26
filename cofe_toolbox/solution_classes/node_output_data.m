@@ -47,12 +47,12 @@ classdef node_output_data
             ];
     end
     methods(Static = true)
-        function node_output = from_response(resp,ID,response_type,keep_ind)
+        function node_output = from_response(response_type,resp,ID,keep_ind)
             % Instantiates a node_output_data object from response vectors
             % Inputs:
+            %   response_type [uint8] node_output_data.response_type -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
             %   resp [6*n_nodes,n_response_vectors] matrix of response vectors
             %   ID [n_nodes,1] vector of all node ID numbers
-            %   response_type [uint8] node_output_data.response_type -> CoFE code specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
             %   keep_ind [n_output_nodes,1] Optional vector of indicies for output nodes in ID --> node_output_data.ID=ID(keep_ind);
             
             % check inputs

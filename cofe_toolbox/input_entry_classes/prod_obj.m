@@ -32,6 +32,7 @@ classdef prod_obj < entry
             P_ROD.MID = obj.MID;
             P_ROD.A = obj.A;
             P_ROD.J = obj.J;
+            P_ROD.C = obj.C;
             P_ROD.NSM = obj.NSM;
             MODEL.PROP = [MODEL.PROP;P_ROD];
         end

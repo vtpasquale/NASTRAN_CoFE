@@ -33,7 +33,7 @@ classdef grid_obj < entry
         function MODEL = entry2model(obj,MODEL)
             if ~(obj.SEID == 0 | isempty(obj.SEID)); error('GRID ID = %d had a nonzero SEID, which is not supported.',obj.ID); end
             NODE = node;
-            NODE.ID=obj.ID;
+            NODE.ID=uint32(obj.ID);
             NODE.CP=obj.CP;
             NODE.X_P = [obj.X1; obj.X2; obj.X3];
             NODE.CD=obj.CD;

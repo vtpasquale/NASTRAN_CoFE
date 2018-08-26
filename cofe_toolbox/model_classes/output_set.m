@@ -4,7 +4,7 @@ classdef output_set
     
     properties
         ID % [int] Set identification number
-        all % [logical] indicates all entities should be output
+        all = 0% [logical] indicates all entities should be output
         i1 % [n,1 uint32] list of individual identification numbers and the first identification number for any THRU ranges
         iN % [n,1 uint32] list of the second identification number for any THRU ranges
         thru % [n,1 logical] true where i1(thru,1) and iN(thru,1) contain THRU ranges
@@ -36,10 +36,16 @@ classdef output_set
                     dummy(2:2:end) = obj.iN;
                     
                     % create eval string
-                    eval_str = ['val = uint32([',...
-                        sprintf('%d:%d,',dummy(1:end-2)),...
-                        sprintf('%d:%d',dummy(end-1:end)),...
-                        ']).'';'];
+                    if size(dummy,1)==2
+                        eval_str = ['val = uint32([',...
+                            sprintf('%d:%d',dummy),...
+                            ']).'';'];
+                    else
+                        eval_str = ['val = uint32([',...
+                            sprintf('%d:%d,',dummy(1:end-2)),...
+                            sprintf('%d:%d',dummy(end-1:end)),...
+                            ']).'';'];
+                    end
                     
                     % correct eval string
                     eval_str = strrep(eval_str,':0','');
@@ -66,9 +72,9 @@ classdef output_set
             if m ~= 1; error('Metehod input IDs should have size(IDs,2)=1'); end
             
             if obj.all == true
-                rind = (1:n).';
+                rind = uint32(1:n).';
             else
-                rind = find(ismember(IDs,obj.values));
+                rind = uint32(find(ismember(IDs,obj.values)));
             end
         end
         function echo(obj,fid)
@@ -115,9 +121,14 @@ classdef output_set
                     dummy(2:2:end) = obj.iN;
                     
                     % create dummy string
-                    dummy_str = [sprintf('SET %d = ',obj.ID),...
-                        sprintf('%d THRU %d,',dummy(1:end-2)),...
-                        sprintf('%d THRU %d',dummy(end-1:end))];
+                    if size(dummy,1) == 2
+                        dummy_str = [sprintf('SET %d = ',obj.ID),...
+                            sprintf('%d THRU %d',dummy)];
+                    else
+                        dummy_str = [sprintf('SET %d = ',obj.ID),...
+                            sprintf('%d THRU %d,',dummy(1:end-2)),...
+                            sprintf('%d THRU %d',dummy(end-1:end))];
+                    end
                     
                     % correct dummy string
                     longstr = strrep(dummy_str,' THRU 0','');

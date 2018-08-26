@@ -8,6 +8,7 @@ classdef p_rod < prop
         MID % Material identification number. (Integer > 0)
         A % Area of the rod. (Real)
         J % Torsional constant. (Real)
+        C % Coefficient to determine torsional stress. (Real)
         NSM % Nonstructural mass per unit length. (Real)
     end
 end

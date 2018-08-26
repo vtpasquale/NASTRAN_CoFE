@@ -14,7 +14,7 @@ classdef case_control
         LOAD % (int > 0 or blank) Selects a load set to be applied
         METHOD % (int > 0 or blank) Selects the real eigenvalue extraction parameters
         
-        OUTPUT_SETS; % [nsets,1] Array of output_set objects
+        OUTPUT_SETS@output_set; % [nsets,1] Array of output_set objects
         
         DISPLACEMENT = output_request(); % [output_request] Requests the form and type of nodal displacement output
         VELOCITY     = output_request(); % [output_request] Requests the form and type of nodal velocity output
