@@ -87,7 +87,7 @@ classdef model
             
             % Assemble
             obj = obj.NODE.assemble(obj);
-            obj = obj.ELEM.assemble_all(obj); % element and global matricies
+            obj = obj.ELEM.assemble(obj); % element and global matricies
             obj = obj.LOADS.assemble(obj);
             
         end

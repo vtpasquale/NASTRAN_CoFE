@@ -30,18 +30,26 @@ classdef static
             obj.u_g(f) = MODEL.K_g(f,f)\MODEL.p_g(f,lc);
             obj.u_0    = MODEL.R_0g*obj.u_g;
             
+%             % fake multiple response vectors
+%             obj.u_0 = [obj.u_0,2*obj.u_0,5*obj.u_0];
+%             obj.u_g = [obj.u_g,2*obj.u_g,5*obj.u_g];
+            
             %%
-            % save node output data to node_output_data object
-            response_type = 1; % 1=DISPLACEMENT
-            ID = MODEL.nodeIDs;
-            keep_ind = obj.CASE_CONTROL.DISPLACEMENT.get_member_ID_indices(ID,obj.CASE_CONTROL.OUTPUT_SETS);
+            % save node output data to node_output_data objects
+            if obj.CASE_CONTROL.DISPLACEMENT.none ~= true
+                response_type = 1; % 1=DISPLACEMENT
+                ID = MODEL.nodeIDs;
+                keep_ind = obj.CASE_CONTROL.DISPLACEMENT.get_member_ID_indices(ID,obj.CASE_CONTROL.OUTPUT_SETS);
+                
+                resp = obj.u_0;
+                obj.displacement_0 = node_output_data.from_response(response_type,resp,ID,keep_ind);
+                
+                resp = obj.u_g;
+                obj.displacement_g = node_output_data.from_response(response_type,resp,ID,keep_ind);
+                clear response_type resp ID keep_ind
+            end
             
-            resp = obj.u_0;
-            obj.displacement_0 = node_output_data.from_response(response_type,resp,ID,keep_ind);
-            
-            resp = obj.u_g;
-            obj.displacement_g = node_output_data.from_response(response_type,resp,ID,keep_ind);
-            clear response_type resp ID keep_ind
+
             
             % recover element quantities and save element output data
             obj = MODEL.ELEM.recover(obj);
@@ -59,9 +67,10 @@ classdef static
             nas_rev = 0; % [int] Revision of Nastran SUBCASE
             
             obj.DB(1,1)=db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
-
                        
             obj.DB = [obj.DB;obj.displacement_0.convert_2_db1051(ID)];
+            obj.DB = [obj.DB;obj.force.convert_2_db1051(MODEL,ID)];
+            obj.DB = [obj.DB;obj.stress.convert_2_db1051(MODEL,ID)];
             
             ID = 1;
             Title = 'Analysis Study Title';

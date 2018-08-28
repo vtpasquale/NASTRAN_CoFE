@@ -34,5 +34,24 @@ classdef element_output_data
             if in < 1 || in > 4; error('element_output_data.response_type must be greater than zero and less than 5.'); end
             obj.response_type=uint8(in);
         end
+        function DB = convert_2_db1051(obj,MODEL,StartSetID)
+            DB = [];
+            elem_types = [obj.elem_type];
+            unique_elem_types = unique(elem_types);
+            for i = 1:size(unique_elem_types,2)
+                index = elem_types==unique_elem_types(i);
+                obj_i = obj(index);
+                EIDs = [obj_i.ID].';
+                model_index = ismember(EIDs,MODEL.elemEIDs);
+                rtype=unique([obj_i.response_type]);
+                if size(rtype,2)~=1; error('There is more than one response type in the call to convert_2_db1051. Data processing should have prevented this.'); end
+                switch rtype
+                    case 1
+                        DB = [DB;MODEL.ELEM(model_index).force_2_db1051(obj_i,StartSetID)];
+                    case 2
+                        DB = [DB;MODEL.ELEM(model_index).stress_2_db1051(obj_i,StartSetID)];
+                end
+            end
+        end
     end
 end

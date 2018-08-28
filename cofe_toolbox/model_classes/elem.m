@@ -12,7 +12,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
         elem_type % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
     end
     methods (Abstract)
-        obj = assemble(obj,MODEL) % Calculate element matricies
+        obj = assemble_sub(obj,MODEL) % Calculate element matricies
         obj = recover_sub(obj,u_g) % Recover element response values
     end
     methods (Sealed=true)
@@ -30,7 +30,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
                 error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',EIDS(nonunique)))
             end
         end
-        function MODEL = assemble_all(obj,MODEL)
+        function MODEL = assemble(obj,MODEL)
             % assemble element and global matricies
             
             % Preallocate Sparse Matrices
@@ -40,7 +40,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
             % Loop through elements
             nelem = size(obj,1);
             for i=1:nelem
-                oi=obj(i).assemble(MODEL);
+                oi=obj(i).assemble_sub(MODEL);
                 K_g(oi.gdof,oi.gdof)=K_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
                 M_g(oi.gdof,oi.gdof)=M_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
                 obj(i)=oi;
@@ -60,13 +60,13 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
                 1) = true;
             returnIO(...
                 SOLUTION.CASE_CONTROL.STRESS.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
-                1) = true;
+                2) = true;
             returnIO(...
                 SOLUTION.CASE_CONTROL.STRAIN.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
-                1) = true;
+                3) = true;
             returnIO(...
                 SOLUTION.CASE_CONTROL.ESE.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
-                1) = true;
+                4) = true;
             
             % Any element indices where element results are requested
             recoverIND = uint32(find(any(returnIO,2)));
