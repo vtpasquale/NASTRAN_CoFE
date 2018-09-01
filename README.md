@@ -11,10 +11,11 @@ A CoFE v4.0 web user manual is maintained on the [_gh-pages_](https://github.com
 ## CoFE Version 5
 CoFE v5.0 is currently under development and occupies the [version5](https://github.com/vtpasquale/NASTRAN_CoFE/tree/version5) branch of this repository. This version completely reshapes the program architecture to allow for the sustainable addition of several new features that include
 * Rectangular, cylindrical, and spherical coordinate system support for both node definition and nodal displacement reference frames
-* Simplified source code organization through improved object composition using
-    * heterogeneous object arrays
-    * hierarchical object interfacing
-* restructured class responsibilities by separating classes used for 
+* Simplified source code organization through 
+    * improved object composition using
+        * heterogeneous object arrays
+        * hierarchical object interfacing
+* Restructured class responsibilities by separating classes used for 
     * input processing
     * model definition
     * analysis solutions
