@@ -1,20 +1,29 @@
-% Class for reading and storing input file data
+%BDF_LINES reads Nastran-formatted input file lines. Handles INCLUDE statements.
+% Removes comments. Partitions executive, case control, and bulk data sections.
+%
 % Anthony Ricciardi
 %
-classdef input_file_data
+classdef bdf_lines
     
-    properties
-        fid % [scalr] File identifiers of active input file (main or INCLUDE)
+    properties (SetAccess = private)
+        exec=cell(0);% [nexec,1 cell] Executive control lines (also NASTRAN statement and File Management lines)
+        casec=cell(0); % [ncasec,1 cell] Case control lines
+        bulk=cell(0); % [ndata,1 cell] Bulk data lines
+    end
+    properties (Access = private)
+        fid % [scaler] File identifiers of active input file (main or INCLUDE)
         fids = [];% [n,1] File identifiers of all currently open input files (main or INCLUDE)
         pathstrs=cell(0);% {n,1} Cell of file path strings of all currently open input files
-        
-        exec=cell(0);% [nexec,1 cell] Excutive control data (also NASTRAN statement and File Management statements)
-        casec=cell(0); % [ncasec,1 struct] Case control data
-        bulk=cell(0); % [ndata,1 struct] Buld data data
+        start_dir % [char] Path string of the directory which is current when bdf_lines constructor is called
     end
-    
+        
     methods
-        function obj = input_file_data(filename)
+        function obj = bdf_lines(filename)
+            % Reads lines from specified Nastran-formatted input file. Creates bdf_lines object. 
+            %
+            % Inputs
+            % filename = [char] Nastran-formatted input file name.
+            obj.start_dir = pwd;
             obj = open_file(obj,filename);
             
             % read the executive control section
@@ -22,7 +31,8 @@ classdef input_file_data
                 [obj,A] = next_line(obj);
                 if ~ischar(A)
                     warning('The input file ended before the CEND statement.')
-                    return % the input file ended
+                    check_files_closed(obj)
+                    return % input file ended
                 else
                     [obj,cend] = process_exec_line(obj,A);
                 end
@@ -36,7 +46,8 @@ classdef input_file_data
                 [obj,A] = next_line(obj);
                 if ~ischar(A)
                     warning('The input file ended before the BEGIN BULK statement.')
-                    return % the input file ended
+                    check_files_closed(obj)
+                    return % input file ended
                 else
                     [obj,begin_bulk] = process_cc_line(obj,A);
                 end
@@ -50,7 +61,8 @@ classdef input_file_data
                 [obj,A] = next_line(obj);
                 if ~ischar(A)
                     warning('The input file ended before the ENDDATA statement.')
-                    return % the input file ended
+                    check_files_closed(obj)
+                    return % input file ended
                 else
                     [obj,enddata] = process_bulk_line(obj,A);
                 end
@@ -59,119 +71,119 @@ classdef input_file_data
                 end
             end
             
-            % Add logic to check the files are closed.
+            % Close the current input file (will be the main file if inputs follow convention)
+            obj = close_file(obj);
             
+            % Check that input files are closed - warn the user otherwise
+            check_files_closed(obj)
         end
-        
+    end
+    methods (Access = private)
         function [obj,A] = next_line(obj)
-            % Function to return the next uncommented, nonblank input file line while managing INCLUDE statments
+            % Returns the next uncommented, nonblank input file line while managing INCLUDE statements
             while 1
                 A = fgetl(obj.fid);
-                
-                A
-                
                 if A == -1 % The file has ended
                     obj = close_file(obj);
-                    % Add logic for new include file
+                    if isempty(obj.fid) % the main file has ended
+                        break
+                    end
                 else
-                    Acheck = strrep(A,' ','');
-                    if strcmp(Acheck,'') == 1
+                    Acheck = strtrim(A);
+                    if strcmp(Acheck,'')
                         % Empty line will be skipped
-                    elseif strcmp(Acheck(1),'$') == 1
+                    elseif strcmp(Acheck(1),'$')
                         % Comment line will be skipped
-                    elseif size(Acheck,2)>6
+                    elseif strncmpi(Acheck,'INCLUDE',7)
                         % Manage INCLUDE statements
-                        if strcmpi(Acheck(1:7),'INCLUDE')
-                            filename = Acheck(8:end);
-                            if ~strcmp(filename(1),'''')
-                                error('INCLUDE file names must be in ''single quotations''')
+                        filename = strtrim(Acheck(8:end));
+                        if ~strcmp(filename(1),'''')
+                            error('INCLUDE file names must be in ''single quotations''')
+                        end
+                        if ~strcmp(filename(end),'''')
+                            % INCLUDE statment continues on the next line
+                            A2check = strtrim(fgetl(obj.fid));
+                            if strcmp(A2check,''); error('INCLUDE statement formating issue with: %s',A); end
+                            filename=[filename,A2check];
+                            if ~strcmp(A2check(end),'''')
+                                A3check = strtrim(fgetl(obj.fid));
+                                if strcmp(A3check,''); error('INCLUDE statement formating issue with: %s',A); end
+                                if ~strcmp(A3check(end),'''') error('INCLUDE statement formating issue with: %s. INCLUDE continuations only supported up to 3 lines.',A); end
+                                filename=[filename,A3check];
                             end
-                            if ~strcmp(filename(end),'''')
-                                % INCLUDE statment continues on the next line
-                                A2check = strrep(fgetl(obj.fid),' ');
-                                if strcmp(A2check,'') == 1; error('INCLUDE statement formating issue with: %s',A); end
-                                if ~strcmp(A2check(end),'''')
-                                    filename=[filename,A2check];
-                                    A3check = strrep(fgetl(obj.fid),' ');
-                                    if strcmp(A3check,'') == 1; error('INCLUDE statement formating issue with: %s',A); end
-                                    if ~strcmp(A3check(end),'''') error('INCLUDE statement formating issue with: %s. INCLUDE continuations only supported up to 3 lines.',A); end
-                                    filename=[filename,A3check];
-                                end
-                            end
-                            obj = open_file(obj,filename(2:end-1));
-                        else
-                            break % return A
-                        end                        
+                        end
+                        obj = open_file(obj,filename(2:end-1));
                     else
-                        break % return A
+                        % check for trailing comments and remove if present
+                        cmts = strfind(A,'$');
+                        if ~isempty(cmts)
+                            A = A(1:cmts(1)-1);
+                        end
+                        % Return A
+                        break 
                     end
                 end
             end
         end
         function [obj,cend] = process_exec_line(obj,A)
-            Acheck = strrep(A,' ','');
-            if size(Acheck,2)>3
-                if strcmpi(Acheck(1:4),'CEND')
-                    cend = true; % end of executive control section
-                    return
-                else
-                    cend = false;
-                end
+            % Processes an executive control line. Checks for CEND statement.
+            Acheck = strtrim(A);
+            if strncmpi(Acheck,'CEND',4)
+                cend = true; % end of executive control section
+                return
             else
                 cend = false;
             end
             obj.exec{end+1,1} = A;
         end
         function [obj,begin_bulk] = process_cc_line(obj,A)
-            Acheck = strrep(A,' ','');
-            if size(Acheck,2)>8
-                if strcmpi(Acheck(1:9),'BEGINBULK')
+            % Processes a case control line. Checks for BEGIN BULK statement.
+            Acheck = strtrim(A);
+            if strncmpi(Acheck,'BEGIN BULK',10)
                     begin_bulk = true; % end of executive control section
                     return
-                else
-                    begin_bulk = false;
-                end
             else
                 begin_bulk = false;
             end
             obj.casec{end+1,1} = A;
         end
         function [obj,enddata] = process_bulk_line(obj,A)
-            Acheck = strrep(A,' ','');
-            if size(Acheck,2)>6
-                if strcmpi(Acheck(1:7),'ENDDATA')
+            % Processes a bulk data line. Checks for ENDDATA statement.
+            Acheck = strtrim(A);
+            if strncmpi(Acheck,'ENDDATA',7)
                     enddata = true; % end of executive control section
                     return
-                else
-                    enddata = false;
-                end
             else
                 enddata = false;
             end
             obj.bulk{end+1,1} = A;
         end
         function obj = open_file(obj,filename)
-            % check path
-            pathstr = fileparts(filename);
+            % Opens a new main input file or new INCLUDE file.
+            
+            % get file short name and file path
+            [pathstr,name,ext] = fileparts(filename);
+            fname = [name,ext];
+            % check the directory path
             if strcmp(pathstr,'')
                 pathstr=pwd;
-            else
-                if exist(pathstr,'dir')~=7; error('An INCLUDE statement specifies a nonexistent directory.'); end
             end
-            % check file
-            if exist(filename,'file')~=2; error('An INCLUDE statement specifies a nonexistent file.'); end
-            % open file
-            obj.fid = fopen(filename);
-            obj.fids(end+1,1) = obj.fid;
             % go to input file directory and save location
             cd(pathstr);
             obj.pathstrs{end+1,1} = pwd;
+            % check file
+            if exist(fname,'file')~=2; error('The main input filename or an INCLUDE statement specifies a nonexistent file: %s',filename); end
+            % open file
+            obj.fid = fopen(fname);
+            obj.fids(end+1,1) = obj.fid;
         end
         function obj = close_file(obj)
+            % Closes the current main input file or current INCLUDE file.
             st = fclose(obj.fids(end));
             if st == -1; error('There was a issue closing an INCLUDEd file.'); end
             % update properties and current directory
             if size(obj.pathstrs,1)==1
+                cd(obj.pathstrs{1})
                 obj.pathstrs = cell(0);
                 obj.fids = [];
                 obj.fid = [];
@@ -182,7 +194,16 @@ classdef input_file_data
                 obj.fid = obj.fids(end);
             end
         end
+        function check_files_closed(obj)
+            % Checks that main and INCLUDEd input files are closed.
+            % Warns the user if files were still open. Closes open input files.
+            % Sets the current directory back to the directory that was current when the bdf_lines constructor was called
+            if ~isempty(obj.fid)
+                fclose('all');
+                warning('The input file reader may have stopped prematurely. Check that your model is complete. Check for unintentional ENDDATA statements, especially in INCLUDEd files.')
+            end
+            cd(obj.start_dir)
+        end
     end
     
 end
-
