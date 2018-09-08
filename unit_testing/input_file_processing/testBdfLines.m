@@ -44,13 +44,13 @@ fprintf(fid,'%s\n',bulk{:});
 fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check results
-assert(all(strcmp(bdf.exec,exec(1:2))))
-assert(all(strcmp(bdf.casec,casec([1:2,5]))))
-assert(all(strcmp(bdf.bulk,bulk([1:3,6:7]))))
+assert(all(strcmp(bdf.executiveControlLines,exec(1:2))))
+assert(all(strcmp(bdf.caseControlLines,casec([1:2,5]))))
+assert(all(strcmp(bdf.bulkDataLines,bulk([1:3,6:7]))))
 
 
 %% trailing comments must be removed
@@ -99,13 +99,13 @@ fprintf(fid,'%s\n',bulk{:});
 fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check results
-assert(all(strcmp(bdf.exec,exec_check)))
-assert(all(strcmp(bdf.casec,casec_check)))
-assert(all(strcmp(bdf.bulk,bulk_check)))
+assert(all(strcmp(bdf.executiveControlLines,exec_check)))
+assert(all(strcmp(bdf.caseControlLines,casec_check)))
+assert(all(strcmp(bdf.bulkDataLines,bulk_check)))
 
 %% stop at the first ENDDATA statement in bulk data section
 test_file = 'stop_at_enddata.dat';
@@ -135,11 +135,11 @@ fprintf(fid,'%s\n',bulk{:});
 fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check results
-assert(all(strcmp(bdf.bulk,bulk(1:3))))
+assert(all(strcmp(bdf.bulkDataLines,bulk(1:3))))
 
 %% handle nested INCLUDE statements
 main1 = fullfile(testDir1,'main1.dat');
@@ -205,16 +205,16 @@ for i = 1:3
     fclose(fid);
 end
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(main1);
+% read the data using BdfLines.m
+bdf = BdfLines(main1);
 
 % check results
 for i = 1:8
     check{i,1} = sprintf('Dummy text %d',i);
 end
-assert(all(strcmp(bdf.exec,check)))
-assert(all(strcmp(bdf.casec,check)))
-assert(all(strcmp(bdf.bulk,check)))
+assert(all(strcmp(bdf.executiveControlLines,check)))
+assert(all(strcmp(bdf.caseControlLines,check)))
+assert(all(strcmp(bdf.bulkDataLines,check)))
 
 %% handle multiline include statements
 % uses INCLUDE files generated for previous test case
@@ -230,17 +230,17 @@ fprintf(fid,'      testDir3%scasec3.dat''\n',filesep);
 fprintf(fid,'INCLUDE ''%s''\n',fullfile(testDir3,'bulk3.dat'));
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(test_file);
+% read the data using BdfLines.m
+bdf = BdfLines(test_file);
 
 % check results
 clear check
 for i = 1:4
     check{i,1} = sprintf('Dummy text %d',i+4);
 end
-assert(all(strcmp(bdf.exec,check)))
-assert(all(strcmp(bdf.casec,check)))
-assert(all(strcmp(bdf.bulk,check)))
+assert(all(strcmp(bdf.executiveControlLines,check)))
+assert(all(strcmp(bdf.caseControlLines,check)))
+assert(all(strcmp(bdf.bulkDataLines,check)))
 
 %% warn if file ends before CEND
 test_file = 'warn_end_before_cend.dat';
@@ -270,8 +270,8 @@ fprintf(fid,'%s\n',bulk{:});
 fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check the last warning
 lastmsg = lastwarn();
@@ -305,8 +305,8 @@ fprintf(fid,'%s\n',bulk{:});
 fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check the last warning
 lastmsg = lastwarn();
@@ -339,8 +339,8 @@ fprintf(fid,'%s\n',bulk{:});
 % fprintf(fid,'ENDDATA');
 fclose(fid);
 
-% read the data using bdf_lines.m
-bdf = bdf_lines(fullfile(testDir1,test_file));
+% read the data using BdfLines.m
+bdf = BdfLines(fullfile(testDir1,test_file));
 
 % check the last warning
 lastmsg = lastwarn();
