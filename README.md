@@ -1,4 +1,4 @@
-![Nastran CoFE](https://raw.githubusercontent.com/vtpasquale/NASTRAN_CoFE/0008e2883a190333441512e4f565aeb477e78187/big_cofe_logo.png)
+<img src="https://raw.githubusercontent.com/vtpasquale/cofeV5docs/gh-pages/assets/images/nastranCofeLogo.png" width="550">
 
 NASTRAN Compatible Finite Elements (CoFE) is a standalone finite element code for structural analysis and design. CoFE is an open source program implemented using object-oriented MATLAB.
 
