@@ -6,9 +6,9 @@
 classdef BdfLines
     
     properties (SetAccess = private)
-        executiveControlLines=cell(0);% [number of executive control lines,1 cell] Executive control lines (also NASTRAN statement and File Management lines)
-        caseControlLines=cell(0); % [number of case control lines,1 cell] Case control lines
-        bulkDataLines=cell(0); % [number of bulk data lines,1 cell] Bulk data lines
+        executiveControl=cell(0);% [number of executive control lines,1 cell] Executive control lines (also NASTRAN statement and File Management lines)
+        caseControl=cell(0); % [number of case control lines,1 cell] Case control lines
+        bulkData=cell(0); % [number of bulk data lines,1 cell] Bulk data lines
     end
     properties (Access = private)
         fid % [scaler] File identifiers of active input file (main or INCLUDE)
@@ -16,7 +16,7 @@ classdef BdfLines
         openFidPaths=cell(0);% {n,1} Cell of file path strings of all currently open input files
         startPath % [char] Path string of the directory which is current when BdfLines constructor is called
     end
-        
+
     methods
         function obj = BdfLines(filename)
             % Reads lines from specified Nastran-formatted input file. Creates BdfLines object. 
@@ -134,29 +134,29 @@ classdef BdfLines
             else
                 cend = false;
             end
-            obj.executiveControlLines{end+1,1} = inputLine;
+            obj.executiveControl{end+1,1} = inputLine;
         end
-        function [obj,beginBulk] = processCaseControlLine(obj,A)
+        function [obj,beginBulk] = processCaseControlLine(obj,inputLine)
             % Processes a case control line. Checks for BEGIN BULK statement.
-            trimLine = strtrim(A);
+            trimLine = strtrim(inputLine);
             if strncmpi(trimLine,'BEGIN BULK',10)
                     beginBulk = true; % end of executive control section
                     return
             else
                 beginBulk = false;
             end
-            obj.caseControlLines{end+1,1} = A;
+            obj.caseControl{end+1,1} = inputLine;
         end
-        function [obj,endData] = processBulkDataLine(obj,A)
+        function [obj,endData] = processBulkDataLine(obj,inputLine)
             % Processes a bulk data line. Checks for ENDDATA statement.
-            trimLine = strtrim(A);
+            trimLine = strtrim(inputLine);
             if strncmpi(trimLine,'ENDDATA',7)
                     endData = true; % end of executive control section
                     return
             else
                 endData = false;
             end
-            obj.bulkDataLines{end+1,1} = A;
+            obj.bulkData{end+1,1} = inputLine;
         end
         function obj = openFile(obj,filename)
             % Opens a new main input file or new INCLUDE file.
