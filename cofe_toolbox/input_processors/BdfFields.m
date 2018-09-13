@@ -14,7 +14,77 @@ classdef BdfFields
     methods
         function obj = BdfFields(bdfLines)
             % Reads fields from Nastran input lines stored in BdfLines object.
-            bulkDataLines = bdfLines.bulkData;
+            obj.executiveControl=obj.processExecutiveControl(bdfLines.executiveControl);
+            obj.caseControl=obj.processCaseControl(bdfLines.caseControl);
+            obj.bulkData=obj.processBulkDataLines(bdfLines.bulkData);
+        end
+    end
+    methods (Static = true)
+        function executiveControlFields = processExecutiveControl(executiveControlLines)
+            executiveControlFields = regexpi(executiveControlLines,...
+                '\s*(?<entryName>SOL)\s+(?<rightHandDescribers>.+)','names');
+        end
+        function caseControlFields = processCaseControl(caseControlLines)
+            nCaseControlLines = size(caseControlLines,1);
+            if nCaseControlLines == 0
+                caseControlFields = [];
+            else
+                
+                % process lines other than set continuations
+                caseControlRegularLines = regexpi(caseControlLines,...
+                    ['\s*(?<entryName>SET)\s*(?<leftHandDescribers>\d+)\s*=(?<rightHandDescribers>.+)','|',...
+                    '\s*(?<entryName>\w+)\s*\((?<leftHandDescribers>.+)\)\s*=(?<rightHandDescribers>.+)','|',...
+                    '\s*(?<entryName>\w+)\s*=(?<rightHandDescribers>.+)','|',...
+                    '\s*(?<entryName>SUBCASE)\s+(?<rightHandDescribers>.+)','|'],'names');
+                
+                % check first line
+                if isempty(caseControlRegularLines{1})
+                    error('Format issue with Case Control Line: %s',caseControlLines{1})
+                end
+                
+                % find set continuations and confirm formatting of other lines
+                isSetContinuation = false(nCaseControlLines,1);
+                for i  = 2:nCaseControlLines
+                    if isempty(caseControlRegularLines{i})
+                        previousLine = strtrim(caseControlLines{i-1});
+                        if strcmp(previousLine(end),',')
+                            isSetContinuation(i)=true;
+                        else
+                            error('Format issue with Case Control Line: %s',caseControlLines{i})
+                        end
+                    end
+                end
+                
+                % Define what line continuation lines are adding to
+                lineIsContinuationOf = zeros(nCaseControlLines,1,'uint32');
+                continuationOfTemp = uint32(1);
+                for i = 2:nCaseControlLines
+                    if isSetContinuation(i)
+                        lineIsContinuationOf(i) = continuationOfTemp;
+                    else
+                        continuationOfTemp = continuationOfTemp + 1;
+                    end
+                end
+                clear continuationOfTemp
+                
+                % remove continuation lines from caseControlRegularLines
+                caseControlFields = caseControlRegularLines(~isSetContinuation);
+                
+                % add set continuations to set entries
+                fieldsLine = int32(1);
+                for i = 2:nCaseControlLines
+                    if isSetContinuation(i)
+                        caseControlFields{fieldsLine}.rightHandDescribers=...
+                            [caseControlFields{fieldsLine}.rightHandDescribers,...
+                             strtrim(caseControlLines{i})];
+                    else
+                        fieldsLine = fieldsLine + 1;
+                    end
+                end
+            end
+        end % processCaseControl
+        
+        function bulkDataFields = processBulkDataLines(bulkDataLines)
             nBulkDataLines = size(bulkDataLines,1);
             lineNum = int32(1);
             entryNum = int32(1);
@@ -24,7 +94,7 @@ classdef BdfFields
             while lineNum <= nBulkDataLines
                 bulkDataLine = bulkDataLines{lineNum};
                 % check if the line is a continuation
-                isContinuation = any([strncmp(bulkDataLine,'+',1),strncmp(bulkDataLine,'*',1),strncmp(bulkDataLine,'        ',8)]);
+                isContinuation = any([strncmp(bulkDataLine,'+',1),strncmp(bulkDataLine,'*',1),strncmp(bulkDataLine,',',1),strncmp(bulkDataLine,'        ',8)]);
                 if lineNum > 1
                     if ~isContinuation
                         bulkDataFields{entryNum,1} = strtrim(entryFields);
@@ -33,23 +103,23 @@ classdef BdfFields
                         fieldNum = int32(1);
                     else
                         fieldNum = fieldNum + 10;
-                        entryFields(fieldNum:fieldNum+9)=cell(1,10);
+                        entryFields(fieldNum:fieldNum+9)={'','','','','','','','','',''};
                     end
                 end
                 commas = strfind(bulkDataLine,',');
                 if ~isempty(commas)
-                    %% free field format
+                    % free field format
                     splitLine = strsplit(bulkDataLine,',','CollapseDelimiters',false);
                     entryFields(fieldNum:fieldNum-1+size(splitLine,2))=splitLine;
                 else
                     sizeBulkDataLine = size(bulkDataLine,2);
-                    if sizeBulkDataLine>7
+                    if sizeBulkDataLine > 7
                         asterisksFieldOne =  strfind(bulkDataLine(1:8),'*');
                     else
                         asterisksFieldOne =  strfind(bulkDataLine(1:end),'*');
                     end
                     if ~isempty(asterisksFieldOne)
-                        %% large field format
+                        % large field format
                         if sizeBulkDataLine >= 73
                             lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72)};
                         elseif sizeBulkDataLine >= 57
@@ -64,7 +134,7 @@ classdef BdfFields
                             lineFields = {bulkDataLine(1:end),'','','',''};
                         end
                         entryFields(fieldNum:fieldNum+4)=lineFields;
-
+                        
                         % check large field continuation
                         if strncmp(bulkDataLines{lineNum+1},'*',1)
                             lineNum = lineNum + 1;
@@ -77,7 +147,7 @@ classdef BdfFields
                             if sizeBulkDataLine >= 80
                                 lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:80)};
                             elseif sizeBulkDataLine >= 73
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),''};
+                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:end)};
                             elseif sizeBulkDataLine >= 57
                                 lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:end),''};
                             elseif sizeBulkDataLine >= 41
@@ -93,13 +163,12 @@ classdef BdfFields
                             % else
                             % entryFields(fieldNum+6:fieldNum+10)=cell(5,1);
                         end
-                        
                     else
-                        %% small field format
+                        % small field format
                         if sizeBulkDataLine >= 80
                             lineFields = {bulkDataLine(1:8),bulkDataLine(9:16),bulkDataLine(17:24),bulkDataLine(25:32),bulkDataLine(33:40),bulkDataLine(41:48),bulkDataLine(49:56),bulkDataLine(57:64),bulkDataLine(65:72),bulkDataLine(73:80)};
                         elseif sizeBulkDataLine >= 73
-                            lineFields = {bulkDataLine(1:8),bulkDataLine(9:16),bulkDataLine(17:24),bulkDataLine(25:32),bulkDataLine(33:40),bulkDataLine(41:48),bulkDataLine(49:56),bulkDataLine(57:64),bulkDataLine(65:72),''};
+                            lineFields = {bulkDataLine(1:8),bulkDataLine(9:16),bulkDataLine(17:24),bulkDataLine(25:32),bulkDataLine(33:40),bulkDataLine(41:48),bulkDataLine(49:56),bulkDataLine(57:64),bulkDataLine(65:72),bulkDataLine(73:end)};
                         elseif sizeBulkDataLine >= 65
                             lineFields = {bulkDataLine(1:8),bulkDataLine(9:16),bulkDataLine(17:24),bulkDataLine(25:32),bulkDataLine(33:40),bulkDataLine(41:48),bulkDataLine(49:56),bulkDataLine(57:64),bulkDataLine(65:end),''};
                         elseif sizeBulkDataLine >= 57
@@ -124,7 +193,7 @@ classdef BdfFields
                 end
                 lineNum = lineNum + 1;
             end
-            obj.bulkData=bulkDataFields;
-        end
+        end % function processBulkDataLines
+        
     end
 end
