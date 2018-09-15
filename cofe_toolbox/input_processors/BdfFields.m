@@ -1,24 +1,90 @@
-% Nastran input entry fields - delimited from input files lines.
-% Constructed from BdfLines object.
+% BdfFields converts Nastran input lines to distinct entries and fields 
+% stored as [char] variables in cell/struct arrays. 
+% 
+% The upstream BdfLines class manages INCLUDE statements, commented 
+% lines, inline comments, and partitioning of the inputs to Executive 
+% (includes NASTRAN statement and File Management lines) Control, Case 
+% Control, and Bulk Data sections. A BdfFields object is constructed from
+% a BdfLines object.
+% 
+% BdfFields Specification
+% =======================
+% 
+% Executive Control Section
+% -------------------------
+% Reads and stores the first SOL entry and ignores everything else.
+% 
+% Case Control Section
+% --------------------
+% The first line of all case control entries is stored. Continuations lines 
+% are stored only for SET entries. Nastran input fields are delimited and 
+% stored in a cell array of MATLAB structure variables with [char] fields. 
+% The [char] fields store the entry name, left hand side describers, and 
+% right hand side describers. Left hand side describers are optional.
+% 
+% EXAMPLE
+%   Nastran Case Control Line: 
+%      FORCE(PRINT,CORNER) = ALL
+% 
+%   BdfFields caseControl property:
+%      BdfFields.caseControl{i}.entryName = 'FORCE'
+%      BdfFields.caseControl{i}. leftHandDescribers = 'PRINT,CORNER'
+%      BdfFields.caseControl{i}. rightHandDescribers = 'ALL'
 %
-% You must use a + or * in column 1, field 1 of a continuation entry
+% SPECIAL CASES
+%   * SUBCASE entry lines can omit the equal sign (if left hand side 
+%     describers are omitted, as they should be for SUBCASE entries).
+%   * SET continuation lines are read and stored. SET entry lines are 
+%     continued when the last nonwhitespace character is a comma. All SET 
+%     continuation lines are appended to the SET entry rightHandDescribers 
+%     variable.
+% 
+% Bulk Data Section
+% -----------------
+% Free field, small field, and large field format bulk data lines are 
+% delimited into entries and fields. A cell array (BdfFields.bulkData) is 
+% created which contains one cell for each bulk data entry. Each bulk data 
+% entry cell contains another cell array with [char] variable data for each
+% input field. 
+% 
+% All continuation lines are read and stored. A line is determined to be a 
+% continuation line if the first field is blank, or if a "+" or "*" is in 
+% column 1, field 1. Continuation lines must directly follow the parent 
+% entry line. The format of continuations can be mixed, but this is not 
+% recommended. 
+% 
+% EXAMPLE
+%   Nastran Bulk Data Entry: 
+%      PBEAML,101,501,,BAR
+%      ,0.031291,0.181177,0.002854
+%  
+%   BdfFields bulkData property:
+%      BdfFields.bulkData{i}=
+%         Columns 1 through 10
+%           'PBEAML'	'101'	'501'	''	'BAR'	''	''	''	''	''
+%         Columns 11 through 20
+%           ''	'0.031291'	'0.181177'	'0.002854'	''	''	''	''	''	''
+%
 %
 % Anthony Ricciardi
 %
 classdef BdfFields
     properties (SetAccess = private)
-        sol % [char] Describer of the first SOL entry in the executive control section
-        caseControl; % [Num Case Control Entries,1 cell].[struct] with case control describer data
-%       caseControl{:}.
-%                     .entryName: [char] Name of the Case Control Entry
-%                     .leftHandDescribers: [char] Left hand describers
-%                     .rightHandDescribers: [char] Right hand describers
-        bulkData; % [Num Bulk Data Entries,1 cell] Bulk data entry fields
-%                   bulkData{:} = [1,10*num continuations cell] Bulk data entry fields as [char]
+        sol; % [char] Describer of the first SOL entry in the executive control section
+
+        % caseControl [Num Case Control Entries,1 cell] containing [struct] with case control data
+        %            {:}.entryName: [char] Name of the Case Control Entry
+        %            {:}.leftHandDescribers: [char] Left hand side describers
+        %            {:}.rightHandDescribers: [char] Right hand side describers
+        caseControl;
+
+        % bulkData [Num Bulk Data Entries,1 cell] containing [cell] with bulk data fields
+        %         {:} = [1,number of entry fields] Bulk data entry fields as [char]
+        bulkData;
     end
     methods
         function obj = BdfFields(bdfLines)
-            % Reads fields from Nastran input lines stored in BdfLines object.
+            % Creates BdfFields object with distinct input entries and fields 
             obj.sol=obj.processExecutiveControl(bdfLines.executiveControl);
             obj.caseControl=obj.processCaseControl(bdfLines.caseControl);
             obj.bulkData=obj.processBulkDataLines(bdfLines.bulkData);
@@ -107,7 +173,10 @@ classdef BdfFields
             while lineNum <= nBulkDataLines
                 bulkDataLine = bulkDataLines{lineNum};
                 % check if the line is a continuation
-                isContinuation = any([strncmp(bulkDataLine,'+',1),strncmp(bulkDataLine,'*',1),strncmp(bulkDataLine,',',1),strncmp(bulkDataLine,'        ',8)]);
+                isContinuation = any([strncmp(bulkDataLine,'+',1),...
+                    strncmp(bulkDataLine,'*',1),...
+                    strncmp(strtrim(bulkDataLine),',',1),...
+                    strncmp(bulkDataLine,'        ',8)]);
                 if lineNum > 1
                     if ~isContinuation
                         bulkDataFields{entryNum,1} = strtrim(entryFields);
