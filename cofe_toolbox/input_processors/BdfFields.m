@@ -7,22 +7,35 @@
 %
 classdef BdfFields
     properties (SetAccess = private)
-        executiveControl=cell(0);% [____ ,1 cell] Executive control fields (also NASTRAN statement and File Management fields)
-        caseControl=cell(0); % [____ ,1 cell] Case control fields
-        bulkData=cell(0); % [____ ,1 cell] Bulk data fields
+        sol % [char] Describer of the first SOL entry in the executive control section
+        caseControl; % [Num Case Control Entries,1 cell].[struct] with case control describer data
+%       caseControl{:}.
+%                     .entryName: [char] Name of the Case Control Entry
+%                     .leftHandDescribers: [char] Left hand describers
+%                     .rightHandDescribers: [char] Right hand describers
+        bulkData; % [Num Bulk Data Entries,1 cell] Bulk data entry fields
+%                   bulkData{:} = [1,10*num continuations cell] Bulk data entry fields as [char]
     end
     methods
         function obj = BdfFields(bdfLines)
             % Reads fields from Nastran input lines stored in BdfLines object.
-            obj.executiveControl=obj.processExecutiveControl(bdfLines.executiveControl);
+            obj.sol=obj.processExecutiveControl(bdfLines.executiveControl);
             obj.caseControl=obj.processCaseControl(bdfLines.caseControl);
             obj.bulkData=obj.processBulkDataLines(bdfLines.bulkData);
         end
     end
     methods (Static = true)
-        function executiveControlFields = processExecutiveControl(executiveControlLines)
+        function sol = processExecutiveControl(executiveControlLines)
             executiveControlFields = regexpi(executiveControlLines,...
-                '\s*(?<entryName>SOL)\s+(?<rightHandDescribers>.+)','names');
+                '\s*SOL\s+(?<rightHandDescribers>.+)','names');            
+            notSolExecutiveControlFields = cellfun('isempty',executiveControlFields);
+            solEntries = find(notSolExecutiveControlFields==false);
+            if isempty(solEntries)
+                sol = [];
+            else
+                firstSolEntryFields = executiveControlFields(solEntries(1));
+                sol = firstSolEntryFields{1}.rightHandDescribers;
+            end
         end
         function caseControlFields = processCaseControl(caseControlLines)
             nCaseControlLines = size(caseControlLines,1);
@@ -32,9 +45,9 @@ classdef BdfFields
                 
                 % process lines other than set continuations
                 caseControlRegularLines = regexpi(caseControlLines,...
-                    ['\s*(?<entryName>SET)\s*(?<leftHandDescribers>\d+)\s*=(?<rightHandDescribers>.+)','|',...
-                    '\s*(?<entryName>\w+)\s*\((?<leftHandDescribers>.+)\)\s*=(?<rightHandDescribers>.+)','|',...
-                    '\s*(?<entryName>\w+)\s*=(?<rightHandDescribers>.+)','|',...
+                    ['\s*(?<entryName>SET)\s*(?<leftHandDescribers>\d+)\s*=\s*(?<rightHandDescribers>.+)','|',...
+                    '\s*(?<entryName>\w+)\s*\((?<leftHandDescribers>.+)\)\s*=\s*(?<rightHandDescribers>.+)','|',...
+                    '\s*(?<entryName>\w+)\s*=\s*(?<rightHandDescribers>.+)','|',...
                     '\s*(?<entryName>SUBCASE)\s+(?<rightHandDescribers>.+)','|'],'names');
                 
                 % check first line
