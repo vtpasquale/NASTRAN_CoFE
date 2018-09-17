@@ -15,12 +15,12 @@ classdef BulkEntryCmass1 < BulkEntry
     methods (Static = true)
 		% Initialize entry properties based on input file entry data in cell format
         function obj = BulkEntryCmass1(entryFields)
-            obj.eid = setData('CMASS1','EID',entryFields{2},'uint32',NaN,1);
-            obj.pid = setData('CMASS1','PID',entryFields{3},'uint32',NaN,1);
-            obj.g1 = setData('CMASS1','G1',entryFields{4},'uint32',NaN,1);
-            obj.c1 = setData('CMASS1','C1',entryFields{5},'uint8',NaN,1,6);
-            obj.g2 = setData('CMASS1','G2',entryFields{6},'uint32',[],1);
-            obj.c2 = setData('CMASS1','C2',entryFields{7},'uint8',[],1,6);
+            obj.eid = castInputField('CMASS1','EID',entryFields{2},'uint32',NaN,1);
+            obj.pid = castInputField('CMASS1','PID',entryFields{3},'uint32',NaN,1);
+            obj.g1 = castInputField('CMASS1','G1',entryFields{4},'uint32',NaN,1);
+            obj.c1 = castInputField('CMASS1','C1',entryFields{5},'uint8',NaN,1,6);
+            obj.g2 = castInputField('CMASS1','G2',entryFields{6},'uint32',[],1);
+            obj.c2 = castInputField('CMASS1','C2',entryFields{7},'uint8',[],1,6);
         end
     end
     methods

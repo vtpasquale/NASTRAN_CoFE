@@ -20,7 +20,7 @@
 % Outputs
 % out [dataType] checked input field data cast to specified dataType
 %
-function out = setData(entryName,fieldName,fieldData,dataType,dataDefault,dataMin,datMax)
+function out = castInputField(entryName,fieldName,fieldData,dataType,dataDefault,dataMin,datMax)
 
 %% check for empty field
 if strcmp(fieldData,'');
