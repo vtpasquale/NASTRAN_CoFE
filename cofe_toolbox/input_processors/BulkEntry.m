@@ -1,89 +1,51 @@
-% Abstract superclass for input entries
+% Abstract superclass for Nastran Bulk Data input entries
 % Anthony Ricciardi
 %
-classdef (Abstract) entry < matlab.mixin.Heterogeneous
-    properties (Constant = true, GetAccess = private)
-        matlab_entry_conflict_names =  {'grid','load','prod'}; % Cell array of strings with supported input entry names that conflict with MATLAB names. These entry class names are appended with '_obj' to deconflict.
-    end
+classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
     methods (Abstract)
-        % Initialize entry properties based on input file entry data in cell format
-        initialize(obj,data)
+        % The class constructor must initialize entry properties based on input file entry field data in cell format
         
         % Print the entry in NASTRAN free field format to a text file with file id fid
-        echo(obj,fid)
+        echo_sub(obj,fid)
         
         % Write appropriate model object(s) based on entry data
-        model = entry2model(obj)
+        model = entry2model_sub(obj)
     end
     
     methods (Sealed = true)
-        % Execute entry.echo(fid) for all heterogeneous entry objects in array
-        function echo_all(obj,fid)
+        % Execute entry.echo_sub(fid) for all heterogeneous entry objects in array
+        function echo(obj,fid)
             [n,m]=size(obj);
             if m > 1; error('entry.echo_all(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
             for i=1:n
-                echo(obj(i),fid);
+                echo_sub(obj(i),fid);
             end
         end
-        % Execute entry.entry2model(fid) for all heterogeneous entry objects in array
-        function MODEL = entry2model_all(obj)
+        % Execute entry.entry2model_sub(fid) for all heterogeneous entry objects in array
+        function MODEL = entry2model(obj)
             [n,m]=size(obj);
             if m > 1; error('entry.entry2model_all(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
             MODEL = model;
             for i = 1:n
-                MODEL = entry2model(obj(i),MODEL);
+                MODEL = entry2model_sub(obj(i),MODEL);
             end
-            % % %             %% Categorize subclasses heterogeneous entry array - avoiding handle superclass
-            % % %             obj_classes = cell(n,1);
-            % % %             for i=1:n
-            % % %                 obj_classes{i}=class(obj(i));
-            % % %             end
-            % % %
-            % % %             %% GRDSET Processing
-            % % %             grdset_id = find(strcmp(obj_classes,'grdset'));
-            % % %             if isempty(grdset_id)
-            % % %                 GRDSET = grdset;
-            % % %             elseif size(grdset_id,1)>1
-            % % %                 error('Only one GRDSET entry may appear in the Bulk Data Section.')
-            % % %             else
-            % % %                 GRDSET=obj(grdset_id);
-            % % %             end
-            % % %
-            % % %             %% Node processing using GRDSET as default
-            % % %             grid_id = find(strcmp(obj_classes,'grid_obj'));
-            % % %             for i=grid_id
-            % % %                 MODEL = entry2model(obj(i),MODEL,GRDSET);
-            % % %             end
-            % % %
-            % % %             %% Processing Everything else
-            % % %             id = setdiff(1:n,[grid_id;grdset_id]);
         end
     end
     methods (Sealed = true, Static = true)
         % Read input file and create heterogeneous entry array from input data
-        function ENTRY = import_entries(filename)
-            data = import_data(filename);
-            nData = size(data,2);
-            for i = 1:nData
-                fields = data(i).fields;
+        function bulkEntry = importBulkEntry(bulkDataFields)
+            for i = 1:size(bulkDataFields,1)
+                fields = bulkDataFields{i};
                 entryName =  lower(fields{1});
-                % special treatment for entry names that overlap with MATLAB built-in function names
-                if any(strcmp(entryName,entry.matlab_entry_conflict_names))
-                    entryName = [entryName,'_obj'];
-                end
+                entryName(1) = upper(entryName(1));
                 % check that input entry is supported
-                if exist(entryName,'class')==8
-                    eval(['isaEntry = isa(',entryName,',''entry'');']);
-                    if isaEntry
-                        % Call initialize method for each entry
-                        eval(['ENTRY(i,1) = ',entryName,'.initialize(fields);']);
-                    else
-                        error('Entry type %s not supported.',upper(entryName))
-                    end
+                if exist(['BulkEntry',entryName],'class')==8
+                    % Call contructor method for each entry
+                    eval(['bulkEntry(i,1) = BulkEntry',entryName,'(fields);']);
                 else
-                    error('Entry type %s not supported.',upper(entryName))
+                    error('Bulk data entry %s not supported.',upper(entryName))
                 end
             end
-        end
+        end % importBulkEntry()
     end
 end

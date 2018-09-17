@@ -1,32 +1,31 @@
 % Class for CMASS1 entries
 % Anthony Ricciardi
 %
-classdef cmass1 < entry
+classdef BulkEntryCmass1 < BulkEntry
     
     properties
-        EID % Unique element identification number. (0 < Integer < 100,000,000)
-        PID % Property identification number of a PMASS entry. (Integer > 0; Default = EID)
-        G1 % Grid identification number. (Integer > 0)
-        C1 % Component numbers. (0 < Integer < 6)
-        G2 % Grid identification number. (Integer > 0)
-        C2 % Component numbers. (0 < Integer < 6)
+        eid % Unique element identification number. (1 <= uint32 <= 4,294,967,295)
+        pid % Property identification number of a PMASS entry. (1 <= uint32 <= 4,294,967,295; Default = EID)
+        g1 % Grid identification number. (1 <= uint32 <= 4,294,967,295)
+        c1 % Component numbers. (1 <= uint8 <= 6)
+        g2 % Grid identification number. (1 <= uint32 <= 4,294,967,295)
+        c2 % Component numbers. (1 <= uint8 <= 6)
     end
     
     methods (Static = true)
 		% Initialize entry properties based on input file entry data in cell format
-        function CMASS1 = initialize(data)
-            CMASS1=cmass1;
-            CMASS1.EID = set_data('CMASS1','EID',data{2},'int',NaN,1,100000000);
-            CMASS1.PID = set_data('CMASS1','PID',data{3},'int',NaN,1);
-            CMASS1.G1 = set_data('CMASS1','G1',data{4},'int',NaN,1);
-            CMASS1.C1 = set_data('CMASS1','C1',data{5},'int',NaN,1,6);
-            CMASS1.G2 = set_data('CMASS1','G2',data{6},'int',[],1);
-            CMASS1.C2 = set_data('CMASS1','C2',data{7},'int',[],1,6);
+        function obj = BulkEntryCmass1(entryFields)
+            obj.eid = setData('CMASS1','EID',entryFields{2},'uint32',NaN,1);
+            obj.pid = setData('CMASS1','PID',entryFields{3},'uint32',NaN,1);
+            obj.g1 = setData('CMASS1','G1',entryFields{4},'uint32',NaN,1);
+            obj.c1 = setData('CMASS1','C1',entryFields{5},'uint8',NaN,1,6);
+            obj.g2 = setData('CMASS1','G2',entryFields{6},'uint32',[],1);
+            obj.c2 = setData('CMASS1','C2',entryFields{7},'uint8',[],1,6);
         end
     end
     methods
         % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model(obj,MODEL)
+        function MODEL = entry2model_sub(obj,MODEL)
             C_MASS1 = c_mass1;
             C_MASS1.EID = obj.EID;
             C_MASS1.PID = obj.PID;
@@ -38,8 +37,8 @@ classdef cmass1 < entry
             MODEL.ELEM = [MODEL.ELEM;C_MASS1];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
-        function echo(obj,fid)
-            fprintf(fid,'CMASS1,%d,%d,%d,%d,%d,%d\n',obj.EID,obj.PID,obj.G1,obj.C1,obj.G2,obj.C2);
+        function echo_sub(obj,fid)
+            fprintf(fid,'CMASS1,%d,%d,%d,%d,%d,%d\n',obj.eid,obj.pid,obj.g1,obj.c1,obj.g2,obj.c2);
         end
         
     end
