@@ -1,0 +1,152 @@
+INIT MASTER(S)
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1
+ID caseControlTestTenBar,Femap
+SOL SESTATIC
+CEND
+  TITLE = Analysis Title
+  SUBTITLE = Master Title
+  LABEL = Master Label
+  ECHO = NONE
+  DISPLACEMENT(PRINT) = ALL
+  SET 1 = 1 THRU 2
+  SPCFORCE(PRINT) = 1
+  FORCE(PRINT,CORNER) = ALL
+  SET 2 = 2,4,6
+  STRESS(PRINT,CORNER) = 2
+  ESE(PRINT) = ALL
+  SET 3 = 5,9 THRU 10
+  STRAIN(PRINT,FIBER,CORNER) = 3
+  SPC = 1
+  LOAD = 1
+SUBCASE 1
+SUBCASE 2
+  SUBTITLE = Case 2
+  SET 4 = 1 THRU 2
+  DISPLACEMENT(PLOT) = 4
+  LOAD = 2
+SUBCASE 3
+  SUBTITLE = Case 3
+  SPC = 1
+  LOAD = 3
+SUBCASE 4
+  SUBTITLE = Case 4
+  LABEL = Subcase 4 label
+  SET 5 = 2,4,6
+  FORCE(PLOT) = 5
+  SPC = 2
+SUBCASE 5
+  SUBTITLE = Case 5
+  SET 6 = 2,4,6
+  ESE(PLOT) = 6
+  SPC = 2
+  LOAD = 2
+SUBCASE 6
+  SUBTITLE = Case 6
+  SET 7 = 2,4,6
+  STRESS(PLOT) = 7
+  SPC = 2
+  LOAD = 3
+SUBCASE 7
+  SUBTITLE = Case 7
+  SPC = 3
+  LOAD = 1
+SUBCASE 8
+  SUBTITLE = Case 8
+  SPC = 3
+  LOAD = 2
+SUBCASE 9
+  SUBTITLE = Case 9
+  SPC = 3
+  LOAD = 3
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap with NX Nastran
+$   Version    : 11.4.2
+$   Translator : NX Nastran
+$   From Model : \\ero-fs1\u\aricciar\Desktop\temp\caseControlTestTenBar.modfem
+$   Date       : Sat Sep 15 10:04:57 2018
+$   Output To  : \\ero-fs1\u\aricciar\Desktop\temp\
+$ ***************************************************************************
+$
+PBEAML,101,501,,BAR,,,,,
+,0.031291,0.181177,0.002854
+PARAM,PRGPST,NO
+PARAM,POST,-1
+PARAM,OGEOM,NO
+PARAM,AUTOSPC,NO
+PARAM,GRDPNT,0
+CORD2C*                1               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              1.                
+*       
+CORD2S*                2               0              0.              0.
+*                     0.              0.              0.              1.*       
+*                     1.              0.              1.                
+*       
+$ Femap with NX Nastran Load Set 1 : NASTRAN 88
+FORCE          1       1       0      1.      0.      0.     -1.
+$ Femap with NX Nastran Load Set 2 : NASTRAN 88
+FORCE          2       1       0      1.      0.      0.     -1.
+$ Femap with NX Nastran Load Set 3 : NASTRAN 88
+FORCE          3       1       0      1.      0.      0.     -1.
+$ Femap with NX Nastran Constraint Set 1 : NASTRAN SPC 1
+SPC1           1    2456       1
+SPC1           1    2456       2
+SPC1           1    2456       3
+SPC1           1    2456       4
+SPC1           1  123456       5
+SPC1           1  123456       6
+$ Femap with NX Nastran Constraint Set 2 : NASTRAN SPC 1
+SPC1           2    2456       1
+SPC1           2    2456       2
+SPC1           2    2456       3
+SPC1           2    2456       4
+SPC1           2  123456       5
+SPC1           2  123456       6
+$ Femap with NX Nastran Constraint Set 3 : NASTRAN SPC 1
+SPC1           3    2456       1
+SPC1           3    2456       2
+SPC1           3    2456       3
+SPC1           3    2456       4
+SPC1           3  123456       5
+SPC1           3  123456       6
+$ Femap with NX Nastran Property 101 : ROD Property
+PROD         101     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 201 : ROD Property
+PROD         201     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 501 : ROD Property
+PROD         501     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 601 : ROD Property
+PROD         601     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 701 : ROD Property
+PROD         701     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 901 : ROD Property
+PROD         901     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Material 501 : ISOTROPIC Material
+MAT1         501    1.+73759398.     .33  2.59-4      0.      0.        
+GRID*                  1               0            720.              0.
+*                     0.               0
+GRID*                  2               0            720.              0.
+*                  -360.               0
+GRID*                  3               0            360.              0.
+*                     0.               0
+GRID*                  4               0            360.              0.
+*                  -360.               0
+GRID*                  5               0              0.              0.
+*                     0.               0
+GRID*                  6               0              0.              0.
+*                  -360.               0
+CROD           1     101       5       3
+CROD           2     201       3       1
+CROD           3     101       6       4
+CROD           4     201       4       2
+CROD           5     501       3       4
+CROD           6     601       1       2
+CROD           7     701       5       4
+CROD           8     701       6       3
+CROD           9     901       3       2
+CROD          10     901       4       1
+ENDDATA 973f9b19

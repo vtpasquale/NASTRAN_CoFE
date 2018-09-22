@@ -1,0 +1,87 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+NASTRAN SYSTEM(653) = 1
+SOL FIRSTSOLENTRY
+SOL SECONDSOLENTRY
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+SPCFORCES = NONE
+  TITLE = Analysis Title
+  ECHO = NONE
+  DISPLACEMENT = ALL
+  FORCE = ALL
+  STRESS=ALL
+  ESE =ALL
+  STRAIN = ALL
+SUBCASE 1
+  SPC = 1
+  LOAD = 88
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap with NX Nastran
+$   Version    : 11.4.2
+$   Translator : NX Nastran
+$   From Model : \\ero-fs1\u\aricciar\Desktop\temp\tenbar.modfem
+$   Date       : Mon Aug 20 20:39:27 2018
+$   Output To  : \\ero-fs1\u\aricciar\Desktop\temp\
+$ ***************************************************************************
+$
+PARAM,POST,-2
+PARAM,PRGPST,NO
+PARAM,AUTOSPC,NO
+PARAM,GRDPNT,0
+CORD2C         1       0      0.      0.      0.      0.      0.      1.+FEMAPC1
++FEMAPC1      1.      0.      1.        
+CORD2S         2       0      0.      0.      0.      0.      0.      1.+FEMAPC2
++FEMAPC2      1.      0.      1.        
+$ Femap with NX Nastran Load Set 88 : NASTRAN 88
+FORCE         88       1       0      1.      0.      0.     -1.
+$ Femap with NX Nastran Constraint Set 1 : NASTRAN SPC 1
+SPC1           1    2456       1
+SPC1           1    2456       2
+SPC1           1    2456       3
+SPC1           1    2456       4
+SPC1           1  123456       5
+SPC1           1  123456       6
+$ Femap with NX Nastran Property 101 : ROD Property
+PROD         101     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 201 : ROD Property
+PROD         201     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 501 : ROD Property
+PROD         501     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 601 : ROD Property
+PROD         601     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 701 : ROD Property
+PROD         701     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Property 901 : ROD Property
+PROD         901     501  9.5318  25000.     .25      0.
+$ Femap with NX Nastran Material 501 : ISOTROPIC Material
+MAT1         501    1.+73759398.     .33  2.59-4      0.      0.        
+GRID           1       0    720.      0.      0.       0
+GRID           2       0    720.      0.   -360.       0
+GRID           3       0    360.      0.      0.       0
+GRID           4       0    360.      0.   -360.       0
+GRID           5       0      0.      0.      0.       0
+GRID           6       0      0.      0.   -360.       0
+CROD           1     101       5       3
+CROD           2     201       3       1
+CROD           3     101       6       4
+CROD           4     201       4       2
+CROD           5     501       3       4
+CROD           6     601       1       2
+CROD           7     701       5       4
+CROD           8     701       6       3
+CROD           9     901       3       2
+CROD          10     901       4       1
+ENDDATA 02c2ddc8
