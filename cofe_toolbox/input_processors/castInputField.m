@@ -2,8 +2,8 @@
 % Anthony Ricciardi
 %
 % Inputs
-% entryName [string] entry name, used for potential error messages
-% fieldName [string] field name, used for potential error messages
+% entryName [char] entry name, used for potential error messages
+% fieldName [char] field name, used for potential error messages
 % fieldData [char] raw field data from input file
 % dataType  [char] data type.
 %      Supported options: (type help class for more details)
@@ -14,26 +14,36 @@
 % dataDefault [type, [], NaN] default value.
 %                        Set to NaN if explicit user input is required.
 %                        Set to []  if user input is optional.
-% dataMin:    [real] minimum value - optional - only used for numeric types
-% dataMax:    [real] maximum value - optional - only used for numeric types
+% dataMin:    [numeric] minimum value - optional - only used for numeric types
+% dataMax:    [numeric] maximum value - optional - only used for numeric types
 %
 % Outputs
 % out [dataType] checked input field data cast to specified dataType
 %
-function out = castInputField(entryName,fieldName,fieldData,dataType,dataDefault,dataMin,datMax)
+function out = castInputField(entryName,fieldName,fieldData,dataType,dataDefault,dataMin,dataMax)
 
-%% check for empty field
+%% Check inputs
+if nargin < 5; error('castInputField:missingInputs','At least 5 input arguments are requred for castInputField().'); end
+if ~all([ischar(entryName),ischar(fieldName),ischar(fieldData),ischar(dataType)])
+    error('castInputField:wrongInputDataType',...
+          'Input arguments entryName, fieldName, fieldData, and dataType should be type [char].')
+end
+
+%% Empty field checks
 if strcmp(fieldData,'');
     if isnan(dataDefault)
-        error(['The ',fieldName,' field is required for ',entryName,' entries.'])
+        error('castInputField:emptyFieldWithNoDefault',...
+            'The %s field is required for %s entries.',fieldName,entryName)
     elseif isempty(dataDefault)
         out = dataDefault;
         return
     else
-        fieldData = dataDefault;
-        if ~isa(fieldData,dataType)
-            error('If a default field value is specified, class(default) should match the class specified by the "dataType" input.')
+        out = dataDefault;
+        if ~isa(out,dataType)
+            error('castInputField:dataDefaultShouldMatchDataType',...
+            'When a default field value is specified, class(default) should match the class specified by the "dataType" input.')
         end
+        return
     end
 end
     
@@ -41,9 +51,6 @@ end
 switch dataType
     case 'char'
         out = fieldData;
-        if ~ischar(out)
-            error(['The ',fieldName,' field on ',entryName,' entries should be type char.']);
-        end
     case 'double' 
         % deal with scientific notation
         exponentSignLocation = strfind(fieldData(2:end),'-');
@@ -58,37 +65,49 @@ switch dataType
                 fieldDataNew(exponentSignLocation+1)='E';
                 fieldData = fieldDataNew;
             elseif exponentSignLocation-exponentLocation ~= 1
-                error('There is a formating problem')
+                error('castInputField:dataFormatIssue',...
+                      'There is a formating problem with the %s field on a(n) %s entry.',fieldName,entryName)
             end
         end
-        
         out = sscanf(fieldData,'%f'); % out = str2double(data);
-        if ~isa(out,'double')
-            error([fieldName,' on  ',entryName,' should be type double.']);
+        if any([isnan(out),isempty(out)])
+            error('castInputField:dataFormatIssue',...
+                'There is a formating problem with the %s field on a(n) %s entry.',fieldName,entryName)
         end
     case {'uint8','uint32'}
         out = sscanf(fieldData,'%f'); % out = str2double(data);
+        if any([isnan(out),isempty(out)])
+            error('castInputField:dataFormatIssue',...
+                'There is a formating problem with the %s field on a(n) %s entry.',fieldName,entryName)
+        end
         if mod(out,1)~=0
-            error([fieldName,' field on ',entryName,' entry should be an integer.']);
+            error('castInputField:fieldShouldBeInteger',...
+                'The %s field on a(n) %s entry should be an integer.',fieldName,entryName);
         end
         if out < intmin(dataType) || out > intmax(dataType)
-            error('The %s field on a(n) %s entry has a value of %d, which is outside the range of values that can be stored using type %s.',fieldName,entryName,out,dataType);
+            error('castInputField:fieldValueOutsideIntegerRange',...
+            'The %s field on a(n) %s entry has a value of %d, which is outside the range of values that can be stored using type %s.',fieldName,entryName,out,dataType);
         end
         out = cast(out,dataType);
     otherwise
-        error('dataType %s not supported by setData() function.',dataType)
+        error('castInputField:dataTypeNotSupported',...
+            'dataType %s not supported by setData() function.',dataType)
 end
-        
-%% Check out values are within specified range
+
+%% Check output values are within specified range
 if isnumeric(out)
     if nargin > 5
-        if out < dataMin
-            error([fieldName,' field on ',entryName,' should be greater than or equal to ',num2str(dataMin),'.']);
+        if ~isempty(dataMin)
+            if out < dataMin
+                error('castInputField:fieldValueOutsideSpecifiedRange',...
+                    'The %s field on a(n) %s entry should be greater than or equal to %g',fieldName,entryName,dataMin);
+            end
         end
     end
     if nargin > 6
-        if out > datMax
-            error([fieldName,' field on ',entryName,' should be less than or equal to ',num2str(datMax),'.']);
+        if out > dataMax
+            error('castInputField:fieldValueOutsideSpecifiedRange',...
+                  'The %s field on a(n) %s entry should be less than or equal to %g',fieldName,entryName,dataMax);
         end
     end
 end
