@@ -1,47 +1,44 @@
-% Class for PROD property entries
+% Class for FORCE entries
 % Anthony Ricciardi
 %
-classdef force < entry
+classdef BulkEntryForce < BulkEntry
     
     properties
-        SID % Load set identification number. (Integer > 0)
-        G % Grid point identification number. (Integer > 0)
-        CID % Coordinate system identification number. (Integer > 0; Default = 0)
-        F % Scale factor. (Real)
-        N1 % Components of a vector measured in coordinate system defined by CID. (Real; at least one Ni ~= 0.0. unless F is zero)
-        N2
-        N3
+        sid % Load set identification number. (Integer > 0)
+        g % Grid point identification number. (Integer > 0)
+        cid % Coordinate system identification number. (Integer > 0; Default = 0)
+        f % Scale factor. (Real)
+        n1 % Components of a vector measured in coordinate system defined by CID. (Real; at least one Ni ~= 0.0. unless f is zero)
+        n2
+        n3
     end
     
-    methods (Static = true)
-		% Initialize entry properties based on input file entry data in cell format
-        function FORCE = initialize(data)
-            FORCE = force;
-            FORCE.SID = set_data('FORCE','SID',data{2},'int',NaN,1);
-            FORCE.G = set_data('FORCE','G',data{3},'int',NaN,1);
-            FORCE.CID = set_data('FORCE','CID',data{4},'int',0);            
-            FORCE.F = set_data('FORCE','F',data{5},'dec',NaN);
-            FORCE.N1 = set_data('FORCE','N1',data{6},'dec',0.0);
-            FORCE.N2 = set_data('FORCE','N2',data{7},'dec',0.0);
-            FORCE.N3 = set_data('FORCE','N3',data{8},'dec',0.0);
-            if FORCE.F ~= 0 && all([FORCE.N1,FORCE.N2,FORCE.N3]==0)
-                error('Error with FORCE CID=%d: at least one Ni ~= 0.0. Unless F is zero.',FORCE.SID)
+    methods
+        function obj = BulkEntryForce(entryFields)
+            % Construct using entry field data input as cell array of char
+            obj.sid = castInputField('FORCE','SID',entryFields{2},'uint32',NaN,1);
+            obj.g = castInputField('FORCE','G',entryFields{3},'uint32',NaN,1);
+            obj.cid = castInputField('FORCE','CID',entryFields{4},'uint32',0);            
+            obj.f = castInputField('FORCE','F',entryFields{5},'double',NaN);
+            obj.n1 = castInputField('FORCE','N1',entryFields{6},'double',0.0);
+            obj.n2 = castInputField('FORCE','N2',entryFields{7},'double',0.0);
+            obj.n3 = castInputField('FORCE','N3',entryFields{8},'double',0.0);
+            if obj.f ~= 0 && all([obj.n1,obj.n2,obj.n3]==0)
+                error('Error with FORCE CID=%d: at least one Ni ~= 0.0. Unless F is zero.',obj.sid)
             end
         end
-    end
-    methods
+        function MODEL = entry2model_sub(obj,MODEL)
         % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model(obj,MODEL)
             FORCES = forces;
-            FORCES.SID = obj.SID;
-            FORCES.G = obj.G;
-            FORCES.CID = obj.CID;
-            FORCES.F = obj.F*[obj.N1;obj.N2;obj.N3];
+            FORCES.sid = obj.sid;
+            FORCES.g = obj.g;
+            FORCES.cid = obj.cid;
+            FORCES.f = obj.f*[obj.n1;obj.n2;obj.n3];
             MODEL.LOADS = [MODEL.LOADS;FORCES];
         end
-        % Print the entry in NASTRAN free field format to a text file with file id fid
-        function echo(obj,fid)
-            fprintf(fid,'FORCE,%d,%d,%d,%f,%f,%f,%f\n',obj.SID,obj.G,obj.CID,obj.F,obj.N1,obj.N2,obj.N3);
+        function echo_sub(obj,fid)
+            % Print the entry in NASTRAN free field format to a text file with file id fid
+            fprintf(fid,'FORCE,%d,%d,%d,%f,%f,%f,%f\n',obj.sid,obj.g,obj.cid,obj.f,obj.n1,obj.n2,obj.n3);
         end
     end
 end

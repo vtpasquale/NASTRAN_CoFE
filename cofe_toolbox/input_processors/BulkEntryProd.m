@@ -1,44 +1,41 @@
 % Class for PROD property entries
 % Anthony Ricciardi
 %
-classdef prod_obj < entry
+classdef BulkEntryProd < BulkEntry
     
     properties
-        PID % Property identification number. (Integer > 0)
-        MID % Material identification number. (Integer > 0)
-        A % Area of the rod. (Real)
-        J % Torsional constant. (Real)
-        C % Coefficient to determine torsional stress. (Real; Default = 0.0)
-        NSM % Nonstructural mass per unit length. (Real)
+        pid % Property identification number. (Integer > 0)
+        mid % Material identification number. (Integer > 0)
+        a % Area of the rod. (Real)
+        j % Torsional constant. (Real)
+        c % Coefficient to determine torsional stress. (Real; Default = 0.0)
+        nsm % Nonstructural mass per unit length. (Real)
     end
     
-    methods (Static = true)
-		% Initialize entry properties based on input file entry data in cell format
-        function PROD = initialize(data)
-            PROD = prod_obj;
-            PROD.PID = set_data('PROD','PID',data{2},'int',NaN,1);
-            PROD.MID = set_data('PROD','MID',data{3},'int',NaN,1);
-            PROD.A = set_data('PROD','A',data{4},'dec',NaN);
-            PROD.J = set_data('PROD','J',data{5},'dec',NaN);
-            PROD.C = set_data('PROD','C',data{6},'dec',[],0.0);
-            PROD.NSM = set_data('PROD','NSM',data{7},'dec',0.0);
-        end
-    end
     methods
+        function obj = BulkEntryProd(entryFields)
+            % Construct using entry field data input as cell array of char
+            obj.pid = castInputField('PROD','PID',entryFields{2},'uint32',NaN,1);
+            obj.mid = castInputField('PROD','MID',entryFields{3},'uint32',NaN,1);
+            obj.a = castInputField('PROD','A',entryFields{4},'double',NaN);
+            obj.j = castInputField('PROD','J',entryFields{5},'double',NaN);
+            obj.c = castInputField('PROD','C',entryFields{6},'double',[],0.0);
+            obj.nsm = castInputField('PROD','NSM',entryFields{7},'double',0.0);
+        end
         % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model(obj,MODEL)
+        function MODEL = entry2model_sub(obj,MODEL)
             P_ROD = p_rod;
-            P_ROD.PID = obj.PID;
-            P_ROD.MID = obj.MID;
-            P_ROD.A = obj.A;
-            P_ROD.J = obj.J;
-            P_ROD.C = obj.C;
-            P_ROD.NSM = obj.NSM;
+            P_ROD.pid = obj.pid;
+            P_ROD.mid = obj.mid;
+            P_ROD.a = obj.a;
+            P_ROD.j = obj.j;
+            P_ROD.c = obj.c;
+            P_ROD.nsm = obj.nsm;
             MODEL.PROP = [MODEL.PROP;P_ROD];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
-        function echo(obj,fid)
-            fprintf(fid,'PROD,%d,%d,%f,%f,,%f\n',obj.PID,obj.MID,obj.A,obj.J,obj.NSM);
+        function echo_sub(obj,fid)
+            fprintf(fid,'PROD,%d,%d,%f,%f,,%f\n',obj.pid,obj.mid,obj.a,obj.j,obj.nsm);
         end
     end
 end

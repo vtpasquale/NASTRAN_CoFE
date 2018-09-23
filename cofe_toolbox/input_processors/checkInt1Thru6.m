@@ -9,7 +9,7 @@
 %
 % Outputs: None. Throws an error if the integer fails the criteria
 %
-function [] = check_int1thru6(C,entryName,idName,idNumber,fieldName)
+function [] = checkInt1Thru6(C,entryName,idName,idNumber,fieldName)
 check = str2num(num2str(C)');
 pass = true;
 if any(check<1) || any(check>6)

@@ -3,7 +3,7 @@
 %
 classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
     methods (Abstract)
-        % The class constructor must initialize entry properties based on input file entry field data in cell format
+        % The class constructor must initialize entry properties using entry field data input as cell array of char 
         
         % Print the entry in NASTRAN free field format to a text file with file id fid
         echo_sub(obj,fid)
@@ -33,11 +33,15 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
     end
     methods (Sealed = true, Static = true)
         % Read input file and create heterogeneous entry array from input data
-        function bulkEntry = importBulkEntry(bulkDataFields)
+        function bulkEntry = constructFromFields(bulkDataFields)
             for i = 1:size(bulkDataFields,1)
                 fields = bulkDataFields{i};
+                % convert field 1 to case-sensitive class name
                 entryName =  lower(fields{1});
                 entryName(1) = upper(entryName(1));
+                if strcmp(entryName(end),'*');
+                    entryName = entryName(1:end-1);
+                end
                 % check that input entry is supported
                 if exist(['BulkEntry',entryName],'class')==8
                     % Call contructor method for each entry

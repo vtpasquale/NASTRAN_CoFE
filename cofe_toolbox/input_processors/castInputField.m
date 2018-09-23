@@ -91,7 +91,7 @@ switch dataType
         out = cast(out,dataType);
     otherwise
         error('castInputField:dataTypeNotSupported',...
-            'dataType %s not supported by setData() function.',dataType)
+            'dataType %s not supported by castInputField() function.',dataType)
 end
 
 %% Check output values are within specified range

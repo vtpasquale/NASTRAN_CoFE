@@ -227,21 +227,21 @@ classdef BdfFields
                             bulkDataLine = bulkDataLines{lineNum};
                             sizeBulkDataLine = size(bulkDataLine,2);
                             if sizeBulkDataLine >= 80
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:80)};
+                                lineFields = {bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:80)};
                             elseif sizeBulkDataLine >= 73
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:end)};
+                                lineFields = {bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:72),bulkDataLine(73:end)};
                             elseif sizeBulkDataLine >= 57
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:end),''};
+                                lineFields = {bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:56),bulkDataLine(57:end),''};
                             elseif sizeBulkDataLine >= 41
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:end),'',''};
+                                lineFields = {bulkDataLine(9:24),bulkDataLine(25:40),bulkDataLine(41:end),'',''};
                             elseif sizeBulkDataLine >= 25
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:24),bulkDataLine(25:end),'','',''};
+                                lineFields = {bulkDataLine(9:24),bulkDataLine(25:end),'','',''};
                             elseif sizeBulkDataLine >= 9
-                                lineFields = {bulkDataLine(1:8),bulkDataLine(9:end),'','','',''};
+                                lineFields = {bulkDataLine(9:end),'','','',''};
                             else
-                                lineFields = {bulkDataLine(1:end),'','','','',''};
+                                lineFields = {'','','','',''};
                             end
-                            entryFields(fieldNum+5:fieldNum+10)=lineFields;
+                            entryFields(fieldNum+5:fieldNum+9)=lineFields;
                             % else
                             % entryFields(fieldNum+6:fieldNum+10)=cell(5,1);
                         end

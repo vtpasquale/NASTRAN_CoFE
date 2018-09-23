@@ -12,9 +12,9 @@ classdef BulkEntryCmass1 < BulkEntry
         c2 % Component numbers. (1 <= uint8 <= 6)
     end
     
-    methods (Static = true)
-		% Initialize entry properties based on input file entry data in cell format
+    methods
         function obj = BulkEntryCmass1(entryFields)
+            % Construct using entry field data input as cell array of char
             obj.eid = castInputField('CMASS1','EID',entryFields{2},'uint32',NaN,1);
             obj.pid = castInputField('CMASS1','PID',entryFields{3},'uint32',NaN,1);
             obj.g1 = castInputField('CMASS1','G1',entryFields{4},'uint32',NaN,1);
@@ -22,10 +22,8 @@ classdef BulkEntryCmass1 < BulkEntry
             obj.g2 = castInputField('CMASS1','G2',entryFields{6},'uint32',[],1);
             obj.c2 = castInputField('CMASS1','C2',entryFields{7},'uint8',[],1,6);
         end
-    end
-    methods
-        % Write appropriate model object(s) based on entry data
         function MODEL = entry2model_sub(obj,MODEL)
+            % Write appropriate model object(s) based on entry data
             C_MASS1 = c_mass1;
             C_MASS1.EID = obj.EID;
             C_MASS1.PID = obj.PID;
@@ -36,8 +34,8 @@ classdef BulkEntryCmass1 < BulkEntry
             end
             MODEL.ELEM = [MODEL.ELEM;C_MASS1];
         end
-        % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)
+            % Print the entry in NASTRAN free field format to a text file with file id fid
             fprintf(fid,'CMASS1,%d,%d,%d,%d,%d,%d\n',obj.eid,obj.pid,obj.g1,obj.c1,obj.g2,obj.c2);
         end
         
