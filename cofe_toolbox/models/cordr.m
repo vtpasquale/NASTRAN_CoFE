@@ -4,17 +4,17 @@
 classdef cordr < cord
 
     methods
-        function X_0 = X_0(obj,X_C) 
-            % Returns location X ([3,1] Float) expressed in _0 from X expressed in _C
-            X_0 = obj.TC_C0.'*X_C + obj.XC_0;
+        function x_0 = x_0(obj,x_c) 
+            % Returns location x ([3,1] double) expressed in _0 from x expressed in _c
+            x_0 = obj.Tc_c0.'*x_c + obj.xc_0;
         end
-        function X_C = X_C(obj,X_0)
-            % Returns location X ([3,1] Float) expressed in _C from X expressed in _0
-            X_C = obj.TC_C0*( X_0 - obj.XC_0);
+        function x_c = x_c(obj,x_0)
+            % Returns location x ([3,1] double) expressed in _c from x expressed in _0
+            x_c = obj.Tc_c0*( x_0 - obj.xc_0);
         end
-        function T_C0 = T_C0(obj,X_C) 
-            % Returns transformation matrix ([3,3] Symmetric Float) from basic coordinate system to current coordinate system at X_C
-            T_C0 = obj.TC_C0;
+        function T_c0 = T_c0(obj,x_c) 
+            % Returns transformation matrix ([3,3] double) from basic coordinate system to current coordinate system at x_c
+            T_c0 = obj.Tc_c0;
         end
     end
 end
