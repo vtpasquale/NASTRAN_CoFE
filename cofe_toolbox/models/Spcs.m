@@ -1,10 +1,10 @@
 % Abstract superclass for single point constraints.
 % Anthony Ricciardi
 %
-classdef (Abstract) spcs < matlab.mixin.Heterogeneous
+classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
 
     properties (Abstract)
-        SID % [int] Identification numbers of the single-point constraint sets.
+        sid % [int] Identification numbers of the single-point constraint sets.
     end
     methods (Sealed=true)
         function [sb,sd,spcsSIDs]=process_sb(obj,node2gdof)
@@ -15,13 +15,13 @@ classdef (Abstract) spcs < matlab.mixin.Heterogeneous
             for i = 1:size(obj,1)
                 oi = obj(i);
                 if isa(oi,'spcadd')
-                    if any(spcaddID==oi.SID)
+                    if any(spcaddID==oi.sid)
                         error('SID on SPCADD entries must be unique.')
                     end
-                    spcaddID=[spcaddID;oi.SID];
+                    spcaddID=[spcaddID;oi.sid];
                 else
-                    if ~any(spcconID==oi.SID)
-                        spcconID=[spcconID;oi.SID];
+                    if ~any(spcconID==oi.sid)
+                        spcconID=[spcconID;oi.sid];
                     end
                 end
             end
@@ -35,7 +35,7 @@ classdef (Abstract) spcs < matlab.mixin.Heterogeneous
             
             %% Single point contraints
             for i = 1:size(spcconID,1)
-                oi=obj([obj.SID]==spcconID(i));
+                oi=obj([obj.sid]==spcconID(i));
                 for j = 1:size(oi,1)
                     oj=oi(j);
                     gdof = node2gdof(oj.C,oj.G);

@@ -1,71 +1,71 @@
 % Class for case control
 % Anthony Ricciardi
 %
-classdef case_control
+classdef CaseControl
     
     properties
-        ANALYSIS; % [char] Specifies the type of analysis being performed for the current subcase
+        analysis; % [char] Specifies the type of analysis being performed for the current subcase
 
-        TITLE=''; % [char] Defines a title to appear on the first heading line of each page
-        SUBTITLE=''; % [char] Defines a subtitle to appear on the second heading line of each page
-        LABEL=''; % [char] Defines a label to appear on the third heading line of each page
+        title=''; % [char] Defines a title to appear on the first heading line of each page
+        subtitle=''; % [char] Defines a subtitle to appear on the second heading line of each page
+        label=''; % [char] Defines a label to appear on the third heading line of each page
         
-        SPC % (int > 0 or blank) Selects a single point constraint set to be applied
-        LOAD % (int > 0 or blank) Selects a load set to be applied
-        METHOD % (int > 0 or blank) Selects the real eigenvalue extraction parameters
+        spc % (int > 0 or blank) Selects a single point constraint set to be applied
+        load % (int > 0 or blank) Selects a load set to be applied
+        method % (int > 0 or blank) Selects the real eigenvalue extraction parameters
         
-        OUTPUT_SETS@output_set; % [nsets,1] Array of output_set objects
+        outputSet@OutputSet; % [nsets,1] Array of OutputSet objects
         
-        DISPLACEMENT = output_request(); % [output_request] Requests the form and type of nodal displacement output
-        VELOCITY     = output_request(); % [output_request] Requests the form and type of nodal velocity output
-        ACCELERATION = output_request(); % [output_request] Requests the form and type of nodal acceleration output
+        displacement; % [OutputRequest] Requests the form and type of nodal displacement output
+        velocity;     % [OutputRequest] Requests the form and type of nodal velocity output
+        acceleration; % [OutputRequest] Requests the form and type of nodal acceleration output
         
-        FORCE  = output_request(); % [output_request] Requests the form and type of element force output
-        STRESS = output_request(); % [output_request] Requests the form and type of element stress output
-        STRAIN = output_request(); % [output_request] Requests the form and type of element strain output
-        ESE    = output_request(); % [output_request] Requests the form and type of element strain energy output
-        EKE    = output_request(); % [output_request] Requests the form and type of element kinetic energy output
+        force  = OutputRequest(); % [OutputRequest] Requests the form and type of element force output
+        stress = OutputRequest(); % [OutputRequest] Requests the form and type of element stress output
+        strain = OutputRequest(); % [OutputRequest] Requests the form and type of element strain output
+        ese    = OutputRequest(); % [OutputRequest] Requests the form and type of element strain energy output
+        eke    = OutputRequest(); % [OutputRequest] Requests the form and type of element kinetic energy output
     end
     
     methods
        
         %% Set Methods
-        function obj = set.ANALYSIS(obj,in)
-            if ischar(in)==0; error('case_control.ANALYSIS must be a string'); end
+        function obj = set.analysis(obj,in)
+            if ischar(in)==0; error('CaseControl.ANALYSIS must be a string'); end
             opts = {'STATICS','MODES','BUCK'};
             switch in
                 case opts
                 otherwise
                     error('Case control ''ANALYSIS = %s'' not supported.',in)
             end
-            obj.ANALYSIS=in;
+            obj.analysis=in;
         end
-        function obj = set.TITLE(obj,in)
-            if ischar(in)==0; error('case_control.title must be a string'); end
-            obj.TITLE=in;
+        function obj = set.title(obj,in)
+            if ischar(in)==0; error('CaseControl.title must be a string'); end
+            obj.title=in;
         end
-        function obj = set.SUBTITLE(obj,in)
-            if ischar(in)==0; error('case_control.subtitle must be a string'); end
-            obj.SUBTITLE=in;
+        function obj = set.subtitle(obj,in)
+            if ischar(in)==0; error('CaseControl.subtitle must be a string'); end
+            obj.subtitle=in;
         end
-        function obj = set.LABEL(obj,in)
-            if ischar(in)==0; error('case_control.LABEL must be a string'); end
-            obj.LABEL=in;
+        function obj = set.label(obj,in)
+            if ischar(in)==0; error('CaseControl.LABEL must be a string'); end
+            obj.label=in;
         end
-        function obj = set.OUTPUT_SETS(obj,in)
-            if isa(in,'output_set')==0; error('case_control.OUTPUT_SETS must be an instanct of Class output_set'); end
+        function obj = set.outputSet(obj,in)
+            if isa(in,'OutputSet')==0; error('CaseControl.outputSet must be an instanct of Class OutputSet'); end
             [~,m]=size(in);
-            if m~=1; error('Array instances of Class output_set should have size(output_set,2)==1.'); end
-            obj.OUTPUT_SETS=in;
+            if m~=1; error('Array instances of Class output_set should have size(outputSet,2)==1.'); end
+            obj.outputSet=in;
         end
-        function obj = set.SPC(obj,in)
-            obj.SPC=setInt(in,'case_control.SPC');
+        function obj = set.spc(obj,in)
+            obj.spc=setInt(in,'CaseControl.spc');
         end
-        function obj = set.LOAD(obj,in)
-            obj.LOAD=setInt(in,'case_control.LOAD');
+        function obj = set.load(obj,in)
+            obj.load=setInt(in,'CaseControl.load');
         end
-        function obj = set.METHOD(obj,in)
-            obj.METHOD=setInt(in,'case_control.METHOD');
+        function obj = set.method(obj,in)
+            obj.method=setInt(in,'CaseControl.method');
         end        
     end
     

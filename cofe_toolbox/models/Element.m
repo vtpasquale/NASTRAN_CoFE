@@ -1,11 +1,11 @@
 % Abstract superclass for elastic elements
 % Anthony Ricciardi
 %
-classdef (Abstract) elem < matlab.mixin.Heterogeneous
+classdef (Abstract) Element < matlab.mixin.Heterogeneous
     
     properties (Abstract)
-        EID % [int] Element identification number.
-        G % [1,: int] Node identification numbers of connection points.
+        eid % [int] Element identification number.
+        g % [1,: int] Node identification numbers of connection points.
         gdof % [ngdof,1 int] Indices of of element degrees of freedom in global set
     end
     properties (Abstract=true,Hidden=true)
@@ -22,7 +22,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
             if m > 1; error('elem.preprocess() can only handel nx1 arrays of elem objects. The second dimension exceeds 1.'); end
             
             % check that element id numbers are unique
-            EIDS=[obj.EID];
+            EIDS=[obj.eid];
             
             [~,ia] = unique(EIDS,'stable');
             if size(ia,1)~=nelem
@@ -51,7 +51,7 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
         end
         function SOLUTION = recover(obj,SOLUTION)
             nelem = size(obj,1);
-            IDs = uint32([obj.EID]).';
+            IDs = uint32([obj.eid]).';
             
             % returnIO [nelem,4] [force,stress,strain,strain_energy]
             returnIO = false(nelem,4);
@@ -83,16 +83,16 @@ classdef (Abstract) elem < matlab.mixin.Heterogeneous
                 oi = obj(ele_ind);
                 [f,s,e,ese] = oi.recover_sub(u_g,returnIO(ele_ind,:));
                 if ~isempty(f)
-                    F = [F;element_output_data(oi.EID,oi.elem_type,1,f)];
+                    F = [F;element_output_data(oi.eid,oi.elem_type,1,f)];
                 end
                 if ~isempty(s)
-                    S = [S;element_output_data(oi.EID,oi.elem_type,2,s)];
+                    S = [S;element_output_data(oi.eid,oi.elem_type,2,s)];
                 end
                 if ~isempty(e)
-                    E = [E;element_output_data(oi.EID,oi.elem_type,3,e)];
+                    E = [E;element_output_data(oi.eid,oi.elem_type,3,e)];
                 end
                 if ~isempty(ese)
-                    ESE = [ESE;element_output_data(oi.EID,oi.elem_type,4,ese)];
+                    ESE = [ESE;element_output_data(oi.eid,oi.elem_type,4,ese)];
                 end
             end
             SOLUTION.force = F;

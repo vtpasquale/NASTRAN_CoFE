@@ -22,16 +22,16 @@ classdef BulkEntryProd < BulkEntry
             obj.c = castInputField('PROD','C',entryFields{6},'double',[],0.0);
             obj.nsm = castInputField('PROD','NSM',entryFields{7},'double',0.0);
         end
-        % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model_sub(obj,MODEL)
-            P_ROD = p_rod;
-            P_ROD.pid = obj.pid;
-            P_ROD.mid = obj.mid;
-            P_ROD.a = obj.a;
-            P_ROD.j = obj.j;
-            P_ROD.c = obj.c;
-            P_ROD.nsm = obj.nsm;
-            MODEL.PROP = [MODEL.PROP;P_ROD];
+        function model = entry2model_sub(obj,model)
+            % Convert entry object to model object and store in model entity array
+            prod = Prod;
+            prod.pid = obj.pid;
+            prod.mid = obj.mid;
+            prod.a = obj.a;
+            prod.j = obj.j;
+            prod.c = obj.c;
+            prod.nsm = obj.nsm;
+            model.property = [model.property;prod];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

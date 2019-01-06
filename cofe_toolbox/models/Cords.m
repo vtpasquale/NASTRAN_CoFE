@@ -1,7 +1,7 @@
 % Class for spherical coordinate systems
 % Anthony Ricciardi
 %
-classdef cords < cord
+classdef Cords < Cord
 
     methods
         function x_0 = x_0(obj,x_c) 

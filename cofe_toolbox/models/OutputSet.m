@@ -1,6 +1,6 @@
 % Class for output sets
 % Anthony Ricciardi
-classdef output_set
+classdef OutputSet
     
     properties
         ID % [int] Set identification number
@@ -58,7 +58,7 @@ classdef output_set
                 end
             end
         end
-        function rind = get_member_ID_indices(obj,IDs)
+        function rind = getSetMemberIndices(obj,IDs)
             % Returns a vector of of indices of input vector IDs(n,1 int)
             % that correspond to members of the output set. This is useful 
             % for the model data recovery process.
@@ -72,8 +72,11 @@ classdef output_set
             if m ~= 1; error('Metehod input IDs should have size(IDs,2)=1'); end
             
             if obj.all == true
-                rind = uint32(1:n).';
+                rind = (uint32(1):uint32(n)).';
             else
+                if ~isa(IDs,'uint32')
+                    IDs=uint32(IDs);
+                end
                 rind = uint32(find(ismember(IDs,obj.values)));
             end
         end
@@ -88,12 +91,12 @@ classdef output_set
         end
         function disp(obj)
             [n,m] = size(obj);
-            if m > 1; error('output_set.disp() can only handel nx1 arrays of output_set objects. The second dimension exceeds 1.'); end
+            if m > 1; error('OutputSet.disp() can only handel nx1 arrays of OutputSet objects. The second dimension exceeds 1.'); end
             
             if n > 1
-                fprintf(1,'%dx1 output_set with echo:\n\n',n);
+                fprintf(1,'%dx1 OutputSet with echo:\n\n',n);
             else
-                fprintf(1,'output_set with echo:\n\n');
+                fprintf(1,'OutputSet with echo:\n\n');
             end
             echo(obj,1);
         end

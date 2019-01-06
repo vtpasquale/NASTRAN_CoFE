@@ -1,7 +1,7 @@
 % Abstract superclass for coordinate systems
 % Anthony Riccairdi
 %
-classdef (Abstract) cord < matlab.mixin.Heterogeneous
+classdef (Abstract) Cord < matlab.mixin.Heterogeneous
     
     properties
         cid % (int32 >= 0) Coordinate system identification number.
@@ -49,7 +49,7 @@ classdef (Abstract) cord < matlab.mixin.Heterogeneous
                     if unresolved(i) ~= 0
                         r = find(cids==obj(i).rid);
                         if isempty(r)==1
-                            error('Coordinate systems CID = %d references an undefined coodinate system CID = %d',obj(i).cid,obj(i).rid`)
+                            error('Coordinate systems CID = %d references an undefined coodinate system CID = %d',obj(i).cid,obj(i).rid)
                         else
                             if unresolved(r) == 0
                                 obj(i)=obj(i).preprocess(obj(r));

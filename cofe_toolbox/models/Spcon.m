@@ -1,13 +1,13 @@
 % Class for single-point constraints.
 % Anthony Ricciardi
 %
-classdef spcon < spcs
+classdef Spcon < Spcs
     
     properties
-        SID % Identification number of single-point constraint set. (Integer > 0)
-        C % [1,: int] Component numbers between 1 and 6.
-        G % [1,: int] Node identification numbers.
-        D % [int] Value of enforced displacement for components C.
+        sid % Identification number of single-point constraint set. (Integer > 0)
+        c % [1,: int] Component numbers between 1 and 6.
+        g % [1,: int] Node identification numbers.
+        d % [int] Value of enforced displacement for components C.
     end
     methods
     end

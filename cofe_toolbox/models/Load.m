@@ -1,10 +1,10 @@
 % Abstract superclass for loads
 % Anthony Ricciardi
 %
-classdef (Abstract) loads < matlab.mixin.Heterogeneous
+classdef (Abstract) Load < matlab.mixin.Heterogeneous
 
     properties (Abstract)
-        SID % [int] Load set identification number.
+        sid % [int] Load set identification number.
     end
     methods (Sealed=true)
         function obj = preprocess(obj,MODEL)
@@ -25,7 +25,7 @@ classdef (Abstract) loads < matlab.mixin.Heterogeneous
             % Loop through loads
             for i=1:nloads
                 oi=obj(i);
-                lc = find(oi.SID==MODEL.loadsSIDs);
+                lc = find(oi.sid==MODEL.loadsSIDs);
                 p_g(oi.gdof,lc)=p_g(oi.gdof,lc)+oi.p_g;
             end
             MODEL.p_g=p_g;

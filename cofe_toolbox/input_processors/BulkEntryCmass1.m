@@ -22,17 +22,17 @@ classdef BulkEntryCmass1 < BulkEntry
             obj.g2 = castInputField('CMASS1','G2',entryFields{6},'uint32',[],1);
             obj.c2 = castInputField('CMASS1','C2',entryFields{7},'uint8',[],1,6);
         end
-        function MODEL = entry2model_sub(obj,MODEL)
-            % Write appropriate model object(s) based on entry data
-            C_MASS1 = c_mass1;
-            C_MASS1.EID = obj.EID;
-            C_MASS1.PID = obj.PID;
-            C_MASS1.G = obj.G1;
-            C_MASS1.C = obj.C1;
-            if ~isempty(obj.G2)
-                error('Nonblank G2 on CMASS1 EID = %d. Nonblank G2 is not supported.',C_MASS1.EID)
+        function model = entry2model_sub(obj,model)
+            % Convert entry object to model object and store in model entity array
+            cmass1 = Cmass1;
+            cmass1.eid = obj.eid;
+            cmass1.pid = obj.pid;
+            cmass1.g = obj.g1;
+            cmass1.c = obj.c1;
+            if ~isempty(obj.g2)
+                error('Nonblank G2 on CMASS1 EID = %d. Nonblank G2 is not supported.',cmass1.eid)
             end
-            MODEL.ELEM = [MODEL.ELEM;C_MASS1];
+            model.element = [model.element;cmass1];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

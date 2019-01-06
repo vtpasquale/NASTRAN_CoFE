@@ -1,17 +1,17 @@
 % Class for model nodes
 % Anthony Ricciardi
 %
-classdef node
+classdef Node
     
     properties
-        ID  % [int] Node identification number.
-        CP  % [int] Identification number of coordinate system in which the location of the node is defined.
-        X_P % [3,1 real] Location of the node in coordinate system CP.
-        CD % [int] Identification number of coordinate system in which the displacements, degrees-offreedom, constraints, and solution vectors are defined at the node.
-        PS % [7, 1 logical] Permanent single-point constraints associated with nodal degrees of freedom. PS(1:6)==true where nodal degrees of freedom are perminantly constrained. PS(7)==true when the GRID PS field is not blank (default values used when GRID PS is blank - the seventh logical is needed because GRID PS=0 can be used to remove the default constraints defined on the GRDSET entry).
+        id  % [int] Node identification number.
+        cp  % [int] Identification number of coordinate system in which the location of the node is defined.
+        x_p % [3,1 real] Location of the node in coordinate system cp.
+        cd % [int] Identification number of coordinate system in which the displacements, degrees-offreedom, constraints, and solution vectors are defined at the node.
+        ps % [7, 1 logical] Permanent single-point constraints associated with nodal degrees of freedom. ps(1:6)==true where nodal degrees of freedom are perminantly constrained. ps(7)==true when the GRID ps field is not blank (default values used when GRID ps is blank - the seventh logical is needed because GRID ps=0 can be used to remove the default constraints defined on the GRDSET entry).
         
-        X_0 % [3,1 real] Location of the node in the basic coordinate system.
-        T_G0 % [3,3 real] Transoformation matrix from the basic coordinate system to node deformation coordinate system (defined in CD field)
+        x_0 % [3,1 real] Location of the node in the basic coordinate system.
+        T_g0 % [3,3 real] Transoformation matrix from the basic coordinate system to node deformation coordinate system (defined in CD field)
     end
     methods
         function obj = preprocess(obj,MODEL)
@@ -23,7 +23,7 @@ classdef node
             if m > 1; error('node.preprocess() can only handel nx1 arrays of node objects. The second dimension exceeds 1.'); end
             
             % check that element id numbers are unique
-            NIDS = [obj.ID];
+            NIDS = [obj.id];
             [~,ia] = unique(NIDS,'stable');
             if size(ia,1)~=nnodes
                 nonunique=setxor(ia,1:nnodes);
@@ -35,20 +35,20 @@ classdef node
             if isempty(CPdefault); CPdefault=int32(0); end
             if isempty(CDdefault); CDdefault=int32(0); end
             for i = 1:nnodes
-                if isempty(obj(i).CP); obj(i).CP=CPdefault; end
-                if isempty(obj(i).CD); obj(i).CD=CDdefault; end
+                if isempty(obj(i).cp); obj(i).cp=CPdefault; end
+                if isempty(obj(i).cd); obj(i).cd=CDdefault; end
             end
             
-            % set X_0 and T_G0 for all nodes
+            % set x_0 and T_g0 for all nodes
             CORD = MODEL.CORD;
             cordCIDs=MODEL.cordCIDs;
             
             % Loop through nodes
             for i=1:nnodes
                 oi = obj(i);
-                oi.X_0=CORD(oi.CP==cordCIDs).X_0(oi.X_P);
-                CORD_CD = CORD(oi.CD==cordCIDs);
-                oi.T_G0=CORD_CD.T_C0(CORD_CD.X_C(oi.X_0));
+                oi.x_0=CORD(oi.cp==cordCIDs).x_0(oi.x_p);
+                CORD_CD = CORD(oi.cd==cordCIDs);
+                oi.T_g0=CORD_CD.T_C0(CORD_CD.X_C(oi.x_0));
                 obj(i)=oi;
             end
         end
@@ -58,9 +58,9 @@ classdef node
             % reference frame to the basic reference frame
             R_0g=spalloc(6*nnodes,6*nnodes,18*nnodes);
             for i = 1:nnodes
-                t_0g = obj(i).T_G0.';
-                R_0g(1+6*(i-1):3+6*(i-1),1+6*(i-1):3+6*(i-1))= t_0g;
-                R_0g(4+6*(i-1):6+6*(i-1),4+6*(i-1):6+6*(i-1))= t_0g;
+                T_0g = obj(i).T_g0.';
+                R_0g(1+6*(i-1):3+6*(i-1),1+6*(i-1):3+6*(i-1))= T_0g;
+                R_0g(4+6*(i-1):6+6*(i-1),4+6*(i-1):6+6*(i-1))= T_0g;
             end
             MODEL.R_0g = R_0g;
         end
@@ -68,7 +68,7 @@ classdef node
             % Process perminant single point constraints. Returns sg [nnodes,1 logical] set.
             nnodes = size(obj,1);
             
-            psGrid = [obj.PS]; % ps defined by Grid entries as [7,nnodes logical] matrix.
+            psGrid = [obj.ps]; % ps defined by Grid entries as [7,nnodes logical] matrix.
             % psGrid(7,:) is a [1,nnodes logical] that is true if the node ps
             % values were defined explicitly. Default values are assigned where
             % psGrid(7,:)==false, explicit values where psGrid(7,:)==true.

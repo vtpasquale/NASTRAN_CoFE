@@ -1,13 +1,13 @@
 % Class for scalar mass elements.
 % Anthony Ricciardi
 %
-classdef c_mass1 < elem
+classdef Cmass1 < Element
     
     properties
-        EID % [int] Element identification number.
-        PID % [int] Property identification number of a PROD entry. 
-        G % [int] Node identification number.
-        C % Component number. (0 < Integer < 6; blank or zero if scalar point)
+        eid % [int] Element identification number.
+        pid % [int] Property identification number of a PROD entry. 
+        g % [int] Node identification number.
+        c % Component number. (0 < Integer < 6)
         
         gdof
         m_e % [1 x 1] element mass matrix in the element reference frame
@@ -21,13 +21,13 @@ classdef c_mass1 < elem
     end
     methods
         function obj=assemble(obj,MODEL)
-            g1ind = obj.G==MODEL.nodeIDs;
+            g1ind = obj.g==MODEL.nodeIDs;
             obj.gdof_plot = MODEL.node2gdof(:,g1ind);
-            obj.gdof = obj.gdof_plot(obj.C);
+            obj.gdof = obj.gdof_plot(obj.c);
             
-            pty=MODEL.PROP(obj.PID==MODEL.propPIDs);
+            pty=MODEL.PROP(obj.pid==MODEL.propPIDs);
             if ~isa(pty,'p_mass');
-                error('CMASS1 EID=%d references property PID = %d, which is not type PMASS. Only PMASS properties are supported for CMASS1 elements.',obj.EID,obj.PID);
+                error('CMASS1 EID=%d references property PID = %d, which is not type PMASS. Only PMASS properties are supported for CMASS1 elements.',obj.eid,obj.pid);
             end
             obj.m_e = pty.M;
         end

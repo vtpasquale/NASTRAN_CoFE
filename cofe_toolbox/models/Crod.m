@@ -1,12 +1,12 @@
 % Class for tension-compression-torsion elements.
 % Anthony Ricciardi
 %
-classdef c_rod < elem
+classdef Crod < Element
     
     properties
-        EID % [int] Element identification number.
-        PID % [int] Property identification number of a PROD entry.
-        G % [1,2 int] Grid point identification numbers of connection points.
+        eid % [int] Element identification number.
+        pid % [int] Property identification number of a PROD entry.
+        g % [1,2 int] Grid point identification numbers of connection points.
         
         gdof
         % T_e0 % [3  x 3 ] rotation matrix from the basic reference frame to the element reference frame
@@ -14,9 +14,9 @@ classdef c_rod < elem
         k_e % [12 x 12] element stiffness matrix in the element reference frame
         m_e % [12 x 12] element mass matrix in the element reference frame
         
-        A % [real] Area of the rod.
-        J % [real] Torsional constant.
-        C % [real] Coefficient to determine torsional stress.
+        a % [real] Area of the rod.
+        j % [real] Torsional constant.
+        c % [real] Coefficient to determine torsional stress.
     end
     properties (Hidden = true)
         elem_type = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
@@ -26,24 +26,24 @@ classdef c_rod < elem
     methods
         function obj=assemble_sub(obj,MODEL)
             
-            g1ind = obj.G(1)==MODEL.nodeIDs;
-            g2ind = obj.G(2)==MODEL.nodeIDs;
+            g1ind = obj.g(1)==MODEL.nodeIDs;
+            g2ind = obj.g(2)==MODEL.nodeIDs;
             n1 = MODEL.NODE(g1ind);
             n2 = MODEL.NODE(g2ind);
             obj.gdof = [MODEL.node2gdof(:,g1ind);MODEL.node2gdof(:,g2ind)];
             p1 = n1.X_0;
             p2 = n2.X_0;
             
-            pty=MODEL.PROP(obj.PID==MODEL.propPIDs);
+            pty=MODEL.PROP(obj.pid==MODEL.propPIDs);
             if ~isa(pty,'p_rod');
-                error('CROD EID=%d references property PID = %d, which is not type PROD. Only PROD properties are supported for CROD elements.',obj.EID,obj.PID);
+                error('CROD EID=%d references property PID = %d, which is not type PROD. Only PROD properties are supported for CROD elements.',obj.eid,obj.pid);
             end
-            obj.A = pty.A;
-            obj.J = pty.J;
-            obj.C = pty.C;
+            obj.a = pty.a;
+            obj.j = pty.j;
+            obj.c = pty.c;
             
             mt=MODEL.MAT(pty.MID==MODEL.matMIDs);
-            [T_e0,obj.k_e,obj.m_e] = obj.crodMat(p1,p2,mt.E,mt.G,pty.A,pty.J,mt.RHO,pty.NSM);
+            [T_e0,obj.k_e,obj.m_e] = obj.crodMat(p1,p2,mt.E,mt.G,pty.a,pty.j,mt.RHO,pty.NSM);
             
             % Material constants
             obj.matG = mt.G;
@@ -86,8 +86,8 @@ classdef c_rod < elem
             
             % Calcualte stress for stress or strain recovery
             if any(returnIO(2:3))
-                s = [(1/obj.A)*f_e(7,:);...
-                     (obj.C/obj.J)*f_e(10,:)];
+                s = [(1/obj.a)*f_e(7,:);...
+                     (obj.c/obj.j)*f_e(10,:)];
             end
             
             % Stress

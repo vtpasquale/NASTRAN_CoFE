@@ -26,9 +26,9 @@ classdef BulkEntryMat1 < BulkEntry
             obj.rho = castInputField('MAT1','RHO',entryFields{6},'double',0.0);
         end
         % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model_sub(obj,MODEL)
-            MAT_1 = mat_1;
-            MAT_1.mid = obj.mid;
+        function model = entry2model_sub(obj,model)
+            mat1 = Mat1;
+            mat1.mid = obj.mid;
             seg = size([obj.E,obj.G],2);
             if seg<1
                 error('Error with MAT1 MID = %d: E and G may not both be blank.',obj.mid)
@@ -41,11 +41,11 @@ classdef BulkEntryMat1 < BulkEntry
                     obj.E=obj.G*2*(1+obj.nu);
                 end
             end
-            MAT_1.E = obj.E;
-            MAT_1.G = obj.G;
-            MAT_1.nu = obj.nu;
-            MAT_1.rho = obj.rho;
-            MODEL.MAT=[MODEL.MAT;MAT_1];
+            mat1.E = obj.E;
+            mat1.G = obj.G;
+            mat1.nu = obj.nu;
+            mat1.rho = obj.rho;
+            model.material=[model.material;mat1];
         end
 		% Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

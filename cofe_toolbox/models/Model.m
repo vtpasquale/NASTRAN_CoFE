@@ -1,24 +1,24 @@
 % Class that defines a finite element model.
 % Anthony Ricciardi
-classdef model
+classdef Model
         
     properties
         %% Model entities
-        CORD@cord;
-        MAT@mat;
-        PROP@prop;
-        NODE@node;
-        ELEM@elem;
-        SPCS@spcs;
+        cord@Cord;
+        material@Material;
+        property@Property;
+        node@Node;
+        element@Element;
+        spcs@Spcs;
 %         MPCS@mpcs;
-        LOADS@loads;
+        load@Load;
         
         %% Simple entities
         eigTab=[]; % [:,2 int] table with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
         
         %% Sets and related
         sb % ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
-        sd % ([ngdof,num SID] sparse real) Enforced displacement values due to single-point constraints that are included in boundary conditions
+        sd % ([ngdof,num SID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
         sg % ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries.
         s  % ([ngdof,1] logical) All degrees-of-freedom eliminated by single point constraints -> sb + sg
         f  % ([ngdof,1] logical) Unconstrained (free) structural degrees-of-freedom -> a + o 
@@ -31,7 +31,7 @@ classdef model
         M_g  % ([ngdof,ngdof] sparse) Mass matrix in nodal displacement reference frame
         G
         p_g % ([ngdof,1] real) load vector in nodal displacement reference frame
-        R_0g % ([ngdof,ngdof] int sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
+        R_0g % ([ngdof,ngdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
         
     end
     properties (Hidden=true)

@@ -1,10 +1,10 @@
 % Abstract superclass for materials.
 % Anthony Ricciardi
 %
-classdef (Abstract) mat < matlab.mixin.Heterogeneous
+classdef (Abstract) Material < matlab.mixin.Heterogeneous
 
     properties (Abstract)
-        MID % [int] Material identification number.
+        mid % [uint32] Material identification number.
     end
     methods (Sealed=true)
         function obj = preprocess(obj)

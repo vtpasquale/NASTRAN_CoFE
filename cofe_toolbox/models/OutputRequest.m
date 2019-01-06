@@ -1,49 +1,37 @@
 % Class for output requests
 % Anthony Ricciardi
-classdef output_request
+classdef OutputRequest
     
     properties
-        none = true % [logical] No response will be output if true
-        all  = false % [logical] Response at all relevant points will be output if true
-        n % [uint32] Set ID of a defined output_set object. Only response of points that appear on this output_set will be output.
+        n = int32(0) % [int32] Number used to indicate output request. Options: 
+                     %   -1 -> Response at all relevant points will be output
+                     %    0 -> No response will be output
+                     %    n -> Response points in OutputSet.ID = n will be output
+        
+        print =false; % [logical] Requested output will be printed to a human-readable text output file if true
+        plot = false; % [logical] Requested output will be printed to a FEMAP neutral file if true
     end
     methods
-        function obj = set.none(obj,in)
-            if ~islogical(in); error('output_request.none must be a logical (true/false) variable.'); end
-            if in == true
-                obj.all = false;
-            end
-            obj.none = in;
-        end
-        function obj = set.all(obj,in)
-            if ~islogical(in); error('output_request.all must be a logical (true/false) variable.'); end
-            if in == true
-                obj.none = false;
-            end
-            obj.all = in;
-        end
         function obj = set.n(obj,in)
             if isempty(in)
-                % empty output_request.n is OK
+                % empty OutputRequest.n is OK initially
             else
-                if ~isnumeric(in); error('output_request.n must be numeric or empty variable.'); end
-                if mod(in,1) ~= 0; error('output_request.n must be an integer or empty variable'); end
-                if in < 1; error('output_request.n must be greater than zero.'); end
-                obj.none = false;
-                obj.all = false;
+                if ~isnumeric(in); error('OutputRequest.n must be numeric.'); end
+                if mod(in,1) ~= 0; error('OutputRequest.n must be an integer.'); end
+                if in < -1; error('OutputRequest.n must be greater than or equal to -1.'); end
             end
-            obj.n = uint32(in);
+            obj.n = int32(in);
         end
-        function rind = get_member_ID_indices(obj,IDs,OUTPUT_SETS)
+        function rind = getRequestMemberIndices(obj,IDs,outputSet)
             % Returns a vector of of indices of input vector IDs(n,1 int)
             % that correspond to members of the output set. This is useful
             % for the model data recovery process.
             [nobj,mobj] = size(obj);
             if nobj ~= 1 || mobj ~=1
-                error('Method get_member_ID_indices does not support arrays of output_request objects. Method get_member_ID_indices is used only for scalar output_request objects. ');
+                error('Method get_member_ID_indices does not support arrays of OutputRequest objects. Method get_member_ID_indices is used only for scalar OutputRequest objects. ');
             end
             
-            if obj.none == true
+            if obj.n == 0 % = NONE
                 % Finished if Request = NONE
                 rind = uint32([]);
             else
@@ -51,24 +39,24 @@ classdef output_request
                 if nids < 1; error('Metehod input IDs should have size(IDs,1)>0'); end
                 if mids ~= 1; error('Metehod input IDs should have size(IDs,2)=1'); end
                 
-                if obj.all == true
+                if obj.n == -1 % == ALL
                     % Finished if Request = ALL
-                    rind = uint32(1:nids).';
+                    rind = (uint32(1):uint32(nids)).';
                 elseif isempty(obj.n)
                     error('The output request is undefined.');
-                elseif isempty(OUTPUT_SETS)
-                    error('Input argument OUPUT_SETS cannot be empty.')
+                elseif isempty(outputSet)
+                    error('Input argument outputSet cannot be empty.')
                 else
-                    [~,mos]=size(OUTPUT_SETS);
-                    if mos~=1; error('Array instances of Class output_set should have size(output_set,2)==1.'); end
-                    if isa(OUTPUT_SETS,'output_set')==0; error('OUTPUT_SETS must be an instance of Class output_set'); end
-                    output_set_IDs = [OUTPUT_SETS.ID].';
-                    output_set_ID  = find(obj.n==output_set_IDs);
-                    if isempty(output_set_ID)
+                    mos=size(outputSet,2);
+                    if mos~=1; error('Array instances of Class outputSet should have size(outputSet,2)==1.'); end
+                    if isa(outputSet,'OutputSet')==0; error('outputSet must be an instance of Class OutputSet'); end
+                    outputSetIDs = [outputSet.ID].';
+                    outputSetID  = find(obj.n==outputSetIDs);
+                    if isempty(outputSetID)
                         error('Output Set ID = %d does not exist.',obj.n);
                     else
                         % Get vector indicies from referenced output set 
-                        rind = OUTPUT_SETS(output_set_ID).get_member_ID_indices(IDs);
+                        rind = outputSet(outputSetID).getSetMemberIndices(IDs);
                     end
                 end
             end

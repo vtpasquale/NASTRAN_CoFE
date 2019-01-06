@@ -15,15 +15,15 @@ classdef BulkEntryCord2r < Cord2
             % Construct using entry field data input as cell array of char 
             bulkEntryCord2r=constructCord2(bulkEntryCord2r,entryFields);
         end
-        function MODEL = entry2model_sub(obj,MODEL)
-            % Write appropriate model object(s) based on entry data
-            CORD = cordr;
-            CORD.cid = obj.cid;
-            CORD.rid = obj.rid;
-            CORD.a = obj.a;
-            CORD.b = obj.b;
-            CORD.c = obj.c;
-            MODEL.CORD = [MODEL.CORD;CORD];
+        function model = entry2model_sub(obj,model)
+            % Convert entry object to model object and store in model entity array
+            cord = Cordr;
+            cord.cid = obj.cid;
+            cord.rid = obj.rid;
+            cord.a = obj.a;
+            cord.b = obj.b;
+            cord.c = obj.c;
+            model.cord = [model.cord;cord];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file

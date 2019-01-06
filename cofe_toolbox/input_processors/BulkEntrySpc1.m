@@ -43,14 +43,14 @@ classdef BulkEntrySpc1 < BulkEntry
                 error('GRID IDs specified in SPC1 SID = %d should be unique.',obj.sid)
             end
         end
-        % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model_sub(obj,MODEL)
-            SPCON = spcon;
-            SPCON.sid = obj.sid;
-            SPCON.c = int32(str2num(num2str(obj.c)'))';
-            SPCON.g = obj.g;
-            SPCON.D=0.0;
-            MODEL.SPCS=[MODEL.SPCS;SPCON];
+        function model = entry2model_sub(obj,model)
+            % Convert entry object to model object and store in model entity array
+            spcon = Spcon;
+            spcon.sid = obj.sid;
+            spcon.c = int32(str2num(num2str(obj.c)'))';
+            spcon.g = obj.g;
+            spcon.d=0.0;
+            model.spcs=[model.spcs;spcon];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

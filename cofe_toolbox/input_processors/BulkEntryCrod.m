@@ -20,13 +20,13 @@ classdef BulkEntryCrod < BulkEntry
                 error('G1 and G2 fields must be unique on CROD entries.')
             end
         end
-        % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model_sub(obj,MODEL)
-            C_ROD = c_rod;
-            C_ROD.eid = obj.eid;
-            C_ROD.pid = obj.pid;
-            C_ROD.G = [obj.g1,obj.g2];
-            MODEL.ELEM = [MODEL.ELEM;C_ROD];
+        function model = entry2model_sub(obj,model)
+            % Convert entry object to model object and store in model entity array
+            crod = Crod;
+            crod.eid = obj.eid;
+            crod.pid = obj.pid;
+            crod.g = [obj.g1,obj.g2];
+            model.element = [model.element;crod];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

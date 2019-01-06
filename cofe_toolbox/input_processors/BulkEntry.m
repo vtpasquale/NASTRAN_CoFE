@@ -8,26 +8,26 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
         % Print the entry in NASTRAN free field format to a text file with file id fid
         echo_sub(obj,fid)
         
-        % Write appropriate model object(s) based on entry data
-        model = entry2model_sub(obj)
+        % Convert entry object to model object and store in model entity array
+        model = entry2model_sub(obj,model)
     end
     
     methods (Sealed = true)
         % Execute entry.echo_sub(fid) for all heterogeneous entry objects in array
         function echo(obj,fid)
             [n,m]=size(obj);
-            if m > 1; error('entry.echo_all(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
+            if m > 1; error('BulkEntry.echo(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
             for i=1:n
                 echo_sub(obj(i),fid);
             end
         end
-        % Execute entry.entry2model_sub(fid) for all heterogeneous entry objects in array
-        function MODEL = entry2model(obj)
+        % Convert buld data entry object array to model object entity arrays
+        function model = entry2model(obj)
             [n,m]=size(obj);
-            if m > 1; error('entry.entry2model_all(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
-            MODEL = model;
+            if m > 1; error('BulkEntry.entry2model(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
+            model = Model;
             for i = 1:n
-                MODEL = entry2model_sub(obj(i),MODEL);
+                model = entry2model_sub(obj(i),model);
             end
         end
     end
@@ -50,6 +50,6 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
                     error('Bulk data entry %s not supported.',upper(entryName))
                 end
             end
-        end % importBulkEntry()
+        end % constructFromFields()
     end
 end

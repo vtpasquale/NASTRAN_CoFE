@@ -27,14 +27,14 @@ classdef BulkEntryForce < BulkEntry
                 error('Error with FORCE CID=%d: at least one Ni ~= 0.0. Unless F is zero.',obj.sid)
             end
         end
-        function MODEL = entry2model_sub(obj,MODEL)
-        % Write appropriate model object(s) based on entry data
-            FORCES = forces;
-            FORCES.sid = obj.sid;
-            FORCES.g = obj.g;
-            FORCES.cid = obj.cid;
-            FORCES.f = obj.f*[obj.n1;obj.n2;obj.n3];
-            MODEL.LOADS = [MODEL.LOADS;FORCES];
+        function model = entry2model_sub(obj,model)
+        % Convert entry object to model object and store in model entity array
+            force = Force;
+            force.sid = obj.sid;
+            force.g = obj.g;
+            force.cid = obj.cid;
+            force.f = obj.f*[obj.n1;obj.n2;obj.n3];
+            model.load = [model.load;force];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid
