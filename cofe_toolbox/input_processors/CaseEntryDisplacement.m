@@ -40,10 +40,6 @@ classdef CaseEntryDisplacement < CaseEntry
             % Convert Case Control entry to property in Case Control
             caseControl.displacement = obj.outputRequest;
         end
-        % Print the entry in NASTRAN free field format to a text file with file id fid
-        function echo_sub(obj,fid)
-             fprintf(fid,'DISPLACEMENT\n');
-        end
     end
     
     

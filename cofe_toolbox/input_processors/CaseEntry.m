@@ -4,32 +4,40 @@
 classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
     methods (Abstract)
         % The class constructor must initialize entry properties using entry field data input as struct array of char 
-        
-        % Print the entry in NASTRAN free field format to a text file with file id fid
-        echo_sub(obj,fid)
-        
+
         % Convert entry object to model object and store in model entity array
         caseControl = entry2CaseControl_sub(obj,caseControl)
     end
     
     methods (Sealed = true)
-        % Execute entry.echo_sub(fid) for all heterogeneous entry objects in array
-        function echo(obj,fid)
-            [n,m]=size(obj);
-            if m > 1; error('CaseEntry.echo(fid) can only handle nx1 arrays of entry objects. The second dimension exceeds 1.'); end
-            for i=1:n
-                echo_sub(obj(i),fid);
-            end
-        end
         function caseControl = entry2CaseControl(obj)
             % Convert case control entry array to CaseControl objects
             [n,m]=size(obj);
             if m > 1; error('CaseEntry.entry2CaseControl(fid) can only handle nx1 arrays of CaseEntry objects. The second dimension exceeds 1.'); end
-            caseControl = CaseControl;
-            for i = 1:n
-                caseControl = entry2CaseControl_sub(obj(i),caseControl);
+            
+            % Master case
+            masterCaseControl = CaseControl;
+            i = 1;
+            while i<=n
+                if isa(obj(i),'CaseEntrySubcase')
+                    break
+                end
+                masterCaseControl = entry2CaseControl_sub(obj(i),masterCaseControl);
+                i = i+1;
             end
-        end
+            
+            % Specific subcases
+            subcaseIndex = 1;
+            caseControl(subcaseIndex,1)=masterCaseControl;
+            while i<=n
+                caseControl(subcaseIndex,1) = entry2CaseControl_sub(obj(i),caseControl(subcaseIndex,1));
+                i = i+1;
+                if isa(obj(i),'CaseEntrySubcase')
+                    subcaseIndex = subcaseIndex + 1;
+                    caseControl(subcaseIndex,1) = masterCaseControl;
+                end
+            end
+        end % entry2CaseControl(obj)
     end
     methods (Sealed = true, Static = true)
         

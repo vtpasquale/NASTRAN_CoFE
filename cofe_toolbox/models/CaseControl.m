@@ -4,6 +4,7 @@
 classdef CaseControl
     
     properties
+        ID = uint32(1); % [uint32] Subcase identification number.
         analysis; % [char] Specifies the type of analysis being performed for the current subcase
 
         title=''; % [char] Defines a title to appear on the first heading line of each page
