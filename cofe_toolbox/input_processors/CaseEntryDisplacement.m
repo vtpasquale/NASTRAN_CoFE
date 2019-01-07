@@ -8,21 +8,19 @@ classdef CaseEntryDisplacement < CaseEntry
     end
     methods
         function obj = CaseEntryDisplacement(entryFields)
-            % Construct using entry field data input as struct
+            
+            % Process left-hand-side describers
             if ~isempty(entryFields.leftHandDescribers)
                 lhDescribers = upper(strtrim(strsplit(entryFields.leftHandDescribers,',')));
-                for i = 1:size(lhDescribers,2)
-                    switch lhDescribers{i}
-                        case 'PRINT'
-                            obj.outputRequest.print = true;
-                        case 'PLOT'
-                            obj.outputRequest.plot = true;
-                       %otherwise
-                            % No errors or warnings
-                    end
+                if any(strcmp('PRINT',lhDescribers))
+                    obj.outputRequest.print = true;
+                end
+                if any(strcmp('PLOT',lhDescribers))
+                    obj.outputRequest.plot = true;
                 end
             end
             
+            % Process right-hand-side describers
             if isempty(entryFields.rightHandDescribers)
                 error('Missing right hand describers for Case Control entry.')
             else

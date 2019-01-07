@@ -4,7 +4,7 @@ classdef OutputSet
     
     properties
         ID % [int] Set identification number
-        all = 0% [logical] indicates all entities should be output
+        all = false% [logical] indicates all entities should be output
         i1 % [n,1 uint32] list of individual identification numbers and the first identification number for any THRU ranges
         iN % [n,1 uint32] list of the second identification number for any THRU ranges
         thru % [n,1 logical] true where i1(thru,1) and iN(thru,1) contain THRU ranges

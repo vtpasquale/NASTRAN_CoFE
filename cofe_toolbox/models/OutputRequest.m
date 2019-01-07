@@ -8,7 +8,7 @@ classdef OutputRequest
                      %    0 -> No response will be output
                      %    n -> Response points in OutputSet.ID = n will be output
         
-        print =false; % [logical] Requested output will be printed to a human-readable text output file if true
+        print = true; % [logical] Requested output will be printed to a human-readable text output file if true
         plot = false; % [logical] Requested output will be printed to a FEMAP neutral file if true
     end
     methods

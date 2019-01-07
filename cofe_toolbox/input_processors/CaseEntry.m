@@ -43,6 +43,7 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
         
         function caseEntry = constructFromFields(caseControlFields)
             % construct case entry objectes from input fields
+            iKeep = 1;
             for i = 1:size(caseControlFields,1)
                 fields = caseControlFields{i};
                 % convert field 1 to case-sensitive class name
@@ -51,7 +52,8 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                 % check that input entry is supported
                 if exist(['CaseEntry',entryName],'class')==8
                     % Call contructor method for each entry
-                    eval(['caseEntry(i,1) = CaseEntry',entryName,'(fields);']);
+                    eval(['caseEntry(iKeep,1) = CaseEntry',entryName,'(fields);']);
+                    iKeep = iKeep + 1;
                 else
                     warning('Case control entry %s not supported. Entry skipped.',upper(entryName))
                 end
