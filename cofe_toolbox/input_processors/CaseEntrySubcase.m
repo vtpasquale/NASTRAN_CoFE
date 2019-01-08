@@ -14,6 +14,10 @@ classdef CaseEntrySubcase < CaseEntry
             % Convert Case Control entry to property in Case Control Object
             caseControl.ID = obj.ID;
         end
+        function echo_sub(obj,fid)
+            % Print the case control entry in NASTRAN format to a text file with file id fid
+            fprintf(fid,'SUBCASE = %d\n',obj.ID);
+        end
     end
     
     

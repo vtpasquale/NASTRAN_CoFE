@@ -8,8 +8,9 @@ classdef OutputRequest
                      %    0 -> No response will be output
                      %    n -> Response points in OutputSet.ID = n will be output
         
-        print = true; % [logical] Requested output will be printed to a human-readable text output file if true
-        plot = false; % [logical] Requested output will be printed to a FEMAP neutral file if true
+        print = true; % [logical] Determines output medium
+                      %  true -> Requested output will be printed to a human-readable text output file
+                      % false -> Requested output will be printed to a FEMAP neutral file
     end
     methods
         function obj = set.n(obj,in)

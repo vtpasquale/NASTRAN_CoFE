@@ -7,20 +7,26 @@ classdef CaseControl
         ID = uint32(1); % [uint32] Subcase identification number.
         analysis; % [char] Specifies the type of analysis being performed for the current subcase
 
+        % Titles
         title=''; % [char] Defines a title to appear on the first heading line of each page
         subtitle=''; % [char] Defines a subtitle to appear on the second heading line of each page
         label=''; % [char] Defines a label to appear on the third heading line of each page
         
+        % Analysis selections
         spc % (int > 0 or blank) Selects a single point constraint set to be applied
         load % (int > 0 or blank) Selects a load set to be applied
         method % (int > 0 or blank) Selects the real eigenvalue extraction parameters
         
+        % Output sets
         outputSet@OutputSet; % [nsets,1] Array of OutputSet objects
         
-        displacement; % [OutputRequest] Requests the form and type of nodal displacement output
-        velocity;     % [OutputRequest] Requests the form and type of nodal velocity output
-        acceleration; % [OutputRequest] Requests the form and type of nodal acceleration output
+        % Nodal response output requests
+        displacement = OutputRequest(); % [OutputRequest] Requests the form and type of nodal displacement output
+        velocity     = OutputRequest(); % [OutputRequest] Requests the form and type of nodal velocity output
+        acceleration = OutputRequest(); % [OutputRequest] Requests the form and type of nodal acceleration output
+        spcforces    = OutputRequest(); % [OutputRequest] Requests the form and type of single-point force of constraint vector output
         
+        % Element response output requests
         force  = OutputRequest(); % [OutputRequest] Requests the form and type of element force output
         stress = OutputRequest(); % [OutputRequest] Requests the form and type of element stress output
         strain = OutputRequest(); % [OutputRequest] Requests the form and type of element strain output
@@ -42,15 +48,15 @@ classdef CaseControl
             obj.analysis=in;
         end
         function obj = set.title(obj,in)
-            if ischar(in)==0; error('CaseControl.title must be a string'); end
+            if ischar(in)==0; error('CaseControl.title must be type char'); end
             obj.title=in;
         end
         function obj = set.subtitle(obj,in)
-            if ischar(in)==0; error('CaseControl.subtitle must be a string'); end
+            if ischar(in)==0; error('CaseControl.subtitle must be type char'); end
             obj.subtitle=in;
         end
         function obj = set.label(obj,in)
-            if ischar(in)==0; error('CaseControl.LABEL must be a string'); end
+            if ischar(in)==0; error('CaseControl.LABEL must be type char'); end
             obj.label=in;
         end
         function obj = set.outputSet(obj,in)

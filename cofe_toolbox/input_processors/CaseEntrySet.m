@@ -9,7 +9,7 @@ classdef CaseEntrySet < CaseEntry
     methods
         function obj = CaseEntrySet(entryFields)
             % Process left-hand-side describers
-            obj.outputSet.ID = castInputField('SET','RightHandSideDescriber',entryFields.leftHandDescribers,'uint32',NaN,1);
+            obj.outputSet.ID = castInputField('SET','LeftHandDescribers',entryFields.leftHandDescribers,'uint32',NaN,1);
 
             % Process right-hand-side describers
             if isempty(entryFields.rightHandDescribers)
@@ -48,7 +48,7 @@ classdef CaseEntrySet < CaseEntry
         end
         function echo_sub(obj,fid)
             % Print the case control entry in NASTRAN format to a text file with file id fid
-            fprintf(fid,'LABEL = %s\n',obj.name);
+            obj.outputSet.echo(fid)
         end
     end
 end
