@@ -17,18 +17,18 @@ classdef (Abstract) Load < matlab.mixin.Heterogeneous
                 obj(i)=obj(i).preprocess_sub(MODEL);
             end
         end
-        function MODEL = assemble(obj,MODEL)
-            nloads = size(obj,1);
-            ncases = size(MODEL.loadsSIDs,1);
-            p_g = zeros(MODEL.ngdof,ncases);
+        function model = assemble(obj,model)
+            nLoads = size(obj,1);
+            nCases = size(model.loadSIDs,1);
+            p_g = zeros(model.ngdof,nCases);
             
             % Loop through loads
-            for i=1:nloads
+            for i=1:nLoads
                 oi=obj(i);
-                lc = find(oi.sid==MODEL.loadsSIDs);
+                lc = find(oi.sid==model.loadSIDs);
                 p_g(oi.gdof,lc)=p_g(oi.gdof,lc)+oi.p_g;
             end
-            MODEL.p_g=p_g;
+            model.p_g=p_g;
         end
     end
     

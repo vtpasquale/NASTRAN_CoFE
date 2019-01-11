@@ -1,27 +1,27 @@
 % Class for output data at nodes
 % Anthony Ricciardi
 %
-classdef node_output_data
+classdef NodeOutputData
     
     properties
-        response_type  % [uint8] CoFE code specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
-        ID % [n_out_nodes,1] Output node ID numbers
-        T1 % [n_out_nodes,n_response_vectors] X translation response
-        T2 % [n_out_nodes,n_response_vectors] Y translation response
-        T3 % [n_out_nodes,n_response_vectors] Z translation response
-        R1 % [n_out_nodes,n_response_vectors] X rotation response
-        R2 % [n_out_nodes,n_response_vectors] Y rotation response
-        R3 % [n_out_nodes,n_response_vectors] Z rotation response
+        responseType  % [uint8] CoFE code specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
+        ID % [nOutputNodes,1] Output node ID numbers
+        T1 % [nOutputNodes,nResponseVectors] X translation response
+        T2 % [nOutputNodes,nResponseVectors] Y translation response
+        T3 % [nOutputNodes,nResponseVectors] Z translation response
+        R1 % [nOutputNodes,nResponseVectors] X rotation response
+        R2 % [nOutputNodes,nResponseVectors] Y rotation response
+        R3 % [nOutputNodes,nResponseVectors] Z rotation response
     end
     properties (Constant = true, Hidden = true)
-        print_titles = {...
+        printTitles = {...
             '                                                 D I S P L A C E M E N T S';
             '                                                    V E L O C I T I E S';
             '                                                 A C C E L E R A T I O N S';
             '                                               A P P L I E D    F O R C E S';
             '                                    S U M M E D    G R I D    P O I N T    F O R C E S';
             }
-        femap_output_vector_titles = {...
+        femapOutputVectorTitles = {...
             'Total Translation','T1 Translation','T2 Translation','T3 Translation','Total Rotation','R1 Rotation','R2 Rotation','R3 Rotation';
             'Total Velocity','T1 Velocity','T2 Velocity','T3 Velocity','Total Ang Velocity','R1 Angular Velocity','R2 Angular Velocity','R3 Angular Velocity';
             'Total Acceleration','T1 Acceleration','T2 Acceleration','T3 Acceleration','Total Ang Acceleration','R1 Angular Acceleration','R2 Angular Acceleration','R3 Angular Acceleration';
@@ -29,7 +29,7 @@ classdef node_output_data
             'Total Applied Force','T1 Applied Force','T2 Applied Force','T3 Applied Force','Total Applied Moment','R1 Applied Moment','R2 Applied Moment','R3 Applied Moment';
             'Total Summed GPForce','T1 Summed GPForce','T2 Summed GPForce','T3 Summed GPForce','Total Summed GPMoment','R1 Summed GPMoment','R2 Summed GPMoment','R3 Summed GPMoment',
             }
-        femap_output_vector_IDs = [...
+        femapOutputVectorIDs = [...
             1:8   % DISPLACEMENT
             11:18 % VELOCITY
             21:28 % ACCELERATION
@@ -37,7 +37,7 @@ classdef node_output_data
             41:48 % Applied Force
             161:168 % Summed GPForce
             ];
-        femap_output_type = [... % (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
+        femapOutputType = [... % (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             1 % DISPLACEMENT
             2 % VELOCITY
             2 % ACCELERATION
@@ -46,67 +46,64 @@ classdef node_output_data
             3 % Summed GPForce
             ];
     end
-    methods(Static = true)
-        function node_output = from_response(response_type,resp,ID,keep_ind)
-            % Instantiates a node_output_data object from response vectors
+    methods
+        function obj = NodeOutputData(responseType,response,ID,keepIndex)
+            % Constructs NodeOutputData object from response vectors
             % Inputs:
-            %   response_type [uint8] node_output_data.response_type -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
-            %   resp [6*n_nodes,n_response_vectors] matrix of response vectors
-            %   ID [n_nodes,1] vector of all node ID numbers
-            %   keep_ind [n_output_nodes,1] Optional vector of indicies for output nodes in ID --> node_output_data.ID=ID(keep_ind);
+            %   responseType [uint8] NodeOutputData.responseType -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
+            %   response [6*nNodes,nResponseVectors] matrix of response vectors
+            %   ID [nNodes,1] vector of all node ID numbers
+            %   keepIndex [nOutputNodes,1] Optional vector of indicies for output nodes in ID --> NodeOutputData.ID=ID(keep_ind);
             
             % check inputs
             if nargin < 3; error('Not enought input arguments.'); end
-            [nu,mu]=size(resp);
-            if nu < 1 || mu < 1; error('Input u matrix of response vectors size [6*n_nodes,n_response_vectors]'); end
+            [nu,mu]=size(response);
+            if nu < 1 || mu < 1; error('Input u matrix of response vectors size [6*n_nodes,nResponseVectors]'); end
             [nID,mID]=size(ID);
             if nID < 1 || mID ~= 1; error('Input ID should be a vector of integer size [n,1].'); end
             if 6*nID~=nu; error('Input inconsistency: size(u,1)~=6*size(ID,1)'); end
             if nargin > 3
-                [n_kid,m_kid]=size(keep_ind);
+                [n_kid,m_kid]=size(keepIndex);
                 if nID < n_kid || m_kid ~= 1; error('Optional input keep_ind should be a vector of integer size [n,1].'); end
             end
             
-            % Initialize node_output_data object
-            node_output = node_output_data;
-            node_output.response_type = response_type;
+            % Initialize NodeOutputData object
+            obj.responseType = responseType;
             
             % process
             if nargin < 4
                 % keep all
-                node_output.ID=ID;
-                node_output.T1=resp(1:6:end,:);
-                node_output.T2=resp(2:6:end,:);
-                node_output.T3=resp(3:6:end,:);
-                node_output.R1=resp(4:6:end,:);
-                node_output.R2=resp(5:6:end,:);
-                node_output.R3=resp(6:6:end,:);
+                obj.ID=ID;
+                obj.T1=response(1:6:end,:);
+                obj.T2=response(2:6:end,:);
+                obj.T3=response(3:6:end,:);
+                obj.R1=response(4:6:end,:);
+                obj.R2=response(5:6:end,:);
+                obj.R3=response(6:6:end,:);
             else
                 % downselect
-                index_all = uint32(1:6:size(resp,1)).';
-                index = index_all(keep_ind);
-                node_output.ID=ID(keep_ind);
-                node_output.T1=resp(index  ,:);
-                node_output.T2=resp(index+1,:);
-                node_output.T3=resp(index+2,:);
-                node_output.R1=resp(index+3,:);
-                node_output.R2=resp(index+4,:);
-                node_output.R3=resp(index+5,:);
+                index_all = uint32(1:6:size(response,1)).';
+                index = index_all(keepIndex);
+                obj.ID=ID(keepIndex);
+                obj.T1=response(index  ,:);
+                obj.T2=response(index+1,:);
+                obj.T3=response(index+2,:);
+                obj.R1=response(index+3,:);
+                obj.R2=response(index+4,:);
+                obj.R3=response(index+5,:);
             end
         end
-    end
-    methods
-        function obj = set.response_type(obj,in)
-            if isnumeric(in)==0; error('node_output_data.response_type must be a number'); end
-            if mod(in,1) ~= 0; error('node_output_data.response_type must be an integer'); end
-            if in < 1 || in > 5; error('node_output_data.response_type must be greater than zero and less than 6.'); end
-            obj.response_type=uint8(in);
+        function obj = set.responseType(obj,in)
+            if isnumeric(in)==0; error('NodeOutputData.responseType must be a number'); end
+            if mod(in,1) ~= 0; error('NodeOutputData.responseType must be an integer'); end
+            if in < 1 || in > 5; error('NodeOutputData.responseType must be greater than zero and less than 6.'); end
+            obj.responseType=uint8(in);
         end
         function echo(obj,fid)
-            disp_string = sprintf('\n\n%s\n',node_output_data.print_titles{obj.response_type});
-            n_response_vectors = size(obj.T1,2);
-            for i = 1:n_response_vectors
-                fprintf(fid,'%s',disp_string);
+            dispString = sprintf('\n\n%s\n',NodeOutputData.printTitles{obj.responseType});
+            nResponseVectors = size(obj.T1,2);
+            for i = 1:nResponseVectors
+                fprintf(fid,'%s',dispString);
                 fprintf(fid,'\n   GRID ID.            T1             T2               T3             R1               R2             R3\n');
                 fprintf(fid,' %8d \t\t %+E \t %+E \t %+E \t %+E \t %+E \t %+E \n',[double(obj.ID),obj.T1(:,i),obj.T2(:,i),obj.T3(:,i),obj.R1(:,i),obj.R2(:,i),obj.R3(:,i)]' );
             end
@@ -114,15 +111,15 @@ classdef node_output_data
         function DB = convert_2_db1051(obj,startSetID)
             DB = [];
             DoubleSidedContourVectorID = 0;
-            out_type = node_output_data.femap_output_type(obj.response_type); % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
+            out_type = NodeOutputData.femapOutputType(obj.responseType); % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             ent_type = 7; % [int] Either nodal (7) or elemental (8) output\                compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
             compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
             comp_dir = 1; % [int] If 1, comp[0..2] are the X,Y,Z component values. If 2, data at end of Beams. If 3, reverse data at second end of beam.
             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             
-            vecID = node_output_data.femap_output_vector_IDs(obj.response_type,:); % [int] ID of output vector, must be unique in each output set
-            title = node_output_data.femap_output_vector_titles(obj.response_type,:); % [max 79 char] Output Vector title
+            vecID = NodeOutputData.femapOutputVectorIDs(obj.responseType,:); % [int] ID of output vector, must be unique in each output set
+            title = NodeOutputData.femapOutputVectorTitles(obj.responseType,:); % [max 79 char] Output Vector title
             comp = zeros(8,20);
             comp(1,1:3) = vecID(1:3);
             comp(2,1) = vecID(1);
@@ -139,8 +136,8 @@ classdef node_output_data
             TT = sqrt(obj.T1.^2 + obj.T2.^2 + obj.T3.^2);
             RT = sqrt(obj.R1.^2 + obj.R2.^2 + obj.R3.^2);
             
-            n_response_vectors = size(obj.T1,2);
-            for i = 1:n_response_vectors
+            nResponseVectors = size(obj.T1,2);
+            for i = 1:nResponseVectors
                 setID = startSetID+i-1;
 
                 % Total Linear

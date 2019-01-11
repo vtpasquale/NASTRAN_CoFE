@@ -30,24 +30,24 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
                 error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',EIDS(nonunique)))
             end
         end
-        function MODEL = assemble(obj,MODEL)
+        function model = assemble(obj,model)
             % assemble element and global matricies
             
             % Preallocate Sparse Matrices
-            K_g = spalloc(MODEL.ngdof,MODEL.ngdof,20*MODEL.ngdof);
+            K_g = spalloc(model.ngdof,model.ngdof,20*model.ngdof);
             M_g = K_g;
             
             % Loop through elements
             nelem = size(obj,1);
             for i=1:nelem
-                oi=obj(i).assemble_sub(MODEL);
+                oi=obj(i).assemble_sub(model);
                 K_g(oi.gdof,oi.gdof)=K_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
                 M_g(oi.gdof,oi.gdof)=M_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
                 obj(i)=oi;
             end
-            MODEL.ELEM=obj;
-            MODEL.K_g=K_g;
-            MODEL.M_g=M_g;
+            model.element=obj;
+            model.K_g=K_g;
+            model.M_g=M_g;
         end
         function SOLUTION = recover(obj,SOLUTION)
             nelem = size(obj,1);

@@ -1,13 +1,13 @@
 
 %% BdfFields.sol should store the first SOL entry describer
-bdfLines  = BdfLines(fullfile('gitControlTestInputs','tenbar-hdf5.dat'));
+bdfLines  = BdfLines(fullfile('gitControlTestDir','tenbar-hdf5.dat'));
 bdfFields = BdfFields(bdfLines);
 
 assert(strcmp(bdfFields.sol,'FIRSTSOLENTRY'),...
     'BdfFields.sol should store the first SOL entry describer.')
 
 %% Check executive and case control processing
-fileName = fullfile('gitControlTestInputs','testBdfFields.dat');
+fileName = fullfile('gitIgnoreTestDir1','testBdfFields.dat');
 fid = fopen(fileName,'w+');
 
 fprintf(fid,'EXEC ENTRY\n');

@@ -33,14 +33,14 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
             sb=false(size(node2gdof,2)*6,max([size(spcsSIDs,1),1]));
             sd=spalloc(size(sb,1),size(sb,2),ceil(size(sb,1)/10)*size(sb,2));
             
-            %% Single point contraints
+            % Single point contraints
             for i = 1:size(spcconID,1)
                 oi=obj([obj.sid]==spcconID(i));
                 for j = 1:size(oi,1)
                     oj=oi(j);
-                    gdof = node2gdof(oj.C,oj.G);
+                    gdof = node2gdof(oj.c,oj.g);
                     gdof = gdof(:);
-                    sd(gdof,i)=oj.D;
+                    sd(gdof,i)=oj.d;
                     sb(gdof,i)=true;
                 end
             end

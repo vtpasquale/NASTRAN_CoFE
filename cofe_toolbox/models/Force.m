@@ -13,16 +13,16 @@ classdef Force < Load
         p_g % [3,1 real] Force vector expressed in the nodal displacement coordinate system defined at grind point G.
     end
     methods
-        function obj=preprocess_sub(obj,MODEL)
-            gind = obj.g==MODEL.nodeIDs;
-            cind = obj.cid==MODEL.cordCIDs;
-            obj.gdof = MODEL.node2gdof(1:3,gind);
+        function obj=preprocess_sub(obj,model)
+            gIndex = obj.g==model.nodeIDs;
+            cIndex = obj.cid==model.coordinateSystemCIDs;
+            obj.gdof = model.node2gdof(1:3,gIndex);
             
-            fnode = MODEL.NODE(gind);
-            fcord = MODEL.CORD(cind);
+            fnode = model.node(gIndex);
+            fcsys = model.coordinateSystem(cIndex);
             
-            obj.p_g = fnode.T_G0*...
-                      fcord.T_C0(fcord.X_C(fnode.X_0)).'*...
+            obj.p_g = fnode.T_g0*...
+                      fcsys.T_c0(fcsys.x_c(fnode.x_0)).'*...
                       obj.f;
         end
     end

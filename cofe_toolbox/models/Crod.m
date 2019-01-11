@@ -24,36 +24,36 @@ classdef Crod < Element
         matG % [real] Shear modulus
     end
     methods
-        function obj=assemble_sub(obj,MODEL)
+        function obj=assemble_sub(obj,model)
             
-            g1ind = obj.g(1)==MODEL.nodeIDs;
-            g2ind = obj.g(2)==MODEL.nodeIDs;
-            n1 = MODEL.NODE(g1ind);
-            n2 = MODEL.NODE(g2ind);
-            obj.gdof = [MODEL.node2gdof(:,g1ind);MODEL.node2gdof(:,g2ind)];
-            p1 = n1.X_0;
-            p2 = n2.X_0;
+            g1ind = obj.g(1)==model.nodeIDs;
+            g2ind = obj.g(2)==model.nodeIDs;
+            n1 = model.node(g1ind);
+            n2 = model.node(g2ind);
+            obj.gdof = [model.node2gdof(:,g1ind);model.node2gdof(:,g2ind)];
+            p1 = n1.x_0;
+            p2 = n2.x_0;
             
-            pty=MODEL.PROP(obj.pid==MODEL.propPIDs);
-            if ~isa(pty,'p_rod');
+            pty=model.property(obj.pid==model.propertyPIDs);
+            if ~isa(pty,'Prod');
                 error('CROD EID=%d references property PID = %d, which is not type PROD. Only PROD properties are supported for CROD elements.',obj.eid,obj.pid);
             end
             obj.a = pty.a;
             obj.j = pty.j;
             obj.c = pty.c;
             
-            mt=MODEL.MAT(pty.MID==MODEL.matMIDs);
-            [T_e0,obj.k_e,obj.m_e] = obj.crodMat(p1,p2,mt.E,mt.G,pty.a,pty.j,mt.RHO,pty.NSM);
+            mt=model.material(pty.mid==model.materialMIDs);
+            [T_e0,obj.k_e,obj.m_e] = obj.crodMat(p1,p2,mt.E,mt.G,pty.a,pty.j,mt.rho,pty.nsm);
             
             % Material constants
             obj.matG = mt.G;
             obj.matE = mt.E;
             
             % Transformation matrix
-            obj.R_eg(10:12,10:12) = T_e0*n2.T_G0.';
-            obj.R_eg(7:9,7:9)     = T_e0*n2.T_G0.';
-            obj.R_eg(4:6,4:6)     = T_e0*n1.T_G0.';
-            obj.R_eg(1:3,1:3)     = T_e0*n1.T_G0.';
+            obj.R_eg(10:12,10:12) = T_e0*n2.T_g0.';
+            obj.R_eg(7:9,7:9)     = T_e0*n2.T_g0.';
+            obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
+            obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
         end
         function [force,stress,strain,strain_energy] = recover_sub(obj,u_g,returnIO,opts)
             % INPUTS
@@ -221,16 +221,16 @@ classdef Crod < Element
             % k_e = [12 x 12] element stiffness matrix in the element reference frame
             % m_e = [12 x 12] element mass matrix in the element reference frame
             
-            L = norm_cs(p2-p1); % Length
+            L = normCS(p2-p1); % Length
             
             % Transformation Matrix
-            xVec = p2 - p1; xVec = xVec./norm_cs(xVec);
+            xVec = p2 - p1; xVec = xVec./normCS(xVec);
             zVec = [0;0;1];
             if sum(abs(xVec - zVec)) < .1 || sum(abs(xVec + zVec)) < .1
                 zVec = [1;0;0];
             end
-            yVec = cross3(zVec,xVec); yVec = yVec./norm_cs(yVec);
-            zVec = cross3(xVec,yVec); zVec = zVec./norm_cs(zVec);
+            yVec = cross3(zVec,xVec); yVec = yVec./normCS(yVec);
+            zVec = cross3(xVec,yVec); zVec = zVec./normCS(zVec);
             
             T_e0 = [xVec, yVec, zVec].';
             

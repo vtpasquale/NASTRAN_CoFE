@@ -44,7 +44,7 @@ classdef Node
                 oi = obj(i);
                 oi.x_0  = coordinateSystem(oi.cp==coordinateSystemCIDs).x_0(oi.x_p);
                 nodalDispCoordSys = coordinateSystem(oi.cd==coordinateSystemCIDs);
-                oi.T_g0 = nodalDispCoordSys.T_C0(nodalDispCoordSys.X_C(oi.x_0));
+                oi.T_g0 = nodalDispCoordSys.T_c0(nodalDispCoordSys.x_c(oi.x_0));
                 obj(i)=oi;
             end
         end
