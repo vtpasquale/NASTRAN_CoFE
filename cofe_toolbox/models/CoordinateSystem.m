@@ -1,7 +1,7 @@
 % Abstract superclass for coordinate systems
 % Anthony Riccairdi
 %
-classdef (Abstract) Cord < matlab.mixin.Heterogeneous
+classdef (Abstract) CoordinateSystem < matlab.mixin.Heterogeneous
     
     properties
         cid % (int32 >= 0) Coordinate system identification number.
@@ -22,7 +22,7 @@ classdef (Abstract) Cord < matlab.mixin.Heterogeneous
         T_c0 = T_c0(obj,x_c) % Returns transformation matrix ([3,3] double) from basic coordinate system to current coordinate system at x_c
     end
     methods (Sealed = true)
-        function obj = preprocess_all(obj)
+        function obj = preprocess(obj)
             % function to preprocess coordinate systems
             [ncord,m]=size(obj);
             if m > 1; error('cord.preprocess() can only handel nx1 arrays of cord objects. The second dimension exceeds 1.'); end
@@ -36,7 +36,7 @@ classdef (Abstract) Cord < matlab.mixin.Heterogeneous
             end
             
             % Create basic coordinate system and add to array
-            basicCsys = cordr; basicCsys.xc_0=zeros(3,1); basicCsys.Tc_c0=eye(3); % Basic Csys
+            basicCsys = Cordr; basicCsys.xc_0=zeros(3,1); basicCsys.Tc_c0=eye(3); % Basic Csys
             basicCsys.cid = 0; basicCsys.rid = -1;
             obj = [basicCsys;obj];
             cids=[0,cids];
@@ -52,7 +52,7 @@ classdef (Abstract) Cord < matlab.mixin.Heterogeneous
                             error('Coordinate systems CID = %d references an undefined coodinate system CID = %d',obj(i).cid,obj(i).rid)
                         else
                             if unresolved(r) == 0
-                                obj(i)=obj(i).preprocess(obj(r));
+                                obj(i)=obj(i).preprocess_sub(obj(r));
                                 unresolved(i) = 0;
                             end
                         end
@@ -66,7 +66,7 @@ classdef (Abstract) Cord < matlab.mixin.Heterogeneous
         end
     end
     methods
-        function obj = preprocess(obj,basicCsys)
+        function obj = preprocess_sub(obj,basicCsys)
             % Preprocess coordinate system
             
             % convert definition points to basic coordiate system
@@ -82,9 +82,9 @@ classdef (Abstract) Cord < matlab.mixin.Heterogeneous
             end
             
             % rotation matrix
-            z = dab./norm_cs(dab);
-            y = cross3(z,nu); y = y./norm_cs(y);
-            x = cross3(y,z); x = x./norm_cs(x);
+            z = dab./normCS(dab);
+            y = cross3(z,nu); y = y./normCS(y);
+            x = cross3(y,z); x = x./normCS(x);
             
             obj.Tc_c0 = [x,y,z].';
             obj.xc_0 = a_0;

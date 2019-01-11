@@ -23,7 +23,7 @@ classdef BulkEntryCord2r < Cord2
             cord.a = obj.a;
             cord.b = obj.b;
             cord.c = obj.c;
-            model.cord = [model.cord;cord];
+            model.coordinateSystem = [model.coordinateSystem;cord];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file

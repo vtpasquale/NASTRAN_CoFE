@@ -48,8 +48,8 @@ classdef BulkEntryGrid < BulkEntry
             node.ps=ps;
             model.node=[model.node;node];
         end
-        % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)
+            % Print the entry in NASTRAN free field format to a text file with file id fid
             if obj.ps == -999
                 fprintf(fid,'GRID,%d,%d,%f,%f,%f,%d\n',obj.id,obj.cp,obj.x1,obj.x2,obj.x3,obj.cd);
             else

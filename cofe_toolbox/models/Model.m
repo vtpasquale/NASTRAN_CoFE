@@ -4,7 +4,7 @@ classdef Model
         
     properties
         %% Model entities
-        cord@Cord;
+        coordinateSystem@CoordinateSystem;
         material@Material;
         property@Property;
         node@Node;
@@ -35,13 +35,13 @@ classdef Model
         
     end
     properties (Hidden=true)
-        cordCIDs
-        matMIDs
-        propPIDs
+        coordinateSystemCIDs
+        materialMIDs
+        propertyPIDs
         nodeIDs
-        elemEIDs
+        elementEIDs
         spcsSIDs
-        loadsSIDs
+        loadSIDs
         
         node2gdof
         ngdof
@@ -49,46 +49,46 @@ classdef Model
 
     methods
         function obj = preprocess(obj)
-            nnodes = size(obj.NODE,1);
+            nnodes = size(obj.node,1);
             obj.ngdof       = 6*nnodes;
             obj.node2gdof   = zeros(6,nnodes);
             obj.node2gdof(:)= 1:obj.ngdof;
             
             % Preprocess coordinate systems
-            obj.CORD = obj.CORD.preprocess_all();
+            obj.coordinateSystem = obj.coordinateSystem.preprocess();
             
             % Store vectors of ID numbers as seperate varables. This speeds 
-            % up assembly because concatenation gets expensive.        
-            obj.cordCIDs=[obj.CORD.CID]; 
-            obj.matMIDs=[obj.MAT.MID]';
-            obj.propPIDs=[obj.PROP.PID]';
-            obj.nodeIDs=[obj.NODE.ID]';
-            obj.elemEIDs=[obj.ELEM.EID]';
-            obj.loadsSIDs=unique([obj.LOADS.SID])';
+            % up assembly because repeated concatenation is expensive.        
+            obj.coordinateSystemCIDs=[obj.coordinateSystem.cid]; 
+            obj.materialMIDs=[obj.material.mid].';
+            obj.propertyPIDs=[obj.property.pid].';
+            obj.nodeIDs=[obj.node.id].';
+            obj.elementEIDs=[obj.element.eid].';
+            obj.loadSIDs=unique([obj.load.sid]).';
             
             % Preprocess remaining model entities
-            obj.MAT  = obj.MAT.preprocess();
-            obj.PROP = obj.PROP.preprocess();
-            obj.NODE = obj.NODE.preprocess(obj);
-            obj.ELEM = obj.ELEM.preprocess();
-            obj.LOADS = obj.LOADS.preprocess(obj);
+            obj.material = obj.material.preprocess();
+            obj.property = obj.property.preprocess();
+            obj.node = obj.node.preprocess(obj);
+            obj.element = obj.element.preprocess();
+            obj.load = obj.load.preprocess(obj);
             
             % Process single-point constraints
-            obj.sg = obj.NODE.process_ps(); % DOF eliminated by perminant single-point constraints
-            [obj.sb,obj.sd,obj.spcsSIDs]=obj.SPCS.process_sb(obj.node2gdof); % SID numbers and DOF eliminated by boundary single-point constraints      
+            obj.sg = obj.node.getPerminantSinglePointConstraints();
+            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj.node2gdof); % SID numbers and DOF eliminated by boundary single-point constraints
             
-            % define sets (in progress)
+            % Define sets (in progress)
             obj.s = obj.sg | obj.sb;
             obj.f = ~obj.s;
         end
         function obj = assemble(obj)
             
-            % Process MAT references in PROP entries to speed things up?
+            % Process MAT references in prop entries to speed things up?
             
             % Assemble
-            obj = obj.NODE.assemble(obj);
-            obj = obj.ELEM.assemble(obj); % element and global matricies
-            obj = obj.LOADS.assemble(obj);
+            obj = obj.node.assemble(obj);
+            obj = obj.element.assemble(obj); % element and global matricies
+            obj = obj.load.assemble(obj);
             
         end
     end

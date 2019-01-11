@@ -11,12 +11,12 @@ classdef (Abstract) Material < matlab.mixin.Heterogeneous
             % Function to preprocess properties
             
             % check that property id numbers are unique
-            MIDS=[obj.MID];
+            mids=[obj.mid];
             nprop = size(obj,1);
-            [~,ia] = unique(MIDS,'stable');
+            [~,ia] = unique(mids,'stable');
             if size(ia,1)~=nprop
                 nonunique=setxor(ia,1:nprop);
-                error('Material identification numbers should be unique. Nonunique material identification number(s): %s',sprintf('%d,',MIDS(nonunique)))
+                error('Material identification numbers should be unique. Nonunique material identification number(s): %s',sprintf('%d,',mids(nonunique)))
             end
         end
     end

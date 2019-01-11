@@ -10,7 +10,7 @@ classdef CaseEntrySubcase < CaseEntry
         function obj = CaseEntrySubcase(entryFields)
             obj.ID = castInputField('SUBCASE','RightHandSideDescriber',entryFields.rightHandDescribers,'uint32',NaN,1);
         end
-        function caseControl = entry2CaseControl_sub(obj,caseControl)
+        function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control Object
             caseControl.ID = obj.ID;
         end

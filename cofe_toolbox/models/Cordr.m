@@ -1,7 +1,7 @@
 % Class for rectangular coordinate systems
 % Anthony Ricciardi
 %
-classdef Cordr < Cord
+classdef Cordr < CoordinateSystem
 
     methods
         function x_0 = x_0(obj,x_c) 

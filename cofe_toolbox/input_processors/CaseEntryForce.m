@@ -10,7 +10,7 @@ classdef CaseEntryForce < CaseEntry & CaseEntryOutpuRequest
         function obj = CaseEntryForce(entryFields)
             obj = obj.processDescribers(entryFields);
         end
-        function caseControl = entry2CaseControl_sub(obj,caseControl)
+        function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control
             caseControl.force = obj.outputRequest;
         end

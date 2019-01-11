@@ -1,7 +1,7 @@
 % Class for cylindrical coordinate systems
 % Anthony Ricciardi
 %
-classdef Cordc < Cord
+classdef Cordc < CoordinateSystem
     
     methods
         function x_0 = x_0(obj,x_c) 

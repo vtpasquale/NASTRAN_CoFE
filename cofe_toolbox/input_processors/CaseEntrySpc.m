@@ -16,7 +16,7 @@ classdef CaseEntrySpc < CaseEntry
             obj.n = castInputField('Case Control SPC Entry',...
                 'RightHandSideDescriber',entryFields.rightHandDescribers,'uint32',NaN,1);
         end % CaseEntryLoad()
-        function caseControl = entry2CaseControl_sub(obj,caseControl)
+        function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control
             caseControl.spc = obj.n;
         end

@@ -9,11 +9,11 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
         echo_sub(obj,fid)
         
         % Convert entry object to model object and store in model entity array
-        caseControl = entry2CaseControl_sub(obj,caseControl)
+        caseControl = entry2caseControl_sub(obj,caseControl)
     end
     
     methods (Sealed = true)
-        function caseControl = entry2CaseControl(obj)
+        function caseControl = entry2caseControl(obj)
             % Convert case control entry array to CaseControl objects
             [n,m]=size(obj);
             if m > 1; error('CaseEntry.entry2CaseControl(fid) can only handle nx1 arrays of CaseEntry objects. The second dimension exceeds 1.'); end
@@ -25,20 +25,25 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                 if isa(obj(i),'CaseEntrySubcase')
                     break
                 end
-                masterCaseControl = entry2CaseControl_sub(obj(i),masterCaseControl);
+                masterCaseControl = entry2caseControl_sub(obj(i),masterCaseControl);
                 i = i+1;
             end
-            
-            % Specific subcases
-            subcaseIndex = 1;
-            caseControl(subcaseIndex,1)=masterCaseControl;
-            while i<=n
+            if i<=n
+                % Specific subcases
+                subcaseIndex = 1;
+                caseControl(subcaseIndex,1)=masterCaseControl;
                 caseControl(subcaseIndex,1) = entry2CaseControl_sub(obj(i),caseControl(subcaseIndex,1));
                 i = i+1;
-                if isa(obj(i),'CaseEntrySubcase')
-                    subcaseIndex = subcaseIndex + 1;
-                    caseControl(subcaseIndex,1) = masterCaseControl;
+                while i<=n
+                    if isa(obj(i),'CaseEntrySubcase')
+                        subcaseIndex = subcaseIndex + 1;
+                        caseControl(subcaseIndex,1) = masterCaseControl;
+                    end
+                    caseControl(subcaseIndex,1) = entry2CaseControl_sub(obj(i),caseControl(subcaseIndex,1));
+                    i = i+1;
                 end
+            else
+                caseControl=masterCaseControl;
             end
         end % entry2CaseControl(obj)
         function echo(obj,fid)

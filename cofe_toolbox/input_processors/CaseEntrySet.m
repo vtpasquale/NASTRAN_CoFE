@@ -42,7 +42,7 @@ classdef CaseEntrySet < CaseEntry
                 end
             end
         end % CaseEntrySet()
-        function caseControl = entry2CaseControl_sub(obj,caseControl)
+        function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control
             caseControl.outputSet = [caseControl.outputSet;obj.outputSet];
         end
