@@ -13,13 +13,31 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
     end
     
     methods (Sealed = true)
-        function caseControl = entry2caseControl(obj)
+        function caseControl = entry2caseControl(obj,sol)
+            
+            % process sol input
+            if isempty(sol)
+                warning('Default solution undefined. Statics is assumed default.')
+                sol = 101;
+            end
+            switch upper(sol)
+                case {101,'101','STATICS','SESTATICS'}
+                    defaultAnalysis = 'STATICS';
+                case {103,'103','MODES','SEMODES'}
+                    defaultAnalysis = 'MODES';
+                case {105,'105','BUCK','SEBUCK'}
+                    defaultAnalysis = 'BUCK';
+                otherwise
+                    error('SOL type %s not supported.',num2str(sol))
+            end
+            
             % Convert case control entry array to CaseControl objects
             [n,m]=size(obj);
             if m > 1; error('CaseEntry.entry2CaseControl(fid) can only handle nx1 arrays of CaseEntry objects. The second dimension exceeds 1.'); end
             
             % Master case
             masterCaseControl = CaseControl;
+            masterCaseControl.analysis = defaultAnalysis;
             i = 1;
             while i<=n
                 if isa(obj(i),'CaseEntrySubcase')
