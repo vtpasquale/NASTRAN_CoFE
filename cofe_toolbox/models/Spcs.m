@@ -7,7 +7,7 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
         sid % [int] Identification numbers of the single-point constraint sets.
     end
     methods (Sealed=true)
-        function [sb,sd,spcsSIDs]=process_sb(obj,node2gdof)
+        function [sb,sd,spcsSIDs]=process_sb(obj,node2gdof,nodeIDs)
             
             % logic to deal with SPC and SPCADD types
             spcaddID = [];
@@ -38,7 +38,8 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
                 oi=obj([obj.sid]==spcconID(i));
                 for j = 1:size(oi,1)
                     oj=oi(j);
-                    gdof = node2gdof(oj.c,oj.g);
+                    gIndex=oj.g==nodeIDs;
+                    gdof = node2gdof(oj.c,gIndex);
                     gdof = gdof(:);
                     sd(gdof,i)=oj.d;
                     sb(gdof,i)=true;

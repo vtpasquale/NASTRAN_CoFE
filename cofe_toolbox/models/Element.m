@@ -9,7 +9,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         gdof % [ngdof,1 int] Indices of of element degrees of freedom in global set
     end
     properties (Abstract=true,Hidden=true)
-        elem_type % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+        ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
     end
     methods (Abstract)
         obj = assemble_sub(obj,MODEL) % Calculate element matricies
@@ -49,56 +49,57 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             model.K_g=K_g;
             model.M_g=M_g;
         end
-        function SOLUTION = recover(obj,SOLUTION)
-            nelem = size(obj,1);
+        function solver = recover(obj,solver,caseControl)
+            % recovers element output data
+            nElement = size(obj,1);
             IDs = uint32([obj.eid]).';
             
             % returnIO [nelem,4] [force,stress,strain,strain_energy]
-            returnIO = false(nelem,4);
+            returnIO = false(nElement,4);
             returnIO(...
-                SOLUTION.CASE_CONTROL.FORCE.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
+                caseControl.force.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 1) = true;
             returnIO(...
-                SOLUTION.CASE_CONTROL.STRESS.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
+                caseControl.stress.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 2) = true;
             returnIO(...
-                SOLUTION.CASE_CONTROL.STRAIN.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
+                caseControl.strain.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 3) = true;
             returnIO(...
-                SOLUTION.CASE_CONTROL.ESE.get_member_ID_indices(IDs,SOLUTION.CASE_CONTROL.OUTPUT_SETS),...
+                caseControl.ese.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 4) = true;
             
             % Any element indices where element results are requested
-            recoverIND = uint32(find(any(returnIO,2)));
+            recoverIndex = uint32(find(any(returnIO,2)));
             
             % preallocate element_output_data objects
-            % s(nstress,1) = element_output_data();
-            u_g = SOLUTION.u_g;
+            % s(nstress,1) = ElementOutputData();
+            u_g = solver.u_g;
             F = [];
             S = [];
             E = [];
             ESE = [];
-            for i = 1:size(recoverIND,1)
-                ele_ind = recoverIND(i);
-                oi = obj(ele_ind);
-                [f,s,e,ese] = oi.recover_sub(u_g,returnIO(ele_ind,:));
+            for i = 1:size(recoverIndex,1)
+                elementIndex = recoverIndex(i);
+                oi = obj(elementIndex);
+                [f,s,e,ese] = oi.recover_sub(u_g,returnIO(elementIndex,:));
                 if ~isempty(f)
-                    F = [F;element_output_data(oi.eid,oi.elem_type,1,f)];
+                    F = [F;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,1,f)];
                 end
                 if ~isempty(s)
-                    S = [S;element_output_data(oi.eid,oi.elem_type,2,s)];
+                    S = [S;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,2,s)];
                 end
                 if ~isempty(e)
-                    E = [E;element_output_data(oi.eid,oi.elem_type,3,e)];
+                    E = [E;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,3,e)];
                 end
                 if ~isempty(ese)
-                    ESE = [ESE;element_output_data(oi.eid,oi.elem_type,4,ese)];
+                    ESE = [ESE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,4,ese)];
                 end
             end
-            SOLUTION.force = F;
-            SOLUTION.stress = S;
-            SOLUTION.strain = E;
-            SOLUTION.strain_energy = ESE;
+            solver.force = F;
+            solver.stress = S;
+            solver.strain = E;
+            solver.strainEnergy = ESE;
         end
         
     end

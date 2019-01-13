@@ -11,7 +11,6 @@ classdef BulkEntryCmass1 < BulkEntry
         g2 % Grid identification number. (1 <= uint32 <= 4,294,967,295)
         c2 % Component numbers. (1 <= uint8 <= 6)
     end
-    
     methods
         function obj = BulkEntryCmass1(entryFields)
             % Construct using entry field data input as cell array of char

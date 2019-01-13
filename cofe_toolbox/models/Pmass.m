@@ -1,11 +1,11 @@
 % Class for scalar mass element properties.
 % Anthony Ricciardi
 %
-classdef p_mass < prop
+classdef Pmass < Property
     
     properties
-        PID % Property identification number. (Integer > 0)
-        M % Value of scalar mass. (Real)
+        pid % Property identification number. (Integer > 0)
+        m % Value of scalar mass. (Real)
     end
 end
 

@@ -1,7 +1,7 @@
 % Class for FEMAP Neutral File Data Block 450 - Output Sets
 % Anthony Ricciardi
 %
-classdef db450 < db
+classdef FemapDataBlock450 < FemapDataBlock
     
     properties
         ID % [int] ID of output set
@@ -22,7 +22,7 @@ classdef db450 < db
         LocationID = 0;% See AttachID
     end
     methods
-        function writeNeu(obj,fid)
+        function writeNeutral_sub(obj,fid)
             % Writes single data block to FEMAP Neutral File
             fprintf(fid,'   -1\n');
             fprintf(fid,'   450\n');
@@ -37,7 +37,7 @@ classdef db450 < db
             fprintf(fid,'%d,%d\n',obj.nas_case,obj.nas_rev);
             fprintf(fid,'   -1\n');
         end
-        function obj = db450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev)
+        function obj = FemapDataBlock450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev)
             % db450 class constructor method
             if nargin ~= 0
                 obj.ID=ID; % [int] ID of output set

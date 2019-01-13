@@ -32,14 +32,14 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                 % Specific subcases
                 subcaseIndex = 1;
                 caseControl(subcaseIndex,1)=masterCaseControl;
-                caseControl(subcaseIndex,1) = entry2CaseControl_sub(obj(i),caseControl(subcaseIndex,1));
+                caseControl(subcaseIndex,1) = entry2caseControl_sub(obj(i),caseControl(subcaseIndex,1));
                 i = i+1;
                 while i<=n
                     if isa(obj(i),'CaseEntrySubcase')
                         subcaseIndex = subcaseIndex + 1;
                         caseControl(subcaseIndex,1) = masterCaseControl;
                     end
-                    caseControl(subcaseIndex,1) = entry2CaseControl_sub(obj(i),caseControl(subcaseIndex,1));
+                    caseControl(subcaseIndex,1) = entry2caseControl_sub(obj(i),caseControl(subcaseIndex,1));
                     i = i+1;
                 end
             else

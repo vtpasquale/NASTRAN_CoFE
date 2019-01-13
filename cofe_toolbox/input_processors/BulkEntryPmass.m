@@ -1,56 +1,53 @@
 % Class for PMASS property entries
 % Anthony Ricciardi
 %
-classdef pmass < entry
+classdef BulkEntryPmass < BulkEntry
     
     properties
-        PID1 % Property identification number. (Integer > 0)
-        M1 % Value of scalar mass. (Real)
-        PID2
-        M2
-        PID3
-        M3
-        PID4
-        M4
+        pid1 % Property identification number. (Integer > 0)
+        m1 % Value of scalar mass. (Real)
+        pid2
+        m2
+        pid3
+        m3
+        pid4
+        m4
     end
     
-    methods (Static = true)
-		% Initialize entry properties based on input file entry data in cell format
-        function PMASS = initialize(data)
-            PMASS=pmass;
-            PMASS.PID1 = set_data('PMASS','PID1',data{2},'int',NaN,1);
-            PMASS.M1 = set_data('PMASS','M1',data{3},'dec',NaN);
-            PMASS.PID2 = set_data('PMASS','PID2',data{4},'int',[],1);
-            PMASS.M2 = set_data('PMASS','M2',data{5},'dec',[]);
-            PMASS.PID3 = set_data('PMASS','PID3',data{6},'int',[],1);
-            PMASS.M3 = set_data('PMASS','M3',data{7},'dec',[]);
-            PMASS.PID4 = set_data('PMASS','PID4',data{8},'int',[],1);
-            PMASS.M4 = set_data('PMASS','M4',data{9},'dec',[]);
-        end
-    end
     methods
+        function obj = BulkEntryPmass(entryFields)
+            % Construct using entry field data input as cell array of char
+            obj.pid1 = castInputField('PMASS','PID1',entryFields{2},'uint32',NaN,1);
+            obj.m1 = castInputField('PMASS','M1',entryFields{3},'double',NaN,0);
+            obj.pid2 = castInputField('PMASS','PID2',entryFields{4},'uint32',[],1);
+            obj.m2 = castInputField('PMASS','M2',entryFields{5},'double',[],0);
+            obj.pid3 = castInputField('PMASS','PID3',entryFields{6},'uint32',[],1);
+            obj.m3 = castInputField('PMASS','M3',entryFields{7},'double',[],0);
+            obj.pid4 = castInputField('PMASS','PID4',entryFields{8},'uint32',[],1);
+            obj.m4 = castInputField('PMASS','M4',entryFields{9},'double',[],0);
+        end
         % Write appropriate model object(s) based on entry data
-        function MODEL = entry2model(obj,MODEL)
-            P_MASS = p_mass;
-            P_MASS.PID = obj.PID1;
-            P_MASS.M = obj.M1;
-            if ~isempty(obj.PID2)
-                P_MASS(2,1).PID = obj.PID2;
-                P_MASS(2,1).M = obj.M2;
-                if ~isempty(obj.PID3)
-                    P_MASS(3,1).PID = obj.PID3;
-                    P_MASS(3,1).M = obj.M3;
-                    if ~isempty(obj.PID4)
-                        P_MASS(4,1).PID = obj.PID4;
-                        P_MASS(4,1).M = obj.M4;
+        function model = entry2model_sub(obj,model)
+            pmass = Pmass;
+            pmass.pid = obj.pid1;
+            pmass.m = obj.m1;
+            if ~isempty(obj.pid2)
+                pmass(2,1).pid = obj.pid2;
+                pmass(2,1).m = obj.m2;
+                if ~isempty(obj.pid3)
+                    pmass(3,1).pid = obj.pid3;
+                    pmass(3,1).m = obj.m3;
+                    if ~isempty(obj.pid4)
+                        pmass(4,1).pid = obj.pid4;
+                        pmass(4,1).m = obj.m4;
                     end
                 end
             end
-            MODEL.PROP = [MODEL.PROP;P_MASS];
+            model.property = [model.property;pmass];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
-        function echo(obj,fid)
-            fprintf(fid,'PMASS,%d,%f,%d,%f,%d,%f,%d,%f\n',obj.PID1,obj.M1,obj.PID2,obj.M2,obj.PID3,obj.M3,obj.PID4,obj.M4);
+        function echo_sub(obj,fid)
+            fprintf(fid,'PMASS,%d,%f,%d,%f,%d,%f,%d,%f\n',obj.pid1,obj.m1,obj.pid2,obj.m2,obj.pid3,obj.m3,obj.pid4,obj.m4);
         end
         
     end

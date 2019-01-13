@@ -19,7 +19,7 @@ classdef Crod < Element
         c % [real] Coefficient to determine torsional stress.
     end
     properties (Hidden = true)
-        elem_type = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+        ELEMENT_TYPE = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
         matE % [real] Elastic modulus
         matG % [real] Shear modulus
     end
@@ -114,7 +114,7 @@ classdef Crod < Element
         end
     end
     methods (Static=true)
-        function DB=force_2_db1051(force,startSetID)
+        function femapDataBlock=force_2_FemapDataBlock1051(force,startSetID)
             % Convert array of crod element force data objects to an array of FEMAP data block 1051 objects
             % INPUTS
             % force [nele,nsets element_output_data] array of force data
@@ -122,7 +122,7 @@ classdef Crod < Element
             %
             % Output
             % DB [2*nsets,1 db1051] array of FEMAP data block 1051 objects 
-            DB = [];
+            femapDataBlock = [];
             DoubleSidedContourVectorID = 0;
             out_type = 3; % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             ent_type = 8; % [int] Either nodal (7) or elemental (8) output
@@ -131,7 +131,7 @@ classdef Crod < Element
             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             calc_warn = false; % [logical] If 1, can not linearly combine this output
-            entityID =[force.ID].';% [Nx1 int] Node/element IDs of the for results
+            entityID =[force.elementID].';% [Nx1 int] Node/element IDs of the for results
             
             vecID = [3036,3038]; % [int] ID of output vector, must be unique in each output set
             title{1} = 'Rod Axial Force'; % [max 79 char] Output Vector title
@@ -147,17 +147,19 @@ classdef Crod < Element
                 setID = startSetID+i-1;
                 fvals = vals(1,i:n_response_vectors:end).';
                 tvals = vals(2,i:n_response_vectors:end).';
-                DB=[DB;db1051(setID,vecID(1),title{1},comp(1,:),DoubleSidedContourVectorID,...
+                femapDataBlock=[femapDataBlock;FemapDataBlock1051(...
+                    setID,vecID(1),title{1},comp(1,:),DoubleSidedContourVectorID,...
                     out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                     integer_format,entityID,...
                     fvals)];
-                DB=[DB;db1051(setID,vecID(2),title{2},comp(2,:),DoubleSidedContourVectorID,...
+                femapDataBlock=[femapDataBlock;FemapDataBlock1051(...
+                    setID,vecID(2),title{2},comp(2,:),DoubleSidedContourVectorID,...
                     out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                     integer_format,entityID,...
                     tvals)];
             end
         end
-        function DB=stress_2_db1051(stress,startSetID)
+        function femapDataBlock=stress_2_FemapDataBlock1051(stress,startSetID)
             % Convert array of crod element stress data objects to an array of FEMAP data block 1051 objects
             % INPUTS
             % stress [nele,nsets element_output_data] array of stress data
@@ -165,7 +167,7 @@ classdef Crod < Element
             %
             % Output
             % DB [2*nsets,1 db1051] array of FEMAP data block 1051 objects 
-            DB = [];
+            femapDataBlock = [];
             DoubleSidedContourVectorID = 0;
             out_type = 4; % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             ent_type = 8; % [int] Either nodal (7) or elemental (8) output
@@ -174,7 +176,7 @@ classdef Crod < Element
             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             calc_warn = false; % [logical] If 1, can not linearly combine this output
-            entityID =[stress.ID].';% [Nx1 int] Node/element IDs of the for results
+            entityID =[stress.elementID].';% [Nx1 int] Node/element IDs of the for results
             
             vecID = [3183,3186]; % [int] ID of output vector, must be unique in each output set
             title{1} = 'Rod Axial Stress'; % [max 79 char] Output Vector title
@@ -190,11 +192,13 @@ classdef Crod < Element
                 setID = startSetID+i-1;
                 svals = vals(1,i:n_response_vectors:end).';
                 tvals = vals(2,i:n_response_vectors:end).';
-                DB=[DB;db1051(setID,vecID(1),title{1},comp(1,:),DoubleSidedContourVectorID,...
+                femapDataBlock=[femapDataBlock;FemapDataBlock1051(...
+                    setID,vecID(1),title{1},comp(1,:),DoubleSidedContourVectorID,...
                     out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                     integer_format,entityID,...
                     svals)];
-                DB=[DB;db1051(setID,vecID(2),title{2},comp(2,:),DoubleSidedContourVectorID,...
+                femapDataBlock=[femapDataBlock;FemapDataBlock1051(...
+                    setID,vecID(2),title{2},comp(2,:),DoubleSidedContourVectorID,...
                     out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                     integer_format,entityID,...
                     tvals)];

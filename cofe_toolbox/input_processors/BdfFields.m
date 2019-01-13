@@ -168,7 +168,7 @@ classdef BdfFields
             lineNum = int32(1);
             entryNum = int32(1);
             fieldNum = int32(1);
-            entryFields = cell(1,10);
+            entryFields = {'','','','','','','','','',''};
             bulkDataFields=cell(0);
             while lineNum <= nBulkDataLines
                 bulkDataLine = bulkDataLines{lineNum};
@@ -275,6 +275,8 @@ classdef BdfFields
                 end
                 lineNum = lineNum + 1;
             end
+            % one last bulk data fields
+            bulkDataFields{entryNum,1} = strtrim(entryFields);
         end % function processBulkDataLines
         
     end

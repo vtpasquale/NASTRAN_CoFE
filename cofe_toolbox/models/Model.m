@@ -75,7 +75,7 @@ classdef Model
             
             % Process single-point constraints
             obj.sg = obj.node.getPerminantSinglePointConstraints();
-            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj.node2gdof); % SID numbers and DOF eliminated by boundary single-point constraints
+            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj.node2gdof,obj.nodeIDs); % SID numbers and DOF eliminated by boundary single-point constraints
             
             % Define sets (in progress)
             obj.s = obj.sg | obj.sb;

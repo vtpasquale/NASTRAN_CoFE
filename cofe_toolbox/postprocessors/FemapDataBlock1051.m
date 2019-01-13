@@ -1,7 +1,7 @@
 % Class for FEMAP Neutral File Data Block 1051 - Output Data Vectors
 % Anthony Ricciardi
 %
-classdef db1051 < db
+classdef FemapDataBlock1051 < FemapDataBlock
     
     properties
         setID % [int] ID of output set
@@ -32,7 +32,7 @@ classdef db1051 < db
         id_max = 0 % [int] ID of entity where maximum value occurs (0 if FEMAP will recalc max/min)
     end
     methods
-        function writeNeu(obj,fid)
+        function writeNeutral_sub(obj,fid)
             % Writes single data block to FEMAP Neutral File
 %             fprintf(fid,'   -1\n');
 %             fprintf(fid,'  1051\n');
@@ -53,7 +53,7 @@ classdef db1051 < db
             fprintf(fid,'%d,%f\n',[double(obj.entityID),obj.value]');
             fprintf(fid,'-1,0.\n');
         end
-        function obj = db1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
+        function obj = FemapDataBlock1051(setID,vecID,title,comp,DoubleSidedContourVectorID,...
                 out_type,ent_type,compute_type,calc_warn,comp_dir,cent_total,...
                 integer_format,entityID,value)
             % db1051 class constructor method

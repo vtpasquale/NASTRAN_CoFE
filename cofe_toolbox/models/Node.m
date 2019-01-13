@@ -98,7 +98,37 @@ classdef Node
             cdOut=cdDefault;
             psOut=psDefault;
         end
+        function solver = recover(solver,caseControl,modelNodeIDs)
+            % recovers node output data
+            
+            
+            % displacements
+            if caseControl.displacement.n ~= 0
+                responseType = 1; % 1=displacement
+                keepIndex = caseControl.displacement.getRequestMemberIndices(modelNodeIDs,caseControl.outputSet);
+                
+                response = solver.u_0;
+                solver.displacement_0 = NodeOutputData(responseType,response,modelNodeIDs,keepIndex);
+                
+                response = solver.u_g;
+                solver.displacement_g = NodeOutputData(responseType,response,modelNodeIDs,keepIndex);
+            end
+            
+            % velocities
+            % accelerations
+            
+            % spcforces
+            if caseControl.spcforces.n ~= 0
+                responseType = 4; % 4=spcforces
+                keepIndex = caseControl.spcforces.getRequestMemberIndices(modelNodeIDs,caseControl.outputSet);
+                
+                response = solver.f_0;
+                solver.spcforces_0 = NodeOutputData(responseType,response,modelNodeIDs,keepIndex);
+                
+                response = solver.f_g;
+                solver.spcforces_g = NodeOutputData(responseType,response,modelNodeIDs,keepIndex);
+            end
+        end
     end
-    
 end
 

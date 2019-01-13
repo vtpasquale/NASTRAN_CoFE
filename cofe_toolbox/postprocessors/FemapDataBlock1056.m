@@ -1,7 +1,7 @@
 % Class for FEMAP Neutral File Data Block 1056 – Analysis Study
 % Anthony Ricciardi
 %
-classdef db1056 < db
+classdef FemapDataBlock1056 < FemapDataBlock
     
     properties
         ID % [int] ID of Study
@@ -15,7 +15,7 @@ classdef db1056 < db
         Analysis_Program = 0; % Analysis program where output came from
     end
     methods
-        function writeNeu(obj,fid)
+        function writeNeutral_sub(obj,fid)
             % Writes single data block to FEMAP Neutral File
             fprintf(fid,'   -1\n');
             fprintf(fid,'   1056\n');
@@ -27,7 +27,7 @@ classdef db1056 < db
             fprintf(fid,'%s\n',obj.Study_Notes);
             fprintf(fid,'   -1\n');
         end
-        function obj = db1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes)
+        function obj = FemapDataBlock1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes)
             % db1056 class constructor method
             if nargin ~= 0
                 obj.ID=ID; % [int] ID of Study
