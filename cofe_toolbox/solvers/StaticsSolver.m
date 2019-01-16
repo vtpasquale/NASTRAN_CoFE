@@ -19,7 +19,7 @@ classdef StaticsSolver < Solver
         strain
         strainEnergy
         
-        femapDataBlock@FemapDataBlock;
+        femapDataBlock
     end
     
     methods 
@@ -50,9 +50,19 @@ classdef StaticsSolver < Solver
             obj = model.node.recover(obj,caseControl,model.nodeIDs);
             obj = model.element.recover(obj,caseControl);
         end
-        function output_sub(obj,caseControl,fid)
-            % Output select results data
-            obj.displacement_g.echo(fid)
+        function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
+            
+
+            
+            % Output select results
+            if caseControl.displacement.n~=0
+                if caseControl.displacement.print==true
+                    obj.displacement_g.echo(fid) % To text output file
+                end
+                if writeFemapFlag
+                    obj.femapDataBlock = [obj.femapDataBlock;convert_2_FemapDataBlock1051(obj.displacement_0,1)];
+                end
+            end
         end
 %             % Write output to FEMAP data blocks
 %             ID = 1;% [int] ID of output set

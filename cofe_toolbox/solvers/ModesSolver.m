@@ -25,7 +25,7 @@ classdef ModesSolver < Solver
         strain
         strainEnergy
         
-        femapDataBlock@FemapDataBlock;
+        femapDataBlock
     end
     
     methods 
@@ -33,7 +33,7 @@ classdef ModesSolver < Solver
             
             % process EIGRL
             if isempty(caseControl.method); error('No METHOD defined in Case Control section.'); end
-            nModes = model.eigTab(caseControl.method==model.eigTab(:,1),2);
+            nModes = model.eigrl(caseControl.method==model.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); error(''); end
             
             % sets
@@ -74,7 +74,7 @@ classdef ModesSolver < Solver
             %           
             obj.eigenvalueTable = EigenvalueTable(eigenvalues,diag(V.'*Ma*V),diag(V.'*Ka*V));
             
-            %            obj.u_g(f,:)= V;
+            obj.u_g(f,:)= V;
             obj.u_0     = model.R_0g*obj.u_g;
             
             % constraint forces
@@ -86,9 +86,20 @@ classdef ModesSolver < Solver
             obj = model.node.recover(obj,caseControl,model.nodeIDs);
             obj = model.element.recover(obj,caseControl);
         end
-        function output_sub(obj,caseControl,fid)
-            % Output select results data
-            obj.displacement_g.echo(fid)
+        function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
+            
+            % Print Eigenvalue table
+            obj.eigenvalueTable.echo(fid)
+            
+            % Output select results
+            if caseControl.displacement.n~=0
+                if caseControl.displacement.print==true
+                    obj.displacement_g.echo(fid) % To text output file
+                end
+                if writeFemapFlag
+                    obj.femapDataBlock = [obj.femapDataBlock;convert_2_FemapDataBlock1051(obj.displacement_0,1)];
+                end
+            end
         end
         
 %             %% Output results data

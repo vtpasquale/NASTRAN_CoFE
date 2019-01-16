@@ -9,7 +9,7 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
         obj=solve_sub(obj,caseControl,model)
         
         % Output subcase results
-        output_sub(obj,caseControl,fid)
+        obj = output_sub(obj,caseControl,fid)
     end
     methods (Sealed = true)
         function obj = solve(obj,caseControl,model)
@@ -17,12 +17,33 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 obj(i)=solve_sub(obj(i),caseControl(i),model);
             end
         end % solver()
-        function obj = output(obj,caseControl,fid)
+        function obj = output(obj,caseControl,modelParam,fid)
+            % Check check for PARAM,POST,-1
+            if any(strcmp(modelParam(:,1),'POST') & strcmp(modelParam(:,2),'-1'))
+                writeFemapFlag = true;
+            else
+                writeFemapFlag = false;
+            end
+            
+            % Write text output and construct Femap data blocks
+            fileText = fileread('outputFileText.txt');
+            fprintf(fid,fileText);
+            fprintf(fid,'  This case was run %s \n',datestr(now));
             for i = 1:size(obj,1)
                 caseControl(i).output(fid)
-                output_sub(obj(i),caseControl(i),fid)
-            end % output
-        end % solver()
+                obj(i) = output_sub(obj(i),caseControl(i),writeFemapFlag,fid);
+            end
+            
+            % Write Femap neutral file
+            if writeFemapFlag
+                allFemapDataBlocks = [];
+                for i = 1:size(obj,1)
+                    allFemapDataBlocks = [allFemapDataBlocks;obj(i).femapDataBlock];
+                end
+                allFemapDataBlocks.writeNeutral(fid)
+            end
+            
+        end % output()
     end
     methods (Sealed = true, Static = true)
         function solver = constructFromCaseControl(caseControl)

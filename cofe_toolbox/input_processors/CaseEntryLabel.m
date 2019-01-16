@@ -24,7 +24,7 @@ classdef CaseEntryLabel < CaseEntry
         end
         function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control
-            caseControl.subtitle = obj.name;
+            caseControl.label = obj.name;
         end
         function echo_sub(obj,fid)
             % Print the case control entry in NASTRAN format to a text file with file id fid

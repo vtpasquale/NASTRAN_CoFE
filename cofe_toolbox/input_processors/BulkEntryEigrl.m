@@ -1,4 +1,4 @@
-% Class for EIGRL entries
+% Class for PARAM entries
 % Anthony Ricciardi
 %
 classdef BulkEntryEigrl < BulkEntry
@@ -32,7 +32,7 @@ classdef BulkEntryEigrl < BulkEntry
                 if isempty(obj.nd)
                     error('ND is blank for EIGRL SID = %s. A nonblank integer is required.',obj.sid)
                 end
-                model.eigTab = [model.eigTab;obj.sid,obj.nd];
+                model.eigrl = [model.eigrl;obj.sid,obj.nd];
             end
             function echo_sub(obj,fid)
                 % Print the entry in NASTRAN free field format to a text file with file id fid

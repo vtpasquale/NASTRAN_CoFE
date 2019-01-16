@@ -14,7 +14,9 @@ classdef Model
         load@Load;
         
         %% Simple entities
-        eigTab=[]; % [:,2 int] table with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
+        eigrl % [nEigrl,2 int] matrix with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
+        param % {nParam,3 cell array of [char]} [N,V1,V2] names and values of parameters
+        
         
         %% Sets and related
         sb % ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions

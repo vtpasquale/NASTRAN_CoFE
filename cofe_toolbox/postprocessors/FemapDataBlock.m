@@ -33,9 +33,10 @@ classdef (Abstract) FemapDataBlock < matlab.mixin.Heterogeneous
             end
                         
             % Write Format 450 Datablocks
-            for i = find(typeFemapDataBlock==450)
+            for i = find(typeFemapDataBlock==450)'
                 writeNeutral_sub(obj(i),fid)
             end
+            
             % Write Format 1051 Datablocks
             fprintf(fid,'   -1\n');
             fprintf(fid,'  1051\n');
@@ -44,7 +45,7 @@ classdef (Abstract) FemapDataBlock < matlab.mixin.Heterogeneous
             end
             fprintf(fid,'   -1\n');
             % Write Format 1056 Datablocks
-            for i = find(typeFemapDataBlock==1056)
+            for i = find(typeFemapDataBlock==1056)'
                 writeNeutral_sub(obj(i),fid)
             end
             
