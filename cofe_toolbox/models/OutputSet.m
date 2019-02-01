@@ -10,7 +10,7 @@ classdef OutputSet
         thru % [n,1 logical] true where i1(thru,1) and iN(thru,1) contain THRU ranges
     end
     properties (Dependent = true, Hidden = true)
-        values % [nset:1 uint32] sorted vector of all unique integers in output set
+        values % [nset,1 uint32] sorted vector of all unique integers in output set
     end
     
     methods

@@ -14,20 +14,20 @@ classdef (Abstract) Cord2 < BulkEntry
     methods (Hidden=true)
         function obj = constructCord2(obj,entryFields)
             % Construct using entry field data input as cell array of char  
-            obj.cid = castInputField('CORD2R','CID',entryFields{2},'uint32',NaN,1);
-            obj.rid = castInputField('CORD2R','RID',entryFields{3},'uint32',0,0);
+            obj.cid = castInputField('CORD2x','CID',entryFields{2},'uint32',NaN,1);
+            obj.rid = castInputField('CORD2x','RID',entryFields{3},'uint32',0,0);
             obj.a = zeros(3,1);
             obj.b = zeros(3,1);
             obj.c = zeros(3,1);
-            obj.a(1) = castInputField('CORD2R','A1',entryFields{4},'double',NaN);
-            obj.a(2) = castInputField('CORD2R','A2',entryFields{5},'double',NaN);
-            obj.a(3) = castInputField('CORD2R','A3',entryFields{6},'double',NaN);
-            obj.b(1) = castInputField('CORD2R','B1',entryFields{7},'double',NaN);
-            obj.b(2) = castInputField('CORD2R','B2',entryFields{8},'double',NaN);
-            obj.b(3) = castInputField('CORD2R','B3',entryFields{9},'double',NaN);
-            obj.c(1) = castInputField('CORD2R','C1',entryFields{12},'double',NaN);
-            obj.c(2) = castInputField('CORD2R','C2',entryFields{13},'double',NaN);
-            obj.c(3) = castInputField('CORD2R','C3',entryFields{14},'double',NaN);
+            obj.a(1) = castInputField('CORD2x','A1',entryFields{4},'double',NaN);
+            obj.a(2) = castInputField('CORD2x','A2',entryFields{5},'double',NaN);
+            obj.a(3) = castInputField('CORD2x','A3',entryFields{6},'double',NaN);
+            obj.b(1) = castInputField('CORD2x','B1',entryFields{7},'double',NaN);
+            obj.b(2) = castInputField('CORD2x','B2',entryFields{8},'double',NaN);
+            obj.b(3) = castInputField('CORD2x','B3',entryFields{9},'double',NaN);
+            obj.c(1) = castInputField('CORD2x','C1',entryFields{12},'double',NaN);
+            obj.c(2) = castInputField('CORD2x','C2',entryFields{13},'double',NaN);
+            obj.c(3) = castInputField('CORD2x','C3',entryFields{14},'double',NaN);
         end
     end
 end

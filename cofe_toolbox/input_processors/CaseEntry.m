@@ -14,7 +14,7 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
     
     methods (Sealed = true)
         function caseControl = entry2caseControl(obj,sol)
-            
+                        
             % process sol input
             if isempty(sol)
                 warning('Default solution undefined. Statics is assumed default.')
@@ -76,6 +76,7 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
     methods (Sealed = true, Static = true)
         
         function caseEntry = constructFromFields(caseControlFields)
+            caseEntry=[];
             % construct case entry objectes from input fields
             iKeep = 1;
             for i = 1:size(caseControlFields,1)
