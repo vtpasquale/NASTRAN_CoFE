@@ -7,7 +7,7 @@ classdef Model
         coordinateSystem@CoordinateSystem;
         material@Material;
         property@Property;
-        node@Node;
+        point@Point; % Grid points (nodes) and scalar points
         element@Element;
         spcs@Spcs;
 %         MPCS@mpcs;
@@ -21,7 +21,7 @@ classdef Model
         %% Sets and related
         sb % ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
         sd % ([ngdof,num SID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
-        sg % ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries.
+        sg % ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries
         s  % ([ngdof,1] logical) All degrees-of-freedom eliminated by single point constraints -> sb + sg
         f  % ([ngdof,1] logical) Unconstrained (free) structural degrees-of-freedom -> a + o 
         m  % ([ngdof,1] logical) All degrees-of-freedom eliminated by multiple constraints
@@ -40,21 +40,17 @@ classdef Model
         coordinateSystemCIDs
         materialMIDs
         propertyPIDs
-        nodeIDs
         elementEIDs
         spcsSIDs
         loadSIDs
         
-        node2gdof
-        ngdof
+        pointIDs
+        nodeFlag % ([nPoints,1] logical) flags nodes in point array (not scalar points)
+        nGdof % [uint32] number of global degrees of freedom
     end
 
     methods
         function obj = preprocess(obj)
-            nnodes = size(obj.node,1);
-            obj.ngdof       = 6*nnodes;
-            obj.node2gdof   = zeros(6,nnodes);
-            obj.node2gdof(:)= 1:obj.ngdof;
             
             % Preprocess coordinate systems
             obj.coordinateSystem = obj.coordinateSystem.preprocess();
@@ -64,20 +60,19 @@ classdef Model
             obj.coordinateSystemCIDs=[obj.coordinateSystem.cid]; 
             obj.materialMIDs=[obj.material.mid].';
             obj.propertyPIDs=[obj.property.pid].';
-            obj.nodeIDs=[obj.node.id].';
             obj.elementEIDs=[obj.element.eid].';
             obj.loadSIDs=unique([obj.load.sid]).';
             
             % Preprocess remaining model entities
             obj.material = obj.material.preprocess();
             obj.property = obj.property.preprocess();
-            obj.node = obj.node.preprocess(obj);
+            obj = obj.point.preprocess(obj); % defines model.point, model.pointIDs, model.gNodeFlag, model.nGdof
             obj.element = obj.element.preprocess();
             obj.load = obj.load.preprocess(obj);
             
             % Process single-point constraints
-            obj.sg = obj.node.getPerminantSinglePointConstraints();
-            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj.node2gdof,obj.nodeIDs); % SID numbers and DOF eliminated by boundary single-point constraints
+            obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
+            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj); % SID numbers and DOF eliminated by boundary single-point constraints
             
             % Define sets (in progress)
             obj.s = obj.sg | obj.sb;
@@ -88,7 +83,7 @@ classdef Model
             % Process MAT references in prop entries to speed things up?
             
             % Assemble
-            obj = obj.node.assemble(obj);
+            obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
             

@@ -12,7 +12,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
     end
     methods (Abstract)
-        obj = assemble_sub(obj,MODEL) % Calculate element matricies
+        obj = assemble_sub(obj,model) % Calculate element matricies
         obj = recover_sub(obj,u_g) % Recover element response values
     end
     methods (Sealed=true)
@@ -34,12 +34,12 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             % assemble element and global matricies
             
             % Preallocate Sparse Matrices
-            K_g = spalloc(model.ngdof,model.ngdof,20*model.ngdof);
+            K_g = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
             M_g = K_g;
             
             % Loop through elements
-            nelem = size(obj,1);
-            for i=1:nelem
+            nElement = size(obj,1);
+            for i=1:nElement
                 oi=obj(i).assemble_sub(model);
                 K_g(oi.gdof,oi.gdof)=K_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
                 M_g(oi.gdof,oi.gdof)=M_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;

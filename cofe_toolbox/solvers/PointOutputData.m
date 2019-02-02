@@ -1,17 +1,18 @@
-% Class for output data at nodes
+% Class for output data at grid points and scalar points
 % Anthony Ricciardi
 %
-classdef NodeOutputData
+classdef PointOutputData
     
     properties
         responseType  % [uint8] CoFE code specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
-        ID % [nOutputNodes,1] Output node ID numbers
-        T1 % [nOutputNodes,nResponseVectors] X translation response
-        T2 % [nOutputNodes,nResponseVectors] Y translation response
-        T3 % [nOutputNodes,nResponseVectors] Z translation response
-        R1 % [nOutputNodes,nResponseVectors] X rotation response
-        R2 % [nOutputNodes,nResponseVectors] Y rotation response
-        R3 % [nOutputNodes,nResponseVectors] Z rotation response
+        ID % [nOutputPoints,1] Output point ID numbers
+        pointType % [nOutputPoints,1 char] Point type: 'G' for grid point 'S' for scalar point 
+        T1 % [nOutputPoints,nResponseVectors] X translation response - or scalar point response
+        T2 % [nOutputPoints,nResponseVectors] Y translation response
+        T3 % [nOutputPoints,nResponseVectors] Z translation response
+        R1 % [nOutputPoints,nResponseVectors] X rotation response
+        R2 % [nOutputPoints,nResponseVectors] Y rotation response
+        R3 % [nOutputPoints,nResponseVectors] Z rotation response
     end
     properties (Constant = true, Hidden = true)
         printTitles = {...
@@ -48,24 +49,24 @@ classdef NodeOutputData
             ];
     end
     methods
-        function obj = NodeOutputData(responseType,response,ID,keepIndex)
+        function obj = PointOutputData(responseType,response,model,keepIndex)
             % Constructs NodeOutputData object from response vectors
             % Inputs:
             %   responseType [uint8] NodeOutputData.responseType -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
-            %   response [6*nNodes,nResponseVectors] matrix of response vectors
-            %   ID [nNodes,1] vector of all node ID numbers
-            %   keepIndex [nOutputNodes,1] Optional vector of indicies for output nodes in ID --> NodeOutputData.ID=ID(keep_ind);
+            %   response [nGdof,nResponseVectors] matrix of response vectors
+            %   model [model] model object
+            %   keepIndex [nOutputPoints,1] Optional vector of indicies for output points in ID --> PointOutputData.ID=ID(keepIndex);
             
             % check inputs
             if nargin < 3; error('Not enought input arguments.'); end
-            [nu,mu]=size(response);
-            if nu < 1 || mu < 1; error('Input u matrix of response vectors size [6*n_nodes,nResponseVectors]'); end
-            [nID,mID]=size(ID);
-            if nID < 1 || mID ~= 1; error('Input ID should be a vector of integer size [n,1].'); end
-            if 6*nID~=nu; error('Input inconsistency: size(u,1)~=6*size(ID,1)'); end
+            [nResponse,mResponse]=size(response);
+            if nResponse < 1 || mResponse < 1; error('Input u matrix of response vectors size [nGdof,nResponseVectors]'); end
+            [nPoints,mPoints]=size(model.point);
+            if nPoints < 1 || mPoints ~= 1; error('Input model.points should be size [n,1].'); end
+            if nPoints>nResponse; error('Input inconsistency: nPoints > nResponse)'); end
             if nargin > 3
-                [n_kid,m_kid]=size(keepIndex);
-                if nID < n_kid || m_kid ~= 1; error('Optional input keep_ind should be a vector of integer size [n,1].'); end
+                [nKid,mKid]=size(keepIndex);
+                if nPoints < nKid || mKid ~= 1; error('Optional input keepIndex should be a vector of integer size [n,1].'); end
             end
             
             % Initialize NodeOutputData object
@@ -73,25 +74,48 @@ classdef NodeOutputData
             
             % process
             if nargin < 4
-                % keep all
-                obj.ID=ID;
-                obj.T1=response(1:6:end,:);
-                obj.T2=response(2:6:end,:);
-                obj.T3=response(3:6:end,:);
-                obj.R1=response(4:6:end,:);
-                obj.R2=response(5:6:end,:);
-                obj.R3=response(6:6:end,:);
+                % keep all points
+                obj.ID = model.pointIDs;
+                nKeepPoint = nPoints;
+                keepNodeFlag = model.nodeFlag;
+                keepModelPoint = model.point;
             else
-                % downselect
-                index_all = uint32(1:6:size(response,1)).';
-                index = index_all(keepIndex);
-                obj.ID=ID(keepIndex);
-                obj.T1=response(index  ,:);
-                obj.T2=response(index+1,:);
-                obj.T3=response(index+2,:);
-                obj.R1=response(index+3,:);
-                obj.R2=response(index+4,:);
-                obj.R3=response(index+5,:);
+                % keep select points
+                obj.ID = model.pointIDs(keepIndex);
+                nKeepPoint = nKid;
+                keepNodeFlag = model.nodeFlag(keepIndex);
+                keepModelPoint = model.point(keepIndex);
+            end
+            
+            % assign point types
+            obj.pointType = repmat('G',[nKeepPoint,1]);
+            obj.pointType(~keepNodeFlag)='S';
+            
+            % preallocate response variables
+            obj.T1=zeros(nKeepPoint,mResponse);
+            obj.T2=obj.T1;
+            obj.T3=obj.T1;
+            obj.R1=obj.T1;
+            obj.R2=obj.T1;
+            obj.R3=obj.T1;
+            
+            % save response at requested nodes
+            if any(keepNodeFlag)
+                node = keepModelPoint(keepNodeFlag);
+                nodeGdof = [node.gdof];
+                obj.T1(keepNodeFlag,:)=response(nodeGdof(1:6:end),:);
+                obj.T2(keepNodeFlag,:)=response(nodeGdof(2:6:end),:);
+                obj.T3(keepNodeFlag,:)=response(nodeGdof(3:6:end),:);
+                obj.R1(keepNodeFlag,:)=response(nodeGdof(4:6:end),:);
+                obj.R2(keepNodeFlag,:)=response(nodeGdof(5:6:end),:);
+                obj.R3(keepNodeFlag,:)=response(nodeGdof(6:6:end),:);
+            end
+            
+            % save response at requested scalar points
+            if any(~keepNodeFlag)
+                scalarPoint = keepModelPoint(~keepNodeFlag);
+                scalarPointGdof = [scalarPoint.gdof];
+                obj.T1(~keepNodeFlag,:)=response(scalarPointGdof,:);
             end
         end
         function obj = set.responseType(obj,in)
@@ -101,12 +125,13 @@ classdef NodeOutputData
             obj.responseType=uint8(in);
         end
         function echo(obj,fid)
-            dispString = sprintf('\n\n%s\n',NodeOutputData.printTitles{obj.responseType});
+            dispString = sprintf('\n\n%s\n',PointOutputData.printTitles{obj.responseType});
             nResponseVectors = size(obj.T1,2);
+            sFormat = sprintf('%%14d      %c   %%15E%%15E%%15E%%15E%%15E%%15E\\n',obj.pointType);
             for i = 1:nResponseVectors
                 fprintf(fid,'%s',dispString);
-                fprintf(fid,'\n       GRID ID.       T1             T2             T3             R1             R2             R3\n');
-                fprintf(fid,'%14d%15E%15E%15E%15E%15E%15E\n',[double(obj.ID),obj.T1(:,i),obj.T2(:,i),obj.T3(:,i),obj.R1(:,i),obj.R2(:,i),obj.R3(:,i)]' );
+                fprintf(fid,'\n      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3\n');
+                fprintf(fid,sFormat,[double(obj.ID),obj.T1(:,i),obj.T2(:,i),obj.T3(:,i),obj.R1(:,i),obj.R2(:,i),obj.R3(:,i)]' );
             end
         end
         function femapDataBlock1051 = convert_2_FemapDataBlock1051(obj,startSetID)

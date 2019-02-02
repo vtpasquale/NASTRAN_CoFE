@@ -34,7 +34,7 @@ classdef BulkEntryGrid < BulkEntry
             node.cp=obj.cp;
             node.x_p = [obj.x1; obj.x2; obj.x3];
             node.cd=obj.cd;
-            ps = [false;false;false;false;false;false;false];
+            ps = false(7,1);
             if ~isempty(obj.ps)
                 ps(7)=true; % explicitly define perminate single point constraints (overides defaults)
                 if obj.ps ~= 0
@@ -46,7 +46,7 @@ classdef BulkEntryGrid < BulkEntry
                 end
             end
             node.ps=ps;
-            model.node=[model.node;node];
+            model.point=[model.point;node];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

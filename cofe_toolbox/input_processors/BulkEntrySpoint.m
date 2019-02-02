@@ -24,25 +24,14 @@ classdef BulkEntrySpoint < BulkEntry & BulkIntegerList
         end
         function model = entry2model_sub(obj,model)
             % Convert entry object to model object and store in model entity array
-            if ~(obj.seid == 0 | isempty(obj.seid)); error('GRID ID = %d has a nonzero SEID, which is not supported.',obj.id); end
-            node = Node;
-            node.id=uint32(obj.id);
-            node.cp=obj.cp;
-            node.x_p = [obj.x1; obj.x2; obj.x3];
-            node.cd=obj.cd;
-            ps = [false;false;false;false;false;false;false];
-            if ~isempty(obj.ps)
-                ps(7)=true; % explicitly define perminate single point constraints (overides defaults)
-                if obj.ps ~= 0
-                    ind = str2num(num2str(obj.ps)');
-                    if any(ind>6) || any(ind<1)
-                        error('There is a formatting problem with the PS field in GRID ID = %d.',obj.id)
-                    end
-                    ps(ind)=true;
-                end
+            values = obj.getValues();
+            nValues = size(values,1);
+            
+            for i = 1:nValues
+                scalarPoint(i,1) = ScalarPoint;
+                scalarPoint(i,1).id = values(i);
             end
-            node.ps=ps;
-            model.node=[model.node;node];
+            model.point=[model.point;scalarPoint];
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

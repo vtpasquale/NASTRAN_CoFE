@@ -7,20 +7,20 @@ classdef (Abstract) Load < matlab.mixin.Heterogeneous
         sid % [int] Load set identification number.
     end
     methods (Sealed=true)
-        function obj = preprocess(obj,MODEL)
+        function obj = preprocess(obj,model)
             % preprocess loads
             [nloads,m] = size(obj);
             if m > 1; error('loads.preprocess() can only handel nx1 arrays of loads objects. The second dimension exceeds 1.'); end
             
             % Loop through loads
             for i=1:nloads
-                obj(i)=obj(i).preprocess_sub(MODEL);
+                obj(i)=obj(i).preprocess_sub(model);
             end
         end
         function model = assemble(obj,model)
             nLoads = size(obj,1);
             nCases = size(model.loadSIDs,1);
-            p_g = zeros(model.ngdof,nCases);
+            p_g = zeros(model.nGdof,nCases);
             
             % Loop through loads
             for i=1:nLoads

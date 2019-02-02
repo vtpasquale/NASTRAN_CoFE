@@ -24,8 +24,8 @@ classdef StaticsSolver < Solver
     
     methods 
         function obj=solve_sub(obj,caseControl,model)
-            obj.u_g=zeros(model.ngdof,1);
-            obj.u_0=zeros(model.ngdof,1);
+            obj.u_g=zeros(model.nGdof,1);
+            obj.u_0=zeros(model.nGdof,1);
             
             if isempty(caseControl.load); error('No load case identification number specified.'); end
             lc = find(caseControl.load==model.loadSIDs);
@@ -47,7 +47,7 @@ classdef StaticsSolver < Solver
             obj.f_0 = model.R_0g*obj.f_g;
             
             % recover and store selected response data at nodes and elements 
-            obj = model.node.recover(obj,caseControl,model.nodeIDs);
+            obj = model.point.recover(obj,caseControl,model);
             obj = model.element.recover(obj,caseControl);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)

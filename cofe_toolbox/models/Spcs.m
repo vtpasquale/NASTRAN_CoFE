@@ -7,8 +7,13 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
         sid % [int] Identification numbers of the single-point constraint sets.
     end
     methods (Sealed=true)
-        function [sb,sd,spcsSIDs]=process_sb(obj,node2gdof,nodeIDs)
-            
+        function [sb,sd,spcsSIDs]=process_sb(obj,model) % node2gdof,nodeIDs
+            %
+            % Outputs
+            % sb ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
+            % sd ([ngdof,num SID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
+            % spcsSIDs ([num SID,1] uint32) ID numbers of defined single point constraint sets
+ 
             % logic to deal with SPC and SPCADD types
             spcaddID = [];
             spcconID = [];
@@ -30,22 +35,25 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
                 error('SPCADD SID(s): %s is(are) also used as SID(s) defined for SPC type entries. This is not allowed.',sprintf('%d,',spcconID(lia)))
             end
             spcsSIDs=[spcconID;spcaddID];
-            sb=false(size(node2gdof,2)*6,max([size(spcsSIDs,1),1]));
+            
+            % Preallocate sets
+            sb=false(model.nGdof,max([size(spcsSIDs,1),1]));
             sd=spalloc(size(sb,1),size(sb,2),ceil(size(sb,1)/10)*size(sb,2));
             
             % Single point contraints
+            objSid=[obj.sid];
             for i = 1:size(spcconID,1)
-                oi=obj([obj.sid]==spcconID(i));
+                oi=obj(objSid==spcconID(i));
                 for j = 1:size(oi,1)
                     oj=oi(j);
-                    gIndex=oj.g==nodeIDs;
-                    gdof = node2gdof(oj.c,gIndex);
-                    gdof = gdof(:);
+                    node = model.point.getNode(oj.g,model);
+                    gdof = node.gdof(oj.c);
                     sd(gdof,i)=oj.d;
                     sb(gdof,i)=true;
                 end
             end
-            
+        end % process_sb()
+        
 %             ii = i;
 %             %% SPCADD
 %             for i = 1:size(spcaddID,1)
@@ -55,10 +63,7 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
 %                     
 %                 end
 %             end
-            
-            
-        end
-    end
-    
+
+    end % methods
 end
 

@@ -26,11 +26,9 @@ classdef Crod < Element
     methods
         function obj=assemble_sub(obj,model)
             
-            g1ind = obj.g(1)==model.nodeIDs;
-            g2ind = obj.g(2)==model.nodeIDs;
-            n1 = model.node(g1ind);
-            n2 = model.node(g2ind);
-            obj.gdof = [model.node2gdof(:,g1ind);model.node2gdof(:,g2ind)];
+            n1 = model.point.getNode(obj.g(1),model);
+            n2 = model.point.getNode(obj.g(2),model);
+            obj.gdof = [n1.gdof,n2.gdof];
             p1 = n1.x_0;
             p2 = n2.x_0;
             

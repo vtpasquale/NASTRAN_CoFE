@@ -63,6 +63,17 @@ classdef (Abstract) CoordinateSystem < matlab.mixin.Heterogeneous
                     error('There are dependency issues with coordinate system(s) CID = %s',sprintf('%d, ',unresolved(unresolved~=0)'))
                 end
             end
+        end % preprocess()
+        function coordinateSystem = getCoordinateSystem(obj,id,model)
+            % returns a single node object with the requested node id from the point array
+            index = (id == model.coordinateSystemCIDs);
+            if ~any(index)
+                error('Coordinate System CID = %d is referenced, but is undefined.',id);
+            end
+            coordinateSystem = obj(index);
+            if size(coordinateSystem,1)~=1
+                error('Coordinate System CID = %d is defined more than once.',id)
+            end
         end
     end
     methods

@@ -76,7 +76,6 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
     methods (Sealed = true, Static = true)
         
         function caseEntry = constructFromFields(caseControlFields)
-            caseEntry=[];
             % construct case entry objectes from input fields
             iKeep = 1;
             for i = 1:size(caseControlFields,1)
@@ -92,6 +91,12 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                 else
                     warning('Case control entry %s not supported. Entry skipped.',upper(entryName))
                 end
+            end
+            % create a default case entry if undefined
+            if ~exist('caseEntry','var')
+                entryFields.leftHandDescribers = [];
+                entryFields.rightHandDescribers = 'STATICS';
+                caseEntry = CaseEntryAnalysis(entryFields);
             end
         end % constructFromFields()
     end
