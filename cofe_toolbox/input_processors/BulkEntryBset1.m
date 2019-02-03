@@ -1,8 +1,8 @@
-% Class for ASET1 entries
+% Class for BSET1 entries
 % Anthony Ricciardi
 %
-classdef BulkEntryAset1 < BulkEntry & BulkSet1
-    
+classdef BulkEntryBset1 < BulkEntry & BulkSet1
+
 %% Inherited from BulkSet1
 %     properties
 %         c % [:,1 uint32] Component numbers. Zero OR a sequential combination of integers 1 thru 6.
@@ -17,13 +17,13 @@ classdef BulkEntryAset1 < BulkEntry & BulkSet1
 
 %% Constructor method
     methods
-        function obj = BulkEntryAset1(entryFields)
+        function obj = BulkEntryBset1(entryFields)
             % Construct using entry field data input as cell array of char
             
             % Intended to be constant properties - traditional constant 
             % properteis not allowed with class structure
-            obj.ENTRY_NAME = 'ASET1';
-            obj.DOFSET_NAME = 'a';
+            obj.ENTRY_NAME = 'BSET1';
+            obj.DOFSET_NAME = 'b';
             
             % Construct using BulkSet1 method
             obj = obj.construct(entryFields);

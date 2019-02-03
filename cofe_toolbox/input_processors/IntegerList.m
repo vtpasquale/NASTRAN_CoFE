@@ -63,6 +63,15 @@ classdef (Abstract) IntegerList
                 iN_ = zeros(1,1,'uint32');
                 thru_ = false;
             end
+            
+            % For THRU option check ID1 < ID2
+            if any(thru_)
+                if ~all( i1_(thru_)<iN_(thru_) )
+                    error('The THRU option requires ID1 < ID2')
+                end
+            end
+            
+            % save to class properties
             obj.i1 = i1_;
             obj.iN = iN_;
             obj.thru = thru_;
