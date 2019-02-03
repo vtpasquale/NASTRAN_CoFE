@@ -22,12 +22,9 @@ classdef Node < Point
             if m > 1; error('node.preprocess() can only handel nx1 arrays of node objects. The second dimension exceeds 1.'); end
             
             % Assign coordinate systems to default if unassigned
-            [cpDefault,cdDefault] = obj.setGetGrdset();
-            if isempty(cpDefault); cpDefault=int32(0); end
-            if isempty(cdDefault); cdDefault=int32(0); end
             for i = 1:nnodes
-                if isempty(obj(i).cp); obj(i).cp=cpDefault; end
-                if isempty(obj(i).cd); obj(i).cd=cdDefault; end
+                if isempty(obj(i).cp); obj(i).cp=model.cpDefault; end
+                if isempty(obj(i).cd); obj(i).cd=model.cdDefault; end
             end
             
             % set x_0 and T_g0 for all nodes
@@ -40,26 +37,6 @@ classdef Node < Point
                 oi.T_g0 = nodalDispCoordSys.T_c0(nodalDispCoordSys.x_c(oi.x_0));
                 obj(i)=oi;
             end
-        end
-    end
-    methods (Static=true)
-        function [cpOut,cdOut,psOut] = setGetGrdset(cpIn,cdIn,psIn)
-            % Function to store static GRDSET input data as a persistent variable
-            persistent cpDefault;
-            persistent cdDefault;
-            persistent psDefault;
-            if nargin > 0
-                if nargin ~= 3; error('node.setgetGRDSET() requires zero or three input arguments'); end
-                if length(cpIn)>1; error('length(cpIn) should be = 1 or 0 (blank).'); end
-                if length(cdIn)>1; error('length(cdIn) should be = 1 or 0 (blank).'); end
-                if ~(size(psIn,1)==6 && size(psIn,2)==1); error('size(psIn) should be a [6,1]'); end
-                cpDefault = cpIn;
-                cdDefault = cdIn;
-                psDefault = psIn;
-            end
-            cpOut=cpDefault;
-            cdOut=cdDefault;
-            psOut=psDefault;
         end
     end
 end

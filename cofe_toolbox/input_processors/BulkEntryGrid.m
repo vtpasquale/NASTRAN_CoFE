@@ -10,7 +10,7 @@ classdef BulkEntryGrid < BulkEntry
         x2 % Location of the grid point in coordinate system CP. (Real; Default = 0.0)
         x3 % Location of the grid point in coordinate system CP. (Real; Default = 0.0)
         cd % Identification number of coordinate system in which the displacements, degrees-offreedom, constraints, and solution vectors are defined at the grid point. (Integer > 0 or blank*)
-        ps % Permanent single-point constraints associated with the grid point. (Any of the Integers 1 through 6 with no embedded blanks, or blank*.)
+        ps % Permanent single-point constraints associated with the grid point. (Any of the Integers 1 through 6 with no embedded blanks, or blank.)
         seid % Superelement identification number. (Integer > 0; Default = 0)
         % *See the GRDSET entry for default options for the CP, CD, PS, and SEID fields.
     end
@@ -38,10 +38,7 @@ classdef BulkEntryGrid < BulkEntry
             if ~isempty(obj.ps)
                 ps(7)=true; % explicitly define perminate single point constraints (overides defaults)
                 if obj.ps ~= 0
-                    ind = str2num(num2str(obj.ps)');
-                    if any(ind>6) || any(ind<1)
-                        error('There is a formatting problem with the PS field in GRID ID = %d.',obj.id)
-                    end
+                    ind = expandComponents(obj.ps,'GRID PS',false);
                     ps(ind)=true;
                 end
             end
@@ -50,7 +47,7 @@ classdef BulkEntryGrid < BulkEntry
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid
-            if obj.ps == -999
+            if isempty(obj.ps)
                 fprintf(fid,'GRID,%d,%d,%f,%f,%f,%d\n',obj.id,obj.cp,obj.x1,obj.x2,obj.x3,obj.cd);
             else
                 fprintf(fid,'GRID,%d,%d,%f,%f,%f,%d,%d\n',obj.id,obj.cp,obj.x1,obj.x2,obj.x3,obj.cd,obj.ps);

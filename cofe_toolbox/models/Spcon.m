@@ -4,11 +4,9 @@
 classdef Spcon < Spcs
     
     properties
-        sid % Identification number of single-point constraint set. (Integer > 0)
-        c % [1,: int] Component numbers between 1 and 6.
-        g % [1,: int] Node identification numbers.
-        d % [int] Value of enforced displacement for components C.
-    end
-    methods
+        sid % [uint32] Identification number of single-point constraint set.
+        c % [1,: uint32] Component numbers between 1 and 6.
+        g % [1,: uint32] Node identification numbers.
+        d % [double] Value of enforced displacement for components C.
     end
 end

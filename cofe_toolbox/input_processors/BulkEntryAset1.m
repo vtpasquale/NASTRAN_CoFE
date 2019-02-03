@@ -1,19 +1,23 @@
-% Class for SPOINT entries
+% Class for ASET1 entries
 % Anthony Ricciardi
 %
-classdef BulkEntrySpoint < BulkEntry & IntegerList
+classdef BulkEntryAset1 < BulkEntry & IntegerList
     
     properties
+        c % [:,1 uint32] Component numbers. Zero OR a sequential combination of integers 1 thru 6.
         i1 % [n,1 uint32] list of individual identification numbers and the first identification number for any THRU ranges
         iN % [n,1 uint32] list of the second identification number for any THRU ranges
         thru % [n,1 logical] true where i1(thru,1) and iN(thru,1) contain THRU ranges
     end
     methods
-        function obj = BulkEntrySpoint(varargin)
+        function obj = BulkEntryAset1(varargin)
             switch nargin
                 case 1 % Construct using entry field data input as cell array of char
                     entryFields = varargin{1};
-                    obj = obj.readIntegerFields(entryFields(2:end),'SPOINT'); % Method Inherited from IntegerList
+                    obj.c = castInputField('ASET1','C',entryFields{2},'uint32',uint32(0),0,123456);
+                    obj.c = expandComponents(obj.c,'ASET1 C',true);
+            
+                    obj = obj.readIntegerFields(entryFields(2:end),'ASET1'); % Method Inherited from IntegerList
                 case 3 % Construct using i1, iN, thru
                     obj.i1 = varargin{1};
                     obj.iN = varargin{2};

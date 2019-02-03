@@ -22,11 +22,14 @@ classdef BulkEntryGrdset < BulkEntry
     methods
         function model = entry2model_sub(obj,model)
             % Convert entry object to model object and store in model entity array
-            ps = [false;false;false;false;false;false];
+            ps = false(6,1);
             if ~isempty(obj.ps)
-                ps(str2num(num2str(obj.ps)'))=true;
+                ind = expandComponents(obj.ps,'GRDSET PS',false);
+                ps(ind)=true;
             end
-            model.node.setGetGrdset(obj.cp,obj.cd,ps);
+            model.cpDefault=obj.cp;
+            model.cdDefault=obj.cd;
+            model.psDefault=obj.ps;
         end % entry2model_sub()
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

@@ -4,16 +4,16 @@
 classdef BulkEntrySpc1 < BulkEntry
     properties
         sid % Identification number of single-point constraint set. (Integer > 0)
-        c % Component numbers. (Any unique combination of the Integers 1 through 6 with no embedded blanks for grid points.)
-        g % [1,: int] Node identification numbers.
+        c % [:,1 uint32] Component numbers. Zero OR a sequential combination of integers 1 thru 6.
+        g % [1,: uint32] Node identification numbers.
     end
     
     methods
         function obj = BulkEntrySpc1(entryFields)
             % Construct using entry field data input as cell array of char
-            obj.sid = castInputField('SPC1','sid',entryFields{2},'uint32',NaN);
+            obj.sid = castInputField('SPC1','sid',entryFields{2},'uint32',uint32(0));
             obj.c = castInputField('SPC1','C',entryFields{3},'uint32',NaN,1,123456);
-            checkInt1Thru6(obj.c,'SPC1','sid',obj.sid,'C');
+            obj.c = expandComponents(obj.c,'SPC1 C',true);
 
             obj.g(1) = castInputField('SPC1','G',entryFields{4},'uint32',NaN);
             n=size(entryFields,2);
@@ -47,7 +47,7 @@ classdef BulkEntrySpc1 < BulkEntry
             % Convert entry object to model object and store in model entity array
             spcon = Spcon;
             spcon.sid = obj.sid;
-            spcon.c = int32(str2num(num2str(obj.c)'))';
+            spcon.c = obj.c;
             spcon.g = obj.g;
             spcon.d=0.0;
             model.spcs=[model.spcs;spcon];

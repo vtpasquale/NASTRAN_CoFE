@@ -122,13 +122,10 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
             % values were defined explicitly. Default values are assigned where
             % psGrid(7,:)==false, explicit values where psGrid(7,:)==true.
             
-            [~,~,psDefault]=obj.setGetGrdset(); % load default values from GRDSET entry
-            if isempty(psDefault); psDefault=false(6,1); end
-            psDefault = repmat(psDefault,[1,nnodes]); % arrange default ps values as [6,nnodes logical]
-            
+            psDefaultAll = repmat(model.psDefault,[1,nnodes]); % arrange default ps values as [6,nnodes logical]
             psNodes = false(6,nnodes); % initialize matrix [6,nnodes logical]
             psNodes(:,psGrid(7,:))=psGrid(1:6,psGrid(7,:)); % apply explicitly defined Grid ps values
-            psNodes(:,~psGrid(7,:))=psDefault(:,~psGrid(7,:)); % apply default Grid ps values
+            psNodes(:,~psGrid(7,:))=psDefaultAll(:,~psGrid(7,:)); % apply default Grid ps values
             sgNodes = psNodes(:); % arrage Nodes sg set
             
             % merge with scalar points
@@ -137,28 +134,9 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
         end
     end
     methods (Static=true)
-        function [cpOut,cdOut,psOut] = setGetGrdset(cpIn,cdIn,psIn)
-            % Function to store static GRDSET input data as a persistent variable
-            persistent cpDefault;
-            persistent cdDefault;
-            persistent psDefault;
-            if nargin > 0
-                if nargin ~= 3; error('node.setgetGRDSET() requires zero or three input arguments'); end
-                if length(cpIn)>1; error('length(cpIn) should be = 1 or 0 (blank).'); end
-                if length(cdIn)>1; error('length(cdIn) should be = 1 or 0 (blank).'); end
-                if ~(size(psIn,1)==6 && size(psIn,2)==1); error('size(psIn) should be a [6,1]'); end
-                cpDefault = cpIn;
-                cdDefault = cdIn;
-                psDefault = psIn;
-            end
-            cpOut=cpDefault;
-            cdOut=cdDefault;
-            psOut=psDefault;
-        end % setGetGrdset()
         function solver = recover(solver,caseControl,model)
             % recovers node output data
-            
-            
+
             % displacements
             if caseControl.displacement.n ~= 0
                 responseType = 1; % 1=displacement

@@ -1,8 +1,7 @@
-% Helper superclass for Bulk Data Entires that end with an open-ended
-% list of integers and have the THRU option
+% Helper superclass for open-ended lists of integers with the THRU option
 % Anthony Ricciardi
 %
-classdef (Abstract) BulkIntegerList
+classdef (Abstract) IntegerList
     
     properties (Abstract)
         i1 % [n,1 uint32] list of individual identification numbers and the first identification number for any THRU ranges
