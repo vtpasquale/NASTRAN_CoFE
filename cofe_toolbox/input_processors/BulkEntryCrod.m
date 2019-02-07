@@ -4,18 +4,18 @@
 classdef BulkEntryCrod < BulkEntry
     
     properties
-        eid % Element identification number. (0 < Integer < 100,000,000)
-        pid % Property identification number of a PROD entry. (Integer > 0; Default = EID)
-        g1 % Grid point identification numbers of connection points. (Integer > 0; G1 ~= G2 )
-        g2
+        eid % [uint32] Element identification number.
+        pid % [uint32] Property identification number of a PROD entry. (Default = eid)
+        g1  % [uint32] Grid point identification number of connection point 1.
+        g2  % [uint32] Grid point identification number of connection point 2.
     end
     methods
         function obj = BulkEntryCrod(entryFields)
             % Construct using entry field data input as cell array of char
             obj.eid = castInputField('CROD','EID',entryFields{2},'uint32',NaN,1);
             obj.pid = castInputField('CROD','PID',entryFields{3},'uint32',obj.eid,1);
-            obj.g1 = castInputField('CROD','G1',entryFields{4},'double',NaN,1);
-            obj.g2 = castInputField('CROD','G2',entryFields{5},'double',NaN,1);
+            obj.g1 = castInputField('CROD','G1',entryFields{4},'uint32',NaN,1);
+            obj.g2 = castInputField('CROD','G2',entryFields{5},'uint32',NaN,1);
             if obj.g1 == obj.g2
                 error('G1 and G2 fields must be unique on CROD entries.')
             end

@@ -4,11 +4,11 @@
 classdef Mat1 < Material
     
     properties
-        mid % [int] Material identification number. 
-        E % [real] Young’s modulus. 
-        G % [real] Shear modulus.
-        nu % [real] Poisson’s ratio.
-        rho % [real] Mass density.
+        mid % [uint32] Material identification number. 
+        E % [double] Young’s modulus. 
+        G % [double] Shear modulus.
+        nu % [double] Poisson’s ratio.
+        rho % [double] Mass density.
     end
     methods
     end

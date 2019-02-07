@@ -1,27 +1,28 @@
-% Class for tension-compression-torsion elements.
+% Class for beam elements.
 % Anthony Ricciardi
 %
-classdef Crod < Element
+classdef Cbeam < Element
     
     properties
         eid % [uint32] Element identification number.
         pid % [uint32] Property identification number of a PROD entry.
-        g % [1,2 uint32] Grid point identification numbers of connection points.
+        g   % [2,1 uint32] Grid point identification numbers of connection points [GA,GB].
+        nu_g   % [3,1 double] Components of orientation vector NU, from GA, in the nodal displacement reference frame at GA.
         
-        gdof
-        % T_e0 % [3 x 3 double] rotation matrix from the basic reference frame to the element reference frame
-        R_eg % [12 x 12 double] rotation matrix from the element reference frame to the nodal displacement reference frame
+        gdof % [1,12 uint32] indices of global degrees of freedom associated with the element.
+        % T_e0 % [3  x 3 ] rotation matrix from the basic reference frame to the element reference frame
+        R_eg % [12 x 12 double] rotation matrix from the element reference frame to the nodal displacement reference frame.
         k_e % [12 x 12 double] element stiffness matrix in the element reference frame
         m_e % [12 x 12 double] element mass matrix in the element reference frame
         
-        a % [double] Area of the rod.
-        j % [double] Torsional constant.
-        c % [double] Coefficient to determine torsional stress.
+        %         a % [double] Area of the rod.
+        %         j % [double] Torsional constant.
+        %         c % [double] Coefficient to determine torsional stress.
     end
     properties (Hidden = true)
-        ELEMENT_TYPE = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
-        E % [double] Elastic modulus
-        G % [double] Shear modulus
+        ELEMENT_TYPE = uint8(2); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+        matE % [real] Elastic modulus
+        matG % [real] Shear modulus
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -32,17 +33,13 @@ classdef Crod < Element
             obj.gdof = [n1.gdof,n2.gdof];
             p1 = n1.x_0;
             p2 = n2.x_0;
+            nu_0 = n1.T_g0.'*obj.nu_g;
             
             % Property and material data
-            pty = model.property.getProperty(obj.pid,model,'Prod');
-            obj.a = pty.a;
-            obj.j = pty.j;
-            obj.c = pty.c;
-            obj.G = pty.G;
-            obj.E = pty.E;
+            pty = model.property.getProperty(id,model,'Pbeam');
             
             % Element matricies
-            [T_e0,obj.k_e,obj.m_e] = obj.crodMat(p1,p2,pty.E,pty.G,pty.a,pty.j,pty.rho,pty.nsm);
+            [T_e0,obj.k_e,obj.m_e] = cbeamMat(p1,p2,nu_0,pty.E,pty.G,pty.A,pty.Iy,pty.Iz,pty.J,pty.rho,pty.nsm,pty.k1,pty.k2);
             
             % Transformation matrix
             obj.R_eg(10:12,10:12) = T_e0*n2.T_g0.';
@@ -52,18 +49,27 @@ classdef Crod < Element
         end
         function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,returnFlags,opts)
             % INPUTS
-            % u_g [ngodf,nvectors double] Response vector in nodal displacement reference frame
+            % u_g [nGodf,nVectors double] Response vector in nodal displacement reference frame
             % returnFlags [1,4 logical] [force,stress,strain,strain_energy] 1 -> recover, 0 -> return empty array []
             % opts [struct] optional structure of option fields
             %
             % OUTPUTS
-            % force(1,nvectors) = Axial force
-            % force(2,nvectors) = Torsional moment
-            % stress(1,nvectors) = Axial stress
-            % stress(2,nvectors) = Torsional stress
-            % strain(1,nvectors) = Axial strain
-            % strain(2,nvectors) = Torsional strain
-            % strainEnergy(1,nvectors) = element
+            % force = [6,nVectors] Element forces
+            %
+            % stress  = [8,nVectors double] Element stresses
+            % strain  = [8,nVectors double] Element strains
+            %   indices:
+            %    [ End A Long. Stress or Strain at Point C;
+            %      End A Long. Stress or Strain at Point D;
+            %      End A Long. Stress or Strain at Point E;
+            %      End A Long. Stress or Strain at Point F;
+            %      End B Long. Stress or Strain at Point C;
+            %      End B Long. Stress or Strain at Point D;
+            %      End B Long. Stress or Strain at Point E;
+            %      End B Long. Stress or Strain at Point F];
+            %
+            % strainEnergy = [1,nVectors] Element strain energy
+
             
             % Check inputs
             if ~any(returnFlags); error('This function is not intended to be called if no vaules are to be recovered'); end
@@ -74,10 +80,12 @@ classdef Crod < Element
             
             % Force
             if returnFlags(1)
-                force = [f_e(7,:);f_e(10,:)];
+                force = f_e(7:end,:);
             else
                 force = [];
             end
+            
+            error('Finish writing this function')
             
             % Calcualte stress for stress or strain recovery
             if any(returnFlags(2:3))
@@ -94,8 +102,8 @@ classdef Crod < Element
             
             % Strain
             if returnFlags(3)
-                strain(2,:) = (1/obj.G)*s(2,:);
-                strain(1,:) = (1/obj.E)*s(1,:);
+                strain(2,:) = (1/obj.matG)*s(2,:);
+                strain(1,:) = (1/obj.matE)*s(1,:);
             else
                 strain = [];
             end
@@ -109,70 +117,138 @@ classdef Crod < Element
         end
     end
     methods (Access=private,Static=true)
-        function [T_e0,k_e,m_e] = crodMat(p1,p2,E,G,A,J,rho,nsm)
-            % Function returns the element stiffness, mass, and rotation matrices for CROD space truss elements.
+        function [T_e0,k_e,m_e] = cbeamMat(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2)
+            % Function returns the element stiffness matrix for a space frame element
+            % Constant cross-section properties are required
             % Anthony Ricciardi
             %
             % Inputs
-            % p1 = [3x1] coordinates (x1,y1,z1) for the first node in the basic reference frame
-            % p2 = [3x1] coordinates (x2,y2,z2) for the second node basic reference frame
+            % p1 = [3x1] coordinates (x1,y1,z1) of the first node in the basic reference frame
+            % p2 = [3x1] coordinates (x2,y2,z2) of the second node in the basic reference frame
+            % nu_0 = [3x1] beam orientation vector in the basic reference frame
             % E = modulus of elasticity
             % G = shear modulus of elasticity
-            % A = cross-sectional area
+            % A = cross-sectional area ,
+            % Iy and Iz =  moments of inertia
             % J = torsional constant
             % rho = material density
             % nsm = nonstructural mass per unit length
+            % k1, k2 Shear stiffness factor K in K.*A.*G for plane 1 and plane 2
             %
             % Outputs
-            % T_e0 = [3,3 double] Transformation matrix from the basic reference frame to the element reference frame
+            % T_e0 = [3,3 double] transformation matrix from the basic reference frame to the element reference frame
             % k_e = [12,12 double] element stiffness matrix in the element reference frame
             % m_e = [12,12 double] element mass matrix in the element reference frame
             
-            L = normCS(p2-p1); % Length
+            L = normCS(p2-p1); % norm(p2-p1) is not complex-step friendly % sqrt( (p2(1)-p1(1)).^2 + (p2(2)-p1(2)).^2 + (p2(3)-p1(3)).^2 );
             
-            % Transformation Matrix
+            %% Transformation Matrix
             xVec = p2 - p1; xVec = xVec./normCS(xVec);
-            zVec = [0;0;1];
-            if sum(abs(xVec - zVec)) < .1 || sum(abs(xVec + zVec)) < .1
-                zVec = [1;0;0];
-            end
+            zVec = cross3(xVec,nu_0); zVec = zVec./normCS(zVec);
             yVec = cross3(zVec,xVec); yVec = yVec./normCS(yVec);
-            zVec = cross3(xVec,yVec); zVec = zVec./normCS(zVec);
             T_e0 = [xVec, yVec, zVec].';
             
-            % Elastic Stiffness Matrix
-            k_e = zeros(12);
-            k_e(1,1) = E.*A./L;
-            k_e(7,7) = E.*A./L;
-            k_e(1,7) =-E.*A./L;
-            k_e(7,1) =-E.*A./L;
-            k_e(4,4) = G.*J./L;
-            k_e(10,10) = G.*J./L;
-            k_e(4,10) =-G.*J./L;
-            k_e(10,4) =-G.*J./L;
+            %% Elastic Stiffness Matrix
+            % Timoshenko beam equations
+            if k1 == 0
+                psiY = 0;
+            else
+                psiY = 12.*E.*Iz./(k1.*A.*G.*L.^2);
+            end
+            if k2 == 0
+                psiZ = 0;
+            else
+                psiZ = 12.*E.*Iy./(k2.*A.*G.*L.^2);
+            end
+            X = E.*A./L;
+            Y1 = 12.*E.*Iz./((1+psiY).*L.^3);
+            Z1 = 12.*E.*Iy./((1+psiZ).*L.^3);
+            Y2 = 6.*E.*Iz./((1+psiY).*L.^2);
+            Z2 = 6.*E.*Iy./((1+psiZ).*L.^2);
+            Y3 = (4+psiY).*E.*Iz./((1+psiY).*L);
+            Z3 = (4+psiZ).*E.*Iy./((1+psiZ).*L);
+            Y4 = (2-psiY).*E.*Iz./((1+psiY).*L);
+            Z4 = (2-psiZ).*E.*Iy./((1+psiZ).*L);
+            S = G.*J./L;
+            ke11 = diag([X Y1 Z1 S Z3 Y3]);
+            ke11(3,5) = -Z2; ke11(5,3) = -Z2; ke11(2,6) = Y2; ke11(6,2) = Y2;
+            ke22 = diag([X Y1 Z1 S Z3 Y3]);
+            ke22(3,5) = Z2; ke22(5,3) = Z2; ke22(2,6) = -Y2; ke22(6,2) = -Y2;
+            ke12 = diag([-X -Y1 -Z1 -S Z4 Y4]);
+            ke12(3,5) = -Z2; ke12(5,3) = Z2; ke12(2,6) = Y2; ke12(6,2) = -Y2;
+            k_e = [ke11,ke12;ke12.',ke22];
             
-            % Mass Matrix
-            m = [...
-                2.5         0         0         0         0         0        .5         0         0         0         0         0
-                0         3         0         0         0         0         0         0         0         0         0         0
-                0         0         3         0         0         0         0         0         0         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0
-                .5         0         0         0         0         0       2.5         0         0         0         0         0
-                0         0         0         0         0         0         0         3         0         0         0         0
-                0         0         0         0         0         0         0         0         3         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0
-                0         0         0         0         0         0         0         0         0         0         0         0];
-            m_e = (1/6*(rho*A+nsm)*L)*m;
+            % % Euler_bernoulli
+            %     [E.*A./L	0	0	0	0	0	-(E.*A./L)	0	0	0	0	0
+            %     0	(12.*E.*Iz)./L.^3	0	0	0	(6.*E.*Iz)./L.^2	0	-((12.*E.*Iz)./L.^3)	0	0	0	(6.*E.*Iz)./L.^2
+            %     0	0	(12.*E.*Iy)./L.^3	0	-((6.*E.*Iy)./L.^2)	0	0	0	-((12.*E.*Iy)./L.^3)	0	-((6.*E.*Iy)./L.^2)	0
+            %     0	0	0	G.*J./L	0	0	0	0	0	-(G.*J./L)	0	0
+            %     0	0	-((6.*E.*Iy)./L.^2)	0	(4.*E.*Iy)./L	0	0	0	(6.*E.*Iy)./L.^2	0	(2.*E.*Iy)./L	0
+            %     0	(6.*E.*Iz)./L.^2	0	0	0	(4.*E.*Iz)./L	0	-((6.*E.*Iz)./L.^2)	0	0	0	(2.*E.*Iz)./L
+            %     -(E.*A./L)	0	0	0	0	0	E.*A./L	0	0	0	0	0
+            %     0	-((12.*E.*Iz)./L.^3)	0	0	0	-((6.*E.*Iz)./L.^2)	0	(12.*E.*Iz)./L.^3	0	0	0	-((6.*E.*Iz)./L.^2)
+            %     0	0	-((12.*E.*Iy)./L.^3)	0	(6.*E.*Iy)./L.^2	0	0	0	(12.*E.*Iy)./L.^3	0	(6.*E.*Iy)./L.^2	0
+            %     0	0	0	-(G.*J./L)	0	0	0	0	0	G.*J./L	0	0
+            %     0	0	-((6.*E.*Iy)./L.^2)	0	(2.*E.*Iy)./L	0	0	0	(6.*E.*Iy)./L.^2	0	(4.*E.*Iy)./L	0
+            %     0	(6.*E.*Iz)./L.^2	0	0	0	(2.*E.*Iz)./L	0	-((6.*E.*Iz)./L.^2)	0	0	0	(4.*E.*Iz)./L]...
+            
+            %% Mass Matrix
+            a = .5.*L;
+            rx2 = 0;
+            
+            m_e = diag([70 78 78 70.*rx2 8.*a.^2 8.*a.^2 70 78 78 70.*rx2 8.*a.^2 8.*a.^2]);
+            m_e(1,7) = 35;
+            m_e(2,6) = 22.*a;
+            m_e(2,8) = 27;
+            m_e(2,12) = -13.*a;
+            m_e(3,5) = -22.*a;
+            m_e(3,9) = 27;
+            m_e(3,11) = 13.*a;
+            m_e(4,10) = -35.*rx2;
+            m_e(5,9) = -13.*a;
+            m_e(5,11) = -6.*a.^2;
+            m_e(6,8) = 13.*a;
+            m_e(6,12) = -6.*a.^2;
+            m_e(8,12) = -22.*a;
+            m_e(9,11) = 22.*a;
+            
+            m_e(7,1) = m_e(1,7); m_e(6,2) = m_e(2,6); m_e(8,2) = m_e(2,8);
+            m_e(12,2) = m_e(2,12); m_e(5,3) = m_e(3,5); m_e(9,3) = m_e(3,9);
+            m_e(11,3) = m_e(3,11); m_e(10,4) = m_e(4,10); m_e(9,5) = m_e(5,9);
+            m_e(11,5) = m_e(5,11); m_e(8,6) = m_e(6,8); m_e(12,6) = m_e(6,12);
+            m_e(12,8) = m_e(8,12); m_e(11,9) = m_e(9,11);
+            
+            m_e = (rho.*A+nsm).*a./105.*m_e;
+            
+            % Add torsional intertia
+            % I_xx./Area.*axial_mass
+            % if mprime(4,4) ~= 0; error('add logic for this'); end
+            m_e(4,4)   = (Iz+Iy)./A.*m_e(1,1);
+            m_e(4,10)  = m_e(4,4)./2;
+            m_e(10,10) = m_e(4,4);
+            m_e(10,4)  = m_e(4,10);
+            
+            %     % Add rotary inertia (not default)
+            %     rIy = rho.*Iy./(30.*L).*[36    -3.*L    -36   -3*L;
+            %                             -3.*L   4.*L.^2  3.*L -L.^2;
+            %                             -36     3.*L     36    3.*L;
+            %                             -3.*L  -L.^2     3.*L  4.*L.^2];
+            %     rIz = rho.*Iz./(30.*L).*[36    -3.*L    -36   -3*L;
+            %                             -3.*L   4.*L.^2  3.*L -L.^2;
+            %                             -36     3.*L     36    3.*L;
+            %                             -3.*L  -L.^2     3.*L  4.*L.^2];
+            %     mR = zeros(12);
+            %     mR([2,6,8,12],[2,6,8,12]) = rIz;
+            %     mR([3,5,9,11],[3,5,9,11]) = rIy;
+            %     m_e = m_e + mR;
+            
         end
     end
     methods (Static=true)
         function femapDataBlock=force_2_FemapDataBlock1051(force,startSetID)
             % Convert array of crod element force data objects to an array of FEMAP data block 1051 objects
             % INPUTS
-            % force [nele,nsets element_output_data] array of force data
+            % force [nele,nsets ElementOutputData] array of force data
             % startSetID [int] ID number of first output set
             %
             % Output

@@ -12,7 +12,7 @@ classdef Node < Point
         
         x_0 % [3,1 double] Location of the node in the basic coordinate system.
         T_g0 % [3,3 double] Transoformation matrix from the basic coordinate system to node deformation coordinate system (defined in CD field)
-        gdof % [1,6 uint32] index of global degrees of freedom associated with the node.
+        gdof % [1,6 uint32] indices of global degrees of freedom associated with the node.
     end
     methods
         function obj = preprocess_sub(obj,model)

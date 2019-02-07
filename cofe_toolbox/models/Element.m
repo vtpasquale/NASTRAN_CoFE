@@ -54,23 +54,23 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             nElement = size(obj,1);
             IDs = uint32([obj.eid]).';
             
-            % returnIO [nelem,4] [force,stress,strain,strain_energy]
-            returnIO = false(nElement,4);
-            returnIO(...
+            % returnIO [nElement,4] [force,stress,strain,strain_energy]
+            returnFlags = false(nElement,4);
+            returnFlags(...
                 caseControl.force.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 1) = true;
-            returnIO(...
+            returnFlags(...
                 caseControl.stress.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 2) = true;
-            returnIO(...
+            returnFlags(...
                 caseControl.strain.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 3) = true;
-            returnIO(...
+            returnFlags(...
                 caseControl.ese.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 4) = true;
             
             % Any element indices where element results are requested
-            recoverIndex = uint32(find(any(returnIO,2)));
+            recoverIndex = uint32(find(any(returnFlags,2)));
             
             % preallocate element_output_data objects
             % s(nstress,1) = ElementOutputData();
@@ -82,7 +82,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             for i = 1:size(recoverIndex,1)
                 elementIndex = recoverIndex(i);
                 oi = obj(elementIndex);
-                [f,s,e,ese] = oi.recover_sub(u_g,returnIO(elementIndex,:));
+                [f,s,e,ese] = oi.recover_sub(u_g,returnFlags(elementIndex,:));
                 if ~isempty(f)
                     F = [F;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,1,f)];
                 end

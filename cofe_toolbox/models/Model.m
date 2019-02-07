@@ -86,20 +86,19 @@ classdef Model
     methods
         function obj = preprocess(obj)
             
-            % Preprocess coordinate systems
-            obj.coordinateSystem = obj.coordinateSystem.preprocess();
-            
-            % Store vectors of ID numbers as seperate varables. This speeds 
-            % up assembly because repeated concatenation is expensive.        
+            % Preprocess model entities
+            obj.coordinateSystem = obj.coordinateSystem.preprocess();   
             obj.coordinateSystemCIDs=[obj.coordinateSystem.cid]; 
+            
+            obj.material = obj.material.preprocess();
             obj.materialMIDs=[obj.material.mid].';
-            obj.propertyPIDs=[obj.property.pid].';
+            
+            obj.property = obj.property.preprocess(obj);
+            obj.propertyPIDs = [obj.property.pid].';
+            
             obj.elementEIDs=[obj.element.eid].';
             obj.loadSIDs=unique([obj.load.sid]).';
             
-            % Preprocess remaining model entities
-            obj.material = obj.material.preprocess();
-            obj.property = obj.property.preprocess();
             obj = obj.point.preprocess(obj); % defines model.point, model.pointIDs, model.gNodeFlag, model.nGdof
             obj.element = obj.element.preprocess();
             obj.load = obj.load.preprocess(obj);
@@ -113,9 +112,7 @@ classdef Model
             obj.f = ~obj.s;
         end
         function obj = assemble(obj)
-            
-            % Process MAT references in prop entries to speed things up?
-            
+                        
             % Assemble
             obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies

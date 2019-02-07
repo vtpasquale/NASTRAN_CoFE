@@ -3,15 +3,16 @@
 %
 classdef BulkEntrySpc1 < BulkEntry
     properties
-        sid % Identification number of single-point constraint set. (Integer > 0)
+        sid % [uint32] Identification number of single-point constraint set.
         c % [:,1 uint32] Component numbers. Zero OR a sequential combination of integers 1 thru 6.
         g % [1,: uint32] Node identification numbers.
+        d % [double] Value of enforced displacement for components C.
     end
     
     methods
         function obj = BulkEntrySpc1(entryFields)
             % Construct using entry field data input as cell array of char
-            obj.sid = castInputField('SPC1','sid',entryFields{2},'uint32',uint32(0));
+            obj.sid = castInputField('SPC1','sid',entryFields{2},'uint32',NaN,0);
             obj.c = castInputField('SPC1','C',entryFields{3},'uint32',NaN,1,123456);
             obj.c = expandComponents(obj.c,'SPC1 C',true);
 
