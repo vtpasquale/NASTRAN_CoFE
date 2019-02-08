@@ -19,14 +19,11 @@ classdef BulkEntryParam < BulkEntry
         methods
             function model = entry2model_sub(obj,model)
                 % Convert entry object to model object and store in model entity array
-                if isempty(model.param)
-                    model.param = {obj.n,obj.v1,obj.v2};
-                else
-                    nParam = size(model.param,1);
-                    model.param{nParam+1,1} = obj.n;
-                    model.param{nParam+1,2} = obj.v1;
-                    model.param{nParam+1,3} = obj.v2;
-                end
+                parameter = Parameter;
+                parameter.n = obj.n;
+                parameter.v1 = obj.v1;
+                parameter.v2 = obj.v2;
+                model.parameter = [model.parameter;parameter];
             end
             function echo_sub(obj,fid)
                 % Print the entry in NASTRAN free field format to a text file with file id fid

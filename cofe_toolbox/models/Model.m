@@ -14,8 +14,8 @@ classdef Model
         load@Load;
         
         %% Simple entities
+        parameter@Parameter;
         eigrl % [nEigrl,2 int] matrix with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
-        param % {nParam,3 cell array of [char]} [N,V1,V2] names and values of parameters
     end
     properties (Hidden=true)
         %% Sets translated from input data - processed after degrees-of-freedom are numbered
@@ -75,6 +75,7 @@ classdef Model
         
         nodeFlag % ([nPoints,1] logical) flags nodes in point array (not scalar points)
         nGdof % [uint32] number of global degrees of freedom
+        coupledMassFlag % [logical] Coupled mass formulation is used if true, lumped mass formulation used otherwise.
 
         %% Default Grid point properties:
         %  - Specified Grid points default to these options if not specified explicitly
@@ -87,6 +88,8 @@ classdef Model
         function obj = preprocess(obj)
             
             % Preprocess model entities
+            obj = obj.parameter.preprocess(obj);
+            
             obj.coordinateSystem = obj.coordinateSystem.preprocess();   
             obj.coordinateSystemCIDs=[obj.coordinateSystem.cid]; 
             
@@ -102,7 +105,7 @@ classdef Model
             obj = obj.point.preprocess(obj); % defines model.point, model.pointIDs, model.gNodeFlag, model.nGdof
             obj.element = obj.element.preprocess();
             obj.load = obj.load.preprocess(obj);
-            
+
             % Process single-point constraints
             obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
             [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj); % SID numbers and DOF eliminated by boundary single-point constraints

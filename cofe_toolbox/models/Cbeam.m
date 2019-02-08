@@ -5,19 +5,14 @@ classdef Cbeam < Element
     
     properties
         eid % [uint32] Element identification number.
-        pid % [uint32] Property identification number of a PROD entry.
+        pid % [uint32] Property identification number of a PBEAM entry.
         g   % [2,1 uint32] Grid point identification numbers of connection points [GA,GB].
         nu_g   % [3,1 double] Components of orientation vector NU, from GA, in the nodal displacement reference frame at GA.
         
         gdof % [1,12 uint32] indices of global degrees of freedom associated with the element.
-        % T_e0 % [3  x 3 ] rotation matrix from the basic reference frame to the element reference frame
         R_eg % [12 x 12 double] rotation matrix from the element reference frame to the nodal displacement reference frame.
         k_e % [12 x 12 double] element stiffness matrix in the element reference frame
         m_e % [12 x 12 double] element mass matrix in the element reference frame
-        
-        %         a % [double] Area of the rod.
-        %         j % [double] Torsional constant.
-        %         c % [double] Coefficient to determine torsional stress.
     end
     properties (Hidden = true)
         ELEMENT_TYPE = uint8(2); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
@@ -36,10 +31,12 @@ classdef Cbeam < Element
             nu_0 = n1.T_g0.'*obj.nu_g;
             
             % Property and material data
-            pty = model.property.getProperty(id,model,'Pbeam');
+            pty = model.property.getProperty(obj.pid,model,'Pbeam');
             
             % Element matricies
-            [T_e0,obj.k_e,obj.m_e] = cbeamMat(p1,p2,nu_0,pty.E,pty.G,pty.A,pty.Iy,pty.Iz,pty.J,pty.rho,pty.nsm,pty.k1,pty.k2);
+            [T_e0,obj.k_e,obj.m_e] = Cbeam.getElementMatrices(p1,p2,nu_0,...
+                pty.E,pty.G,pty.a,pty.i2,pty.i1,pty.j,pty.rho,pty.nsm,...
+                pty.k1,pty.k2,model.coupledMassFlag);
             
             % Transformation matrix
             obj.R_eg(10:12,10:12) = T_e0*n2.T_g0.';
@@ -69,7 +66,7 @@ classdef Cbeam < Element
             %      End B Long. Stress or Strain at Point F];
             %
             % strainEnergy = [1,nVectors] Element strain energy
-
+            
             
             % Check inputs
             if ~any(returnFlags); error('This function is not intended to be called if no vaules are to be recovered'); end
@@ -117,23 +114,24 @@ classdef Cbeam < Element
         end
     end
     methods (Access=private,Static=true)
-        function [T_e0,k_e,m_e] = cbeamMat(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2)
-            % Function returns the element stiffness matrix for a space frame element
+        function [T_e0,k_e,m_e] = getElementMatrices(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag)
+            % Returns the element matrices for a space frame element
             % Constant cross-section properties are required
             % Anthony Ricciardi
             %
             % Inputs
-            % p1 = [3x1] coordinates (x1,y1,z1) of the first node in the basic reference frame
-            % p2 = [3x1] coordinates (x2,y2,z2) of the second node in the basic reference frame
-            % nu_0 = [3x1] beam orientation vector in the basic reference frame
-            % E = modulus of elasticity
-            % G = shear modulus of elasticity
-            % A = cross-sectional area ,
-            % Iy and Iz =  moments of inertia
-            % J = torsional constant
-            % rho = material density
-            % nsm = nonstructural mass per unit length
-            % k1, k2 Shear stiffness factor K in K.*A.*G for plane 1 and plane 2
+            % p1 = [3,1 double] coordinates (x1,y1,z1) of the first node in the basic reference frame
+            % p2 = [3,1 double] coordinates (x2,y2,z2) of the second node in the basic reference frame
+            % nu_0 = [3,1 double] beam orientation vector in the basic reference frame
+            % E [double] modulus of elasticity
+            % G [double] shear modulus of elasticity
+            % A [double] cross-sectional area ,
+            % Iy, Iz [double]  moments of inertia
+            % J [double] torsional constant
+            % rho [double] material density
+            % nsm [double] nonstructural mass per unit length
+            % k1, k2 [double] Shear stiffness factor K in K.*A.*G for plane 1 and plane 2
+            % coupledMassFlag [logical] Coupled mass provided if true, lumped mass otherwise.
             %
             % Outputs
             % T_e0 = [3,3 double] transformation matrix from the basic reference frame to the element reference frame
@@ -142,14 +140,13 @@ classdef Cbeam < Element
             
             L = normCS(p2-p1); % norm(p2-p1) is not complex-step friendly % sqrt( (p2(1)-p1(1)).^2 + (p2(2)-p1(2)).^2 + (p2(3)-p1(3)).^2 );
             
-            %% Transformation Matrix
+            % Transformation Matrix
             xVec = p2 - p1; xVec = xVec./normCS(xVec);
             zVec = cross3(xVec,nu_0); zVec = zVec./normCS(zVec);
             yVec = cross3(zVec,xVec); yVec = yVec./normCS(yVec);
             T_e0 = [xVec, yVec, zVec].';
             
-            %% Elastic Stiffness Matrix
-            % Timoshenko beam equations
+            % Elastic Stiffness Matrix using Timoshenko beam equations
             if k1 == 0
                 psiY = 0;
             else
@@ -178,24 +175,9 @@ classdef Cbeam < Element
             ke12(3,5) = -Z2; ke12(5,3) = Z2; ke12(2,6) = Y2; ke12(6,2) = -Y2;
             k_e = [ke11,ke12;ke12.',ke22];
             
-            % % Euler_bernoulli
-            %     [E.*A./L	0	0	0	0	0	-(E.*A./L)	0	0	0	0	0
-            %     0	(12.*E.*Iz)./L.^3	0	0	0	(6.*E.*Iz)./L.^2	0	-((12.*E.*Iz)./L.^3)	0	0	0	(6.*E.*Iz)./L.^2
-            %     0	0	(12.*E.*Iy)./L.^3	0	-((6.*E.*Iy)./L.^2)	0	0	0	-((12.*E.*Iy)./L.^3)	0	-((6.*E.*Iy)./L.^2)	0
-            %     0	0	0	G.*J./L	0	0	0	0	0	-(G.*J./L)	0	0
-            %     0	0	-((6.*E.*Iy)./L.^2)	0	(4.*E.*Iy)./L	0	0	0	(6.*E.*Iy)./L.^2	0	(2.*E.*Iy)./L	0
-            %     0	(6.*E.*Iz)./L.^2	0	0	0	(4.*E.*Iz)./L	0	-((6.*E.*Iz)./L.^2)	0	0	0	(2.*E.*Iz)./L
-            %     -(E.*A./L)	0	0	0	0	0	E.*A./L	0	0	0	0	0
-            %     0	-((12.*E.*Iz)./L.^3)	0	0	0	-((6.*E.*Iz)./L.^2)	0	(12.*E.*Iz)./L.^3	0	0	0	-((6.*E.*Iz)./L.^2)
-            %     0	0	-((12.*E.*Iy)./L.^3)	0	(6.*E.*Iy)./L.^2	0	0	0	(12.*E.*Iy)./L.^3	0	(6.*E.*Iy)./L.^2	0
-            %     0	0	0	-(G.*J./L)	0	0	0	0	0	G.*J./L	0	0
-            %     0	0	-((6.*E.*Iy)./L.^2)	0	(2.*E.*Iy)./L	0	0	0	(6.*E.*Iy)./L.^2	0	(4.*E.*Iy)./L	0
-            %     0	(6.*E.*Iz)./L.^2	0	0	0	(2.*E.*Iz)./L	0	-((6.*E.*Iz)./L.^2)	0	0	0	(4.*E.*Iz)./L]...
-            
-            %% Mass Matrix
+            % Mass Matrix
             a = .5.*L;
             rx2 = 0;
-            
             m_e = diag([70 78 78 70.*rx2 8.*a.^2 8.*a.^2 70 78 78 70.*rx2 8.*a.^2 8.*a.^2]);
             m_e(1,7) = 35;
             m_e(2,6) = 22.*a;
@@ -211,22 +193,27 @@ classdef Cbeam < Element
             m_e(6,12) = -6.*a.^2;
             m_e(8,12) = -22.*a;
             m_e(9,11) = 22.*a;
-            
-            m_e(7,1) = m_e(1,7); m_e(6,2) = m_e(2,6); m_e(8,2) = m_e(2,8);
+            m_e(7,1)  = m_e(1,7); m_e(6,2) = m_e(2,6); m_e(8,2) = m_e(2,8);
             m_e(12,2) = m_e(2,12); m_e(5,3) = m_e(3,5); m_e(9,3) = m_e(3,9);
             m_e(11,3) = m_e(3,11); m_e(10,4) = m_e(4,10); m_e(9,5) = m_e(5,9);
             m_e(11,5) = m_e(5,11); m_e(8,6) = m_e(6,8); m_e(12,6) = m_e(6,12);
             m_e(12,8) = m_e(8,12); m_e(11,9) = m_e(9,11);
-            
             m_e = (rho.*A+nsm).*a./105.*m_e;
             
             % Add torsional intertia
-            % I_xx./Area.*axial_mass
-            % if mprime(4,4) ~= 0; error('add logic for this'); end
             m_e(4,4)   = (Iz+Iy)./A.*m_e(1,1);
             m_e(4,10)  = m_e(4,4)./2;
             m_e(10,10) = m_e(4,4);
             m_e(10,4)  = m_e(4,10);
+            
+            if ~coupledMassFlag
+                % convert to lumped mass formulation
+                lumpedTranslationM_e = diag(sum(m_e([1:3,7:9],[1:3,7:9]),2));
+                lumpedRotationM_e = diag(sum(m_e([4,10],[4,10]),2));
+                m_e = zeros(12,12);
+                m_e([1:3,7:9],[1:3,7:9]) = lumpedTranslationM_e;
+                m_e([4,10],[4,10]) = lumpedRotationM_e;
+            end
             
             %     % Add rotary inertia (not default)
             %     rIy = rho.*Iy./(30.*L).*[36    -3.*L    -36   -3*L;

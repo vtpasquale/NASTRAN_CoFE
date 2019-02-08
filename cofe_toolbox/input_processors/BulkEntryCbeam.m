@@ -29,7 +29,7 @@ classdef BulkEntryCbeam < BulkEntry
             x1 = castInputField('CBEAM','X1',entryFields{6},'double',NaN);
             x2 = castInputField('CBEAM','X2',entryFields{7},'double',NaN);
             x3 = castInputField('CBEAM','X3',entryFields{8},'double',NaN);
-            obj.nu_g = [x1;x2;x3];
+            obj.x = [x1;x2;x3];
             if size(entryFields,2)>10
                 error('CBEAM continuation lines are not supported.')
             end
@@ -39,7 +39,7 @@ classdef BulkEntryCbeam < BulkEntry
             cbeam = Cbeam;
             cbeam.eid = obj.eid;
             cbeam.pid = obj.pid;
-            cbeam.g = [obj.g1,obj.g2];
+            cbeam.g = [obj.ga,obj.gb];
             cbeam.nu_g = obj.x;
             model.element = [model.element;cbeam];
         end

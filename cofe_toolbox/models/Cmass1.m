@@ -13,7 +13,7 @@ classdef Cmass1 < Element
         m_e % [1 x 1] element mass matrix in the element reference frame
     end
     properties (Hidden=true)
-        gdof_plot
+        % gdof_plot
         ELEMENT_TYPE = uint8(999); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
     end
     properties (Constant=true)
@@ -21,15 +21,12 @@ classdef Cmass1 < Element
         R_eg = 1;% [1 x 1] rotation matrix from the element reference frame to the nodal displacement reference frame
     end
     methods
-        function obj=assemble_sub(obj,model)
-            g1ind = obj.g==model.nodeIDs;
-            obj.gdof_plot = model.node2gdof(:,g1ind);
-            obj.gdof = obj.gdof_plot(obj.c);
+        function obj=assemble_sub(obj,model)           
+            node = model.point.getNode(obj.g,model);
+            % obj.gdof_plot = node.gdof;
+            obj.gdof = node.gdof(obj.c);
             
-            pty=model.property(obj.pid==model.propertyPIDs);
-            if ~isa(pty,'Pmass');
-                error('CMASS1 EID=%d references property PID = %d, which is not type PMASS. Only PMASS properties are supported for CMASS1 elements.',obj.eid,obj.pid);
-            end
+            pty = model.property.getProperty(obj.pid,model,'Pmass');
             obj.m_e = pty.m;
         end
         function [force,stress,strain,strain_energy] = recover_sub(obj,u_g,returnIO,opts)

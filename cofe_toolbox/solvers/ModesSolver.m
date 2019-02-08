@@ -46,18 +46,19 @@ classdef ModesSolver < Solver
             end
             
             % preallocate
-            obj.u_g=zeros(model.ngdof,nModes);
-            obj.u_0=zeros(model.ngdof,nModes);
+            obj.u_g=zeros(model.nGdof,nModes);
+            obj.u_0=zeros(model.nGdof,nModes);
             
             %% Solve
             
             % modes
             Ka = model.K_g(f,f);
             Ma = model.M_g(f,f);
-            [V,D] = eigs(Ka,Ma,nModes);
-            eigenvalues = diag(D);
+            [V,D] = eigs(Ma,Ka,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
+            eigenvalues = diag(D).^-1;
             
-            % mass normalize eigenvectors (required for Lee and Jung sensitivity method)
+            
+            % mass normalize eigenvectors
             for mn = 1:nModes
                 % Complication: eigenvectors are reversable. 
                 % This can be a problem for sensitivity methods.
@@ -83,7 +84,7 @@ classdef ModesSolver < Solver
             obj.f_0 = model.R_0g*obj.f_g;
             
             % recover and store selected response data at nodes and elements 
-            obj = model.node.recover(obj,caseControl,model.nodeIDs);
+            obj = model.point.recover(obj,caseControl,model);
             obj = model.element.recover(obj,caseControl);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)

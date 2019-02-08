@@ -39,9 +39,9 @@ classdef BulkEntryCbar < BulkEntry
             cbeam = Cbeam;
             cbeam.eid = obj.eid;
             cbeam.pid = obj.pid;
-            cbeam.g = [obj.g1,obj.g2];
+            cbeam.g = [obj.ga,obj.gb];
             cbeam.nu_g = obj.x;
-            model.element = [model.element;crod];
+            model.element = [model.element;cbeam];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

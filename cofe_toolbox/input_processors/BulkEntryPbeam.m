@@ -1,7 +1,7 @@
-% Class for PBAR property entries
+% Class for PBEAM property entries
 % Anthony Ricciardi
 %
-classdef BulkEntryPbar < BulkEntry
+classdef BulkEntryPbeam < BulkEntry
     
     properties
         pid % [uint32] Property identification number
@@ -18,25 +18,28 @@ classdef BulkEntryPbar < BulkEntry
     end
     
     methods
-        function obj = BulkEntryPbar(entryFields)
+        function obj = BulkEntryPbeam(entryFields)
             % Construct using entry field data input as cell array of char
-            obj.pid = castInputField('PBAR','PID',entryFields{2},'uint32',NaN,1);
-            obj.mid = castInputField('PBAR','MID',entryFields{3},'uint32',NaN,1);
-            obj.a = castInputField('PBAR','A',entryFields{4},'double',0.0,0);
-            obj.i1 = castInputField('PBAR','I1',entryFields{5},'double',0.0,0);
-            obj.i2 = castInputField('PBAR','I2',entryFields{6},'double',0.0,0);
-            obj.j = castInputField('PBAR','J',entryFields{7},'double',0.0,0);
-            obj.nsm = castInputField('PBAR','NSM',entryFields{8},'double',0.0,0);
+            obj.pid = castInputField('PBEAM','PID',entryFields{2},'uint32',NaN,1);
+            obj.mid = castInputField('PBEAM','MID',entryFields{3},'uint32',NaN,1);
+            obj.a = castInputField('PBEAM','A',entryFields{4},'double',0.0,0);
+            obj.i1 = castInputField('PBEAM','I1',entryFields{5},'double',0.0,0);
+            obj.i2 = castInputField('PBEAM','I2',entryFields{6},'double',0.0,0);
+            obj.i12 = castInputField('PBEAM','I12',entryFields{7},'double',0.0,0);
+            obj.j = castInputField('PBEAM','J',entryFields{8},'double',0.0,0);
+            obj.nsm = castInputField('PBEAM','NSM',entryFields{9},'double',0.0,0);
             if size(entryFields,2)>10
                 obj.c1ThruF2 = zeros(1,8);
                 for i = 12:19
-                    obj.c1ThruF2(i-11) = castInputField('PBAR','C1 thru D1',entryFields{i},'double',0.0);
+                    obj.c1ThruF2(i-11) = castInputField('PBEAM','C1 thru D1',entryFields{i},'double',0.0);
                 end
             end
             if size(entryFields,2)>20
-                obj.k1 = castInputField('PBAR','K1',entryFields{22},'double',0.0);
-                obj.k2 = castInputField('PBAR','K2',entryFields{23},'double',0.0);
-                obj.i12 = castInputField('PBAR','I12',entryFields{24},'double',0.0,0);
+                obj.k1 = castInputField('PBEAM','K1',entryFields{22},'double',1.0);
+                obj.k2 = castInputField('PBEAM','K2',entryFields{23},'double',1.0);
+            end
+            if size(entryFields,2)>30
+                error('PBEAM is supported, but not the format on EID = %d',obj.eid);
             end
         end
         function model = entry2model_sub(obj,model)
@@ -55,12 +58,12 @@ classdef BulkEntryPbar < BulkEntry
             end
             pbeam.nsm = obj.nsm;
             if isempty(obj.k1)
-                pbeam.k1 = 0;
+                pbeam.k1 = 1.0;
             else
                 pbeam.k1 = obj.k1;
             end
             if isempty(obj.k2)
-                pbeam.k2 = 0;
+                pbeam.k2 = 1.0;
             else
                 pbeam.k2 = obj.k2;
             end
@@ -73,15 +76,15 @@ classdef BulkEntryPbar < BulkEntry
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid
-            fprintf(fid,'PBAR,%d,%d,%f,%f,%f,%f,%f\n',obj.pid,obj.mid,obj.a,obj.i1,obj.i2,obj.j,obj.nsm);
-            if any([~isempty(obj.c1ThruF2),~isempty(obj.k1),~isempty(obj.k2),~isempty(obj.i12)])
+            fprintf(fid,'PBEAM,%d,%d,%f,%f,%f,%f,%f,%f\n',obj.pid,obj.mid,obj.a,obj.i1,obj.i2,obj.i12,obj.j,obj.nsm);
+            if any([~isempty(obj.c1ThruF2),~isempty(obj.k1),~isempty(obj.k2)])
                 if isempty(obj.c1ThruF2)
                     obj.c1ThruF2 = zeros(1,8);
                 end
                 fprintf(fid,',%f,%f,%f,%f,%f,%f,%f,%f\n',obj.c1ThruF2);
             end
-            if any([~isempty(obj.k1),~isempty(obj.k2),~isempty(obj.i12)])
-                fprintf(fid,',%f,%f,%f\n',obj.k1,obj.k2,obj.i12);
+            if any([~isempty(obj.k1),~isempty(obj.k2)])
+                fprintf(fid,',%f,%f\n',obj.k1,obj.k2);
             end
         end
     end
