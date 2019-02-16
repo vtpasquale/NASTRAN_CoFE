@@ -17,12 +17,12 @@ classdef BulkEntrySpc < BulkEntry
             % Construct using entry field data input as cell array of char
             obj.sid = castInputField('SPC','SID',entryFields{2},'uint32',NaN,1);
             obj.g1 = castInputField('SPC','G1',entryFields{3},'uint32',NaN,0);
-            obj.c1 = castInputField('SPC','C1',entryFields{4},'uint32',NaN,1,123456);
+            obj.c1 = castInputField('SPC','C1',entryFields{4},'uint32',NaN,0,123456);
             obj.c1 = expandComponents(obj.c1,'SPC C1',true);
             obj.d1 = castInputField('SPC','D1',entryFields{5},'double',NaN);
             
             obj.g2 = castInputField('SPC','G2',entryFields{6},'uint32',[],0);
-            obj.c2 = castInputField('SPC','C2',entryFields{7},'uint32',[],1,123456);
+            obj.c2 = castInputField('SPC','C2',entryFields{7},'uint32',[],0,123456);
             if ~isempty(obj.c2)
                 obj.c2 = expandComponents(obj.c2,'SPC C2',true);
             end

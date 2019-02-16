@@ -21,17 +21,17 @@ classdef (Abstract) BulkSet
         function obj = construct(obj,entryFields)
             % Construct using entry field data input as cell array of char
             obj.id1 = castInputField(obj.ENTRY_NAME,'ID1',entryFields{2},'uint32',NaN,0);
-            obj.c1  = castInputField(obj.ENTRY_NAME,'C1', entryFields{3},'uint32',NaN,0,123456);
+            obj.c1  = castInputField(obj.ENTRY_NAME,'C1', entryFields{3},'uint32',uint32(0),0,123456);
             obj.c1  = expandComponents(obj.c1,sprintf('%s C1',obj.ENTRY_NAME),true);
             
             if ~isempty(entryFields{4})
                 obj.id2 = castInputField(obj.ENTRY_NAME,'ID2',entryFields{4},'uint32',NaN,0);
-                obj.c2  = castInputField(obj.ENTRY_NAME,'C2', entryFields{5},'uint32',NaN,0,123456);
+                obj.c2  = castInputField(obj.ENTRY_NAME,'C2', entryFields{5},'uint32',uint32(0),0,123456);
                 obj.c2  = expandComponents(obj.c2,sprintf('%s C2',obj.ENTRY_NAME),true);
                 
                 if ~isempty(entryFields{6})
                     obj.id3 = castInputField(obj.ENTRY_NAME,'ID3',entryFields{6},'uint32',NaN,0);
-                    obj.c3  = castInputField(obj.ENTRY_NAME,'C3', entryFields{7},'uint32',NaN,0,123456);
+                    obj.c3  = castInputField(obj.ENTRY_NAME,'C3', entryFields{7},'uint32',uint32(0),0,123456);
                     obj.c3  = expandComponents(obj.c3,sprintf('%s C3',obj.ENTRY_NAME),true);
                     
                     if ~isempty(entryFields{8})

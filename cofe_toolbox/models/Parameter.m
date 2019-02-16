@@ -38,6 +38,9 @@ classdef Parameter
             if any(index)
                 value1 = obj(index).v1;
                 value2 = obj(index).v2;
+            else
+                value1 = [];
+                value2 = [];
             end
         end
     end

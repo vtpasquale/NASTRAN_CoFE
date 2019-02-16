@@ -13,7 +13,7 @@ classdef BulkEntrySpc1 < BulkEntry
         function obj = BulkEntrySpc1(entryFields)
             % Construct using entry field data input as cell array of char
             obj.sid = castInputField('SPC1','sid',entryFields{2},'uint32',NaN,0);
-            obj.c = castInputField('SPC1','C',entryFields{3},'uint32',NaN,1,123456);
+            obj.c = castInputField('SPC1','C',entryFields{3},'uint32',NaN,0,123456);
             obj.c = expandComponents(obj.c,'SPC1 C',true);
 
             obj.g(1) = castInputField('SPC1','G',entryFields{4},'uint32',NaN);

@@ -2,7 +2,7 @@
 % Anthony Ricciardi
 %
 classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
-
+    
     properties (Abstract)
         sid % [int] Identification numbers of the single-point constraint sets.
     end
@@ -13,7 +13,7 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
             % sb ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
             % sd ([ngdof,num SID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
             % spcsSIDs ([num SID,1] uint32) ID numbers of defined single point constraint sets
- 
+            
             % logic to deal with SPC and SPCADD types
             spcaddID = [];
             spcconID = [];
@@ -46,24 +46,35 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
                 oi=obj(objSid==spcconID(i));
                 for j = 1:size(oi,1)
                     oj=oi(j);
-                    node = model.point.getNode(oj.g,model);
-                    gdof = node.gdof(oj.c);
-                    sd(gdof,i)=oj.d;
-                    sb(gdof,i)=true;
+                    for k = 1:size(oj.g,2)
+                        point = model.point.getPoint(oj.g(k),model);
+                        if isa(point,'Node')
+                            gdof = point.gdof(oj.c);
+                        elseif isa(point,'ScalarPoint')
+                            if oj.c~=0
+                                error('Only component zero can be fixed for a scalar point.')
+                            end
+                            gdof = point.gdof;
+                        else
+                            error('Update Spcs class for new point type.')
+                        end
+                        sd(gdof,i)=oj.d;
+                        sb(gdof,i)=true;
+                    end
                 end
             end
         end % process_sb()
         
-%             ii = i;
-%             %% SPCADD
-%             for i = 1:size(spcaddID,1)
-%                 oi=obj([obj.SID]==spcaddID(i));
-%                 for j = 1:size(oi,1)
-%                     oj=oi(j);
-%                     
-%                 end
-%             end
-
+        %             ii = i;
+        %             %% SPCADD
+        %             for i = 1:size(spcaddID,1)
+        %                 oi=obj([obj.SID]==spcaddID(i));
+        %                 for j = 1:size(oi,1)
+        %                     oj=oi(j);
+        %
+        %                 end
+        %             end
+        
     end % methods
 end
 

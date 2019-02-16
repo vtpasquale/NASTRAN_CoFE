@@ -1,7 +1,7 @@
 % Class that defines a finite element model.
 % Anthony Ricciardi
 classdef Model
-        
+    
     properties
         %% Model entities
         coordinateSystem@CoordinateSystem;
@@ -10,7 +10,7 @@ classdef Model
         point@Point; % Grid points (nodes) and scalar points
         element@Element;
         spcs@Spcs;
-%         MPCS@mpcs;
+        %         mpc@Mpc;
         load@Load;
         
         %% Simple entities
@@ -20,25 +20,25 @@ classdef Model
     properties (Hidden=true)
         %% Sets translated from input data - processed after degrees-of-freedom are numbered
         dofSet@DofSet; % [nBulkEntry*set,1 DofSet]
-
+        
         %% Exclusive Degrees-of-freedom sets
         m  % ([ngdof,1] logical) Degrees-of-freedom eliminated by multiple constraints
         sb % ([ngdof,numSID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
         sg % ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are specified on the PS field on node entries
-        % o % ([ngdof,1] logical) Degrees-of-freedom omitted by structural matrix partitioning
-        % q % ([ngdof,1] logical) Generalized degrees-of-freedom for dynamic reduction or component mode synthesis
-        % r % ([ngdof,1] logical) Reference degrees-of-freedom used to determine free body motion
-        % c % ([ngdof,1] logical) Degrees-of-freedom that are free during component mode synthesis or dynamic reduction
-        % b % ([ngdof,1] logical) Degrees-of-freedom fixed during component mode analysis or dynamic reduction
+        o % ([ngdof,1] logical) Degrees-of-freedom omitted by structural matrix partitioning
+        q % ([ngdof,1] logical) Generalized degrees-of-freedom for dynamic reduction or component mode synthesis
+        r % ([ngdof,1] logical) Reference degrees-of-freedom used to determine free body motion
+        c % ([ngdof,1] logical) Degrees-of-freedom that are free during component mode synthesis or dynamic reduction
+        b % ([ngdof,1] logical) Degrees-of-freedom fixed during component mode analysis or dynamic reduction
         % e % ([ngdof,1] logical) extra degrees-of-freedom introduced in dynamic analysis
         % sa Permanently constrained aerodynamic degrees-of-freedom
         % k Aerodynamic degrees-of-freedom
-
+        
         %% Nonexclusive Degrees-of-freedom sets
         s  % ([ngdof,numSID] logical) [sb + sg] Degrees-of-freedom eliminated by single point constraints
         % l % ([ngdof,1] logical) [b + c] Structural degrees-of-freedom remaining after the reference degrees-of-freedom are removed (degrees-of-freedom left over)
         % t % ([ngdof,1] logical) [l + r] Total set of physical boundary degrees-of-freedom for superelements
-        % a % ([ngdof,1] logical) [t + q] Set assembled in superelement analysis
+        a % ([ngdof,1] logical) [t + q] Set assembled in superelement analysis
         % d % ([ngdof,1] logical) [a + e] Set used in dynamic analysis by the direct method
         f % ([ngdof,1] logical) [a + o] Unconstrained (free) structural degrees-of-freedom
         % fe % ([ngdof,1] logical) [f + e] Free structural degrees-of-freedom plus extra degrees-of-freedom
@@ -62,9 +62,9 @@ classdef Model
         p_g % ([ngdof,1] real) load vector in nodal displacement reference frame
         R_0g % ([ngdof,ngdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
         
-
-        %% Store vectors of ID numbers and other index data as seperate varables. 
-        % This speeds up assembly because repeated concatenation is expensive.  
+        
+        %% Store vectors of ID numbers and other index data as seperate varables.
+        % This speeds up assembly because repeated concatenation is expensive.
         coordinateSystemCIDs
         materialMIDs
         propertyPIDs
@@ -76,7 +76,7 @@ classdef Model
         nodeFlag % ([nPoints,1] logical) flags nodes in point array (not scalar points)
         nGdof % [uint32] number of global degrees of freedom
         coupledMassFlag % [logical] Coupled mass formulation is used if true, lumped mass formulation used otherwise.
-
+        
         %% Default Grid point properties:
         %  - Specified Grid points default to these options if not specified explicitly
         %  - Defaults can be chaged using GRDSET bulk data entry
@@ -90,8 +90,8 @@ classdef Model
             % Preprocess model entities
             obj = obj.parameter.preprocess(obj);
             
-            obj.coordinateSystem = obj.coordinateSystem.preprocess();   
-            obj.coordinateSystemCIDs=[obj.coordinateSystem.cid]; 
+            obj.coordinateSystem = obj.coordinateSystem.preprocess();
+            obj.coordinateSystemCIDs=[obj.coordinateSystem.cid];
             
             obj.material = obj.material.preprocess();
             obj.materialMIDs=[obj.material.mid].';
@@ -105,23 +105,26 @@ classdef Model
             obj = obj.point.preprocess(obj); % defines model.point, model.pointIDs, model.gNodeFlag, model.nGdof
             obj.element = obj.element.preprocess();
             obj.load = obj.load.preprocess(obj);
-
-            % Process single-point constraints
+            
+            % Process single-point constraint sets
             obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
             [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj); % SID numbers and DOF eliminated by boundary single-point constraints
-            
-            % Define sets (in progress)
             obj.s = obj.sg | obj.sb;
+            
+            % Process multi-point constraint sets? - or wait for assembly?
+            
+            % Process sets
+            obj = obj.dofSet.preprocess(obj);
             obj.f = ~obj.s;
+            
+            
         end
         function obj = assemble(obj)
-                        
             % Assemble
             obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
-            
+            obj = DofSet.assemble(obj); % model reduction sets
         end
     end
 end
-
