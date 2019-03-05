@@ -36,56 +36,51 @@ classdef ModesSolver < Solver
             nModes = model.eigrl(caseControl.method==model.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); error(''); end
             
-            % sets
-            f=model.f;
-            s=model.s;
+%             % sets
+%             f=model.f;
+%             s=model.s;
             
-            if nModes>sum(f)
-                nModes=sum(f);
-                warning('The number of modes requested by the EIGRL input is larger than the independent set - the number of modes recovered will be less than requested.')
+            nAset = sum(model.a);
+            if nModes>nAset
+                nModes=nAset;
+                warning('The number of modes requested by the EIGRL input is larger than the analysis set - the number of modes recovered will be less than requested.')
             end
             
-            % preallocate
-            obj.u_g=zeros(model.nGdof,nModes);
-            obj.u_0=zeros(model.nGdof,nModes);
+%             % preallocate
+%             obj.u_g=zeros(model.nGdof,nModes);
+%             obj.u_0=zeros(model.nGdof,nModes);
             
             %% Solve
+            K_aa = model.K_aa;
+            M_aa = model.M_aa;
             
-            % modes
-            Ka = model.K_g(f,f);
-            Ma = model.M_g(f,f);
-            [V,D] = eigs(Ma,Ka,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
+            [u_a,D] = eigs(M_aa,K_aa,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
             eigenvalues = diag(D).^-1;
             
+            % Sort by eigenvalue (eigs() sort order can be unreliable)
+            [eigenvalues,index]=sort(eigenvalues);
+            u_a = u_a(:,index);
             
             % mass normalize eigenvectors
-            for mn = 1:nModes
-                % Complication: eigenvectors are reversable. 
-                % This can be a problem for sensitivity methods.
-                % This is an attempt to keep eigenvector directions 
-                % consistent across design cycles.
-                if sum(V(:,mn)) < 0
-                    V(:,mn) = -V(:,mn);
-                end
-                
-                % Mass normalize
-                V(:,mn) = V(:,mn)./sqrt(V(:,mn).'*Ma*V(:,mn));
-            end
+            u_a = u_a./repmat(sqrt(diag(u_a.'*M_aa*u_a)).',[nAset,1]);
             
-            %           
-            obj.eigenvalueTable = EigenvalueTable(eigenvalues,diag(V.'*Ma*V),diag(V.'*Ka*V));
+            % Eigenvalue table
+            obj.eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
             
-            obj.u_g(f,:)= V;
+            % Expand eigenvectors
+            obj.u_g = model.modelExpansion(u_a);
+            
+%             obj.u_g(f,:)= V;
             obj.u_0     = model.R_0g*obj.u_g;
-            
-            % constraint forces
-            obj.f_g = zeros(size(obj.u_g));
-            obj.f_g(s,:) = model.K_g(s,f)*obj.u_g(f,:) + model.K_g(s,s)*obj.u_g(s,:);
-            obj.f_0 = model.R_0g*obj.f_g;
-            
-            % recover and store selected response data at nodes and elements 
-            obj = model.point.recover(obj,caseControl,model);
-            obj = model.element.recover(obj,caseControl);
+%             
+%             % constraint forces
+%             obj.f_g = zeros(size(obj.u_g));
+%             obj.f_g(s,:) = model.K_gg(s,f)*obj.u_g(f,:) + model.K_gg(s,s)*obj.u_g(s,:);
+%             obj.f_0 = model.R_0g*obj.f_g;
+%             
+%             % recover and store selected response data at nodes and elements 
+%             obj = model.point.recover(obj,caseControl,model);
+%             obj = model.element.recover(obj,caseControl);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
             

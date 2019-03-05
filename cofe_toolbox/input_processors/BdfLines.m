@@ -1,14 +1,16 @@
 % Reads Nastran-formatted input file lines. Handles INCLUDE statements.
 % Removes comments. Partitions executive, case control, and bulk data sections.
+% Partitions the bulk data section into part superelements.
 %
 % Anthony Ricciardi
 %
 classdef BdfLines
     
     properties (SetAccess = private)
-        executiveControl=cell(0);% [number of executive control lines,1 cell] Executive control lines (also NASTRAN statement and File Management lines)
-        caseControl=cell(0); % [number of case control lines,1 cell] Case control lines
-        bulkData=cell(0); % [number of bulk data lines,1 cell] Bulk data lines
+        executiveControl=cell(0);% {nExecutiveControlLines,1 char} Executive control lines (also NASTRAN statement and File Management lines)
+        caseControl=cell(0); % {nCaseControlLines,1 char} Case control lines
+        bulkData=cell(0); % {nSuperElements,1 {nBulkDataLines,1 char}} Bulk data lines
+        superElementID = uint32(0); % [nSuperElements, 1 uint32] Part superelement ID number
     end
     properties (Access = private)
         fid % [scaler] File identifiers of active input file (main or INCLUDE)
@@ -16,10 +18,10 @@ classdef BdfLines
         openFidPaths=cell(0);% {n,1} Cell of file path strings of all currently open input files
         startPath % [char] Path string of the directory which is current when BdfLines constructor is called
     end
-
+    
     methods
         function obj = BdfLines(filename)
-            % Reads lines from specified Nastran-formatted input file. Creates BdfLines object. 
+            % Reads lines from specified Nastran-formatted input file. Creates BdfLines object.
             %
             % Inputs
             % filename = [char] Nastran-formatted input file name.
@@ -76,6 +78,45 @@ classdef BdfLines
             
             % Check that input files are closed - warn the user otherwise
             checkFilesClosed(obj)
+            
+            % Partition the bulk data section into superelements
+            startsWithBegin = strncmpi(obj.bulkData,'BEGIN',5);
+            if any(startsWithBegin)
+                % part superelement model
+                bulkDataLines = obj.bulkData;
+                beginIndex = find(startsWithBegin);
+                startIndex = [1;beginIndex+1];
+                endIndex = [beginIndex-1;size(bulkDataLines,1)];
+                nSuperElements = size(startIndex,1);
+                obj.superElementID = zeros(nSuperElements,1,'uint32');
+                
+                obj.bulkData=cell(0);
+                
+                % Residual structure
+                obj.superElementID(1) = uint32(0);
+                obj.bulkData{1,1} = bulkDataLines(startIndex(1):endIndex(1),1);
+                
+                % Partition Part Bulk Data
+                for i = 2:nSuperElements
+                    % Super element ID
+                    beginLine = bulkDataLines{beginIndex(i-1),1};
+                    findEqual = strfind(beginLine,'=');
+                    findSuper = strfind(upper(beginLine),'SUPER');
+                    if isempty(findEqual) || isempty(findSuper)
+                        error('There is a format error with bulk data line: %s',beginLine) 
+                    end
+                    splitBeginLine = strsplit(beginLine,'=','CollapseDelimiters',false);
+                    if size(splitBeginLine,2)~=2; error('There is a format error with bulk data line: %s',beginLine); end
+                    obj.superElementID(i) = castInputField('BEGIN SUPER','ID',splitBeginLine{2},'uint32',NaN,1);
+                    
+                    % Part bulk data
+                    obj.bulkData{i,1} = bulkDataLines(startIndex(i):endIndex(i),1);
+                end
+            else
+                dummy = cell(0);
+                dummy{1,1}=obj.bulkData;
+                obj.bulkData=dummy;
+            end
         end
     end
     methods (Access = private)
@@ -120,7 +161,7 @@ classdef BdfLines
                             inputLine = inputLine(1:comment(1)-1);
                         end
                         % Return A
-                        break 
+                        break
                     end
                 end
             end
@@ -140,8 +181,8 @@ classdef BdfLines
             % Processes a case control line. Checks for BEGIN BULK statement.
             trimLine = strtrim(inputLine);
             if strncmpi(trimLine,'BEGIN BULK',10)
-                    beginBulk = true; % end of executive control section
-                    return
+                beginBulk = true; % end of executive control section
+                return
             else
                 beginBulk = false;
             end
@@ -151,8 +192,8 @@ classdef BdfLines
             % Processes a bulk data line. Checks for ENDDATA statement.
             trimLine = strtrim(inputLine);
             if strncmpi(trimLine,'ENDDATA',7)
-                    endData = true; % end of executive control section
-                    return
+                endData = true; % end of executive control section
+                return
             else
                 endData = false;
             end

@@ -38,12 +38,12 @@ classdef StaticsSolver < Solver
             %% Solve
             
             % displacements
-            obj.u_g(f) = model.K_g(f,f)\model.p_g(f,lc);
+            obj.u_g(f) = model.K_gg(f,f)\model.p_g(f,lc);
             obj.u_0    = model.R_0g*obj.u_g;
             
             % constraint forces
             obj.f_g = zeros(size(obj.u_g));
-            obj.f_g(s) = model.K_g(s,f)*obj.u_g(f) + model.K_g(s,s)*obj.u_g(s);
+            obj.f_g(s) = model.K_gg(s,f)*obj.u_g(f) + model.K_gg(s,s)*obj.u_g(s);
             obj.f_0 = model.R_0g*obj.f_g;
             
             % recover and store selected response data at nodes and elements 

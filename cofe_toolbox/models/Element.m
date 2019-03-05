@@ -34,20 +34,20 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             % assemble element and global matricies              
             
             % Preallocate Sparse Matrices
-            K_g = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
-            M_g = K_g;
+            K_gg = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
+            M_gg = K_gg;
             
             % Loop through elements
             nElement = size(obj,1);
             for i=1:nElement
                 oi=obj(i).assemble_sub(model);
-                K_g(oi.gdof,oi.gdof)=K_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
-                M_g(oi.gdof,oi.gdof)=M_g(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
+                K_gg(oi.gdof,oi.gdof)=K_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
+                M_gg(oi.gdof,oi.gdof)=M_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
                 obj(i)=oi;
             end
             model.element=obj;
-            model.K_g=K_g;
-            model.M_g=M_g;
+            model.K_gg=K_gg;
+            model.M_gg=M_gg;
         end
         function solver = recover(obj,solver,caseControl)
             % recovers element output data

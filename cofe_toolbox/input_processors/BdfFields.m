@@ -87,7 +87,11 @@ classdef BdfFields
             % Creates BdfFields object with distinct input entries and fields 
             obj.sol=obj.processExecutiveControl(bdfLines.executiveControl);
             obj.caseControl=obj.processCaseControl(bdfLines.caseControl);
-            obj.bulkData=obj.processBulkDataLines(bdfLines.bulkData);
+            
+            nSuperElements = size(bdfLines.bulkData,1);
+            for i = 1:nSuperElements
+                obj.bulkData{i,1}=obj.processBulkDataLines(bdfLines.bulkData{i});
+            end
         end
     end
     methods (Static = true)
