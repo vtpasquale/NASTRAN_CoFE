@@ -3,6 +3,9 @@
 classdef Model
     
     properties
+        %% Case control
+        caseControl@CaseControl;
+        
         %% Model entities
         coordinateSystem@CoordinateSystem;
         material@Material;
@@ -107,6 +110,9 @@ classdef Model
                 obj(i) = assemble_sub(obj(i));
             end
         end
+        function u_g = modelExpansion(obj,u_a)
+            u_g = obj(1).modelExpansion_sub(u_a);
+        end
     end
     methods (Access = private)
         function obj = preprocess_sub(obj)
@@ -168,7 +174,7 @@ classdef Model
             end
             
         end
-        function u_g = modelExpansion(obj,u_a)
+        function u_g = modelExpansion_sub(obj,u_a)
             
             % preallocate
             nVectors = size(u_a,2);

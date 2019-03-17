@@ -1,6 +1,6 @@
 % Reads Nastran-formatted input file lines. Handles INCLUDE statements.
-% Removes comments. Partitions executive, case control, and bulk data sections.
-% Partitions the bulk data section into part superelements.
+% Removes comments. Partitions executive, case control, and bulk data 
+% sections. Partitions the bulk data section into part superelements.
 %
 % Anthony Ricciardi
 %
@@ -22,6 +22,17 @@ classdef BdfLines
     methods
         function obj = BdfLines(filename)
             % Reads lines from specified Nastran-formatted input file. Creates BdfLines object.
+            %
+            % Inputs
+            % filename = [char] Nastran-formatted input file name.
+            obj = obj.readBdfLines(filename);
+            obj = obj.partitionBulkDataSuperelements();
+        end
+    end
+    methods (Access = private)
+        function obj = readBdfLines(obj,filename)
+            % Reads lines from specified Nastran-formatted input file. Creates BdfLines object.
+            % Bulk data superelements are not partitioned in this function
             %
             % Inputs
             % filename = [char] Nastran-formatted input file name.
@@ -78,7 +89,8 @@ classdef BdfLines
             
             % Check that input files are closed - warn the user otherwise
             checkFilesClosed(obj)
-            
+        end
+        function obj = partitionBulkDataSuperelements(obj)
             % Partition the bulk data section into superelements
             startsWithBegin = strncmpi(obj.bulkData,'BEGIN',5);
             if any(startsWithBegin)
@@ -103,7 +115,7 @@ classdef BdfLines
                     findEqual = strfind(beginLine,'=');
                     findSuper = strfind(upper(beginLine),'SUPER');
                     if isempty(findEqual) || isempty(findSuper)
-                        error('There is a format error with bulk data line: %s',beginLine) 
+                        error('There is a format error with bulk data line: %s',beginLine)
                     end
                     splitBeginLine = strsplit(beginLine,'=','CollapseDelimiters',false);
                     if size(splitBeginLine,2)~=2; error('There is a format error with bulk data line: %s',beginLine); end
@@ -118,8 +130,6 @@ classdef BdfLines
                 obj.bulkData=dummy;
             end
         end
-    end
-    methods (Access = private)
         function [obj,inputLine] = readNextLine(obj)
             % Returns the next uncommented, nonblank input file line while managing INCLUDE statements
             while 1
@@ -246,5 +256,4 @@ classdef BdfLines
             cd(obj.startPath)
         end
     end
-    
 end

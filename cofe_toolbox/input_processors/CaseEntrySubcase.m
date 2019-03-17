@@ -12,7 +12,7 @@ classdef CaseEntrySubcase < CaseEntry
         end
         function caseControl = entry2caseControl_sub(obj,caseControl)
             % Convert Case Control entry to property in Case Control Object
-            caseControl.ID = obj.ID;
+            caseControl.subcase = obj.ID;
         end
         function echo_sub(obj,fid)
             % Print the case control entry in NASTRAN format to a text file with file id fid

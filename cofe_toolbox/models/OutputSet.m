@@ -84,7 +84,7 @@ classdef OutputSet
             % Print the entries in NASTRAN free field format to a text file with file ID fid
             if nargin < 2; error('Input argument missing.'); end
             [n,m] = size(obj);
-            if m > 1; error('output_set.echo() can only handel nx1 arrays of output_set objects. The second dimension exceeds 1.'); end
+            if m > 1; error('OutputSet.echo() can only handel nx1 arrays of output_set objects. The second dimension exceeds 1.'); end
             for i = 1:n
                 echo_sub(obj(i),fid)
             end
@@ -106,12 +106,16 @@ classdef OutputSet
             % Print the entry in NASTRAN free field format to a text file with file id fid
             if isempty(obj.ID); error('Cannot echo a set without an ID number'); end
             if obj.all == true
-                fprintf(fid,'SET %d = ALL\n',obj.ID)
+                fprintf(fid,'SET %d = ALL\n',obj.ID);
             else
                 if any(obj.thru) == false
-                    longstr = [sprintf('SET %d = ',obj.ID),...
-                        sprintf('%d,',obj.i1(1:end-1)),...
-                        sprintf('%d',obj.i1(end))];
+                    if size(obj.i1,1)==1
+                        longstr = sprintf('SET %d = %d',obj.ID,obj.i1);
+                    else
+                        longstr = [sprintf('SET %d = ',obj.ID),...
+                            sprintf('%d,',obj.i1(1:end-1)),...
+                            sprintf('%d',obj.i1(end))];
+                    end
                 else
                     n = size(obj.i1,1);
                     

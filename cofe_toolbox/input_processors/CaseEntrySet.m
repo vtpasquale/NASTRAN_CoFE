@@ -56,6 +56,6 @@ end
 function out = setInt(in,errStr)
 if isnumeric(in)==0; error([errStr,' must be a number']); end
 if mod(in,1) ~= 0; error([errStr,' must be an integer']); end
-if in < 1; error([errStr,' must be greater than zero.']); end
+if in < 0; error([errStr,' must be greater than or equal to zero.']); end
 out=uint32(in);
 end

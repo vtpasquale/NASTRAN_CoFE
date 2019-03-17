@@ -42,10 +42,10 @@
 % Bulk Data Section
 % -----------------
 % Free field, small field, and large field format bulk data lines are 
-% delimited into entries and fields. A cell array (BdfFields.bulkData) is 
-% created which contains one cell for each bulk data entry. Each bulk data 
-% entry cell contains another cell array with [char] variable data for each
-% input field. 
+% delimited into superelements, entries, and fields. A cell array is 
+% created which contains one cell for each part superelement. Each 
+% superelement cell contains one cell for each bulk data entry. Each bulk  
+% data entry cell contains cell arrays with char data for each input field. 
 % 
 % All continuation lines are read and stored. A line is determined to be a 
 % continuation line if the first field is blank, or if a "+" or "*" is in 
@@ -59,7 +59,7 @@
 %      ,0.031291,0.181177,0.002854
 %  
 %   BdfFields bulkData property:
-%      BdfFields.bulkData{i}=
+%      BdfFields.bulkData{i}{j}=
 %         Columns 1 through 10
 %           'PBEAML'	'101'	'501'	''	'BAR'	''	''	''	''	''
 %         Columns 11 through 20
@@ -72,21 +72,23 @@ classdef BdfFields
     properties (SetAccess = private)
         sol; % [char] Describer of the first SOL entry in the executive control section
 
-        % caseControl [Num Case Control Entries,1 cell] containing [struct] with case control data
-        %            {:}.entryName: [char] Name of the Case Control Entry
-        %            {:}.leftHandDescribers: [char] Left hand side describers
-        %            {:}.rightHandDescribers: [char] Right hand side describers
+        % caseControl {nCaseControlEntries,1 struct} case control data
+        %             {:}.entryName: [char] Name of the Case Control Entry
+        %             {:}.leftHandDescribers: [char] Left hand side describers
+        %             {:}.rightHandDescribers: [char] Right hand side describers
         caseControl;
 
-        % bulkData [Num Bulk Data Entries,1 cell] containing [cell] with bulk data fields
-        %         {:} = [1,number of entry fields] Bulk data entry fields as [char]
+        % bulkData {nSuperElements,1 {nBulkDataEntries,nBulkdataFields char}} bulk data fields
         bulkData;
+        
+        superElementID % [nSuperElements, 1 uint32] Superelement ID number
     end
     methods
         function obj = BdfFields(bdfLines)
             % Creates BdfFields object with distinct input entries and fields 
             obj.sol=obj.processExecutiveControl(bdfLines.executiveControl);
             obj.caseControl=obj.processCaseControl(bdfLines.caseControl);
+            obj.superElementID = bdfLines.superElementID;
             
             nSuperElements = size(bdfLines.bulkData,1);
             for i = 1:nSuperElements
