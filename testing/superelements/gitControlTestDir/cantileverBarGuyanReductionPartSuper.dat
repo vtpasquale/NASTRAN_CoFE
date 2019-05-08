@@ -1,0 +1,46 @@
+SOL SEMODES
+CEND
+  TITLE = CANTILEVER BEAM DIVIDED INTO TWO PARTS
+  SUBTITLE = FIXED BOUNDARY REDUCTION
+  METHOD = 1
+  ECHO = NONE
+  DISPLACEMENT = ALL
+  SPCFORCE = ALL
+  SPC = 1
+SUBCASE 1
+  LABEL = SUPERELEMENT 1
+  SUPER = 1, 1
+SUBCASE 2
+  LABEL = SUPERELEMENT 2
+  SUPER = 2, 1
+SUBCASE 3
+  LABEL = RESIDUAL STRUCTURE
+  SET 99 = 0
+  SUPER = 99, 1
+  METHOD = 1
+BEGIN BULK
+$
+SEBULK         1 PRIMARY          MANUAL
+SEBULK         2 PRIMARY          MANUAL
+SECONCT        1       0              NO
+               6       6
+SECONCT        2       0              NO
+               6       6
+$
+$
+$
+GRID           6       0      5.      0.      0.       0
+EIGRL          1                      10       0                    MASS
+$
+$
+BEGIN SUPER=1
+INCLUDE 'cantileverBar1.dat'
+BSET           6  123456
+$
+$
+BEGIN SUPER = 2
+INCLUDE 'cantileverBar2.dat'
+BSET           6  123456
+$
+$
+ENDDATA

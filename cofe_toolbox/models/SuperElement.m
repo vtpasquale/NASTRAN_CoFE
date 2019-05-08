@@ -1,11 +1,11 @@
-% Defines super element type, and connections - remaining superlement data 
+% Defines superelement type, and connections - remaining superelement data 
 % are stored in seperate Model objects stored in same Model array
 % Anthony Ricciardi
 %
 classdef SuperElement
    
     properties
-        seida % [uint32 > 0] Partitioned super element identification number.
+        seida % [uint32 > 0] Partitioned superelement identification number.
         seidb % [unit32] Identification number of superelement for connection to SEIDA.
         type % [char] Superelement type: PRIMARY, EXTERNAL
         % method [char] must be MANUAL

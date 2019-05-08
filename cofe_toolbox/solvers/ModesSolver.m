@@ -29,35 +29,40 @@ classdef ModesSolver < Solver
     end
     
     methods 
-        function obj=solve_sub(obj,caseControl,model)
+        function obj=solve_sub(obj,model)
+            % Normal modes solution
+            %
+            % INPUTS
+            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
+            % model = [nSuperElements,1 Model] Array of Model Objects, one for each superelement
+            % caseControlIndex = [double] Case control (subcase) index number
+            
+            model0 = model(1); % Residual structure
             
             % process EIGRL
-            if isempty(caseControl.method); error('No METHOD defined in Case Control section.'); end
-            nModes = model.eigrl(caseControl.method==model.eigrl(:,1),2);
-            if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); error(''); end
+            nModes = model0.getNumModes();
             
 %             % sets
 %             f=model.f;
 %             s=model.s;
-            
-            nAset = sum(model.a);
-            if nModes>nAset
-                nModes=nAset;
-                warning('The number of modes requested by the EIGRL input is larger than the analysis set - the number of modes recovered will be less than requested.')
-            end
-            
+                       
 %             % preallocate
 %             obj.u_g=zeros(model.nGdof,nModes);
 %             obj.u_0=zeros(model.nGdof,nModes);
             
             %% Solve
-            K_aa = model.K_aa;
-            M_aa = model.M_aa;
+            K_aa = model0.K_aa;
+            M_aa = model0.M_aa;
             
+            nAset = size(K_aa,1);
+            if nModes>nAset
+                nModes=nAset;
+                warning('The number of modes requested by the EIGRL input is larger than the analysis set - the number of modes recovered will be less than requested.')
+            end
             [u_a,D] = eigs(M_aa,K_aa,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
             eigenvalues = diag(D).^-1;
             
-            % Sort by eigenvalue (eigs() sort order can be unreliable)
+            % Sort by eigenvalue (eigs() does not always return sorted eigenvalues and eigenvectors)
             [eigenvalues,index]=sort(eigenvalues);
             u_a = u_a(:,index);
             
@@ -65,13 +70,13 @@ classdef ModesSolver < Solver
             u_a = u_a./repmat(sqrt(diag(u_a.'*M_aa*u_a)).',[nAset,1]);
             
             % Eigenvalue table
-            obj.eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
+            obj(1).eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
             
             % Expand eigenvectors
-            obj.u_g = model.modelExpansion(u_a);
+%             obj = model.modelExpansion(obj,u_a);
             
 %             obj.u_g(f,:)= V;
-            obj.u_0     = model.R_0g*obj.u_g;
+%             obj(1).u_0     = model0.R_0g*obj(1).u_g;
 %             
 %             % constraint forces
 %             obj.f_g = zeros(size(obj.u_g));

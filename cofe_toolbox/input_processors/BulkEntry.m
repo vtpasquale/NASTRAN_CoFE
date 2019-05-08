@@ -50,13 +50,14 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
                 end
             end
         end % constructFromFields_sub()
-        function model = entry2model(bulkEntry)
+        function model = entry2model(bulkEntry,superElementID)
             % Convert bulk data entry object array to model object entity arrays
             [nSuperElements,mSuperElements]=size(bulkEntry);
             if mSuperElements > 1; error('BulkEntry.entry2model(bulkEntry) can only handle nx1 cell arrays of BulkEntry arrays. The second dimension exceeds 1.'); end
             model = [];
             for i = 1:nSuperElements
                 modelI = Model;
+                modelI.superElementID = superElementID(i);
                 bulkEntryI = bulkEntry{i};
                 [nEntries,mEntries]=size(bulkEntryI);
                 if mEntries ~= 1; error('bulkEntry cell array contains a BulkEntry array with size(BulkEntry,2)~=1'); end

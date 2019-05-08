@@ -3,6 +3,9 @@
 classdef Model
     
     properties
+        %% Superelement
+        superElementID; % [uint32]
+        
         %% Case control
         caseControl@CaseControl;
         
@@ -42,7 +45,7 @@ classdef Model
         %% Nonexclusive Degrees-of-freedom sets
         s  % ([nGdof,numSID] logical) [sb + sg] Degrees-of-freedom eliminated by single point constraints
         % l % ([nGdof,1] logical) [b + c] Structural degrees-of-freedom remaining after the reference degrees-of-freedom are removed (degrees-of-freedom left over)
-        % t % ([nGdof,1] logical) [l + r] Total set of physical boundary degrees-of-freedom for superelements
+        t % ([nGdof,1] logical) [l + r] Total set of physical boundary degrees-of-freedom for superelements
         a % ([nGdof,1] logical) [t + q] Set assembled in superelement analysis
         % d % ([nGdof,1] logical) [a + e] Set used in dynamic analysis by the direct method
         f % ([nGdof,1] logical) [a + o] Unconstrained (free) structural degrees-of-freedom
@@ -106,12 +109,49 @@ classdef Model
         function obj = assemble(obj)
             [n,m]=size(obj);
             if m~=1; error('Function only operates on Model arrays size n x 1.'); end
+            % Assemble and reduce seperate part superelements
             for i = 1:n
                 obj(i) = assemble_sub(obj(i));
             end
+            % Synthesize superelement parts - single level only - modify for multi level
+            nModel = size(obj,1);
+            if nModel > 1
+                se = obj(1).superElement;
+                nSuperElement = size(se,1);
+                if (nModel-1) ~= nSuperElement
+                    error('SEBULK and SECONCT entries must be defined in the residual structure for all part superelements.')
+                end
+                superElementIDs = [obj.superElementID];
+                for i = 1:nSuperElement
+                    if se(i).seidb~=0; error('Only single level superlements supported. Check SEBULK and SECONCT entries.'); end
+                    superElementIndex = find(se(i).seida==superElementIDs);
+                    if isempty(superElementIndex); error('SEIDA references undefined superelement #: %d',se(i).seida); end
+                    if superElementIndex==1; error('SEIDA cannot reference residual structure'); end
+                    obji = obj(superElementIndex);
+                    points0 = obj(1).point.getPoints(se(i).gidb,obj(1));
+                    pointsi =   obji.point.getPoints(se(i).gida,obji);
+                    index0 = [points0.gdof];
+                    indexi = [pointsi.gdof];
+                    %% This needs to index the A set not the G set - fix it
+                    obj(1).K_gg(index0,index0) = obj(1).K_gg(index0,index0) + obji.K_gg(indexi,indexi);
+                    obj(1).M_gg(index0,index0) = obj(1).M_gg(index0,index0) + obji.M_gg(indexi,indexi);
+                end
+                obj(1) = obj(1).modelReduction();
+            end
         end
-        function u_g = modelExpansion(obj,u_a)
-            u_g = obj(1).modelExpansion_sub(u_a);
+        function solver = modelExpansion(obj,solver,u_a)
+            % Expands solution result
+            [n,m]=size(obj);
+            if m~=1; error('Function only operates on Model arrays size n x 1.'); end
+            for i = 1:n
+                solver = obj(i).modelExpansion_sub(u_a);
+            end
+            keyboard
+        end
+        function nModes = getNumModes(obj)
+            if isempty(obj.caseControl.method); error('No METHOD defined in Case Control section.'); end
+            nModes = obj.eigrl(obj.caseControl.method==obj.eigrl(:,1),2);
+            if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); end
         end
     end
     methods (Access = private)
@@ -145,9 +185,7 @@ classdef Model
             
             % Process sets
             obj = obj.dofSet.preprocess(obj);
-            obj.f = ~obj.s;
-            
-            
+            obj.f = ~obj.s;    
         end
         function obj = assemble_sub(obj)
             % Assemble
@@ -159,8 +197,8 @@ classdef Model
             obj = obj.modelReduction();
         end
         function obj = modelReduction(obj)
-            if all(obj.a==obj.f) 
-                % no model reduction
+            if ~any(obj.o)
+                % No model reduction
                 obj.reductionType = uint8(0);
                 obj.K_aa = obj.K_gg(obj.f,obj.f);
                 obj.M_aa = obj.M_gg(obj.f,obj.f);
@@ -169,8 +207,9 @@ classdef Model
                 obj.reductionType = uint8(1);
                 obj = obj.guyanReduction();
             else
-                % dynamic reduction
-                error('Implement')
+                % Dynamic reduction
+                obj.reductionType = uint8(2);
+                obj = obj.dynamicReduction();
             end
             
         end
@@ -208,20 +247,21 @@ classdef Model
             % Exact Stiffness Matrix Reduction
             % For Guyan reduction only, the a set is also the t set
             K_oo = obj.K_gg(obj.o,obj.o);
-            K_ot = obj.K_gg(obj.o,obj.a);
+            K_ot = obj.K_gg(obj.o,obj.t);
             obj.G_ot = - K_oo\K_ot;
-            obj.K_aa = obj.K_gg(obj.a,obj.a) +  K_ot.'* obj.G_ot;
+            obj.K_aa = obj.K_gg(obj.t,obj.t) +  K_ot.'* obj.G_ot;
             % Approximate Mass Matrix Reduction
             M_oo = obj.M_gg(obj.o,obj.o);
-            M_ot = obj.M_gg(obj.o,obj.a);
-            obj.M_aa = obj.M_gg(obj.a,obj.a) +  M_ot.'*obj.G_ot + ...
+            M_ot = obj.M_gg(obj.o,obj.t);
+            obj.M_aa = obj.M_gg(obj.t,obj.t) +  M_ot.'*obj.G_ot + ...
                 obj.G_ot.'*M_ot + obj.G_ot.'*M_oo*obj.G_ot;
         end
         function obj = dynamicReduction(obj)
             % Implement dynamic reduction 
-            % Start with HCB only
+            nModes = getNumModes(obj);
+            % Start with H\CB only
             K_oo = obj.K_gg(obj.o,obj.o);
-            K_ot = obj.K_gg(obj.o,obj.a);
+            K_ot = obj.K_gg(obj.o,obj.t);
             obj.G_ot = - K_oo\K_ot;
             M_oo = obj.M_gg(obj.o,obj.o);
             [V,D] = eigs(M_oo,K_oo,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
@@ -234,13 +274,13 @@ classdef Model
             end
             obj.G_oq = V;
             nBset = size(obj.G_ot,2);
-            nOset = size(obj.G_ot,1);
+            nQset = size(obj.G_oq,2);
             %
             % Update for qset indexing...
             %
-            T = [obj.G_ot,obj.G_oq;eye(nBset),zeros(nOset)];
-            obj.K_aa = T.'*obj.K_gg(obj.f,obj.f)*T;
-            obj.M_aa = T.'*obj.K_gg(obj.f,obj.f)*T;
-        end
+            T =[obj.G_ot,obj.G_oq;eye(nBset),zeros(nBset,nQset)];
+            obj.K_aa = T.'*obj.K_gg(obj.t,obj.t)*T;
+            obj.M_aa = T.'*obj.K_gg(obj.t,obj.t)*T;
+        end            
     end
 end

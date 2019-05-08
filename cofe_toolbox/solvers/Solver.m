@@ -2,19 +2,22 @@
 % Anthony Ricciardi
 %
 classdef (Abstract) Solver < matlab.mixin.Heterogeneous
+    properties
+        caseControlIndex % [uint32] 
+    end
     methods (Abstract)
         % The class constructor must...
         
         % Run subcase analysis
-        obj=solve_sub(obj,caseControl,model)
+        obj=solve_sub(obj,model,caseControlIndex)
         
         % Output subcase results
         obj = output_sub(obj,caseControl,fid)
     end
     methods (Sealed = true)
-        function obj = solve(obj,caseControl,model)
+        function obj = solve(obj,model)
             for i = 1:size(obj,1)
-                obj(i)=solve_sub(obj(i),caseControl(i),model);
+                obj(i,:)=solve_sub(obj(i,:),model);
             end
         end % solver()
         function obj = output(obj,caseControl,modelParam,fid)
@@ -46,11 +49,15 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
         end % output()
     end
     methods (Sealed = true, Static = true)
-        function solver = constructFromCaseControl(caseControl)
+        function solver = constructFromModel(model)
+            % check input
+            [nModel,mModel] = size(model);
+            if nModel < 1; error('size(model,1)<1');end
+            if mModel ~=1; error('size(model,2)~=1');end
             % construct Solver object array from CaseControl object array
-            for i = 1:size(caseControl,1)
+            for i = 1:size(model(1).caseControl,1)
                 % convert field 1 to case-sensitive class name
-                analysisType = lower(caseControl(i).analysis);
+                analysisType = lower(model(i).caseControl(i).analysis);
                 if isempty(analysisType)
                     error('Analysis type not defined. Check SOL entry and/or Case Control ANALYSIS entries.')
                 end        
@@ -58,11 +65,14 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 % check that input entry is supported
                 if exist([analysisType,'Solver'],'class')==8
                     % Call contructor method for each Solver
-                    eval(['solver(i,1) = ',analysisType,'Solver();']);
+                    eval(['solver(i,1:nModel) = ',analysisType,'Solver();']);
+                    for j = 1:nModel
+                        solver(i,j).caseControlIndex = uint32(i);
+                    end
                 else
                     error('Analysis type %s not supported. Check SOL entry and/or Case Control ANALYSIS entries.',upper(analysisType))
                 end
             end
-        end % constructFromCaseControl()
+        end % constructFromModel()
     end
 end

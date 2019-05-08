@@ -123,7 +123,7 @@ classdef CaseControl
             for i = 1:nInputCaseControl
                 caseSuperelement = obj(i).superelement;
                 if caseSuperelement==-1
-                    applicableSuperElementIndicies{i,1}=modelSuperElementID;
+                    applicableSuperElementIndicies{i,1}=uint32(1:nModelSuperElementID)';
                 else
                     modelIndex = (caseSuperelement==modelSuperElementID);
                     if sum(modelIndex)>1; error('Model superelement uniqueness issue.'); end

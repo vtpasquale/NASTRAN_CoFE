@@ -24,7 +24,7 @@ classdef BdfEntries
             caseControl = obj.caseEntry.entry2caseControl(obj.sol);
             
             % Create Model superelements from bulk data
-            model = BulkEntry.entry2model(obj.bulkEntry);
+            model = BulkEntry.entry2model(obj.bulkEntry,obj.superElementID);
             
             % Save case control data to applicable Model superelements 
             model = caseControl.caseControl2model(model,obj.superElementID);

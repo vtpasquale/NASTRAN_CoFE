@@ -23,32 +23,36 @@ classdef StaticsSolver < Solver
     end
     
     methods 
-        function obj=solve_sub(obj,caseControl,model)
-            obj.u_g=zeros(model.nGdof,1);
-            obj.u_0=zeros(model.nGdof,1);
+        function obj=solve_sub(obj,model)
             
-            if isempty(caseControl.load); error('No load case identification number specified.'); end
-            lc = find(caseControl.load==model.loadSIDs);
+            model0 = model(1); % Residual structure
+            caseControl0 = model0.caseControl(obj.caseControlIndex);
+            
+            obj.u_g=zeros(model0.nGdof,1);
+            obj.u_0=zeros(model0.nGdof,1);
+                        
+            if isempty(caseControl0.load); error('No load case identification number specified.'); end
+            lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); error('No applied loads found for this case.'); end
             
             % sets
-            f=model.f;
-            s=model.s;
+            f=model0.f;
+            s=model0.s;
             
             %% Solve
             
             % displacements
-            obj.u_g(f) = model.K_gg(f,f)\model.p_g(f,lc);
-            obj.u_0    = model.R_0g*obj.u_g;
+            obj.u_g(f) = model0.K_gg(f,f)\model0.p_g(f,lc);
+            obj.u_0    = model0.R_0g*obj.u_g;
             
             % constraint forces
             obj.f_g = zeros(size(obj.u_g));
-            obj.f_g(s) = model.K_gg(s,f)*obj.u_g(f) + model.K_gg(s,s)*obj.u_g(s);
-            obj.f_0 = model.R_0g*obj.f_g;
+            obj.f_g(s) = model0.K_gg(s,f)*obj.u_g(f) + model0.K_gg(s,s)*obj.u_g(s);
+            obj.f_0 = model0.R_0g*obj.f_g;
             
             % recover and store selected response data at nodes and elements 
-            obj = model.point.recover(obj,caseControl,model);
-            obj = model.element.recover(obj,caseControl);
+            obj = model.point.recover(obj,model);
+            obj = model.element.recover(obj);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
             

@@ -83,7 +83,19 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
             if size(point,1)~=1
                 error('Grid/Scalar point ID = %d is defined more than once.',id)
             end
-        end % getPoint ()
+        end % getPoint()
+        function point = getPoints(obj,id,model)
+            % returns array of point objects with the requested ids from the point array
+            id = sort(id);
+            index = ismember(model.pointIDs,id);
+            point = obj(index);
+            if size(point,1)~=size(id,1)
+                error('There is an issue identifying points.')
+            end
+            if any([point.id]'~=id)
+                error('There is an issue identifying points.')
+            end
+        end % getPoints()
         function node  = getNode(obj,id,model)
             % returns a single node object with the requested node id from the point array
             index = (id == model.pointIDs);
@@ -134,7 +146,7 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
         end
     end
     methods (Static=true)
-        function solver = recover(solver,caseControl,model)
+        function solver = recover(solver,model)
             % recovers node output data
 
             % displacements

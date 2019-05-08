@@ -1,0 +1,458 @@
+1
+ 
+ 
+ 
+ 
+                                                             
+                 Copyright 2017 Siemens Product Lifecycle    
+                        Management Software Inc.             
+                         All Rights Reserved.                
+                                                             
+               This software and related documentation are   
+                 proprietary to Siemens Product Lifecycle    
+                        Management Software Inc.             
+                                                             
+              Siemens and the Siemens logo are registered    
+             trademarks of Siemens AG. NX is a trademark or  
+                registered trademark of Siemens Product      
+               Lifecycle Management Software Inc. or its     
+             subsidiaries in the United States and in other  
+             countries.  NASTRAN is a registered trademark   
+                 of the National Aeronautics and Space       
+                 Administration.  All other trademarks,      
+              registered trademarks or service marks belong  
+                      to their respective holders.           
+                                                             
+           LIMITATIONS TO U.S. GOVERNMENT RIGHTS. UNPUBLISHED
+           - RIGHTS RESERVED UNDER THE COPYRIGHT LAWS OF THE 
+            UNITED STATES. This computer software and related
+               computer software documentation have been     
+            developed exclusively at private expense and are 
+           provided subject to the following rights:  If this
+               computer software and computer  software      
+            documentation qualify as "commercial items" (as  
+             that term is defined in FAR 2.101), their use,  
+            duplication or disclosure by the U.S. Government 
+           is subject to the protections and restrictions as 
+            set forth in the Siemens commercial license for  
+            software and/or documentation, as prescribed in  
+           FAR 12.212 and FAR 27.405(b)(2)(i) (for civilian  
+             agencies) and in DFARS 227.7202-1(a) and DFARS  
+           227.7202-3(a) (for the Department of Defense), or 
+           any successor or similar regulation, as applicable
+           or as amended from time to time.  If this computer
+           software and computer documentation do not qualify
+            as "commercial items", then they are "restricted 
+           computer software" and are provided with "restric-
+            tive rights", and their use, duplication or dis- 
+            closure by the U.S. Government is subject to the 
+            protections and restrictions as set forth in FAR 
+           27.404(b) and FAR 52-227-14 (for civilian agencies
+           ), and DFARS 227.7203-5(c) and DFARS 252.227-7014 
+           (for the Department of Defense), or any successor 
+           or similar regulation, as applicable or as amended
+              from time to time.  Siemens PLM Software Inc.  
+            5800 Granite Parkway, Suite 600, Plano, TX 75024 
+
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *       N X   N a s t r a n       * *
+                * *                                 * *
+                * *        VERSION -   12.0         * *
+                * *                                 * *
+                * *          SEP 21, 2017           * *
+                * *                                 * *
+                * *                                 * *
+                * *Intel64 Family 6 Model 63 Steppi * *
+                * *                                 * *
+                * *MODEL Intel(R) Xeon(R) CPU E5-16 * *
+                * *                                 * *
+                * *  Windows 7 SP1 Service Pack 1   * *
+                * *                                 * *
+                * *       Compiled for X86-64       * *
+                * *                                 * *
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+1 
+  
+                        Welcome to NX Nastran
+                        -------------------------
+  
+  
+ This "news" information can be turned off by setting "news=no" in the runtime
+ configuration (RC) file.  The "news" keyword can be set in the system RC file
+ for global, or multi-user control, and in a local file for local control.
+ Individual jobs can be controlled by setting news to yes or no on the command
+ line.
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=32769 $(C:/PROGRAM FILES/SIEMENS/NXN12/CONF/NAST12.RCF[1])     
+     NASTRAN BUFFPOOL=23554                                                          
+     NASTRAN DIAGA=128 DIAGB=0 $(C:/PROGRAM FILES/SIEMENS/NXN12/CONF/NAST12.RCF[9])  
+     NASTRAN REAL=8577351680 $(MEMORY LIMIT FOR MPI AND OTHER SPECIALIZED MODULES)   
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 103                                                                                 
+     CEND                                                                                    
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      DISPLACEMENT = ALL                                                                      
+                  5      SPC = 1                                                                                 
+                  6      METHOD = 1                                                                              
+                  7      LOAD =  1                                                                               
+                  8      $ **********************************************************                            
+                  9      $   B U L K    D A T A                                                                  
+                 10      $ **********************************************************                            
+                 11      BEGIN BULK                                                                              
+0                             INPUT BULK DATA ENTRY COUNT =          28
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+0                                                 S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBAR    1       1       1       2       0.      1.      0.                      
+                    2-        CBAR    2       1       2       3       0.      1.      0.                      
+                    3-        CBAR    3       1       3       4       0.      1.      0.                      
+                    4-        CBAR    4       1       4       5       0.      1.      0.                      
+                    5-        CBAR    5       1       5       6       0.      1.      0.                      
+                    6-        CBAR    6       1       6       7       0.      1.      0.                      
+                    7-        CBAR    7       1       7       8       0.      1.      0.                      
+                    8-        CBAR    8       1       8       9       0.      1.      0.                      
+                    9-        CBAR    9       1       9       10      0.      1.      0.                      
+                   10-        CBAR    10      1       10      11      0.      1.      0.                      
+                   11-        EIGRL   1                       10                              MASS            
+                   12-        FORCE   1       11      0       1.      0.      100.    0.                      
+                   13-        GRDSET                                                  1345                    
+                   14-        GRID    1       0       0.      0.      0.      0                               
+                   15-        GRID    2       0       1.      0.      0.      0                               
+                   16-        GRID    3       0       2.      0.      0.      0                               
+                   17-        GRID    4       0       3.      0.      0.      0                               
+                   18-        GRID    5       0       4.      0.      0.      0                               
+                   19-        GRID    6       0       5.      0.      0.      0                               
+                   20-        GRID    7       0       6.      0.      0.      0                               
+                   21-        GRID    8       0       7.      0.      0.      0                               
+                   22-        GRID    9       0       8.      0.      0.      0                               
+                   23-        GRID    10      0       9.      0.      0.      0                               
+                   24-        GRID    11      0       10.     0.      0.      0                               
+                   25-        MAT1    1       2.9E+7  1.1E+7  0.32    7.357E-46.E-6   70.                     
+                   26-        PBAR    1       1       0.1     0.01    0.01    0.001   0.                      
+                   27-        SPC     1       1       123456  0.                                              
+                              ENDDATA 
+0                       TOTAL COUNT=        28
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =       11
+ 
+ 
+                                   NUMBER OF CBAR     ELEMENTS =       10
+ 
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       1.000000E+02     ----       0.000000E+00     ----       1.000000E+03                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  1.000000E+02  0.000000E+00  0.000000E+00  0.000000E+00  1.000000E+03                             
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       0 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE =  2.115405E+09, CYCLES =  7.320098E+03 NUMBER OF EIGENVALUES BELOW THIS VALUE =     3
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE =  1.932940E+11, CYCLES =  6.997282E+04 NUMBER OF EIGENVALUES BELOW THIS VALUE =    10
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.        2.1154048E+09          7.3200976E+03                 3                       10
+     2.        1.9329403E+11          6.9972815E+04                10                        0
+
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................    7
+
+                                     NUMBER OF DECOMPOSITIONS .............    2
+
+                                     NUMBER OF ROOTS FOUND ................   10
+
+                                     NUMBER OF SOLVES REQUIRED ............    4
+
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        4.828614E+06        2.197411E+03        3.497288E+02        1.000000E+00        4.828614E+06
+        2         2        1.854417E+08        1.361770E+04        2.167324E+03        1.000000E+00        1.854417E+08
+        3         3        1.424922E+09        3.774814E+04        6.007803E+03        1.000000E+00        1.424922E+09
+        4         4        5.358321E+09        7.320056E+04        1.165023E+04        1.000000E+00        5.358321E+09
+        5         5        1.431861E+10        1.196604E+05        1.904454E+04        1.000000E+00        1.431861E+10
+        6         6        3.109556E+10        1.763393E+05        2.806527E+04        1.000000E+00        3.109556E+10
+        7         7        5.825735E+10        2.413656E+05        3.841453E+04        1.000000E+00        5.825735E+10
+        8         8        9.621565E+10        3.101865E+05        4.936771E+04        1.000000E+00        9.621565E+10
+        9         9        1.396302E+11        3.736712E+05        5.947162E+04        1.000000E+00        1.396302E+11
+       10        10        1.754061E+11        4.188151E+05        6.665649E+04        1.000000E+00        1.754061E+11
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  4.828614E+06
+          CYCLES =  3.497288E+02         R E A L   E I G E N V E C T O R   N O .          1
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0            1.228598E+00   0.0            0.0            0.0            2.398372E+00
+             3      G      0.0            4.679349E+00   0.0            0.0            0.0            4.444559E+00
+             4      G      0.0            1.000153E+01   0.0            0.0            0.0            6.142179E+00
+             5      G      0.0            1.685052E+01   0.0            0.0            0.0            7.500224E+00
+             6      G      0.0            2.489427E+01   0.0            0.0            0.0            8.535141E+00
+             7      G      0.0            3.382161E+01   0.0            0.0            0.0            9.272497E+00
+             8      G      0.0            4.335206E+01   0.0            0.0            0.0            9.748256E+00
+             9      G      0.0            5.324668E+01   0.0            0.0            0.0            1.000968E+01
+            10      G      0.0            6.331971E+01   0.0            0.0            0.0            1.011595E+01
+            11      G      0.0            7.345065E+01   0.0            0.0            0.0            1.013844E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.854417E+08
+          CYCLES =  2.167324E+03         R E A L   E I G E N V E C T O R   N O .          2
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -6.680339E+00   0.0            0.0            0.0           -1.210550E+01
+             3      G      0.0           -2.175301E+01   0.0            0.0            0.0           -1.683705E+01
+             4      G      0.0           -3.811939E+01   0.0            0.0            0.0           -1.486347E+01
+             5      G      0.0           -4.971435E+01   0.0            0.0            0.0           -7.593093E+00
+             6      G      0.0           -5.222866E+01   0.0            0.0            0.0            2.908018E+00
+             7      G      0.0           -4.362071E+01   0.0            0.0            0.0            1.424193E+01
+             8      G      0.0           -2.421874E+01   0.0            0.0            0.0            2.415404E+01
+             9      G      0.0            3.681531E+00   0.0            0.0            0.0            3.104862E+01
+            10      G      0.0            3.671163E+01   0.0            0.0            0.0            3.444257E+01
+            11      G      0.0            7.171651E+01   0.0            0.0            0.0            3.528604E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.424922E+09
+          CYCLES =  6.007803E+03         R E A L   E I G E N V E C T O R   N O .          3
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0            1.626496E+01   0.0            0.0            0.0            2.688063E+01
+             3      G      0.0            4.344259E+01   0.0            0.0            0.0            2.280527E+01
+             4      G      0.0            5.515409E+01   0.0            0.0            0.0           -1.434298E+00
+             5      G      0.0            3.979284E+01   0.0            0.0            0.0           -2.801730E+01
+             6      G      0.0            4.058696E+00   0.0            0.0            0.0           -3.978267E+01
+             7      G      0.0           -3.219130E+01   0.0            0.0            0.0           -2.880448E+01
+             8      G      0.0           -4.766401E+01   0.0            0.0            0.0           -1.675391E-01
+             9      G      0.0           -3.145125E+01   0.0            0.0            0.0            3.169478E+01
+            10      G      0.0            1.203414E+01   0.0            0.0            0.0            5.248287E+01
+            11      G      0.0            6.865322E+01   0.0            0.0            0.0            5.868720E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  5.358321E+09
+          CYCLES =  1.165023E+04         R E A L   E I G E N V E C T O R   N O .          4
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -2.725206E+01   0.0            0.0            0.0           -3.932761E+01
+             3      G      0.0           -5.447637E+01   0.0            0.0            0.0           -6.118680E+00
+             4      G      0.0           -3.382684E+01   0.0            0.0            0.0            4.407799E+01
+             5      G      0.0            1.933634E+01   0.0            0.0            0.0            5.124487E+01
+             6      G      0.0            5.103669E+01   0.0            0.0            0.0            5.533137E+00
+             7      G      0.0            2.872001E+01   0.0            0.0            0.0           -4.522640E+01
+             8      G      0.0           -2.302916E+01   0.0            0.0            0.0           -4.682508E+01
+             9      G      0.0           -4.725389E+01   0.0            0.0            0.0            4.605030E+00
+            10      G      0.0           -1.206605E+01   0.0            0.0            0.0            6.129428E+01
+            11      G      0.0            6.364828E+01   0.0            0.0            0.0            8.292436E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.431861E+10
+          CYCLES =  1.904454E+04         R E A L   E I G E N V E C T O R   N O .          5
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -3.798817E+01   0.0            0.0            0.0           -4.450352E+01
+             3      G      0.0           -4.905999E+01   0.0            0.0            0.0            3.083412E+01
+             4      G      0.0            1.092696E+01   0.0            0.0            0.0            6.791243E+01
+             5      G      0.0            5.092548E+01   0.0            0.0            0.0           -2.527403E+00
+             6      G      0.0            7.479093E+00   0.0            0.0            0.0           -6.814640E+01
+             7      G      0.0           -4.840145E+01   0.0            0.0            0.0           -2.286776E+01
+             8      G      0.0           -2.606550E+01   0.0            0.0            0.0            5.898366E+01
+             9      G      0.0            3.667346E+01   0.0            0.0            0.0            4.215786E+01
+            10      G      0.0            3.178003E+01   0.0            0.0            0.0           -5.407851E+01
+            11      G      0.0           -5.651105E+01   0.0            0.0            0.0           -1.053974E+02
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.109556E+10
+          CYCLES =  2.806527E+04         R E A L   E I G E N V E C T O R   N O .          6
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0            4.703360E+01   0.0            0.0            0.0            3.848363E+01
+             3      G      0.0            2.763848E+01   0.0            0.0            0.0           -7.101905E+01
+             4      G      0.0           -4.615665E+01   0.0            0.0            0.0           -3.397816E+01
+             5      G      0.0           -1.581712E+01   0.0            0.0            0.0            7.656489E+01
+             6      G      0.0            4.999257E+01   0.0            0.0            0.0            1.616628E+01
+             7      G      0.0            4.467740E+00   0.0            0.0            0.0           -8.037542E+01
+             8      G      0.0           -5.120318E+01   0.0            0.0            0.0            1.748156E+00
+             9      G      0.0            6.072788E+00   0.0            0.0            0.0            7.819793E+01
+            10      G      0.0            4.396534E+01   0.0            0.0            0.0           -2.903434E+01
+            11      G      0.0           -4.743461E+01   0.0            0.0            0.0           -1.225828E+02
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  5.825735E+10
+          CYCLES =  3.841453E+04         R E A L   E I G E N V E C T O R   N O .          7
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -5.303006E+01   0.0            0.0            0.0           -1.949057E+01
+             3      G      0.0            3.533527E+00   0.0            0.0            0.0            8.856288E+01
+             4      G      0.0            4.468981E+01   0.0            0.0            0.0           -4.160135E+01
+             5      G      0.0           -4.029067E+01   0.0            0.0            0.0           -5.363005E+01
+             6      G      0.0           -1.235575E+01   0.0            0.0            0.0            8.498487E+01
+             7      G      0.0            5.021421E+01   0.0            0.0            0.0           -1.479482E+01
+             8      G      0.0           -2.815676E+01   0.0            0.0            0.0           -7.320861E+01
+             9      G      0.0           -2.808216E+01   0.0            0.0            0.0            7.274018E+01
+            10      G      0.0            4.691595E+01   0.0            0.0            0.0            7.466020E+00
+            11      G      0.0           -3.716610E+01   0.0            0.0            0.0           -1.298561E+02
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  9.621565E+10
+          CYCLES =  4.936771E+04         R E A L   E I G E N V E C T O R   N O .          8
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0            5.419484E+01   0.0            0.0            0.0           -9.379762E+00
+             3      G      0.0           -3.382553E+01   0.0            0.0            0.0           -6.395753E+01
+             4      G      0.0           -5.920730E+00   0.0            0.0            0.0            8.486316E+01
+             5      G      0.0            4.200645E+01   0.0            0.0            0.0           -4.799919E+01
+             6      G      0.0           -4.901125E+01   0.0            0.0            0.0           -2.213794E+01
+             7      G      0.0            2.214187E+01   0.0            0.0            0.0            7.695720E+01
+             8      G      0.0            2.000572E+01   0.0            0.0            0.0           -7.863996E+01
+             9      G      0.0           -4.857263E+01   0.0            0.0            0.0            2.545912E+01
+            10      G      0.0            4.127481E+01   0.0            0.0            0.0            4.061076E+01
+            11      G      0.0           -2.668889E+01   0.0            0.0            0.0           -1.222509E+02
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    17
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.396302E+11
+          CYCLES =  5.947162E+04         R E A L   E I G E N V E C T O R   N O .          9
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -4.762316E+01   0.0            0.0            0.0            3.507530E+01
+             3      G      0.0            4.963677E+01   0.0            0.0            0.0            8.609105E+00
+             4      G      0.0           -3.903091E+01   0.0            0.0            0.0           -4.373496E+01
+             5      G      0.0            1.615560E+01   0.0            0.0            0.0            6.588723E+01
+             6      G      0.0            1.168127E+01   0.0            0.0            0.0           -6.767741E+01
+             7      G      0.0           -3.591854E+01   0.0            0.0            0.0            4.860001E+01
+             8      G      0.0            4.907026E+01   0.0            0.0            0.0           -1.455566E+01
+             9      G      0.0           -4.719594E+01   0.0            0.0            0.0           -2.420956E+01
+            10      G      0.0            2.955064E+01   0.0            0.0            0.0            5.283506E+01
+            11      G      0.0           -1.680042E+01   0.0            0.0            0.0           -9.594411E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    18
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.754061E+11
+          CYCLES =  6.665649E+04         R E A L   E I G E N V E C T O R   N O .         10
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      0.0           -2.943880E+01   0.0            0.0            0.0            3.466785E+01
+             3      G      0.0            3.809520E+01   0.0            0.0            0.0           -2.438582E+01
+             4      G      0.0           -4.525117E+01   0.0            0.0            0.0            1.543828E+01
+             5      G      0.0            4.885906E+01   0.0            0.0            0.0           -5.075734E+00
+             6      G      0.0           -4.875766E+01   0.0            0.0            0.0           -5.654812E+00
+             7      G      0.0            4.494640E+01   0.0            0.0            0.0            1.595701E+01
+             8      G      0.0           -3.771274E+01   0.0            0.0            0.0           -2.503845E+01
+             9      G      0.0            2.764844E+01   0.0            0.0            0.0            3.230295E+01
+            10      G      0.0           -1.496927E+01   0.0            0.0            0.0           -3.594292E+01
+            11      G      0.0            7.934635E+00   0.0            0.0            0.0            5.232732E+01
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    19
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                          FEBRUARY   8, 2019  NX NASTRAN  9/21/17   PAGE    20
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     29
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+1                                        * * * END OF JOB * * *
+ 
+ 
