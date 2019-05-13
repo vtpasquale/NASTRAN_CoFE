@@ -7,9 +7,13 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
         sid % [int] Identification numbers of the single-point constraint sets.
     end
     methods (Sealed=true)
-        function [sb,sd,spcsSIDs]=process_sb(obj,model) % node2gdof,nodeIDs
+        function [sb,sd]=preprocess(obj,model) % node2gdof,nodeIDs
             %
             % Outputs
+            % sb ([ngdof,1] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
+            % sd ([ngdof,1] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
+
+            % Local variables before downselecting boundary condition:
             % sb ([ngdof,num SID] logical) Degrees-of-freedom eliminated by single-point constraints that are included in boundary conditions
             % sd ([ngdof,num SID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
             % spcsSIDs ([num SID,1] uint32) ID numbers of defined single point constraint sets
@@ -63,18 +67,24 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
                     end
                 end
             end
-        end % process_sb()
+            
+            %%
+            % Downselect boundary condition here (affects superelement set logic flow)
+            % Nastran case control limitation requires this. Nastran allows 
+            % sepearte BC for each load case for residual structure only -
+            % not superelements.
+            sidIndex = (model.caseControl.spc==spcsSIDs);
+            if isempty(sidIndex) % isempty(obj.caseControl.spc) || isempty(obj.spcsSIDs)
+                sb = false(model.nGdof,1);
+                sd = spalloc(model.nGdof,1,0);
+            else
+                sb=sb(:,sidIndex);
+                sd=sd(:,sidIndex);
+            end
+            
+            
+        end % preprocess()
         
-        %             ii = i;
-        %             %% SPCADD
-        %             for i = 1:size(spcaddID,1)
-        %                 oi=obj([obj.SID]==spcaddID(i));
-        %                 for j = 1:size(oi,1)
-        %                     oj=oi(j);
-        %
-        %                 end
-        %             end
-        
-    end % methods
+    end
 end
 

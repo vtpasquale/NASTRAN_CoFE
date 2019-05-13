@@ -148,6 +148,7 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
     methods (Static=true)
         function solver = recover(solver,model)
             % recovers node output data
+            caseControl = model.caseControl(solver.caseControlIndex);
 
             % displacements
             if caseControl.displacement.n ~= 0

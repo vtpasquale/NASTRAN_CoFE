@@ -41,7 +41,7 @@ classdef CaseEntrySuper < CaseEntry
                     switch size(splitRightHandSide,2)
                         case 1
                             idUint32 = castInputField('Case Control Output Request',...
-                            'RightHandSideDescriber',splitRightHandSide,'uint32',NaN,0);
+                            'RightHandSideDescriber',splitRightHandSide{1},'uint32',NaN,0);
                             obj.id = int32(idUint32);
                         case 2
                             idUint32 = castInputField('Case Control Output Request',...

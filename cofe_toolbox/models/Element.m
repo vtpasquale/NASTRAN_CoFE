@@ -49,8 +49,10 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             model.K_gg=K_gg;
             model.M_gg=M_gg;
         end
-        function solver = recover(obj,solver,caseControl)
+        function solver = recover(obj,solver,model)
             % recovers element output data
+            caseControl = model.caseControl(solver.caseControlIndex);
+            
             nElement = size(obj,1);
             IDs = uint32([obj.eid]).';
             

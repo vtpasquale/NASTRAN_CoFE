@@ -61,6 +61,7 @@ classdef Model
         
         %% Set-related data
         sd % ([nGdof,numSID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
+        superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
         
         %% Matricies
         K_gg  % ([nGdof,nGdof] sparse) Elastic stiffness matrix in nodal displacement reference frame
@@ -105,48 +106,67 @@ classdef Model
             for i = 1:n
                 obj(i) = preprocess_sub(obj(i));
             end
+            
+            % Superelement connections
+            obj = obj(1).superElement.preprocess(obj);
+            
+            % Process sets
+            obj = DofSet.partition(obj);
+            
         end
         function obj = assemble(obj)
-            [n,m]=size(obj);
-            if m~=1; error('Function only operates on Model arrays size n x 1.'); end
-            % Assemble and reduce seperate part superelements
-            for i = 1:n
-                obj(i) = assemble_sub(obj(i));
+            % Model assembly, reduction, synthesis
+            [nModel,mModel]=size(obj);
+            if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
+            
+            if nModel>1
+                % Assemble and reduce part superelements
+                for i = 2:nModel
+                    obj(i) = obj(i).assemble_sub();
+                    obj(i) = obj(i).modelReduction();
+                end
             end
+            
+            % Assemble residual structure
+            obj(1) = obj(1).assemble_sub();
+            
             % Synthesize superelement parts - single level only - modify for multi level
-            nModel = size(obj,1);
-            if nModel > 1
-                se = obj(1).superElement;
-                nSuperElement = size(se,1);
-                if (nModel-1) ~= nSuperElement
-                    error('SEBULK and SECONCT entries must be defined in the residual structure for all part superelements.')
+            if nModel>1
+                % Assemble and reduce part superelements
+                seIndex = obj(1).superElementConnections;
+                % g2tIndex0 = cumsum(obj(1).t); g2tIndex0(~obj(1).t)=0;
+                for i = 2:nModel
+                    rowIndex = seIndex(:,i)~=0;
+                    gIndex0 = seIndex(rowIndex,1);
+                    gIndexi = seIndex(rowIndex,i);
+                    obji = obj(i);
+                    g2tIndexi = cumsum(obji.t); g2tIndexi(~obji.t)=0;
+                    % tIndex0=g2tIndex0(gIndex0); if any(tIndex0==0); error('Superelement set problem.'); end
+                    tIndexi=g2tIndexi(gIndexi); if any(tIndexi==0); error('Superelement set problem.'); end
+                    obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obji.K_aa(tIndexi,tIndexi);
+                    obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obji.M_aa(tIndexi,tIndexi);
                 end
-                superElementIDs = [obj.superElementID];
-                for i = 1:nSuperElement
-                    if se(i).seidb~=0; error('Only single level superlements supported. Check SEBULK and SECONCT entries.'); end
-                    superElementIndex = find(se(i).seida==superElementIDs);
-                    if isempty(superElementIndex); error('SEIDA references undefined superelement #: %d',se(i).seida); end
-                    if superElementIndex==1; error('SEIDA cannot reference residual structure'); end
-                    obji = obj(superElementIndex);
-                    points0 = obj(1).point.getPoints(se(i).gidb,obj(1));
-                    pointsi =   obji.point.getPoints(se(i).gida,obji);
-                    index0 = [points0.gdof];
-                    indexi = [pointsi.gdof];
-                    %% This needs to index the A set not the G set - fix it
-                    obj(1).K_gg(index0,index0) = obj(1).K_gg(index0,index0) + obji.K_gg(indexi,indexi);
-                    obj(1).M_gg(index0,index0) = obj(1).M_gg(index0,index0) + obji.M_gg(indexi,indexi);
-                end
-                obj(1) = obj(1).modelReduction();
             end
+            
+            % Reduce residual structure
+            obj(1) = obj(1).modelReduction();
+            
         end
         function solver = modelExpansion(obj,solver,u_a)
             % Expands solution result
-            [n,m]=size(obj);
-            if m~=1; error('Function only operates on Model arrays size n x 1.'); end
-            for i = 1:n
-                solver = obj(i).modelExpansion_sub(u_a);
+            [nModel,mModel]=size(obj);
+            if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
+            
+            % Expand residual structure result
+            solver(1) = obj(1).modelExpansion_sub(solver(1),u_a);
+            
+            if nModel>1
+                for i = 2:nModel
+                    rowIndex = 0~=obj(1).superElementConnections(:,i);
+                    u_ai = solver(1).u_g(rowIndex,:);
+                    solver(i) = obj(i).modelExpansion_sub(solver(i),u_ai);
+                end
             end
-            keyboard
         end
         function nModes = getNumModes(obj)
             if isempty(obj.caseControl.method); error('No METHOD defined in Case Control section.'); end
@@ -178,14 +198,14 @@ classdef Model
             
             % Process single-point constraint sets
             obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
-            [obj.sb,obj.sd,obj.spcsSIDs]=obj.spcs.process_sb(obj); % SID numbers and DOF eliminated by boundary single-point constraints
-            obj.s = obj.sg | obj.sb;
+            [obj.sb,obj.sd]=obj.spcs.preprocess(obj);
             
-            % Process multi-point constraint sets? - or wait for assembly?
+            % Process multi-point constraint sets
+            % obj.m, obj.n
             
-            % Process sets
+            % preprocess model sets
             obj = obj.dofSet.preprocess(obj);
-            obj.f = ~obj.s;    
+            
         end
         function obj = assemble_sub(obj)
             % Assemble
@@ -193,8 +213,6 @@ classdef Model
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
             obj = DofSet.assemble(obj); % model reduction sets
-            
-            obj = obj.modelReduction();
         end
         function obj = modelReduction(obj)
             if ~any(obj.o)
@@ -213,7 +231,7 @@ classdef Model
             end
             
         end
-        function u_g = modelExpansion_sub(obj,u_a)
+        function solver = modelExpansion_sub(obj,solver,u_a)
             
             % preallocate
             nVectors = size(u_a,2);
@@ -229,7 +247,7 @@ classdef Model
                     u_g(obj.f,:) = u_a;
                 case 1
                     % Guyan expansion
-                    u_g(obj.a,:) = u_a;
+                    u_g(obj.t,:) = u_a;
                     u_g(obj.o,:) = obj.G_ot*u_a; % additional term if load applied at o-set
                 case 2
                     % Dynamic expansion
@@ -239,7 +257,17 @@ classdef Model
                 otherwise
                     error('')
             end
+            solver.u_g = u_g;
+            solver.u_0 = obj.R_0g*solver.u_g;
             
+            % constraint forces
+            solver.f_g = zeros(size(solver.u_g));
+            solver.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solver.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solver.u_g(obj.s,:);
+            solver.f_0 = obj.R_0g*solver.f_g;
+            
+            % recover and store selected response data at nodes and elements 
+            solver = obj.point.recover(solver,obj);
+            solver = obj.element.recover(solver,obj);
             
         end
         function obj = guyanReduction(obj)
@@ -259,9 +287,12 @@ classdef Model
         function obj = dynamicReduction(obj)
             % Implement dynamic reduction 
             nModes = getNumModes(obj);
+            
+            t = obj.t & ~obj.q;
+            
             % Start with H\CB only
             K_oo = obj.K_gg(obj.o,obj.o);
-            K_ot = obj.K_gg(obj.o,obj.t);
+            K_ot = obj.K_gg(obj.o,t);
             obj.G_ot = - K_oo\K_ot;
             M_oo = obj.M_gg(obj.o,obj.o);
             [V,D] = eigs(M_oo,K_oo,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
@@ -278,9 +309,10 @@ classdef Model
             %
             % Update for qset indexing...
             %
+            f = obj.o | t ;
             T =[obj.G_ot,obj.G_oq;eye(nBset),zeros(nBset,nQset)];
-            obj.K_aa = T.'*obj.K_gg(obj.t,obj.t)*T;
-            obj.M_aa = T.'*obj.K_gg(obj.t,obj.t)*T;
+            obj.K_aa = T.'*obj.K_gg(f,f)*T;
+            obj.M_aa = T.'*obj.M_gg(f,f)*T;
         end            
     end
 end
