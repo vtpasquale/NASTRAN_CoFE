@@ -29,7 +29,7 @@ classdef ModesSolver < Solver
     end
     
     methods 
-        function obj=solve_sub(obj,model)
+        function obj=solve_sub(obj,model,reducedModel)
             % Normal modes solution
             %
             % INPUTS
@@ -51,8 +51,8 @@ classdef ModesSolver < Solver
 %             obj.u_0=zeros(model.nGdof,nModes);
             
             %% Solve
-            K_aa = model0.K_aa;
-            M_aa = model0.M_aa;
+            K_aa = model0.reducedModel.K_aa;
+            M_aa = model0.reducedModel.M_aa;
             
             nAset = size(K_aa,1);
             if nModes>nAset
@@ -73,6 +73,8 @@ classdef ModesSolver < Solver
             obj(1).eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
             
             % Expand eigenvectors
+            obj = model.expandResult(obj,u_a);
+            
 %             obj = model.modelExpansion(obj,u_a);
             
 %             obj.u_g(f,:)= V;

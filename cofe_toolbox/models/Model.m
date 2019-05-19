@@ -20,6 +20,7 @@ classdef Model
         load@Load;
         
         superElement@SuperElement;
+        reducedModel
         
         %% Simple entities
         parameter@Parameter;
@@ -59,9 +60,16 @@ classdef Model
         % fr = [f ? q ? r] Statically independent set minus the statically determinate supports
         % v = [o + c + r] Set free to vibrate in dynamic reduction and component mode synthesis
         
+        % seconct % ([nGdof,1] logical) Degrees-of-freedom connected to other superelements, as specified on seconct entrires
+        
         %% Set-related data
         sd % ([nGdof,numSID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
         superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
+        
+        aSetIndexInGSet  % [nAsetDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
+        aSetIndexInGSet0 % [nAsetDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
+        aSetIndexInASet0 % [nAsetDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
+        
         
         %% Matricies
         K_gg  % ([nGdof,nGdof] sparse) Elastic stiffness matrix in nodal displacement reference frame
@@ -71,11 +79,8 @@ classdef Model
         p_g % ([nGdof,1] real) load vector in nodal displacement reference frame
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
         
-        G_ot % ([nOdof,nTdof] double) Static boundary transformation matrix between the exterior and interior motion
-        G_oq % ([nOdof,nQdof] double) Dynamic transformation matrix between the exterior and interior motion
-        
-        K_aa % ([nAdof,nAdof] double - possibly sparse) Elastic stiffness matrix of analysis set
-        M_aa % ([nAdof,nAdof] double - possibly sparse) Mass matrix of analysis set
+        % G_ot % ([nOdof,nTdof] double) Static boundary transformation matrix between the exterior and interior motion
+        % G_oq % ([nOdof,nQdof] double) Dynamic transformation matrix between the exterior and interior motion
         
         %% Store vectors of ID numbers and other index data as seperate varables.
         % This speeds up assembly because repeated concatenation is expensive.
@@ -90,7 +95,6 @@ classdef Model
         nodeFlag % ([nPoints,1] logical) flags nodes in point array (not scalar points)
         nGdof % [uint32] number of global degrees of freedom
         coupledMassFlag % [logical] Coupled mass formulation is used if true, lumped mass formulation used otherwise.
-        reductionType % [uint8] Model reduction type: 0 = none, 1 = Guyan, 2 = dynamic
         
         %% Default Grid point properties:
         %  - Specified Grid points default to these options if not specified explicitly
@@ -101,70 +105,79 @@ classdef Model
     end
     methods
         function obj = preprocess(obj)
-            [n,m]=size(obj);
-            if m~=1; error('Function only operates on Model arrays size n x 1.'); end
-            for i = 1:n
-                obj(i) = preprocess_sub(obj(i));
+            [nModel,mModel]=size(obj);
+            if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
+            for i = 1:nModel
+                obj(i) = obj(i).preprocess_sub();
             end
             
             % Superelement connections
             obj = obj(1).superElement.preprocess(obj);
             
-            % Process sets
+            % Preprocess sets
             obj = DofSet.partition(obj);
             
         end
         function obj = assemble(obj)
-            % Model assembly, reduction, synthesis
+            % Model assembly, reduction, and synthesis
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
             
-            if nModel>1
-                % Assemble and reduce part superelements
-                for i = 2:nModel
-                    obj(i) = obj(i).assemble_sub();
-                    obj(i) = obj(i).modelReduction();
-                end
+            % Assemble individual superelements
+            for i = 1:nModel
+                obj(i) = obj(i).assemble_sub();
             end
             
-            % Assemble residual structure
-            obj(1) = obj(1).assemble_sub();
-            
-            % Synthesize superelement parts - single level only - modify for multi level
-            if nModel>1
-                % Assemble and reduce part superelements
-                seIndex = obj(1).superElementConnections;
-                % g2tIndex0 = cumsum(obj(1).t); g2tIndex0(~obj(1).t)=0;
+            % Reduce Part Superelements and add to residual structure
+            if nModel > 1
                 for i = 2:nModel
-                    rowIndex = seIndex(:,i)~=0;
-                    gIndex0 = seIndex(rowIndex,1);
-                    gIndexi = seIndex(rowIndex,i);
-                    obji = obj(i);
-                    g2tIndexi = cumsum(obji.t); g2tIndexi(~obji.t)=0;
-                    % tIndex0=g2tIndex0(gIndex0); if any(tIndex0==0); error('Superelement set problem.'); end
-                    tIndexi=g2tIndexi(gIndexi); if any(tIndexi==0); error('Superelement set problem.'); end
-                    obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obji.K_aa(tIndexi,tIndexi);
-                    obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obji.M_aa(tIndexi,tIndexi);
+                    obj(i).reducedModel = ReducedModel.constructFromModel(obj(i));
+                    
+                    gIndex0 = obj(i).aSetIndexInGSet0;
+                    obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obj(i).reducedModel.K_aa;
+                    obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obj(i).reducedModel.M_aa;
                 end
             end
             
             % Reduce residual structure
-            obj(1) = obj(1).modelReduction();
+            obj(1).reducedModel = ReducedModel.constructFromModel(obj(1));
+            
+%             % Assemble residual structure
+%             obj(1) = obj(1).assemble_sub();
+%             
+%             % Synthesize superelement parts - single level only - modify for multi level
+%             if nModel>1
+%                 % Assemble and reduce part superelements
+%                 seIndex = obj(1).superElementConnections;
+%                 % g2tIndex0 = cumsum(obj(1).t); g2tIndex0(~obj(1).t)=0;
+%                 for i = 2:nModel
+%                     rowIndex = seIndex(:,i)~=0;
+%                     gIndex0 = seIndex(rowIndex,1);
+%                     gIndexi = seIndex(rowIndex,i);
+%                     obji = obj(i);
+%                     g2tIndexi = cumsum(obji.t); g2tIndexi(~obji.t)=0;
+%                     % tIndex0=g2tIndex0(gIndex0); if any(tIndex0==0); error('Superelement set problem.'); end
+%                     tIndexi=g2tIndexi(gIndexi); if any(tIndexi==0); error('Superelement set problem.'); end
+%                     obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obji.K_aa(tIndexi,tIndexi);
+%                     obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obji.M_aa(tIndexi,tIndexi);
+%                 end
+%             end
             
         end
-        function solver = modelExpansion(obj,solver,u_a)
+        function solver = expandResult(obj,solver,u_a)
             % Expands solution result
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
             
             % Expand residual structure result
-            solver(1) = obj(1).modelExpansion_sub(solver(1),u_a);
+            solver(1) = obj(1).expandResult_sub(solver(1),u_a);
+            
+            % Index superelement ASET from residual structure ASET
             
             if nModel>1
                 for i = 2:nModel
-                    rowIndex = 0~=obj(1).superElementConnections(:,i);
-                    u_ai = solver(1).u_g(rowIndex,:);
-                    solver(i) = obj(i).modelExpansion_sub(solver(i),u_ai);
+                    u_ai = u_a;
+                    solver(i) = obj(i).expandResult_sub(solver(i),u_ai);
                 end
             end
         end
@@ -212,51 +225,22 @@ classdef Model
             obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
-            obj = DofSet.assemble(obj); % model reduction sets
         end
-        function obj = modelReduction(obj)
-            if ~any(obj.o)
-                % No model reduction
-                obj.reductionType = uint8(0);
-                obj.K_aa = obj.K_gg(obj.f,obj.f);
-                obj.M_aa = obj.M_gg(obj.f,obj.f);
-            elseif ~any(obj.q)
-                % Guyan reduction
-                obj.reductionType = uint8(1);
-                obj = obj.guyanReduction();
-            else
-                % Dynamic reduction
-                obj.reductionType = uint8(2);
-                obj = obj.dynamicReduction();
-            end
-            
-        end
-        function solver = modelExpansion_sub(obj,solver,u_a)
+        function solver = expandResult_sub(obj,solver,u_a)
             
             % preallocate
             nVectors = size(u_a,2);
             u_g=zeros(obj.nGdof,nVectors);
             
-            % prescribed DOF
-%             u_g(obj.s,:) = repmat(obj.sd,[1,nVectors]);
+            % Expand reduced model result to free and independent set
+            u_o = obj.reducedModel.expandResult(u_a);
+            u_g(obj.a,:) = u_a;
+            u_g(obj.o,:) = u_o;
             
-            % solved DOF
-            switch obj.reductionType
-                case 0
-                    % no model expansion
-                    u_g(obj.f,:) = u_a;
-                case 1
-                    % Guyan expansion
-                    u_g(obj.t,:) = u_a;
-                    u_g(obj.o,:) = obj.G_ot*u_a; % additional term if load applied at o-set
-                case 2
-                    % Dynamic expansion
-                    u_g(obj.a,:) = u_a;
-                    u_g(obj.o,:) = obj.G_ot*u_t + obj.G_oq*u_q; % additional term if load applied at o-set
-                    
-                otherwise
-                    error('')
-            end
+            % prescribed DOF
+             u_g(obj.s,:) = repmat(obj.sd(obj.s),[1,nVectors]);
+            
+             % store in solver object
             solver.u_g = u_g;
             solver.u_0 = obj.R_0g*solver.u_g;
             
@@ -268,51 +252,6 @@ classdef Model
             % recover and store selected response data at nodes and elements 
             solver = obj.point.recover(solver,obj);
             solver = obj.element.recover(solver,obj);
-            
-        end
-        function obj = guyanReduction(obj)
-            % Implement Guyan reduction (a.k.a. static condensation)
-            % Exact Stiffness Matrix Reduction
-            % For Guyan reduction only, the a set is also the t set
-            K_oo = obj.K_gg(obj.o,obj.o);
-            K_ot = obj.K_gg(obj.o,obj.t);
-            obj.G_ot = - K_oo\K_ot;
-            obj.K_aa = obj.K_gg(obj.t,obj.t) +  K_ot.'* obj.G_ot;
-            % Approximate Mass Matrix Reduction
-            M_oo = obj.M_gg(obj.o,obj.o);
-            M_ot = obj.M_gg(obj.o,obj.t);
-            obj.M_aa = obj.M_gg(obj.t,obj.t) +  M_ot.'*obj.G_ot + ...
-                obj.G_ot.'*M_ot + obj.G_ot.'*M_oo*obj.G_ot;
-        end
-        function obj = dynamicReduction(obj)
-            % Implement dynamic reduction 
-            nModes = getNumModes(obj);
-            
-            t = obj.t & ~obj.q;
-            
-            % Start with H\CB only
-            K_oo = obj.K_gg(obj.o,obj.o);
-            K_ot = obj.K_gg(obj.o,t);
-            obj.G_ot = - K_oo\K_ot;
-            M_oo = obj.M_gg(obj.o,obj.o);
-            [V,D] = eigs(M_oo,K_oo,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
-            eigenvalues = diag(D).^-1;
-            for mn = 1:nModes
-                if sum(V(:,mn)) < 0
-                    V(:,mn) = -V(:,mn);
-                end
-                V(:,mn) = V(:,mn)./sqrt(V(:,mn).'*M_oo*V(:,mn));
-            end
-            obj.G_oq = V;
-            nBset = size(obj.G_ot,2);
-            nQset = size(obj.G_oq,2);
-            %
-            % Update for qset indexing...
-            %
-            f = obj.o | t ;
-            T =[obj.G_ot,obj.G_oq;eye(nBset),zeros(nBset,nQset)];
-            obj.K_aa = T.'*obj.K_gg(f,f)*T;
-            obj.M_aa = T.'*obj.M_gg(f,f)*T;
         end            
     end
 end

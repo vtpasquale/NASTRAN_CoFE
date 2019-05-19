@@ -12,9 +12,14 @@ classdef SuperElement
         gida % [n,1 uint32] Identification numbers of a grid or scalar point in superelement seida, which will be connected to gidb.
         gidb % [n,1 uint32] Identification numbers of a grid or scalar point in superelement seidb, which will be connected to gida.
         
-        bIndexInGa % [nBsetGdof,1 uint32] G-set index (in superelement seida) of B-set DOF defined by SECONCT
-        bIndexInGb % [nBsetGdof,1 uint32] G-set index (in superelement seidb) of B-set DOF defined by SECONCT
+%         bIndexInGa % [nBsetGdof,1 uint32] G-set index (in superelement seida) of B-set DOF defined by SECONCT
+%         bIndexInGb % [nBsetGdof,1 uint32] G-set index (in superelement seidb) of B-set DOF defined by SECONCT
         modelIndex % [unit32] index of gida superelement model object in model array
+        
+%         aSetIndexInGSet  % [nAsetDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
+%         aSetIndexInGSet0 % [nAsetDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
+%         aSetIndexInASet0 % [nAsetDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
+        
     end
     
     methods
@@ -81,12 +86,15 @@ classdef SuperElement
                     modeli = model(superElementIndex);
                     points0 = model(1).point.getPoints(obj(i).gidb,model(1));
                     pointsi =   modeli.point.getPoints(obj(i).gida,modeli);
-                    obj(i).bIndexInGb = [points0.gdof]';
-                    obj(i).bIndexInGa = [pointsi.gdof]';
+                    
+%                     aSetIndexInGSet  % [nAsetDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
+%                     aSetIndexInGSet0 % [nAsetDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
+%                     aSetIndexInASet0 % [nAsetDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
+                    model(superElementIndex).aSetIndexInGSet0 = [points0.gdof]';
+                    model(superElementIndex).aSetIndexInGSet  = [pointsi.gdof]';
                 end
             end
-            % overwrite self in model object
-            model(1).superElement=obj;
+            model(1).superElement = obj;
         end
     end
 end

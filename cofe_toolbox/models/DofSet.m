@@ -41,7 +41,7 @@ classdef DofSet
             model.r = add2LogicalSet(obj(strcmp(setNames,'r')),model.r,model);
             model.o = add2LogicalSet(obj(strcmp(setNames,'o')),model.o,model);
             
-            % check exclusive sets
+            % check input sets
             if any(model.a & model.o)
                 error('A-set and O-set degrees-of-freedom should be exclusive. Check ASET, ASET1, OMIT, and OMIT1 inputs.')
             end
@@ -81,9 +81,11 @@ classdef DofSet
             if nSuper > 0
                 % Boundary connections defined using: SECONCT, SEIDA, SEIDB
                 for i =1:nSuper
-                    model(1               ).t(se(i).bIndexInGb) = true;
-                    model(se(i).modelIndex).t(se(i).bIndexInGa) = true;
+                    mI = se(i).modelIndex;
+                    model(1 ).t(model(mI).aSetIndexInGSet0) = true;
+                    model(mI).t(model(mI).aSetIndexInGSet ) = true;
                 end
+                
                 % Remove QSET from TSET
                 for i = 1:nModel
                     model(i).t(model(i).q)=false;
@@ -98,11 +100,13 @@ classdef DofSet
                 % GRIDS ARE IS DIFFERENT FROM THE UPSTREAM SUPERELEMENT THEN
                 % THE PERMANENT SET CONSTRAINTS WILL BE UNIONED.
                 for i = 1:nSuper
+                    mI = se(i).modelIndex;
+                    
                     % Add any connected upstream permanent constraints to the residual structure
-                    model(1).sg(se(i).bIndexInGb) = model(1).sg(se(i).bIndexInGb) | model(se(i).modelIndex).sg(se(i).bIndexInGa);
-                                        
+                    model(1).sg(model(mI).aSetIndexInGSet0) = model(1).sg(model(mI).aSetIndexInGSet0) | model(mI).sg(model(mI).aSetIndexInGSet);
+
                     % Remove connected upstream permanent constraints
-                    model(se(i).modelIndex).sg(se(i).bIndexInGa) = false;
+                    model(mI).sg(model(mI).aSetIndexInGSet) = false;
                 end
                 % Remove permanent single point constraint DOF from free
                 % residual structure sets
@@ -116,7 +120,8 @@ classdef DofSet
                 
                 % Add superelement TSET to superelement BSET (not for residual structure)
                 for i = 1:nSuper
-                    model(se(i).modelIndex).b(model(se(i).modelIndex).t) = true;
+                    mI = se(i).modelIndex;
+                    model(mI).b(model(mI).t) = true;
                 end
                 
                 % SB SET
@@ -125,13 +130,25 @@ classdef DofSet
                 % in the processing tree (last of the group to be processed).
                 % Remove connected upstream permanent constraints
                 for i = 1:nSuper
-                    model(se(i).modelIndex).sb(se(i).bIndexInGa) = false;
+                    mI = se(i).modelIndex;
+                    model(mI).sb(model(mI).aSetIndexInGSet) = false;
                 end
             end
             
             for i = 1:nModel
                 model(i) = DofSet.partition_sub(model(i));
             end
+            
+            if nModel > 1
+                aSet0IndexInGSet0 = cumsum(model(1).a); 
+                aSet0IndexInGSet0(~model(1).a)=0;
+                for i = 2:nModel
+                    model(i).aSetIndexInGSet
+                    model(i).aSetIndexInGSet0
+                    model(i).aSetIndexInASet0 = aSet0IndexInGSet0(model(i).aSetIndexInGSet0);
+                end
+            end
+            
         end
         function model = partition_sub(model)
             % partition model logical array sets 
@@ -185,6 +202,8 @@ classdef DofSet
                     % No model reduction - same as previous option
                     model.a = model.f;
                 end
+                % Add ASET to residual structure TSET
+                model.t = model.a & ~model.q;
             end
         end
     end

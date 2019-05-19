@@ -3,7 +3,7 @@
 %
 classdef (Abstract) Solver < matlab.mixin.Heterogeneous
     properties
-        caseControlIndex % [uint32] 
+        caseControlIndex % uint32
     end
     methods (Abstract)
         % The class constructor must...
