@@ -82,8 +82,8 @@ classdef DofSet
                 % Boundary connections defined using: SECONCT, SEIDA, SEIDB
                 for i =1:nSuper
                     mI = se(i).modelIndex;
-                    model(1 ).t(model(mI).aSetIndexInGSet0) = true;
-                    model(mI).t(model(mI).aSetIndexInGSet ) = true;
+                    model(1 ).t(model(mI).seconctIndexInGSet0) = true;
+                    model(mI).t(model(mI).seconctIndexInGSet ) = true;
                 end
                 
                 % Remove QSET from TSET
@@ -102,11 +102,13 @@ classdef DofSet
                 for i = 1:nSuper
                     mI = se(i).modelIndex;
                     
-                    % Add any connected upstream permanent constraints to the residual structure
-                    model(1).sg(model(mI).aSetIndexInGSet0) = model(1).sg(model(mI).aSetIndexInGSet0) | model(mI).sg(model(mI).aSetIndexInGSet);
-
+                    % Add any connected upstream permanent constraints (SG) to
+                    % the residual structure boundary constraints (SB) 
+                    model(1).sg(model(mI).seconctIndexInGSet0) = model(1).sg(model(mI).seconctIndexInGSet0) | model(mI).sg(model(mI).seconctIndexInGSet);
+                    
                     % Remove connected upstream permanent constraints
-                    model(mI).sg(model(mI).aSetIndexInGSet) = false;
+                    model(mI).sg(model(mI).seconctIndexInGSet) = false;
+                    
                 end
                 % Remove permanent single point constraint DOF from free
                 % residual structure sets
@@ -116,7 +118,7 @@ classdef DofSet
                 model(1).c(model(1).sg)=false;
                 model(1).q(model(1).sg)=false;
                 model(1).r(model(1).sg)=false;
-                model(1).o(model(1).sg)=false;
+                % model(1).o(model(1).sg)=false;
                 
                 % Add superelement TSET to superelement BSET (not for residual structure)
                 for i = 1:nSuper
@@ -131,7 +133,7 @@ classdef DofSet
                 % Remove connected upstream permanent constraints
                 for i = 1:nSuper
                     mI = se(i).modelIndex;
-                    model(mI).sb(model(mI).aSetIndexInGSet) = false;
+                    model(mI).sb(model(mI).seconctIndexInGSet) = false;
                 end
             end
             
@@ -139,15 +141,19 @@ classdef DofSet
                 model(i) = DofSet.partition_sub(model(i));
             end
             
-            if nModel > 1
-                aSet0IndexInGSet0 = cumsum(model(1).a); 
-                aSet0IndexInGSet0(~model(1).a)=0;
-                for i = 2:nModel
-                    model(i).aSetIndexInGSet
-                    model(i).aSetIndexInGSet0
-                    model(i).aSetIndexInASet0 = aSet0IndexInGSet0(model(i).aSetIndexInGSet0);
-                end
-            end
+%             % deal with aset connections - which may be different than seconct connections
+%             if nModel > 1
+%                 keyboard
+%                 aSet0IndexInGSet0 = cumsum(model(1).a); 
+%                 aSet0IndexInGSet0(~model(1).a)=0;
+%                 for i = 2:nModel
+%                     model(i).seconctIndexInGSet0 & model(1).a;
+%                     
+%                     model(i).seconctIndexInASet0 = seconct0IndexInGSet0(model(i).seconctIndexInGSet0);
+%                     % remove DOFS that are not actually in ASET
+%                     model(i).seconctIndexInASet0=model(i).seconctIndexInASet0(model(i).seconctIndexInASet0~=0);
+%                 end
+%             end
             
         end
         function model = partition_sub(model)

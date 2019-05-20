@@ -29,36 +29,29 @@ classdef ModesSolver < Solver
     end
     
     methods 
-        function obj=solve_sub(obj,model,reducedModel)
+        function obj=solve_sub(obj,model)
             % Normal modes solution
             %
             % INPUTS
             % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
             % model = [nSuperElements,1 Model] Array of Model Objects, one for each superelement
-            % caseControlIndex = [double] Case control (subcase) index number
             
-            model0 = model(1); % Residual structure
             
-            % process EIGRL
-            nModes = model0.getNumModes();
+            % process EIGRL input
+            nModes = model(1).getNumModes();
             
-%             % sets
-%             f=model.f;
-%             s=model.s;
-                       
-%             % preallocate
-%             obj.u_g=zeros(model.nGdof,nModes);
-%             obj.u_0=zeros(model.nGdof,nModes);
+            % Residual structure analysis matricies
+            K_aa = model(1).reducedModel.K_aa;
+            M_aa = model(1).reducedModel.M_aa;
             
-            %% Solve
-            K_aa = model0.reducedModel.K_aa;
-            M_aa = model0.reducedModel.M_aa;
-            
+            % Check sets
             nAset = size(K_aa,1);
             if nModes>nAset
                 nModes=nAset;
                 warning('The number of modes requested by the EIGRL input is larger than the analysis set - the number of modes recovered will be less than requested.')
             end
+            
+            % Solve
             [u_a,D] = eigs(M_aa,K_aa,nModes); % -> (1/w^2) * K * V = M * V is more reliable than K * V = w^2 * M * V
             eigenvalues = diag(D).^-1;
             
@@ -66,28 +59,14 @@ classdef ModesSolver < Solver
             [eigenvalues,index]=sort(eigenvalues);
             u_a = u_a(:,index);
             
-            % mass normalize eigenvectors
+            % Mass normalize eigenvectors
             u_a = u_a./repmat(sqrt(diag(u_a.'*M_aa*u_a)).',[nAset,1]);
             
-            % Eigenvalue table
+            % Store Eigenvalue table
             obj(1).eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
             
-            % Expand eigenvectors
-            obj = model.expandResult(obj,u_a);
-            
-%             obj = model.modelExpansion(obj,u_a);
-            
-%             obj.u_g(f,:)= V;
-%             obj(1).u_0     = model0.R_0g*obj(1).u_g;
-%             
-%             % constraint forces
-%             obj.f_g = zeros(size(obj.u_g));
-%             obj.f_g(s,:) = model.K_gg(s,f)*obj.u_g(f,:) + model.K_gg(s,s)*obj.u_g(s,:);
-%             obj.f_0 = model.R_0g*obj.f_g;
-%             
-%             % recover and store selected response data at nodes and elements 
-%             obj = model.point.recover(obj,caseControl,model);
-%             obj = model.element.recover(obj,caseControl);
+            % Recover model results
+            obj = model.recover(obj,u_a);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
             

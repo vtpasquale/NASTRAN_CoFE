@@ -64,11 +64,11 @@ classdef Model
         
         %% Set-related data
         sd % ([nGdof,numSID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
-        superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
+        % superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
         
-        aSetIndexInGSet  % [nAsetDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
-        aSetIndexInGSet0 % [nAsetDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
-        aSetIndexInASet0 % [nAsetDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
+        seconctIndexInGSet  % [nSeconctDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
+        seconctIndexInGSet0 % [nSeconctDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
+        % seconctIndexInASet0 % [nSeconctDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
         
         
         %% Matricies
@@ -133,51 +133,30 @@ classdef Model
                 for i = 2:nModel
                     obj(i).reducedModel = ReducedModel.constructFromModel(obj(i));
                     
-                    gIndex0 = obj(i).aSetIndexInGSet0;
-                    obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obj(i).reducedModel.K_aa;
-                    obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obj(i).reducedModel.M_aa;
+                    seconct = obj(i).seconctIndexInGSet0;
+                    if sum(seconct)~=size(obj(i).reducedModel.K_aa,1); error('There is an issue with superelement sets'); end
+                    obj(1).K_gg(seconct,seconct) = obj(1).K_gg(seconct,seconct) + obj(i).reducedModel.K_aa;
+                    obj(1).M_gg(seconct,seconct) = obj(1).M_gg(seconct,seconct) + obj(i).reducedModel.M_aa;
                 end
             end
             
             % Reduce residual structure
             obj(1).reducedModel = ReducedModel.constructFromModel(obj(1));
             
-%             % Assemble residual structure
-%             obj(1) = obj(1).assemble_sub();
-%             
-%             % Synthesize superelement parts - single level only - modify for multi level
-%             if nModel>1
-%                 % Assemble and reduce part superelements
-%                 seIndex = obj(1).superElementConnections;
-%                 % g2tIndex0 = cumsum(obj(1).t); g2tIndex0(~obj(1).t)=0;
-%                 for i = 2:nModel
-%                     rowIndex = seIndex(:,i)~=0;
-%                     gIndex0 = seIndex(rowIndex,1);
-%                     gIndexi = seIndex(rowIndex,i);
-%                     obji = obj(i);
-%                     g2tIndexi = cumsum(obji.t); g2tIndexi(~obji.t)=0;
-%                     % tIndex0=g2tIndex0(gIndex0); if any(tIndex0==0); error('Superelement set problem.'); end
-%                     tIndexi=g2tIndexi(gIndexi); if any(tIndexi==0); error('Superelement set problem.'); end
-%                     obj(1).K_gg(gIndex0,gIndex0) = obj(1).K_gg(gIndex0,gIndex0) + obji.K_aa(tIndexi,tIndexi);
-%                     obj(1).M_gg(gIndex0,gIndex0) = obj(1).M_gg(gIndex0,gIndex0) + obji.M_aa(tIndexi,tIndexi);
-%                 end
-%             end
-            
         end
-        function solver = expandResult(obj,solver,u_a)
+        function solver = recover(obj,solver,u_a)
             % Expands solution result
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
             
             % Expand residual structure result
-            solver(1) = obj(1).expandResult_sub(solver(1),u_a);
+            solver(1) = obj(1).recover_sub(solver(1),u_a);
             
             % Index superelement ASET from residual structure ASET
-            
             if nModel>1
                 for i = 2:nModel
-                    u_ai = u_a;
-                    solver(i) = obj(i).expandResult_sub(solver(i),u_ai);
+                    u_ai = solver(1).u_g(obj(i).seconctIndexInGSet0,:);
+                    solver(i) = obj(i).recover_sub(solver(i),u_ai);
                 end
             end
         end
@@ -226,7 +205,7 @@ classdef Model
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
         end
-        function solver = expandResult_sub(obj,solver,u_a)
+        function solver = recover_sub(obj,solver,u_a)
             
             % preallocate
             nVectors = size(u_a,2);

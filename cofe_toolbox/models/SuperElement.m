@@ -86,12 +86,14 @@ classdef SuperElement
                     modeli = model(superElementIndex);
                     points0 = model(1).point.getPoints(obj(i).gidb,model(1));
                     pointsi =   modeli.point.getPoints(obj(i).gida,modeli);
+
+%                     model(superElementIndex).seconctIndexInGSet0 = [points0.gdof]';
+                    model(superElementIndex).seconctIndexInGSet0 = false(model(1).nGdof,1);
+                    model(superElementIndex).seconctIndexInGSet0([points0.gdof]) = true;
                     
-%                     aSetIndexInGSet  % [nAsetDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
-%                     aSetIndexInGSet0 % [nAsetDof,1 uint32] GSET index (in residual structure) of boundary DOF defined by SECONCT
-%                     aSetIndexInASet0 % [nAsetDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
-                    model(superElementIndex).aSetIndexInGSet0 = [points0.gdof]';
-                    model(superElementIndex).aSetIndexInGSet  = [pointsi.gdof]';
+%                     model(superElementIndex).seconctIndexInGSet  = [pointsi.gdof]';
+                    model(superElementIndex).seconctIndexInGSet = false(model(superElementIndex).nGdof,1);
+                    model(superElementIndex).seconctIndexInGSet([pointsi.gdof]) = true;
                 end
             end
             model(1).superElement = obj;
