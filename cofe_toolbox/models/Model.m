@@ -78,10 +78,7 @@ classdef Model
         G
         p_g % ([nGdof,1] real) load vector in nodal displacement reference frame
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
-        
-        % G_ot % ([nOdof,nTdof] double) Static boundary transformation matrix between the exterior and interior motion
-        % G_oq % ([nOdof,nQdof] double) Dynamic transformation matrix between the exterior and interior motion
-        
+             
         %% Store vectors of ID numbers and other index data as seperate varables.
         % This speeds up assembly because repeated concatenation is expensive.
         coordinateSystemCIDs
@@ -116,7 +113,6 @@ classdef Model
             
             % Preprocess sets
             obj = DofSet.partition(obj);
-            
         end
         function obj = assemble(obj)
             % Model assembly, reduction, and synthesis
@@ -134,7 +130,7 @@ classdef Model
                     obj(i).reducedModel = ReducedModel.constructFromModel(obj(i));
                     
                     seconct = obj(i).seconctIndexInGSet0;
-                    if sum(seconct)~=size(obj(i).reducedModel.K_aa,1); error('There is an issue with superelement sets'); end
+                    if size(seconct,1)~=size(obj(i).reducedModel.K_aa,1); error('There is an issue with superelement sets'); end
                     obj(1).K_gg(seconct,seconct) = obj(1).K_gg(seconct,seconct) + obj(i).reducedModel.K_aa;
                     obj(1).M_gg(seconct,seconct) = obj(1).M_gg(seconct,seconct) + obj(i).reducedModel.M_aa;
                 end

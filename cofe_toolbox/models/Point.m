@@ -85,10 +85,10 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
             end
         end % getPoint()
         function point = getPoints(obj,id,model)
-            % returns array of point objects with the requested ids from the point array
-            id = sort(id);
-            index = ismember(model.pointIDs,id);
-            point = obj(index);
+            % Returns array of point objects with the requested ids from the point array
+            % The points are returned in the order requested (not sorted) 
+            [~,~,ib] = intersect(id,model.pointIDs,'stable');
+            point = obj(ib);
             if size(point,1)~=size(id,1)
                 error('There is an issue identifying points.')
             end

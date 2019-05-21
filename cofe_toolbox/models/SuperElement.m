@@ -87,13 +87,13 @@ classdef SuperElement
                     points0 = model(1).point.getPoints(obj(i).gidb,model(1));
                     pointsi =   modeli.point.getPoints(obj(i).gida,modeli);
 
-%                     model(superElementIndex).seconctIndexInGSet0 = [points0.gdof]';
-                    model(superElementIndex).seconctIndexInGSet0 = false(model(1).nGdof,1);
-                    model(superElementIndex).seconctIndexInGSet0([points0.gdof]) = true;
+                    model(superElementIndex).seconctIndexInGSet0 = [points0.gdof]';
+%                     model(superElementIndex).seconctIndexInGSet0 = false(model(1).nGdof,1); Don't use logical indexing because order matters
+%                     model(superElementIndex).seconctIndexInGSet0([points0.gdof]) = true;
                     
-%                     model(superElementIndex).seconctIndexInGSet  = [pointsi.gdof]';
-                    model(superElementIndex).seconctIndexInGSet = false(model(superElementIndex).nGdof,1);
-                    model(superElementIndex).seconctIndexInGSet([pointsi.gdof]) = true;
+                    model(superElementIndex).seconctIndexInGSet  = [pointsi.gdof]';
+%                     model(superElementIndex).seconctIndexInGSet = false(model(superElementIndex).nGdof,1);
+%                     model(superElementIndex).seconctIndexInGSet([pointsi.gdof]) = true;
                 end
             end
             model(1).superElement = obj;
