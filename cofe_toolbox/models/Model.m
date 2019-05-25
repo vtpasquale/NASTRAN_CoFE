@@ -156,9 +156,9 @@ classdef Model
                 end
             end
         end
-        function nModes = getNumModes(obj)
-            if isempty(obj.caseControl.method); error('No METHOD defined in Case Control section.'); end
-            nModes = obj.eigrl(obj.caseControl.method==obj.eigrl(:,1),2);
+        function nModes = getNumModes(obj,caseControlIndex)
+            if isempty(obj.caseControl(caseControlIndex).method); error('No METHOD defined in Case Control section.'); end
+            nModes = obj.eigrl(obj.caseControl(caseControlIndex).method==obj.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); end
         end
     end

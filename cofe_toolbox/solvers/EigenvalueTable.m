@@ -24,7 +24,7 @@ classdef EigenvalueTable
         function angularFrequency = get.angularFrequency(obj)
             angularFrequency=sqrt(obj.eigenvalue);
         end
-        function echo(obj,fid)
+        function printTextOutput(obj,fid)
             fprintf(fid,'                                    R E A L   E I G E N V A L U E S\n');
             fprintf(fid,'   MODE          EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED\n');
             fprintf(fid,'    NO.                                                                         MASS              STIFFNESS\n');

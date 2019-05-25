@@ -182,11 +182,11 @@ classdef CaseControl
             end
         end % caseControl2model()
         
-        function output(obj,fid)
+        function printTextOutputSubcaseHeading(obj,fid)
             % Function to write subcase header
             fprintf(fid,'\n\n\n');
             fprintf(fid,[repmat('=',[1 104]),'\n']);
-            fprintf(fid,[repmat(' ',[1 floor((104-17)/2)]),'S U B C A S E  %d\n'],obj.ID);
+            fprintf(fid,[repmat(' ',[1 floor((104-17)/2)]),'S U B C A S E  %d\n'],obj.subcase);
             fprintf(fid,[repmat(' ',[1 floor((104-size(obj.analysis,2))/2)]),'%s\n'],obj.analysis);
             fprintf(fid,[repmat('=',[1 104]),'\n']);
             fprintf(fid,'  %s\n',obj.title);

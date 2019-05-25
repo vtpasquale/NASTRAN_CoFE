@@ -50,9 +50,9 @@ classdef PointOutputData
     end
     methods
         function obj = PointOutputData(responseType,response,model,keepIndex)
-            % Constructs NodeOutputData object from response vectors
+            % Constructs PointOutputData object from response vectors
             % Inputs:
-            %   responseType [uint8] NodeOutputData.responseType -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
+            %   responseType [uint8] PointOutputData.responseType -> integer specifying response type [1=DISPLACEMENT,2=VELOCITY,3=ACCELERATION,4=SPC FORCE]
             %   response [nGdof,nResponseVectors] matrix of response vectors
             %   model [model] model object
             %   keepIndex [nOutputPoints,1] Optional vector of indicies for output points in ID --> PointOutputData.ID=ID(keepIndex);
@@ -69,7 +69,7 @@ classdef PointOutputData
                 if nPoints < nKid || mKid ~= 1; error('Optional input keepIndex should be a vector of integer size [n,1].'); end
             end
             
-            % Initialize NodeOutputData object
+            % Initialize PointOutputData object
             obj.responseType = responseType;
             
             % process
@@ -119,16 +119,17 @@ classdef PointOutputData
             end
         end
         function obj = set.responseType(obj,in)
-            if isnumeric(in)==0; error('NodeOutputData.responseType must be a number'); end
-            if mod(in,1) ~= 0; error('NodeOutputData.responseType must be an integer'); end
-            if in < 1 || in > 5; error('NodeOutputData.responseType must be greater than zero and less than 6.'); end
+            if isnumeric(in)==0; error('PointOutputData.responseType must be a number'); end
+            if mod(in,1) ~= 0; error('PointOutputData.responseType must be an integer'); end
+            if in < 1 || in > 5; error('PointOutputData.responseType must be greater than zero and less than 6.'); end
             obj.responseType=uint8(in);
         end
-        function echo(obj,fid)
-            dispString = sprintf('\n\n%s\n',PointOutputData.printTitles{obj.responseType});
+        function printTextOutput(obj,fid,outputHeading)
+            dispString = sprintf('%s\n',PointOutputData.printTitles{obj.responseType});
             nResponseVectors = size(obj.T1,2);
             sFormat = sprintf('%%14d      %c   %%15E%%15E%%15E%%15E%%15E%%15E\\n',obj.pointType);
             for i = 1:nResponseVectors
+                outputHeading.printTextOutput(fid,i)
                 fprintf(fid,'%s',dispString);
                 fprintf(fid,'\n      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3\n');
                 fprintf(fid,sFormat,[double(obj.ID),obj.T1(:,i),obj.T2(:,i),obj.T3(:,i),obj.R1(:,i),obj.R2(:,i),obj.R3(:,i)]' );
@@ -137,15 +138,15 @@ classdef PointOutputData
         function femapDataBlock1051 = convert_2_FemapDataBlock1051(obj,startSetID)
             femapDataBlock1051 = [];
             DoubleSidedContourVectorID = 0;
-            out_type = NodeOutputData.femapOutputType(obj.responseType); % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
+            out_type = PointOutputData.femapOutputType(obj.responseType); % [int] Type of output (0=Any, 1=Disp, 2=Accel, 3=Force, 4=Stress, 5=Strain, 6=Temp, others=User)
             ent_type = 7; % [int] Either nodal (7) or elemental (8) output\                compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
             compute_type = 0; % [int] The combination type for this output vector (0=None, 1=Magnitude, 2=Average, 3=CornerAverage, 4=PrinStressA, 5=PrinStressB, 6=PrinStressC, 7=MaxShear,8=VonMises, 9=ComplexMagnitude)
             comp_dir = 1; % [int] If 1, comp[0..2] are the X,Y,Z component values. If 2, data at end of Beams. If 3, reverse data at second end of beam.
             cent_total = true; % [logical] If 1, this vector has centroidal or nodal output.
             integer_format = false; % [logical] If True, vector contains integer rather than floating point results
             
-            vecID = NodeOutputData.femapOutputVectorIDs(obj.responseType,:); % [int] ID of output vector, must be unique in each output set
-            title = NodeOutputData.femapOutputVectorTitles(obj.responseType,:); % [max 79 char] Output Vector title
+            vecID = PointOutputData.femapOutputVectorIDs(obj.responseType,:); % [int] ID of output vector, must be unique in each output set
+            title = PointOutputData.femapOutputVectorTitles(obj.responseType,:); % [max 79 char] Output Vector title
             comp = zeros(8,20);
             comp(1,1:3) = vecID(1:3);
             comp(2,1) = vecID(1);

@@ -52,11 +52,9 @@ classdef StaticsSolver < Solver
             
             % recover and store selected response data at nodes and elements 
             obj = model.point.recover(obj,model);
-            obj = model.element.recover(obj);
+            obj = model.element.recover(obj,model);
         end
         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
-            
-
             
             % Output select results
             if caseControl.displacement.n~=0

@@ -31,7 +31,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             end
         end
         function model = assemble(obj,model)
-            % assemble element and global matricies              
+            % assemble element and global matricies
             
             % Preallocate Sparse Matrices
             K_gg = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
@@ -103,7 +103,6 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             solver.strain = E;
             solver.strainEnergy = ESE;
         end
-        
     end
 end
 

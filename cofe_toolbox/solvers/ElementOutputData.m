@@ -34,6 +34,19 @@ classdef ElementOutputData
             if in < 1 || in > 4; error('ElementOutputData.responseType must be greater than zero and less than 5.'); end
             obj.responseType=uint8(in);
         end
+        function printTextOutput(obj,fid,model,outputHeading)
+            % Prints an array of ElementOutputData objects of a single
+            % responseType (e.g., stress) for a single superelement and single subcase
+            if size(unique([obj.responseType]),1)~=1; error('Input array elementOutputData should have uniform responseType properties.'); end
+            elementTypes = [obj.elementType];
+            uniqueElementTypes = unique(elementTypes);
+            % Loop through element types
+            for i = 1:size(uniqueElementTypes,1)
+                elementOutputDataI = obj(elementTypes==elementTypes(i));
+                elementTypeObj = model.element(model.elementEIDs==elementOutputDataI(1).elementID);
+                elementTypeObj.printTextOutput(fid,elementOutputDataI,outputHeading)
+            end
+        end
         function femapDataBlock = convert_2_FemapDataBlock1051(obj,model,startSetID)
             femapDataBlock = [];
             elementTypes = [obj.elementType];

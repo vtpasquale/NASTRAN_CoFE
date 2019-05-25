@@ -73,7 +73,7 @@ classdef (Abstract) Spcs < matlab.mixin.Heterogeneous
             % Nastran case control limitation requires this. Nastran allows 
             % sepearte BC for each load case for residual structure only -
             % not superelements.
-            sidIndex = (model.caseControl.spc==spcsSIDs);
+            sidIndex = (model.caseControl(1).spc==spcsSIDs);
             if isempty(sidIndex) % isempty(obj.caseControl.spc) || isempty(obj.spcsSIDs)
                 sb = false(model.nGdof,1);
                 sd = spalloc(model.nGdof,1,0);
