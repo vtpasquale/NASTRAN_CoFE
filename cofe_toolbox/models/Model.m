@@ -129,8 +129,16 @@ classdef Model
                 for i = 2:nModel
                     obj(i).reducedModel = ReducedModel.constructFromModel(obj(i));
                     
-                    seconct = obj(i).seconctIndexInGSet0;
+                    % Connection DOF
+                    seconct0 = obj(i).seconctIndexInGSet0;
+                    seconcti = obj(i).seconctIndexInGSet;
+                    % obj(i).reducedModel.K_aa is sorted, so sort seconct0
+                    % according to seconcti
+                    [~,connectIndex] = sort(seconcti);
+                    seconct = seconct0(connectIndex);
                     if size(seconct,1)~=size(obj(i).reducedModel.K_aa,1); error('There is an issue with superelement sets'); end
+                    
+                    % Add superelement to residual structure
                     obj(1).K_gg(seconct,seconct) = obj(1).K_gg(seconct,seconct) + obj(i).reducedModel.K_aa;
                     obj(1).M_gg(seconct,seconct) = obj(1).M_gg(seconct,seconct) + obj(i).reducedModel.M_aa;
                 end

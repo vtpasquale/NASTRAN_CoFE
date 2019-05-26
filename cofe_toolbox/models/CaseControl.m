@@ -186,12 +186,12 @@ classdef CaseControl
             % Function to write subcase header
             fprintf(fid,'\n\n\n');
             fprintf(fid,[repmat('=',[1 104]),'\n']);
-            fprintf(fid,[repmat(' ',[1 floor((104-17)/2)]),'S U B C A S E  %d\n'],obj.subcase);
-            fprintf(fid,[repmat(' ',[1 floor((104-size(obj.analysis,2))/2)]),'%s\n'],obj.analysis);
-            fprintf(fid,[repmat('=',[1 104]),'\n']);
-            fprintf(fid,'  %s\n',obj.title);
-            fprintf(fid,'  %s\n',obj.subtitle);
-            fprintf(fid,'  %s\n',obj.label);
+            fprintf(fid,[repmat(' ',[1 43]),'S U B C A S E  %d\n'],obj.subcase);
+            fprintf(fid,'  ANALYSIS: %s\n',obj.analysis);
+            fprintf(fid,'     TITLE: %s\n',obj.title);
+            fprintf(fid,'  SUBTITLE: %s\n',obj.subtitle);
+            fprintf(fid,'     LABEL: %s\n',obj.label);
+            fprintf(fid,[repmat('=',[1 104]),'\n\n']);
         end
     end
     

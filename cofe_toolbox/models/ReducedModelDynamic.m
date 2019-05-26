@@ -15,7 +15,8 @@ classdef ReducedModelDynamic < ReducedModel
     end
     methods
         function obj = ReducedModelDynamic(model)
-            nModes = getNumModes(model);
+            % Assumes first superelement subcase references EIGRL entry
+            nModes = getNumModes(model,1);
                         
             % Start with H\CB only
             K_oo = model.K_gg(model.o,model.o);

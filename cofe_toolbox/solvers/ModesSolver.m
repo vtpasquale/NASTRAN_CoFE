@@ -99,21 +99,33 @@ classdef ModesSolver < Solver
                 end
             end
         end
+        function femapDataBlock = writeFemapOutputSets(obj,femapDataBlock,caseControl,outputHeading)
+            
+            % Fixed parameters
+            anal_type = 2; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
+            ProcessType = 0; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)
+            value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.
+            notes = 'Notes text. '; % [1xN char] One line of text.
+            StudyID = femapDataBlock(1).currentAnalysisStudy(); % [int] ID of Analysis Study
+            nas_case = caseControl.subcase; % [int] Nastran SUBCASE ID associated with these results
+            nas_rev = 0; % [int] Revision of Nastran SUBCASE
+            
+            nModes = size(outputHeading.headingVector,1);
+            for i = 1:nModes
+                ID = femapDataBlock(1).currentOutputSet();
+                femapDataBlock(1) = femapDataBlock(1).advanceOutputSet();
+                title = sprintf('Mode %d, %f Hz',i,outputHeading.headingVector(i)); % [max 79 char] Output Set title
+                
+                femapDataBlock=[femapDataBlock;...
+                    FemapDataBlock450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev)
+                    ];
+            end
+            
+        end
         
 %             %% Output results data
 % 
 %             % Write output to FEMAP data blocks
-%             ID = 1;% [int] ID of output set
-%             title = 'Static Case 1'; % [max 79 char] Output Set title
-%             anal_type = 1; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
-%             ProcessType = 0; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)
-%             value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.
-%             notes = 'Notes text. '; % [1xN char] One line of text.
-%             StudyID = 1; % [int] ID of Analysis Study
-%             nas_case = caseControl.ID; % [int] Nastran SUBCASE ID associated with these results
-%             nas_rev = 0; % [int] Revision of Nastran SUBCASE
-%             
-%             obj.femapDataBlock(1,1)=FemapDataBlock450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
 %                        
 %             obj.femapDataBlock = [obj.femapDataBlock;obj.displacement_0.convert_2_FemapDataBlock1051(ID)];
 %             obj.femapDataBlock = [obj.femapDataBlock;obj.force.convert_2_FemapDataBlock1051(model,ID)];

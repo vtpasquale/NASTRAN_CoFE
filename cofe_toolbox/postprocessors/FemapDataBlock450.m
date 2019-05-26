@@ -15,6 +15,7 @@ classdef FemapDataBlock450 < FemapDataBlock
         nas_rev % [int] Revision of Nastran SUBCASE
     end
     properties (Constant = true, Hidden = true)
+        DATA_BLOCK_ID = int32(450);
         from_prog = 0; % Analysis program where output came from
         IntegerFormat = false; % Logical
         nlines = 1; % Number of lines of text in the following notes
@@ -41,6 +42,7 @@ classdef FemapDataBlock450 < FemapDataBlock
             % db450 class constructor method
             if nargin ~= 0
                 obj.ID=ID; % [int] ID of output set
+                if size(title,2)>79; title = title(1:79); end
                 obj.title=title; % [max 79 char] Output Set title
                 obj.anal_type=anal_type; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
                 obj.ProcessType=ProcessType; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)

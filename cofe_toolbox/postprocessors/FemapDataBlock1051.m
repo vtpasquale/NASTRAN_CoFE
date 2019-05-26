@@ -24,6 +24,7 @@ classdef FemapDataBlock1051 < FemapDataBlock
         value % [Nx1 real] result values
     end
     properties (Constant= true, Hidden = true)
+        DATA_BLOCK_ID = int32(1051);
         min_val = 999.  % [real] Minimum value in vector
         max_val = -999. % [real] Maximum value in vector. If max_val < min_val, FEMAP will search the output for the max, min and abs_max values.
         abs_max = 0.    % [real] Maximum absolute value in vector

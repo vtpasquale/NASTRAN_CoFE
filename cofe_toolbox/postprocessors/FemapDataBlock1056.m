@@ -12,6 +12,7 @@ classdef FemapDataBlock1056 < FemapDataBlock
         Study_Notes % [1xN char] text
     end
     properties (Constant = true, Hidden = true)
+        DATA_BLOCK_ID = int32(1056);
         Analysis_Program = 0; % Analysis program where output came from
     end
     methods

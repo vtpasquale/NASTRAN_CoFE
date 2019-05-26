@@ -55,12 +55,10 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 allFemapDataBlocks.writeNeutral(fid)
             end
         end % output()
-    end
-    methods (Sealed = true)
-        function obj = printTextOutput(obj,model,fid)
-            % Function to print solver array output to text file
+        function printTextOutput(obj,model,fid)
+            % Function to print Solver array output to text file
             % Input Solver array can include all subcases. The Model array
-            % input must be consistent
+            % input must be consistent with the Solver array
             
             % Check inputs
             [nRowsSolver,nColumnsSolver]=size(obj);
@@ -70,59 +68,116 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
             if nColumnsSolver~=nRowsModel; error('nColumnsSolver~=nRowsModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
-            % Loop through subcases and superelements
+            % Loop through subcases
             for caseIndex = 1:nCases
                 
-                % Subcase heading
-                model(1).caseControl(caseIndex).printTextOutputSubcaseHeading(fid)
+                % Output file heading
+                caseControl = model(1).caseControl(caseIndex);
+                caseControl.printTextOutputSubcaseHeading(fid);
+                outputHeading = OutputHeading(caseControl,0);
                 
-                if isa(obj,'ModesSolver')
-                    headingVector = obj(1).eigenvalueTable.frequency;
+                if isa(obj(caseIndex,1),'ModesSolver')
+                    outputHeading.headingVector = obj(caseIndex,1).eigenvalueTable.frequency;
+                    outputHeading.headingVectorText = ' FREQUENCY: %E Hz\n';
                     
-                    % Eigenvalue table
-                    obj(1).eigenvalueTable.printTextOutput(fid)
-                else
-                    headingVector = [];
+                    % Print Eigenvalue table
+                    obj(caseIndex,1).eigenvalueTable.printTextOutput(fid)
                 end
                 
+                % Loop through superelements
                 for superElementIndex = 1:nRowsModel
-                    obj(caseIndex,superElementIndex).printTextOutput_sub(model(superElementIndex),fid,headingVector);
+                    obj(caseIndex,superElementIndex).printTextOutput_sub(model(superElementIndex),fid,outputHeading);
                 end
             end           
-        end
+        end % printTextOutput()
+        function femapDataBlock = writeFemapNeutral(obj,model)
+            % Function to write Solver array output to a Femap Neutral file data blocks
+            % Input Solver array can include all subcases. The Model array
+            % input must be consistent with the Solver array
+            
+            % Check inputs
+            [nRowsSolver,nColumnsSolver]=size(obj);
+            [nRowsModel,nColumnsModel]=size(model);
+            nCases = size(model(1).caseControl,1);
+            if nRowsSolver~=nCases; error('The solver object array  in inconsistent with the residual structure case control array.'); end
+            if nColumnsSolver~=nRowsModel; error('nColumnsSolver~=nRowsModel'); end
+            if nColumnsModel~=1; error('nColumnsModel~=1'); end
+            
+            % File Heading 
+            femapDataBlock = FemapDataBlock100();
+            
+            % Loop through subcases
+            for caseIndex = 1:nCases
+                
+                % Use OutputHeading object to store subcase data
+                caseControl = model(1).caseControl(caseIndex);
+                outputHeading = OutputHeading(caseControl,0);
+                if isa(obj(caseIndex,1),'ModesSolver')
+                    outputHeading.headingVector = obj(caseIndex,1).eigenvalueTable.frequency;
+                    outputHeading.headingVectorText = ' FREQUENCY: %E Hz\n';
+                end
+                
+                % Create output set data block for each mode using a subclass method
+                femapDataBlock = obj(caseIndex,1).writeFemapOutputSets(femapDataBlock,caseControl,outputHeading);
+                                
+                % Loop through superelements
+                for superElementIndex = 1:nRowsModel
+                    femapDataBlock = obj(caseIndex,superElementIndex).writeFemapNeutral_sub(femapDataBlock,model(superElementIndex),outputHeading);
+                end
+            end           
+        end % writeFemapNeutral()
     end
     methods (Sealed = true, Access = private)
-        function obj = printTextOutput_sub(obj,model,fid,headingVector)
+        function printTextOutput_sub(obj,model,fid,outputHeading)
             % Function to print solver output to text file.
             [nRowsSolver,nColumnsSolver]=size(obj);
             [nRowsModel,nColumnsModel]=size(model);
             if any([nRowsSolver,nColumnsSolver,nRowsModel,nColumnsModel]~=1); error('Arrays Solver and/or Model inputs not allowed.'); end
-                 
-            % Heading data
+            
+            % Set output heading superlement ID
+            outputHeading.superElementID = model.superElementID;
+            
             caseControl = model.caseControl(obj.caseControlIndex);
-            fixedHeading = sprintf('\n\n     TITLE: %-60s    ANALYSIS: %s\n  SUBTITLE: %-60sSUPERELEMENT: %d\n     LABEL: %-60s     SUBCASE: %d\n',...
-                caseControl.title,caseControl.analysis,caseControl.subtitle,model.superElementID,caseControl.label,caseControl.subcase);
-            if isa(obj,'ModesSolver')
-                vectorHeadingString = ' FREQUENCY: %E Hz\n';
-                outputHeading = OutputHeading(fixedHeading,vectorHeadingString,headingVector);
-            else
-                outputHeading = OutputHeading(fixedHeading);
-            end
             
             % Node Output Data
-            if ~isempty(obj.displacement_g)
+            if ~isempty(obj.displacement_g) && caseControl.displacement.print
                 obj.displacement_g.printTextOutput(fid,outputHeading)
             end
-            if ~isempty(obj.spcforces_g)
+            if ~isempty(obj.spcforces_g) && caseControl.spcforces.print
                 obj.spcforces_g.printTextOutput(fid,outputHeading)
             end
             
             % Element Output Data
-            if ~isempty(obj.stress)
+            if ~isempty(obj.stress) && caseControl.stress.print
                 obj.stress.printTextOutput(fid,model,outputHeading)
             end
             
-        end 
+        end % printTextOutput_sub()
+        function femapDataBlock = writeFemapNeutral_sub(obj,femapDataBlock,model,outputHeading)
+            % Function to print solver output to text file.
+            [nRowsSolver,nColumnsSolver]=size(obj);
+            [nRowsModel,nColumnsModel]=size(model);
+            if any([nRowsSolver,nColumnsSolver,nRowsModel,nColumnsModel]~=1); error('Arrays Solver and/or Model inputs not allowed.'); end
+            
+            % Set output heading superlement ID
+            outputHeading.superElementID = model.superElementID;
+            caseControl = model.caseControl(obj.caseControlIndex);
+            
+            
+            
+            % Node Output Data
+            if ~isempty(obj.displacement_g) && caseControl.displacement.print
+                obj.displacement_g.printTextOutput(fid,outputHeading)
+            end
+            if ~isempty(obj.spcforces_g) && caseControl.spcforces.print
+                obj.spcforces_g.printTextOutput(fid,outputHeading)
+            end
+            
+            % Element Output Data
+            if ~isempty(obj.stress) && caseControl.stress.print
+                obj.stress.printTextOutput(fid,model,outputHeading)
+            end
+        end % writeFemapNeutral_sub()
     end
     methods (Sealed = true, Static = true)
         function solver = constructFromModel(model)
