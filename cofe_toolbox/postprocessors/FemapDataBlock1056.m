@@ -8,7 +8,7 @@ classdef FemapDataBlock1056 < FemapDataBlock
         Title % [1xN char] Title of Analysis Study
         Analysis_Type % ID of analysis type (refer to output sets)
         File_Time % [int] Time of last modification of results file (Unix 10-digit formt = 86400.*(now - datenum(1970,1,1,0,0,0)); ) 
-        Analysis_Set % [int] ID of Analysis Set used for solution
+        Analysis_Set % [int] ID of Femap Analysis Set used for solution
         Study_Notes % [1xN char] text
     end
     properties (Constant = true, Hidden = true)

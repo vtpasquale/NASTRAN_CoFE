@@ -14,24 +14,25 @@ classdef (Abstract) FemapDataBlock < matlab.mixin.Heterogeneous
             [nFemapDataBlock,m] = size(obj);
             if m > 1; error('FemapDataBlock.writeNeutral() can only handel nx1 arrays of FemapDataBlock objects. The second dimension exceeds 1.'); end
                         
-            % Partioned data blocks
-            error('replace this with DATA_BLOCK_ID reference')
-            typeFemapDataBlock = zeros(nFemapDataBlock,1);
-            for i = 1:nFemapDataBlock
-                switch class(obj(i))
-                    case 'FemapDataBlock450'
-                        typeFemapDataBlock(i) = 450;
-                    case 'FemapDataBlock1051'
-                        typeFemapDataBlock(i) = 1051;
-                    case 'FemapDataBlock1056'
-                        typeFemapDataBlock(i) = 1056;
-                    case 'FemapDataBlock100'
-                        typeFemapDataBlock(i) = 450;
-                end
-            end
-            
-            % Write data block 100
-            
+            % Partion data blocks
+            typeFemapDataBlock = [obj.DATA_BLOCK_ID]';
+%             for i = 1:nFemapDataBlock
+%                 switch class(obj(i))
+%                     case 'FemapDataBlock450'
+%                         typeFemapDataBlock(i) = 450;
+%                     case 'FemapDataBlock1051'
+%                         typeFemapDataBlock(i) = 1051;
+%                     case 'FemapDataBlock1056'
+%                         typeFemapDataBlock(i) = 1056;
+%                     case 'FemapDataBlock100'
+%                         typeFemapDataBlock(i) = 450;
+%                 end
+%             end
+
+            % Check/Write data block 100
+            i = find(typeFemapDataBlock==100);
+            if size(i,1)~=1; error('There should be one and only one Femap data block 100 in the Femap data block array'); end
+            writeNeutral_sub(obj(i),fid)
                         
             % Write Format 450 Datablocks
             for i = find(typeFemapDataBlock==450)'

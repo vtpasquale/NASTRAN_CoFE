@@ -148,10 +148,10 @@ classdef PointOutputData
             vecID = PointOutputData.femapOutputVectorIDs(obj.responseType,:); % [int] ID of output vector, must be unique in each output set
             title = PointOutputData.femapOutputVectorTitles(obj.responseType,:); % [max 79 char] Output Vector title
             comp = zeros(8,20);
-            comp(1,1:3) = vecID(1:3);
-            comp(2,1) = vecID(1);
-            comp(3,2) = vecID(2);
-            comp(4,3) = vecID(3);
+            comp(1,1:3) = vecID(2:4);
+            comp(2,1) = vecID(2);
+            comp(3,2) = vecID(3);
+            comp(4,3) = vecID(4);
             comp(5,1:3) = vecID(6:8);
             comp(6,1) = vecID(6);
             comp(7,2) = vecID(7);

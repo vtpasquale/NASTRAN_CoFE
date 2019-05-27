@@ -104,7 +104,7 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
             % File Heading 
-            femapDataBlock = FemapDataBlock100();
+            femapDataBlock = FemapDataBlock100();          
             
             % Loop through subcases
             for caseIndex = 1:nCases
@@ -117,12 +117,27 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                     outputHeading.headingVectorText = ' FREQUENCY: %E Hz\n';
                 end
                 
-                % Create output set data block for each mode using a subclass method
-                femapDataBlock = obj(caseIndex,1).writeFemapOutputSets(femapDataBlock,caseControl,outputHeading);
-                                
-                % Loop through superelements
+                % Create analysis study for each subcase (Not typical, but done here because CoFE allows different analysis types in the same run)
+                femapDataBlock = obj(caseIndex,1).writeFemapAnalysisSet(femapDataBlock,caseControl);
+
+                % Loop through superelements to create output sets and output vectors
                 for superElementIndex = 1:nRowsModel
+                    
+                    % Create output set data blocks for each subcase mode using a subclass method
+                    femapDataBlock = obj(caseIndex,1).writeFemapOutputSets(femapDataBlock,caseControl,outputHeading);
+                    
+                    % Create output vector data blocks for each subcase mode using a subclass method
                     femapDataBlock = obj(caseIndex,superElementIndex).writeFemapNeutral_sub(femapDataBlock,model(superElementIndex),outputHeading);
+                    
+                    % Advance staring index
+                    % Update so that this only runs if output is created for this
+                    % superelement
+                    if isa(obj,'ModesSolver')
+                        femapDataBlock(1) = femapDataBlock(1).advanceOutputSet(size(outputHeading.headingVector,1));
+                    else
+                        femapDataBlock(1) = femapDataBlock(1).advanceOutputSet(1);
+                    end
+            
                 end
             end           
         end % writeFemapNeutral()
@@ -163,20 +178,20 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
             outputHeading.superElementID = model.superElementID;
             caseControl = model.caseControl(obj.caseControlIndex);
             
-            
-            
+            startID = femapDataBlock(1).currentOutputSet;
+
             % Node Output Data
-            if ~isempty(obj.displacement_g) && caseControl.displacement.print
-                obj.displacement_g.printTextOutput(fid,outputHeading)
-            end
-            if ~isempty(obj.spcforces_g) && caseControl.spcforces.print
-                obj.spcforces_g.printTextOutput(fid,outputHeading)
+            if ~isempty(obj.displacement_0) && caseControl.displacement.print
+                femapDataBlock = [femapDataBlock;obj.displacement_0.convert_2_FemapDataBlock1051(startID)];
+            end            
+            if ~isempty(obj.spcforces_0) && caseControl.spcforces.print
+                femapDataBlock = [femapDataBlock;obj.spcforces_0.convert_2_FemapDataBlock1051(startID)];
             end
             
-            % Element Output Data
-            if ~isempty(obj.stress) && caseControl.stress.print
-                obj.stress.printTextOutput(fid,model,outputHeading)
-            end
+%             % Element Output Data
+%             if ~isempty(obj.stress) && caseControl.stress.print
+%                 obj.stress.printTextOutput(fid,model,outputHeading)
+%             end
         end % writeFemapNeutral_sub()
     end
     methods (Sealed = true, Static = true)

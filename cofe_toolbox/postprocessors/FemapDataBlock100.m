@@ -24,10 +24,10 @@ classdef FemapDataBlock100 < FemapDataBlock
         function obj = FemapDataBlock100(startAnalysisStudy,startOutputSet)
             % Class constructor method
             if nargin == 0
-                obj.currentAnalysisStudy = 1;
+                obj.currentOutputSet = 1;
                 obj.currentAnalysisStudy = 1;
             else
-                obj.currentAnalysisStudy = startAnalysisStudy;
+                obj.currentOutputSet = startAnalysisStudy;
                 obj.currentAnalysisStudy = startOutputSet;
             end
         end
