@@ -1,4 +1,4 @@
-% Class for FEMAP Neutral File Data Block 1056 – Analysis Study
+% Class for Femap Neutral File Data Block 1056 – Analysis Study
 % Anthony Ricciardi
 %
 classdef FemapDataBlock1056 < FemapDataBlock

@@ -148,19 +148,30 @@ classdef Model
             obj(1).reducedModel = ReducedModel.constructFromModel(obj(1));
             
         end
-        function solver = recover(obj,solver,u_a)
+        function solution = recover(obj,solution,u_a)
             % Expands solution result
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
             
             % Expand residual structure result
-            solver(1) = obj(1).recover_sub(solver(1),u_a);
+            solution(1) = obj(1).recover_sub(solution(1),u_a);
             
-            % Index superelement ASET from residual structure ASET
+            % Expand superelement results
             if nModel>1
                 for i = 2:nModel
-                    u_ai = solver(1).u_g(obj(i).seconctIndexInGSet0,:);
-                    solver(i) = obj(i).recover_sub(solver(i),u_ai);
+                    
+                    % Connection DOF - This is repeat code, update
+                    % properties to store seconct 
+                    seconct0 = obj(i).seconctIndexInGSet0;
+                    seconcti = obj(i).seconctIndexInGSet;
+                    % obj(i).reducedModel.K_aa is sorted, so sort seconct0
+                    % according to seconcti
+                    [~,connectIndex] = sort(seconcti);
+                    seconct = seconct0(connectIndex);
+                    if size(seconct,1)~=size(obj(i).reducedModel.K_aa,1); error('There is an issue with superelement sets'); end
+                    
+                    u_ai = solution(1).u_g(seconct,:);
+                    solution(i) = obj(i).recover_sub(solution(i),u_ai);
                 end
             end
         end
@@ -209,7 +220,7 @@ classdef Model
             obj = obj.element.assemble(obj); % element and global matricies
             obj = obj.load.assemble(obj);
         end
-        function solver = recover_sub(obj,solver,u_a)
+        function solution = recover_sub(obj,solution,u_a)
             
             % preallocate
             nVectors = size(u_a,2);
@@ -224,17 +235,17 @@ classdef Model
              u_g(obj.s,:) = repmat(obj.sd(obj.s),[1,nVectors]);
             
              % store in solver object
-            solver.u_g = u_g;
-            solver.u_0 = obj.R_0g*solver.u_g;
+            solution.u_g = u_g;
+            solution.u_0 = obj.R_0g*solution.u_g;
             
             % constraint forces
-            solver.f_g = zeros(size(solver.u_g));
-            solver.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solver.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solver.u_g(obj.s,:);
-            solver.f_0 = obj.R_0g*solver.f_g;
+            solution.f_g = zeros(size(solution.u_g));
+            solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
+            solution.f_0 = obj.R_0g*solution.f_g;
             
             % recover and store selected response data at nodes and elements 
-            solver = obj.point.recover(solver,obj);
-            solver = obj.element.recover(solver,obj);
+            solution = obj.point.recover(solution,obj);
+            solution = obj.element.recover(solution,obj);
         end            
     end
 end

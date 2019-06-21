@@ -1,7 +1,7 @@
 % Class that defines a normal modes analysis.
 % Anthony Ricciardi
 %
-classdef ModesSolver < Solver
+classdef ModesSolution < Solution
     
     properties
         u_g
@@ -99,7 +99,7 @@ classdef ModesSolver < Solver
                 end
             end
         end
-        function femapDataBlock = writeFemapAnalysisSet(obj,femapDataBlock,caseControl)
+        function femapDataBlock = constructFemapAnalysisSet(obj,femapDataBlock,caseControl)
             ID = femapDataBlock(1).currentAnalysisStudy; % [int] ID of Study
             if isempty(caseControl.title)
                 Title =  sprintf('CoFE Analysis Study %d',ID);% [1xN char] Title of Analysis Study
@@ -112,7 +112,7 @@ classdef ModesSolver < Solver
              femapDataBlock=[femapDataBlock;...
                  FemapDataBlock1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes)];
         end
-        function femapDataBlock = writeFemapOutputSets(obj,femapDataBlock,caseControl,outputHeading)
+        function femapDataBlock = constructFemapOutputSets(obj,femapDataBlock,caseControl,outputHeading)
             anal_type = 2; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
             ProcessType = 0; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)
             value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.

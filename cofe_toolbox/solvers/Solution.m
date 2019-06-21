@@ -1,7 +1,7 @@
-% Abstract superclass for CoFE analysis solvers
+% Abstract superclass for CoFE analysis solutions
 % Anthony Ricciardi
 %
-classdef (Abstract) Solver < matlab.mixin.Heterogeneous
+classdef (Abstract) Solution < matlab.mixin.Heterogeneous
     properties
         caseControlIndex % uint32
     end
@@ -12,60 +12,36 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
         obj=solve_sub(obj,model,caseControlIndex)
         
         % Output subcase results
-        obj = output_sub(obj,caseControl,fid)
+        femapDataBlock = constructFemapAnalysisSet(obj,femapDataBlock,caseControl)
+        femapDataBlock = constructFemapOutputSets(obj,femapDataBlock,caseControl,outputHeading)
     end
     methods (Sealed = true)
         function obj = solve(obj,model)
+            % Function to solve all subcases
             for i = 1:size(obj,1)
                 obj(i,:)=solve_sub(obj(i,:),model);
             end
-        end % solver()
-        function obj = output(obj,model,fid)
-            [nSolver,mSolver]=size(obj);
-            if nSolver > 1; error('Solver.output() does not handle arrays of Solver objects'); end
-            if mSolver > 1; error('Solver.output() does not handle arrays of Solver objects'); end
-            [nModel,mModel]=size(model);
-            if nModel > 1; error('Solver.output() does not handle arrays of Model objects'); end
-            if mModel > 1; error('Solver.output() does not handle arrays of Model objects'); end
+        end % solve()
+        function output(obj,inputFile,model)
+            % Function to ouput solution data
+            [~,outputFile] = fileparts(inputFile);
+            obj.printTextOutput(model,[outputFile,'.out']);
             
-            % Write solver output
-            paramPost = model.parameter.getParameter('POST');
-            % Check check for PARAM,POST,-1
-            if strcmp(paramPost,'-1')
-                writeFemapFlag = true;
-            else
-                writeFemapFlag = false;
-            end
-            
-            % Write text output and construct Femap data blocks
-            fileText = fileread('outputFileText.txt');
-            fprintf(fid,fileText);
-            fprintf(fid,'  This case was run %s \n',datestr(now));
-            for i = 1:size(obj,1)
-                model.caseControl(i).output(fid)
-                obj(i) = obj(i).output_sub(model.caseControl(i),writeFemapFlag,fid);
-            end
-            
-            % Write Femap neutral file
-            if writeFemapFlag
-                allFemapDataBlocks = [];
-                for i = 1:size(obj,1)
-                    allFemapDataBlocks = [allFemapDataBlocks;obj(i).femapDataBlock];
-                end
-                allFemapDataBlocks.writeNeutral(fid)
-            end
-        end % output()
-        function printTextOutput(obj,model,fid)
-            % Function to print Solver array output to text file
-            % Input Solver array can include all subcases. The Model array
-            % input must be consistent with the Solver array
+            femapDataBlock = obj.constructFemapDataBlocks(model);
+            femapDataBlock.writeNeutral([outputFile,'.neu']);
+        end % output
+        function printTextOutput(obj,model,outputFile)
+            % Function to print Solution array output to text file
+            % Input Solution array can include all subcases. The Model array
+            % input must be consistent with the Solution array
+            fid = fopen(outputFile,'w+');
             
             % Check inputs
-            [nRowsSolver,nColumnsSolver]=size(obj);
+            [nRowsSolution,nColumnsSolution]=size(obj);
             [nRowsModel,nColumnsModel]=size(model);
             nCases = size(model(1).caseControl,1);
-            if nRowsSolver~=nCases; error('The solver object array  in inconsistent with the residual structure case control array.'); end
-            if nColumnsSolver~=nRowsModel; error('nColumnsSolver~=nRowsModel'); end
+            if nRowsSolution~=nCases; error('The solution object array  in inconsistent with the residual structure case control array.'); end
+            if nColumnsSolution~=nRowsModel; error('nColumnsSolution~=nRowsModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
             % Loop through subcases
@@ -76,7 +52,7 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 caseControl.printTextOutputSubcaseHeading(fid);
                 outputHeading = OutputHeading(caseControl,0);
                 
-                if isa(obj(caseIndex,1),'ModesSolver')
+                if isa(obj(caseIndex,1),'ModesSolution')
                     outputHeading.headingVector = obj(caseIndex,1).eigenvalueTable.frequency;
                     outputHeading.headingVectorText = ' FREQUENCY: %E Hz\n';
                     
@@ -88,19 +64,20 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 for superElementIndex = 1:nRowsModel
                     obj(caseIndex,superElementIndex).printTextOutput_sub(model(superElementIndex),fid,outputHeading);
                 end
-            end           
+            end
+            fclose(fid);
         end % printTextOutput()
-        function femapDataBlock = writeFemapNeutral(obj,model)
-            % Function to write Solver array output to a Femap Neutral file data blocks
-            % Input Solver array can include all subcases. The Model array
-            % input must be consistent with the Solver array
+        function femapDataBlock = constructFemapDataBlocks(obj,model)
+            % Function to write Solution array output to a Femap Neutral file data blocks
+            % Input Solution array can include all subcases. The Model array
+            % input must be consistent with the Solution array
             
             % Check inputs
-            [nRowsSolver,nColumnsSolver]=size(obj);
+            [nRowsSolution,nColumnsSolution]=size(obj);
             [nRowsModel,nColumnsModel]=size(model);
             nCases = size(model(1).caseControl,1);
-            if nRowsSolver~=nCases; error('The solver object array  in inconsistent with the residual structure case control array.'); end
-            if nColumnsSolver~=nRowsModel; error('nColumnsSolver~=nRowsModel'); end
+            if nRowsSolution~=nCases; error('The solution object array  in inconsistent with the residual structure case control array.'); end
+            if nColumnsSolution~=nRowsModel; error('nColumnsSolution~=nRowsModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
             % File Heading 
@@ -112,27 +89,27 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 % Use OutputHeading object to store subcase data
                 caseControl = model(1).caseControl(caseIndex);
                 outputHeading = OutputHeading(caseControl,0);
-                if isa(obj(caseIndex,1),'ModesSolver')
+                if isa(obj(caseIndex,1),'ModesSolution')
                     outputHeading.headingVector = obj(caseIndex,1).eigenvalueTable.frequency;
                     outputHeading.headingVectorText = ' FREQUENCY: %E Hz\n';
                 end
                 
                 % Create analysis study for each subcase (Not typical, but done here because CoFE allows different analysis types in the same run)
-                femapDataBlock = obj(caseIndex,1).writeFemapAnalysisSet(femapDataBlock,caseControl);
+                femapDataBlock = obj(caseIndex,1).constructFemapAnalysisSet(femapDataBlock,caseControl);
 
                 % Loop through superelements to create output sets and output vectors
                 for superElementIndex = 1:nRowsModel
                     
                     % Create output set data blocks for each subcase mode using a subclass method
-                    femapDataBlock = obj(caseIndex,1).writeFemapOutputSets(femapDataBlock,caseControl,outputHeading);
+                    femapDataBlock = obj(caseIndex,1).constructFemapOutputSets(femapDataBlock,caseControl,outputHeading);
                     
                     % Create output vector data blocks for each subcase mode using a subclass method
-                    femapDataBlock = obj(caseIndex,superElementIndex).writeFemapNeutral_sub(femapDataBlock,model(superElementIndex),outputHeading);
+                    femapDataBlock = obj(caseIndex,superElementIndex).constructFemapDataBlocks_sub(femapDataBlock,model(superElementIndex),outputHeading);
                     
                     % Advance staring index
                     % Update so that this only runs if output is created for this
                     % superelement
-                    if isa(obj,'ModesSolver')
+                    if isa(obj,'ModesSolution')
                         femapDataBlock(1) = femapDataBlock(1).advanceOutputSet(size(outputHeading.headingVector,1));
                     else
                         femapDataBlock(1) = femapDataBlock(1).advanceOutputSet(1);
@@ -144,10 +121,10 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
     end
     methods (Sealed = true, Access = private)
         function printTextOutput_sub(obj,model,fid,outputHeading)
-            % Function to print solver output to text file.
-            [nRowsSolver,nColumnsSolver]=size(obj);
+            % Function to print solution output to text file.
+            [nRowsSolution,nColumnsSolution]=size(obj);
             [nRowsModel,nColumnsModel]=size(model);
-            if any([nRowsSolver,nColumnsSolver,nRowsModel,nColumnsModel]~=1); error('Arrays Solver and/or Model inputs not allowed.'); end
+            if any([nRowsSolution,nColumnsSolution,nRowsModel,nColumnsModel]~=1); error('Arrays Solution and/or Model inputs not allowed.'); end
             
             % Set output heading superlement ID
             outputHeading.superElementID = model.superElementID;
@@ -168,23 +145,23 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
             end
             
         end % printTextOutput_sub()
-        function femapDataBlock = writeFemapNeutral_sub(obj,femapDataBlock,model,outputHeading)
-            % Function to print solver output to text file.
-            [nRowsSolver,nColumnsSolver]=size(obj);
+        function femapDataBlock = constructFemapDataBlocks_sub(obj,femapDataBlock,model,outputHeading)
+            % Function to print solution output to text file.
+            [nRowsSolution,nColumnsSolution]=size(obj);
             [nRowsModel,nColumnsModel]=size(model);
-            if any([nRowsSolver,nColumnsSolver,nRowsModel,nColumnsModel]~=1); error('Arrays Solver and/or Model inputs not allowed.'); end
+            if any([nRowsSolution,nColumnsSolution,nRowsModel,nColumnsModel]~=1); error('Arrays Solution and/or Model inputs not allowed.'); end
             
             % Set output heading superlement ID
             outputHeading.superElementID = model.superElementID;
-            caseControl = model.caseControl(obj.caseControlIndex);
+            % caseControl = model.caseControl(obj.caseControlIndex);
             
             startID = femapDataBlock(1).currentOutputSet;
 
             % Node Output Data
-            if ~isempty(obj.displacement_0) && caseControl.displacement.print
+            if ~isempty(obj.displacement_0) % && ~caseControl.displacement.print
                 femapDataBlock = [femapDataBlock;obj.displacement_0.convert_2_FemapDataBlock1051(startID)];
             end            
-            if ~isempty(obj.spcforces_0) && caseControl.spcforces.print
+            if ~isempty(obj.spcforces_0) % && ~caseControl.spcforces.print
                 femapDataBlock = [femapDataBlock;obj.spcforces_0.convert_2_FemapDataBlock1051(startID)];
             end
             
@@ -195,12 +172,12 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
         end % writeFemapNeutral_sub()
     end
     methods (Sealed = true, Static = true)
-        function solver = constructFromModel(model)
+        function solution = constructFromModel(model)
             % check input
             [nModel,mModel] = size(model);
             if nModel < 1; error('size(model,1)<1');end
             if mModel ~=1; error('size(model,2)~=1');end
-            % construct Solver object array from CaseControl object array
+            % construct Solution object array from CaseControl object array
             for i = 1:size(model(1).caseControl,1)
                 % convert field 1 to case-sensitive class name
                 analysisType = lower(model(1).caseControl(i).analysis);
@@ -209,11 +186,11 @@ classdef (Abstract) Solver < matlab.mixin.Heterogeneous
                 end        
                 analysisType(1) = upper(analysisType(1));
                 % check that input entry is supported
-                if exist([analysisType,'Solver'],'class')==8
-                    % Call contructor method for each Solver
-                    eval(['solver(i,1:nModel) = ',analysisType,'Solver();']);
+                if exist([analysisType,'Solution'],'class')==8
+                    % Call contructor method for each Solution
+                    eval(['solution(i,1:nModel) = ',analysisType,'Solution();']);
                     for j = 1:nModel
-                        solver(i,j).caseControlIndex = uint32(i);
+                        solution(i,j).caseControlIndex = uint32(i);
                     end
                 else
                     error('Analysis type %s not supported. Check SOL entry and/or Case Control ANALYSIS entries.',upper(analysisType))
