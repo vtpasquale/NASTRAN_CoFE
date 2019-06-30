@@ -84,7 +84,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             for i = 1:size(recoverIndex,1)
                 elementIndex = recoverIndex(i);
                 oi = obj(elementIndex);
-                [f,s,e,ese] = oi.recover_sub(u_g,returnFlags(elementIndex,:));
+                [f,s,e,ese] = oi.recover_sub(u_g,model,returnFlags(elementIndex,:));
                 if ~isempty(f)
                     F = [F;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,1,f)];
                 end

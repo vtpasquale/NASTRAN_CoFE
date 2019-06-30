@@ -28,6 +28,13 @@ classdef Pbeam < Property
             obj.G = material.G;
             obj.rho = material.rho;
         end
+        function [C1,C2,D1,D2,E1,E2,F1,F2]=getStressLocations(obj)
+            % Helper function to deal locations to seperate variables
+            [C1,C2,D1,D2,E1,E2,F1,F2]=deal(obj.c1ThruF2(1),...
+                obj.c1ThruF2(2),obj.c1ThruF2(3),obj.c1ThruF2(4),...
+                obj.c1ThruF2(5),obj.c1ThruF2(6),obj.c1ThruF2(7),...
+                obj.c1ThruF2(8));
+        end
     end
 end
 

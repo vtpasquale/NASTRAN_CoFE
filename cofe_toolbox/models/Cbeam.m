@@ -16,8 +16,6 @@ classdef Cbeam < Element
     end
     properties (Hidden = true)
         ELEMENT_TYPE = uint8(2); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
-        matE % [real] Elastic modulus
-        matG % [real] Shear modulus
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -44,14 +42,26 @@ classdef Cbeam < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
         end
-        function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,returnFlags,opts)
+        function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
             % u_g [nGodf,nVectors double] Response vector in nodal displacement reference frame
             % returnFlags [1,4 logical] [force,stress,strain,strain_energy] 1 -> recover, 0 -> return empty array []
-            % opts [struct] optional structure of option fields
             %
             % OUTPUTS
-            % force = [6,nVectors] Element forces
+            % force = [12,nVectors double] Element forces
+            %   indices:
+            %    [  Beam EndA Axial Force
+            %       Beam EndA Plane1 Shear Force
+            %       Beam EndA Plane2 Shear Force
+            %       Beam EndA Plane1 Moment
+            %       Beam EndA Plane2 Moment
+            %       Beam EndA Torque
+            %       Beam EndB Axial Force
+            %       Beam EndB Plane1 Shear Force
+            %       Beam EndB Plane2 Shear Force
+            %       Beam EndB Plane1 Moment
+            %       Beam EndB Plane2 Moment
+            %       Beam EndB Torque             ]
             %
             % stress  = [8,nVectors double] Element stresses
             % strain  = [8,nVectors double] Element strains
@@ -65,7 +75,7 @@ classdef Cbeam < Element
             %      End B Long. Stress or Strain at Point E;
             %      End B Long. Stress or Strain at Point F];
             %
-            % strainEnergy = [1,nVectors] Element strain energy
+            % strainEnergy = [1,nVectors double] Element strain energy
             
             
             % Check inputs
@@ -77,17 +87,22 @@ classdef Cbeam < Element
             
             % Force
             if returnFlags(1)
-                force = f_e(7:end,:);
+                force = [-f_e(1:6 ,:);
+                          f_e(7:12,:)];
             else
                 force = [];
             end
-            
-            error('Finish writing this function')
-            
+                        
             % Calcualte stress for stress or strain recovery
             if any(returnFlags(2:3))
-                s = [(1/obj.a)*f_e(7,:);...
-                    (obj.c/obj.j)*f_e(10,:)];
+                pty = model.property.getProperty(obj.pid,model,'Pbeam');
+                [C1,C2,D1,D2,E1,E2,F1,F2]=pty.getStressLocations();
+                force2stress = [1/pty.a, 0, 0, 0, C2/pty.i2, -C1/pty.i1;
+                                1/pty.a, 0, 0, 0, D2/pty.i2, -D1/pty.i1;
+                                1/pty.a, 0, 0, 0, E2/pty.i2, -E1/pty.i1;
+                                1/pty.a, 0, 0, 0, F2/pty.i2, -F1/pty.i1];
+                s = [-force2stress*f_e(1:6,:);
+                      force2stress*f_e(7:end,:)];
             end
             
             % Stress
@@ -99,15 +114,14 @@ classdef Cbeam < Element
             
             % Strain
             if returnFlags(3)
-                strain(2,:) = (1/obj.matG)*s(2,:);
-                strain(1,:) = (1/obj.matE)*s(1,:);
+                strain = (1/pty.E)*s;
             else
                 strain = [];
             end
             
             % Strain Energy
             if returnFlags(4)
-                strainEnergy = .5*u_e.'*f_e;
+                strainEnergy = .5*diag(u_e.'*f_e);
             else
                 strainEnergy = [];
             end

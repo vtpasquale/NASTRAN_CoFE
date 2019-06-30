@@ -50,11 +50,10 @@ classdef Crod < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
         end
-        function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,returnFlags,opts)
+        function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
             % u_g [ngodf,nvectors double] Response vector in nodal displacement reference frame
             % returnFlags [1,4 logical] [force,stress,strain,strain_energy] 1 -> recover, 0 -> return empty array []
-            % opts [struct] optional structure of option fields
             %
             % OUTPUTS
             % force(1,nvectors) = Axial force
