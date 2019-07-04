@@ -42,8 +42,9 @@ classdef ElementOutputData
             uniqueElementTypes = unique(elementTypes);
             % Loop through element types
             for i = 1:size(uniqueElementTypes,1)
-                elementOutputDataI = obj(elementTypes==elementTypes(i));
-                elementTypeObj = model.element(model.elementEIDs==elementOutputDataI(1).elementID);
+                elementOutputDataI = obj(elementTypes==uniqueElementTypes(i));
+                elementIndex = ismember(model.elementEIDs,[elementOutputDataI.elementID]);
+                elementTypeObj = model.element(elementIndex);
                 elementTypeObj.printTextOutput(fid,elementOutputDataI,outputHeading)
             end
         end

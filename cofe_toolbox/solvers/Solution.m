@@ -140,10 +140,18 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             end
             
             % Element Output Data
+            if ~isempty(obj.force) && caseControl.force.print
+                obj.force.printTextOutput(fid,model,outputHeading)
+            end
+            if ~isempty(obj.strain) && caseControl.strain.print
+                obj.strain.printTextOutput(fid,model,outputHeading)
+            end
             if ~isempty(obj.stress) && caseControl.stress.print
                 obj.stress.printTextOutput(fid,model,outputHeading)
             end
-            
+            if ~isempty(obj.strainEnergy) && caseControl.ese.print
+                obj.strainEnergy.printTextOutput(fid,model,outputHeading)
+            end
         end % printTextOutput_sub()
         function femapDataBlock = constructFemapDataBlocks_sub(obj,femapDataBlock,model,outputHeading)
             % Function to print solution output to text file.
