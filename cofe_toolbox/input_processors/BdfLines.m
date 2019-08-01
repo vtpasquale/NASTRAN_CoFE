@@ -20,52 +20,57 @@ classdef BdfLines
     end
     
     methods
-        function obj = BdfLines(filename)
+        function obj = BdfLines(filename,skipToBulkData)
             % Reads lines from specified Nastran-formatted input file. Creates BdfLines object.
             %
             % Inputs
             % filename = [char] Nastran-formatted input file name.
-            obj = obj.readBdfLines(filename);
+            % skipToBulkData = [logical] Case and executive control skipped if true
+            if nargin < 2; skipToBulkData = false; end
+            obj = obj.readBdfLines(filename,skipToBulkData);
             obj = obj.partitionBulkDataSuperelements();
         end
     end
     methods (Access = private)
-        function obj = readBdfLines(obj,filename)
+        function obj = readBdfLines(obj,filename,skipToBulkData)
             % Reads lines from specified Nastran-formatted input file. Creates BdfLines object.
             % Bulk data superelements are not partitioned in this function
             %
             % Inputs
             % filename = [char] Nastran-formatted input file name.
+            % skipToBulkData = [logical] Case and executive control skipped if true
             obj.startPath = pwd;
             obj = openFile(obj,filename);
             
-            % read the executive control section
-            while 1
-                [obj,inputLine] = readNextLine(obj);
-                if ~ischar(inputLine)
-                    warning('The input file ended before the CEND statement.')
-                    checkFilesClosed(obj)
-                    return % input file ended
-                else
-                    [obj,cend] = processExecutiveControlLine(obj,inputLine);
+            if ~skipToBulkData
+                % read the executive control section
+                while 1
+                    [obj,inputLine] = readNextLine(obj);
+                    if ~ischar(inputLine)
+                        warning('The input file ended before the CEND statement.')
+                        checkFilesClosed(obj)
+                        return % input file ended
+                    else
+                        [obj,cend] = processExecutiveControlLine(obj,inputLine);
+                    end
+                    if cend
+                        break
+                    end
                 end
-                if cend
-                    break
-                end
-            end
-            
-            % read the case control section
-            while 1
-                [obj,inputLine] = readNextLine(obj);
-                if ~ischar(inputLine)
-                    warning('The input file ended before the BEGIN BULK statement.')
-                    checkFilesClosed(obj)
-                    return % input file ended
-                else
-                    [obj,beginBulk] = processCaseControlLine(obj,inputLine);
-                end
-                if beginBulk
-                    break
+                
+                % read the case control section
+                while 1
+                    [obj,inputLine] = readNextLine(obj);
+                    if ~ischar(inputLine)
+                        warning('The input file ended before the BEGIN BULK statement.')
+                        checkFilesClosed(obj)
+                        return % input file ended
+                    else
+                        [obj,beginBulk] = processCaseControlLine(obj,inputLine);
+                    end
+                    if beginBulk
+                        break
+                    end
                 end
             end
             

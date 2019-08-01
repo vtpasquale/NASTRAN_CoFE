@@ -1,7 +1,9 @@
 % clearvars; close all; clc
 % addpath(genpath(fullfile('..','..','cofe_toolbox')));
 
-%% Transform locations to local reference frame
+cofe = Cofe('truss_rand_coords.dat','output',false);
+
+%% Transform node locations to local reference frame
 
 % ID	Def CSys	X-Def	Y-Def	Z-Def	Active Csys	X-Act	Y-Act	Z-Act
 % 4	6558	169.8167	-216.2057	-3.539755	0..Global Rectangular	-3.311129E-12	120.	240.
@@ -28,18 +30,26 @@ location = [-3.311129E-12	120.	240.
             180.9601	30.36212	155.6088
             205.0785	177.0128	-76.73323]';
         
-% test case
-ENTRY = entry.import_entries('truss_rand_coords.dat');
-MODEL = ENTRY.entry2model_all();
-MODEL = MODEL.preprocess();
-MODEL = MODEL.assemble();
-
 for i = 1:size(csysList,1)
-    cord_id = MODEL.cordCIDs==csysList(i);
-    cofeLocation(:,i) = MODEL.CORD(cord_id).X_C(MODEL.NODE(nodeID).X_0);
+    coordinateSystem = cofe.model.coordinateSystem.getCoordinateSystem(csysList(i),cofe.model);
+    cofeLocation(:,i) = coordinateSystem.x_c(cofe.model.point(nodeID).x_0);
 end
 
-% 
-assert(max(max(abs([location-cofeLocation])))<1e-4) % [location;cofeLocation]
+locationDifference = normalizedDifference(location,cofeLocation);
+assert(all(locationDifference(:)<1e-6),'Coordinate transformation error.') % [location;cofeLocation]
+
+%% Displacement in global (local) reference frames
+nastran_u_g = csvread('truss_rand_coords_u_g.csv',1,2);
+cofe_u_g = [cofe.solution.displacement_g.T1,cofe.solution.displacement_g.T2,cofe.solution.displacement_g.T3];
+u_gDifference = normalizedDifference(nastran_u_g,cofe_u_g);
+assert(all(u_gDifference(:)<1e-5),'Displacement result different than verification case.') % [location;cofeLocation]
+
+
+%% Displacement in basic reference frame
+nastran_u_0 = csvread('truss_rand_coords_u_0.csv',1,2);
+cofe_u_0 = [cofe.solution.displacement_0.T1,cofe.solution.displacement_0.T2,cofe.solution.displacement_0.T3];
+u_0Difference = normalizedDifference(nastran_u_0,cofe_u_0);
+assert(all(u_0Difference(:)<1e-5),'Displacement result different than verification case.') % [location;cofeLocation]
+
 
 

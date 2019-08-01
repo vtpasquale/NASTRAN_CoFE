@@ -1,0 +1,194 @@
+INIT MASTER(S)
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1
+ID analysis,Femap
+SOL SEMODES
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+SPCF=NONE
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+  TITLE = Modes.dat
+  ECHO = NONE
+  DISPLACEMENT(PRINT) = ALL
+  SPCFORCES(PRINT) = ALL
+  FORCE(PRINT) = ALL
+  STRESS(PRINT) = ALL
+  ESE(PRINT) = ALL
+  STRAIN(PRINT,FIBER) = ALL
+  METHOD = 1
+  SPC = 1
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap with NX Nastran
+$   Version    : 12.0.1a
+$   Translator : NX Nastran
+$   From Model : \\ero-fs1\u\aricciar\Desktop\temp\examples\a3_72_bar_truss_analysis\analysis.modfem
+$   Date       : Sat Jul  6 13:00:59 2019
+$   Output To  : \\ero-fs1\u\aricciar\Desktop\temp\examples\a3_72_bar_truss_analysis\
+$ ***************************************************************************
+$
+PARAM,PRGPST,YES
+PARAM,POST,-1
+PARAM,OGEOM,NO
+PARAM,AUTOSPC,NO
+PARAM,GRDPNT,0
+PARAM,COUPMASS,1
+EIGRL          1                      10       0                    MASS
+CORD2C         1       0      0.      0.      0.      0.      0.      1.+FEMAPC1
++FEMAPC1      1.      0.      1.        
+CORD2S         2       0      0.      0.      0.      0.      0.      1.+FEMAPC2
++FEMAPC2      1.      0.      1.        
+$ Femap with NX Nastran Constraint Set 1 : NASTRAN SPC 1
+SPC1           1     456       1
+SPC1           1     456       2
+SPC1           1     456       3
+SPC1           1     456       4
+SPC1           1     456       5
+SPC1           1     456       6
+SPC1           1     456       7
+SPC1           1     456       8
+SPC1           1     456       9
+SPC1           1     456      10
+SPC1           1     456      11
+SPC1           1     456      12
+SPC1           1     456      13
+SPC1           1     456      14
+SPC1           1     456      15
+SPC1           1     456      16
+SPC1           1  123456      17
+SPC1           1  123456      18
+SPC1           1  123456      19
+SPC1           1  123456      20
+$ Femap with NX Nastran Property 1 : ROD Property
+PROD           1     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 2 : ROD Property
+PROD           2     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 3 : ROD Property
+PROD           3     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 4 : ROD Property
+PROD           4     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 5 : ROD Property
+PROD           5     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 6 : ROD Property
+PROD           6     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 7 : ROD Property
+PROD           7     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 8 : ROD Property
+PROD           8     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 9 : ROD Property
+PROD           9     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 10 : ROD Property
+PROD          10     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 11 : ROD Property
+PROD          11     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 12 : ROD Property
+PROD          12     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 13 : ROD Property
+PROD          13     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 14 : ROD Property
+PROD          14     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 15 : ROD Property
+PROD          15     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 16 : ROD Property
+PROD          16     101      .5    999.      0.      0.
+$ Femap with NX Nastran Material 101 : ISOTROPIC Material
+MAT1         101    1.+73759398.     .33  2.59-4      0.      0.        
+GRID           1       0      0.      0.    240.       0
+GRID           2       0    120.      0.    240.       0
+GRID           3       0    120.    120.    240.       0
+GRID           4       0      0.    120.    240.       0
+GRID           5       0      0.      0.    180.       0
+GRID           6       0    120.      0.    180.       0
+GRID           7       0    120.    120.    180.       0
+GRID           8       0      0.    120.    180.       0
+GRID           9       0      0.      0.    120.       0
+GRID          10       0    120.      0.    120.       0
+GRID          11       0    120.    120.    120.       0
+GRID          12       0      0.    120.    120.       0
+GRID          13       0      0.      0.     60.       0
+GRID          14       0    120.      0.     60.       0
+GRID          15       0    120.    120.     60.       0
+GRID          16       0      0.    120.     60.       0
+GRID          17       0      0.      0.      0.       0
+GRID          18       0    120.      0.      0.       0
+GRID          19       0    120.    120.      0.       0
+GRID          20       0      0.    120.      0.       0
+CROD           1       1       1       5
+CROD           2       1       2       6
+CROD           3       1       3       7
+CROD           4       1       4       8
+CROD           5       2       5       2
+CROD           6       2       1       6
+CROD           7       2       6       3
+CROD           8       2       2       7
+CROD           9       2       7       4
+CROD          10       2       3       8
+CROD          11       2       8       1
+CROD          12       2       4       5
+CROD          13       3       1       2
+CROD          14       3       2       3
+CROD          15       3       3       4
+CROD          16       3       4       1
+CROD          17       4       1       3
+CROD          18       4       2       4
+CROD          19       5       5       9
+CROD          20       5       6      10
+CROD          21       5       7      11
+CROD          22       5       8      12
+CROD          23       6       9       6
+CROD          24       6       5      10
+CROD          25       6      10       7
+CROD          26       6       6      11
+CROD          27       6      11       8
+CROD          28       6       7      12
+CROD          29       6      12       5
+CROD          30       6       8       9
+CROD          31       7       5       6
+CROD          32       7       6       7
+CROD          33       7       7       8
+CROD          34       7       8       5
+CROD          35       8       5       7
+CROD          36       8       6       8
+CROD          37       9       9      13
+CROD          38       9      10      14
+CROD          39       9      11      15
+CROD          40       9      12      16
+CROD          41      10      13      10
+CROD          42      10       9      14
+CROD          43      10      14      11
+CROD          44      10      10      15
+CROD          45      10      15      12
+CROD          46      10      11      16
+CROD          47      10      16       9
+CROD          48      10      12      13
+CROD          49      11       9      10
+CROD          50      11      10      11
+CROD          51      11      11      12
+CROD          52      11      12       9
+CROD          53      12       9      11
+CROD          54      12      10      12
+CROD          55      13      13      17
+CROD          56      13      14      18
+CROD          57      13      15      19
+CROD          58      13      16      20
+CROD          59      14      17      14
+CROD          60      14      13      18
+CROD          61      14      18      15
+CROD          62      14      14      19
+CROD          63      14      19      16
+CROD          64      14      15      20
+CROD          65      14      20      13
+CROD          66      14      16      17
+CROD          67      15      13      14
+CROD          68      15      14      15
+CROD          69      15      15      16
+CROD          70      15      16      13
+CROD          71      16      13      15
+CROD          72      16      14      16
+ENDDATA afc25666

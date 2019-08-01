@@ -50,7 +50,7 @@ bdfLines = BdfLines(fullfile(testDir1,test_file));
 % check results
 assert(all(strcmp(bdfLines.executiveControl,exec(1:2))))
 assert(all(strcmp(bdfLines.caseControl,casec([1:2,5]))))
-assert(all(strcmp(bdfLines.bulkData,bulk([1:3,6:7]))))
+assert(all(strcmp(bdfLines.bulkData{1},bulk([1:3,6:7]))))
 
 
 %% trailing comments must be removed
@@ -105,7 +105,7 @@ bdfLines = BdfLines(fullfile(testDir1,test_file));
 % check results
 assert(all(strcmp(bdfLines.executiveControl,exec_check)))
 assert(all(strcmp(bdfLines.caseControl,casec_check)))
-assert(all(strcmp(bdfLines.bulkData,bulk_check)))
+assert(all(strcmp(bdfLines.bulkData{1},bulk_check)))
 
 %% stop at the first ENDDATA statement in bulk data section
 test_file = 'stop_at_enddata.dat';
@@ -139,7 +139,7 @@ fclose(fid);
 bdfLines = BdfLines(fullfile(testDir1,test_file));
 
 % check results
-assert(all(strcmp(bdfLines.bulkData,bulk(1:3))))
+assert(all(strcmp(bdfLines.bulkData{1},bulk(1:3))))
 
 %% handle nested INCLUDE statements
 main1 = fullfile(testDir1,'main1.dat');
@@ -214,7 +214,7 @@ for i = 1:8
 end
 assert(all(strcmp(bdfLines.executiveControl,check)))
 assert(all(strcmp(bdfLines.caseControl,check)))
-assert(all(strcmp(bdfLines.bulkData,check)))
+assert(all(strcmp(bdfLines.bulkData{1},check)))
 
 %% handle multiline include statements
 % uses INCLUDE files generated for previous test case
@@ -240,7 +240,7 @@ for i = 1:4
 end
 assert(all(strcmp(bdfLines.executiveControl,check)))
 assert(all(strcmp(bdfLines.caseControl,check)))
-assert(all(strcmp(bdfLines.bulkData,check)))
+assert(all(strcmp(bdfLines.bulkData{1},check)))
 
 %% warn if file ends before CEND
 test_file = 'warn_end_before_cend.dat';

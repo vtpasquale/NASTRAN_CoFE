@@ -1,0 +1,1822 @@
+1
+ 
+ 
+ 
+ 
+                                                             
+                 Copyright 2017 Siemens Product Lifecycle    
+                        Management Software Inc.             
+                         All Rights Reserved.                
+                                                             
+               This software and related documentation are   
+                 proprietary to Siemens Product Lifecycle    
+                        Management Software Inc.             
+                                                             
+              Siemens and the Siemens logo are registered    
+             trademarks of Siemens AG. NX is a trademark or  
+                registered trademark of Siemens Product      
+               Lifecycle Management Software Inc. or its     
+             subsidiaries in the United States and in other  
+             countries.  NASTRAN is a registered trademark   
+                 of the National Aeronautics and Space       
+                 Administration.  All other trademarks,      
+              registered trademarks or service marks belong  
+                      to their respective holders.           
+                                                             
+           LIMITATIONS TO U.S. GOVERNMENT RIGHTS. UNPUBLISHED
+           - RIGHTS RESERVED UNDER THE COPYRIGHT LAWS OF THE 
+            UNITED STATES. This computer software and related
+               computer software documentation have been     
+            developed exclusively at private expense and are 
+           provided subject to the following rights:  If this
+               computer software and computer  software      
+            documentation qualify as "commercial items" (as  
+             that term is defined in FAR 2.101), their use,  
+            duplication or disclosure by the U.S. Government 
+           is subject to the protections and restrictions as 
+            set forth in the Siemens commercial license for  
+            software and/or documentation, as prescribed in  
+           FAR 12.212 and FAR 27.405(b)(2)(i) (for civilian  
+             agencies) and in DFARS 227.7202-1(a) and DFARS  
+           227.7202-3(a) (for the Department of Defense), or 
+           any successor or similar regulation, as applicable
+           or as amended from time to time.  If this computer
+           software and computer documentation do not qualify
+            as "commercial items", then they are "restricted 
+           computer software" and are provided with "restric-
+            tive rights", and their use, duplication or dis- 
+            closure by the U.S. Government is subject to the 
+            protections and restrictions as set forth in FAR 
+           27.404(b) and FAR 52-227-14 (for civilian agencies
+           ), and DFARS 227.7203-5(c) and DFARS 252.227-7014 
+           (for the Department of Defense), or any successor 
+           or similar regulation, as applicable or as amended
+              from time to time.  Siemens PLM Software Inc.  
+            5800 Granite Parkway, Suite 600, Plano, TX 75024 
+
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *       N X   N a s t r a n       * *
+                * *                                 * *
+                * *        VERSION -  12.0.2        * *
+                * *                                 * *
+                * *          MAY 23, 2018           * *
+                * *                                 * *
+                * *                                 * *
+                * *Intel64 Family 6 Model 63 Steppi * *
+                * *                                 * *
+                * *MODEL Intel(R) Xeon(R) CPU E5-16 * *
+                * *                                 * *
+                * *  Windows 7 SP1 Service Pack 1   * *
+                * *                                 * *
+                * *       Compiled for X86-64       * *
+                * *                                 * *
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+1 
+  
+                        Welcome to NX Nastran
+                        -------------------------
+  
+  
+ This "news" information can be turned off by setting "news=no" in the runtime
+ configuration (RC) file.  The "news" keyword can be set in the system RC file
+ for global, or multi-user control, and in a local file for local control.
+ Individual jobs can be controlled by setting news to yes or no on the command
+ line.
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=32769 $(C:/PROGRAM FILES/SIEMENS/FEMAPV1201/NASTRAN/CONF/NAST12
+     NASTRAN BUFFPOOL=23554                                                          
+     NASTRAN DIAGA=128 DIAGB=0 $(C:/PROGRAM FILES/SIEMENS/FEMAPV1201/NASTRAN/CONF/NAS
+     NASTRAN REAL=8577351680 $(MEMORY LIMIT FOR MPI AND OTHER SPECIALIZED MODULES)   
+     $ **********************************************************                    
+     $   E X E C U T I V E    C O N T R O L                                          
+     $ **********************************************************                    
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 103                                                                                 
+     CEND                                                                                    
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ **********************************************************                            
+                  2      $   C A S E    C O N T R O L                                                            
+                  3      $ **********************************************************                            
+                  4      DISPLACEMENT = ALL                                                                      
+                  5      STRESS = ALL                                                                            
+                  6      STRAIN = ALL                                                                            
+                  7      ESE = ALL                                                                               
+                  8      EKE = ALL                                                                               
+                  9      FORCE = ALL                                                                             
+                 10      SPCFORCES = ALL                                                                         
+                 11      SPC = 1                                                                                 
+                 12      METHOD = 1                                                                              
+                 13      $ **********************************************************                            
+                 14      $   B U L K    D A T A                                                                  
+                 15      $ **********************************************************                            
+                 16      BEGIN BULK                                                                              
+ *** USER WARNING MESSAGE 4699 (XSBFF)
+     THE FREE FIELD BULK DATA ENTRY BELOW HAS A REAL FIELD WITH MORE THAN 8 CHARACTERS.  SOME PRECISION MAY BE LOST.
+     MAT1,501,1440.E6,,.33,5.37078819
+0                             INPUT BULK DATA ENTRY COUNT =          59
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+0                                                 S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBEAM   1       101     1       2       0.      1.      0.                      
+                    2-        CBEAM   2       102     2       3       0.      1.      0.                      
+                    3-        CBEAM   3       103     3       4       0.      1.      0.                      
+                    4-        CBEAM   4       104     4       5       0.      1.      0.                      
+                    5-        CBEAM   5       105     5       6       0.      1.      0.                      
+                    6-        EIGRL   1                       10                              MASS            
+                    7-        FORCE   1       6               1.0E8   0.25    0.5     -1.0                    
+                    8-        GRID    1       0       0.0     0.0     0.0     0                               
+                    9-        GRID    2       0       1.0     0.0     0.0     0                               
+                   10-        GRID    3       0       2.0     0.0     0.0     0                               
+                   11-        GRID    4       0       3.0     0.0     0.0     0                               
+                   12-        GRID    5       0       4.0     0.0     0.0     0                               
+                   13-        GRID    6       0       5.0     0.0     0.0     0                               
+                   14-        MAT1    501     1440.E6         .33     5.37079                                 
+                   15-        MOMENT  1       6               1.0E8   2.0     -3.0    0.75                    
+                   16-        PARAM   AUTOSPC NO                                                              
+                   17-        PARAM   GRDPNT  0                                                               
+                   18-        PARAM   POST    -1                                                              
+                   19-        PBEAM   101     501     15000.  2500.   250.    0.0     25000.  0.0      0000001
+                   20-        +0000001.1      .1      -0.1    .1      -0.1    -0.1    .1      -0.1     0000002
+                   21-        +00000020.0     0.0                                                      0000003
+                   22-        PBEAM   102     501     15000.  2500.   250.    0.0     25000.  0.0      0000004
+                   23-        +0000004.1      .1      -0.1    .1      -0.1    -0.1    .1      -0.1     0000005
+                   24-        +00000050.0     0.0                                                      0000006
+                   25-        PBEAM   103     501     15000.  2500.   250.    0.0     25000.  0.0      0000007
+                   26-        +0000007.1      .1      -0.1    .1      -0.1    -0.1    .1      -0.1     0000008
+                   27-        +00000080.0     0.0                                                      0000009
+                   28-        PBEAM   104     501     15000.  2500.   250.    0.0     25000.  0.0      000000A
+                   29-        +000000A.1      .1      -0.1    .1      -0.1    -0.1    .1      -0.1     000000B
+                   30-        +000000B0.0     0.0                                                      000000C
+                   31-        PBEAM   105     501     15000.  2500.   250.    0.0     25000.  0.0      000000D
+                   32-        +000000D.1      .1      -0.1    .1      -0.1    -0.1    .1      -0.1     000000E
+                   33-        +000000E0.0     0.0                                                      000000F
+                   34-        SPC1    1       123456  1                                                       
+                              ENDDATA 
+0                       TOTAL COUNT=        35
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =        6
+ 
+ 
+                                   NUMBER OF CBEAM    ELEMENTS =        5
+ 
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4109 (OUTPBN2)
+     THE LABEL IS NX12.0.2 FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        7 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =        8 RECORDS.)
+     (TOTAL DATA WRITTEN FOR TAPE LABEL =       17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK PVT0     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                13                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       13 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       39 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK CASECC   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 1                 0              1200                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =     1200 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1226 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK GEOM1S   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 8                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       51 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       84 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK GEOM2S   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                 0                 0                 0              1024                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       93 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      126 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK GEOM3S   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    103                 0                 0                65                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       10 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       29 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       57 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK GEOM4S   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    104                 0                 0                 0                64                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        8 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       41 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK EPTS     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0              1024                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      988 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1021 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101             32768                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       48 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK DYNAMICS WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102               256                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       30 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       63 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK BGPDTS   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 6                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       24 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       50 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK EQEXINS  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 6                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       12 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       54 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  4.028092E+05  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  4.028092E+05  0.000000E+00  0.000000E+00  0.000000E+00  1.007023E+06 *
+                      *  0.000000E+00  0.000000E+00  4.028092E+05  0.000000E+00 -1.007023E+06  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00  0.000000E+00  7.384836E+04  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -1.007023E+06  0.000000E+00  3.423879E+06  0.000000E+00 *
+                      *  0.000000E+00  1.007023E+06  0.000000E+00  0.000000E+00  0.000000E+00  3.423879E+06 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            4.028092E+05      0.000000E+00  0.000000E+00  0.000000E+00
+                                  Y            4.028092E+05      2.500000E+00  0.000000E+00  0.000000E+00
+                                  Z            4.028092E+05      2.500000E+00  0.000000E+00  0.000000E+00
+                                                                I(S)
+                                           *  7.384836E+04  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  9.063208E+05  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  9.063208E+05 *
+                                                                I(Q)
+                                           *  7.384836E+04                             *
+                                           *                9.063208E+05               *
+                                           *                              9.063208E+05 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00                             
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       0 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     UNABLE TO EXECUTE METIS REORDERING BECAUSE THE MATRIX DENSITY IS TOO HIGH:  52 %.
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE =  2.882622E+06, CYCLES =  2.702178E+02 NUMBER OF EIGENVALUES BELOW THIS VALUE =     2
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE =  2.224419E+08, CYCLES =  2.373714E+03 NUMBER OF EIGENVALUES BELOW THIS VALUE =    10
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.        2.8826216E+06          2.7021780E+02                 2                       20
+     2.        2.2244195E+08          2.3737145E+03                10                        0
+
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................    7
+
+                                     NUMBER OF DECOMPOSITIONS .............    2
+
+                                     NUMBER OF ROOTS FOUND ................   10
+
+                                     NUMBER OF SOLVES REQUIRED ............    5
+
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        8.523154E+04        2.919444E+02        4.646440E+01        1.000000E+00        8.523154E+04
+        2         2        8.523154E+05        9.232093E+02        1.469333E+02        1.000000E+00        8.523154E+05
+        3         3        3.073543E+06        1.753152E+03        2.790229E+02        1.000000E+00        3.073543E+06
+        4         4        2.238404E+07        4.731177E+03        7.529902E+02        1.000000E+00        2.238404E+07
+        5         5        2.624516E+07        5.123003E+03        8.153512E+02        1.000000E+00        2.624516E+07
+        6         6        3.073543E+07        5.543954E+03        8.823478E+02        1.000000E+00        3.073543E+07
+        7         7        7.798129E+07        8.830702E+03        1.405450E+03        1.000000E+00        7.798129E+07
+        8         8        8.969637E+07        9.470817E+03        1.507327E+03        1.000000E+00        8.969637E+07
+        9         9        1.674074E+08        1.293860E+04        2.059242E+03        1.000000E+00        1.674074E+08
+       10        10        2.210435E+08        1.486753E+04        2.366241E+03        1.000000E+00        2.210435E+08
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  SPCFORCE RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    1.634641E-06     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       2.368554E-06     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -4.203578E+07  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       5.573659E-08     ----          ----                                  
+               MY       ----          ----          ----          ----       1.552686E+08     ----                                  
+               MZ       ----          ----          ----          ----          ----       1.070230E-05                             
+             TOTALS  1.634641E-06  2.368554E-06 -4.203578E+07  5.573659E-08  1.552686E+08  1.070230E-05                             
+0        2     FX   -6.281218E-07     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       4.203578E+08     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -3.945469E-08  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       3.363440E-09     ----          ----                                  
+               MY       ----          ----          ----          ----      -4.590166E-07     ----                                  
+               MZ       ----          ----          ----          ----          ----       1.552686E+09                             
+             TOTALS -6.281218E-07  4.203578E+08 -3.945469E-08  3.363440E-09 -4.590166E-07  1.552686E+09                             
+0        3     FX   -8.902108E-11     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       5.470442E-10     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       8.484753E+08  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -4.468044E-12     ----          ----                                  
+               MY       ----          ----          ----          ----      -9.156996E+08     ----                                  
+               MZ       ----          ----          ----          ----          ----       1.353816E-09                             
+             TOTALS -8.902108E-11  5.470442E-10  8.484753E+08 -4.468044E-12 -9.156996E+08  1.353816E-09                             
+0        4     FX    3.019756E-04     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       2.494771E-04     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       3.606552E+09  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -2.397795E-05     ----          ----                                  
+               MY       ----          ----          ----          ----      -2.463582E+09     ----                                  
+               MZ       ----          ----          ----          ----          ----       2.746374E-04                             
+             TOTALS  3.019756E-04  2.494771E-04  3.606552E+09 -2.397795E-05 -2.463582E+09  2.746374E-04                             
+0        5     FX   -1.487310E+10     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       3.373760E-04     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       9.519008E-05  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -4.134837E-06     ----          ----                                  
+               MY       ----          ----          ----          ----      -6.552417E-05     ----                                  
+               MZ       ----          ----          ----          ----          ----       3.786402E-04                             
+             TOTALS -1.487310E+10  3.373760E-04  9.519008E-05 -4.134837E-06 -6.552417E-05  3.786402E-04                             
+0        6     FX    8.101041E-04     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       8.484753E+09     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -1.652237E-04  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -2.377378E-05     ----          ----                                  
+               MY       ----          ----          ----          ----       1.163019E-04     ----                                  
+               MZ       ----          ----          ----          ----          ----       9.156996E+09                             
+             TOTALS  8.101041E-04  8.484753E+09 -1.652237E-04 -2.377378E-05  1.163019E-04  9.156996E+09                             
+0        7     FX    3.926005E-05     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       3.357998E-04     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -8.720188E+09  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       6.224968E-04     ----          ----                                  
+               MY       ----          ----          ----          ----       4.530937E+09     ----                                  
+               MZ       ----          ----          ----          ----          ----       3.314396E-04                             
+             TOTALS  3.926005E-05  3.357998E-04 -8.720188E+09  6.224968E-04  4.530937E+09  3.314396E-04                             
+0        8     FX   -3.562325E-05     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----      -5.034316E-05     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -5.381548E-04  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -2.176445E+10     ----          ----                                  
+               MY       ----          ----          ----          ----       2.889788E-04     ----                                  
+               MZ       ----          ----          ----          ----          ----      -5.112736E-05                             
+             TOTALS -3.562325E-05 -5.034316E-05 -5.381548E-04 -2.176445E+10  2.889788E-04 -5.112736E-05                             
+0        9     FX    1.089093E-03     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----      -2.070390E-03     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----      -1.137174E+10  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       5.234960E-04     ----          ----                                  
+               MY       ----          ----          ----          ----       5.126674E+09     ----                                  
+               MZ       ----          ----          ----          ----          ----      -9.319630E-04                             
+             TOTALS  1.089093E-03 -2.070390E-03 -1.137174E+10  5.234960E-04  5.126674E+09 -9.319630E-04                             
+0       10     FX    3.893827E+10     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       3.952909E-01     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       9.471482E-04  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----      -6.387205E-04     ----          ----                                  
+               MY       ----          ----          ----          ----      -4.369076E-04     ----                                  
+               MZ       ----          ----          ----          ----          ----       2.707984E-01                             
+             TOTALS  3.893827E+10  3.952909E-01  9.471482E-04 -6.387205E-04 -4.369076E-04  2.707984E-01                             
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OQG1     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0               480                23                19                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     2047 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK LAMA     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                10                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      246 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OUGV1    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0               480                23                19                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     2047 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+          CYCLES =  4.646440E+01         R E A L   E I G E N V E C T O R   N O .          1
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -7.567784E-20  -1.376775E-18   1.961898E-04  -4.118314E-21  -3.729187E-04  -2.643894E-18
+             3      G     -1.427331E-19  -5.062485E-18   7.075390E-04  -7.753533E-21  -6.309423E-04  -4.611879E-18
+             4      G     -1.958940E-19  -1.036445E-17   1.422649E-03  -1.035786E-20  -7.826895E-04  -5.871613E-18
+             5      G     -2.295620E-19  -1.658313E-17   2.244264E-03  -1.187858E-20  -8.484751E-04  -6.463597E-18
+             6      G     -2.415201E-19  -2.314191E-17   3.102602E-03  -1.228193E-20  -8.632694E-04  -6.606369E-18
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+          CYCLES =  1.469333E+02         R E A L   E I G E N V E C T O R   N O .          2
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      2.907971E-20  -1.961898E-04  -6.557891E-19  -2.485209E-22   1.329844E-18  -3.729187E-04
+             3      G      5.530042E-20  -7.075390E-04  -2.639074E-18  -4.801901E-22   2.597845E-18  -6.309423E-04
+             4      G      7.654955E-20  -1.422649E-03  -5.692951E-18  -7.233834E-22   3.390262E-18  -7.826895E-04
+             5      G      9.068631E-20  -2.244264E-03  -9.223673E-18  -8.860045E-22   3.594904E-18  -8.484751E-04
+             6      G      9.550510E-20  -3.102602E-03  -1.281051E-17  -9.509293E-22   3.582808E-18  -8.632694E-04
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+          CYCLES =  2.790229E+02         R E A L   E I G E N V E C T O R   N O .          3
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      4.121346E-24  -1.627039E-22  -8.789924E-04   3.301388E-25   1.365172E-03  -3.000817E-22
+             3      G      5.485232E-24  -5.524128E-22  -2.045482E-03   6.604427E-25   6.757565E-04  -4.569114E-22
+             4      G      5.741737E-24  -1.039005E-21  -1.880888E-03   7.856786E-25  -1.062511E-03  -5.011765E-22
+             5      G      4.985390E-24  -1.533380E-21  -2.094023E-05   1.077225E-24  -2.499338E-03  -4.812855E-22
+             6      G      5.614273E-24  -2.001747E-21   2.799293E-03   1.221063E-24  -2.980681E-03  -4.619072E-22
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    17
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+          CYCLES =  7.529902E+02         R E A L   E I G E N V E C T O R   N O .          4
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -1.398035E-17  -2.659422E-17  -1.751941E-03   1.771704E-18   1.834183E-03  -4.163857E-17
+             3      G     -2.712062E-17  -6.357194E-17  -1.791593E-03   3.358650E-18  -1.961953E-03  -2.416153E-17
+             4      G     -3.783460E-17  -6.563351E-17   1.090378E-03   4.584194E-18  -2.513332E-03   2.116684E-17
+             5      G     -4.493150E-17  -2.449582E-17   1.568070E-03   5.355897E-18   1.936293E-03   5.672254E-17
+             6      G     -4.737934E-17   3.969262E-17  -2.229776E-03   5.607104E-18   4.728622E-03   6.792138E-17
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    18
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+          CYCLES =  8.153512E+02         R E A L   E I G E N V E C T O R   N O .          5
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      6.885693E-04  -3.696966E-17  -4.693631E-17   3.055185E-19   4.980313E-17  -5.832007E-17
+             3      G      1.309737E-03  -8.901508E-17  -4.797823E-17   5.898623E-19  -5.527784E-17  -3.376496E-17
+             4      G      1.802698E-03  -8.960781E-17   3.476039E-17   8.816906E-19  -7.378185E-17   3.546546E-17
+             5      G      2.119198E-03  -2.124428E-17   5.351297E-17   1.102502E-18   4.593166E-17   9.521551E-17
+             6      G      2.228257E-03   8.784182E-17  -4.197817E-17   1.210009E-18   1.202709E-16   1.160214E-16
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    19
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+          CYCLES =  8.823478E+02         R E A L   E I G E N V E C T O R   N O .          6
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -3.750482E-17  -8.789924E-04   8.503800E-17   1.756618E-18  -9.358354E-17  -1.365172E-03
+             3      G     -7.307684E-17  -2.045482E-03   9.077300E-17   3.278591E-18   1.020151E-16  -6.757565E-04
+             4      G     -1.017180E-16  -1.880888E-03  -6.146155E-17   4.263681E-18   1.250216E-16   1.062511E-03
+             5      G     -1.207940E-16  -2.094023E-05  -6.629269E-17   4.798169E-18  -1.309045E-16   2.499338E-03
+             6      G     -1.272747E-16   2.799293E-03   1.654657E-16   4.891200E-18  -2.821853E-16   2.980681E-03
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    20
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+          CYCLES =  1.405450E+03         R E A L   E I G E N V E C T O R   N O .          7
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -1.817595E-18  -3.048699E-17   2.255844E-03  -4.599560E-17  -4.745638E-04  -4.542770E-17
+             3      G     -1.005369E-17  -6.339930E-17  -5.640434E-04  -9.171765E-17   3.590385E-03  -8.487119E-18
+             4      G     -2.569687E-17  -5.102443E-17  -1.517529E-03  -1.249133E-16  -2.566858E-03   1.776384E-17
+             5      G     -2.545454E-17  -4.422012E-17   1.922856E-03  -1.477152E-16  -7.836543E-04  -5.030684E-18
+             6      G     -2.688210E-17  -5.772446E-17  -1.418150E-03  -1.515456E-16   5.403337E-03  -1.774117E-17
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    21
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+          CYCLES =  1.507327E+03         R E A L   E I G E N V E C T O R   N O .          8
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G      1.649225E-18   4.770320E-18   1.522137E-16   1.608151E-03  -5.528160E-17   7.209938E-18
+             3      G     -6.636570E-18   1.337296E-17   1.778064E-17   3.058886E-03   1.677845E-16   1.127913E-17
+             4      G     -1.059887E-17   2.175506E-17  -3.687241E-17   4.210195E-03  -4.859812E-17  -1.372264E-18
+             5      G     -3.090598E-18   4.941100E-18   3.486396E-17   4.949381E-03  -2.464197E-17  -3.108566E-17
+             6      G      4.839827E-19  -3.487904E-17  -1.871211E-17   5.204087E-03   9.268510E-17  -4.418739E-17
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    22
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+          CYCLES =  2.059242E+03         R E A L   E I G E N V E C T O R   N O .          9
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -5.042099E-17   3.358793E-17   1.855687E-03  -3.868054E-17   1.553320E-03  -2.867553E-17
+             3      G     -1.457565E-16  -1.112127E-16  -2.049455E-03  -1.000495E-16  -6.491425E-05  -2.189361E-16
+             4      G     -1.068018E-16  -2.941234E-16   1.832848E-03  -1.571762E-16  -1.225146E-03  -7.871415E-17
+             5      G      6.783494E-18  -2.146982E-16  -1.104284E-03  -2.133414E-16   2.129986E-03   2.233362E-16
+             6      G      7.189530E-17   9.509311E-17   6.167776E-04  -2.223879E-16  -3.646585E-03   3.530189E-16
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    23
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+          CYCLES =  2.366241E+03         R E A L   E I G E N V E C T O R   N O .         10
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      0.0            0.0            0.0            0.0            0.0            0.0
+             2      G     -1.802698E-03  -1.931039E-14  -1.683215E-16   4.719435E-17  -1.018515E-16  -2.032027E-14
+             3      G     -2.119198E-03  -1.990658E-14   1.486447E-16   8.381180E-17  -3.852821E-17   2.156133E-14
+             4      G     -6.885693E-04   1.196151E-14  -9.385329E-17  -5.308834E-17   3.255960E-17   2.789063E-14
+             5      G      1.309737E-03   1.736819E-14   1.386018E-16  -4.852474E-17  -6.158140E-17  -2.129953E-14
+             6      G      2.228257E-03  -2.455033E-14  -2.043248E-16  -1.576048E-16   5.451806E-16  -5.222801E-14
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    24
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    25
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      1.634641E-06   2.368554E-06  -4.203578E+07   5.573659E-08   1.552686E+08   1.070230E-05
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    26
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G     -6.281218E-07   4.203578E+08  -3.945469E-08   3.363440E-09  -4.590166E-07   1.552686E+09
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    27
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G     -8.902108E-11   5.470442E-10   8.484753E+08  -4.468044E-12  -9.156996E+08   1.353816E-09
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    28
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      3.019756E-04   2.494771E-04   3.606552E+09  -2.397795E-05  -2.463582E+09   2.746374E-04
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    29
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G     -1.487310E+10   3.373760E-04   9.519008E-05  -4.134837E-06  -6.552417E-05   3.786402E-04
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    30
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      8.101041E-04   8.484753E+09  -1.652237E-04  -2.377378E-05   1.163019E-04   9.156996E+09
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    31
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      3.926005E-05   3.357998E-04  -8.720188E+09   6.224968E-04   4.530937E+09   3.314396E-04
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    32
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G     -3.562325E-05  -5.034316E-05  -5.381548E-04  -2.176445E+10   2.889788E-04  -5.112736E-05
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    33
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      1.089093E-03  -2.070390E-03  -1.137174E+10   5.234960E-04   5.126674E+09  -9.319630E-04
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    34
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+                               F O R C E S   O F   S I N G L E - P O I N T   C O N S T R A I N T
+ 
+      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3
+             1      G      3.893827E+10   3.952909E-01   9.471482E-04  -6.387205E-04  -4.369076E-04   2.707984E-01
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    35
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -1.070230E-05  1.552686E+08  -2.368554E-06  4.203578E+07  -1.634641E-06  -5.573659E-08   0.0
+                  2   1.000   -8.333742E-06  1.132328E+08  -2.368554E-06  4.203578E+07  -1.634641E-06  -5.573659E-08   0.0
+0         2
+                  2   0.000   -8.333742E-06  1.132328E+08  -2.497989E-06  4.068866E+07  -1.448393E-06  -4.919845E-08   0.0
+                  3   1.000   -5.835753E-06  7.254418E+07  -2.497989E-06  4.068866E+07  -1.448393E-06  -4.919845E-08   0.0
+0         3
+                  3   0.000   -5.835753E-06  7.254418E+07  -2.601423E-06  3.583040E+07  -1.148276E-06  -3.524651E-08   0.0
+                  4   1.000   -3.234329E-06  3.671378E+07  -2.601423E-06  3.583040E+07  -1.148276E-06  -3.524651E-08   0.0
+0         4
+                  4   0.000   -3.234329E-06  3.671378E+07  -2.206373E-06  2.606191E+07  -7.272278E-07  -2.058117E-08   0.0
+                  5   1.000   -1.027957E-06  1.065187E+07  -2.206373E-06  2.606191E+07  -7.272278E-07  -2.058117E-08   0.0
+0         5
+                  5   0.000   -1.027957E-06  1.065187E+07  -1.027957E-06  1.065187E+07  -2.582959E-07  -5.458942E-09   0.0
+                  6   1.000    1.355253E-20  9.536743E-07  -1.027957E-06  1.065187E+07  -2.582959E-07  -5.458942E-09   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    36
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -1.552686E+09 -4.590166E-07  -4.203578E+08  3.945469E-08   6.281218E-07  -3.363440E-09   0.0
+                  2   1.000   -1.132328E+09 -4.984712E-07  -4.203578E+08  3.945469E-08   6.281218E-07  -3.363440E-09   0.0
+0         2
+                  2   0.000   -1.132328E+09 -4.984712E-07  -4.068866E+08 -8.398211E-08   5.663673E-07  -3.135373E-09   0.0
+                  3   1.000   -7.254418E+08 -4.144891E-07  -4.068866E+08 -8.398211E-08   5.663673E-07  -3.135373E-09   0.0
+0         3
+                  3   0.000   -7.254418E+08 -4.144891E-07  -3.583040E+08 -2.584378E-07   4.589811E-07  -3.291339E-09   0.0
+                  4   1.000   -3.671378E+08 -1.560514E-07  -3.583040E+08 -2.584378E-07   4.589811E-07  -3.291339E-09   0.0
+0         4
+                  4   0.000   -3.671378E+08 -1.560514E-07  -2.606191E+08 -1.647605E-07   3.053541E-07  -2.200887E-09   0.0
+                  5   1.000   -1.065187E+08  8.709130E-09  -2.606191E+08 -1.647605E-07   3.053541E-07  -2.200887E-09   0.0
+0         5
+                  5   0.000   -1.065187E+08  8.709130E-09  -1.065187E+08  8.709130E-09   1.040858E-07  -8.786817E-10   0.0
+                  6   1.000    0.0          -6.776264E-21  -1.065187E+08  8.709130E-09   1.040858E-07  -8.786817E-10   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    37
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -1.353816E-09 -9.156996E+08  -5.470442E-10 -8.484753E+08   8.902108E-11   4.468044E-12   0.0
+                  2   1.000   -8.067722E-10 -6.722428E+07  -5.470442E-10 -8.484753E+08   8.902108E-11   4.468044E-12   0.0
+0         2
+                  2   0.000   -8.067722E-10 -6.722428E+07  -4.843711E-10 -6.308278E+08   2.945993E-11   4.470279E-12   0.0
+                  3   1.000   -3.224011E-10  5.636035E+08  -4.843711E-10 -6.308278E+08   2.945993E-11   4.470279E-12   0.0
+0         3
+                  3   0.000   -3.224011E-10  5.636035E+08  -3.260932E-10 -1.243454E+08   5.540516E-12   1.694922E-12   0.0
+                  4   1.000    3.692080E-12  6.879489E+08  -3.260932E-10 -1.243454E+08   5.540516E-12   1.694922E-12   0.0
+0         4
+                  4   0.000    3.692080E-12  6.879489E+08  -1.358313E-10  3.413819E+08  -1.633711E-11   3.945740E-12   0.0
+                  5   1.000    1.395234E-10  3.465670E+08  -1.358313E-10  3.413819E+08  -1.633711E-11   3.945740E-12   0.0
+0         5
+                  5   0.000    1.395234E-10  3.465670E+08   1.395234E-10  3.465670E+08   1.358388E-11   1.946681E-12   0.0
+                  6   1.000    9.098987E-24  1.430511E-06   1.395234E-10  3.465670E+08   1.358388E-11   1.946681E-12   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    38
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -2.746374E-04 -2.463582E+09  -2.494771E-04 -3.606552E+09  -3.019756E-04   2.397795E-05   0.0
+                  2   1.000   -2.516030E-05  1.142970E+09  -2.494771E-04 -3.606552E+09  -3.019756E-04   2.397795E-05   0.0
+0         2
+                  2   0.000   -2.516030E-05  1.142970E+09  -1.761553E-04 -4.472772E+08  -2.838299E-04   2.147746E-05   0.0
+                  3   1.000    1.509950E-04  1.590247E+09  -1.761553E-04 -4.472772E+08  -2.838299E-04   2.147746E-05   0.0
+0         3
+                  3   0.000    1.509950E-04  1.590247E+09  -2.437430E-05  2.783501E+09  -2.314219E-04   1.658631E-05   0.0
+                  4   1.000    1.753693E-04 -1.193254E+09  -2.437430E-05  2.783501E+09  -2.314219E-04   1.658631E-05   0.0
+0         4
+                  4   0.000    1.753693E-04 -1.193254E+09   9.473760E-05  8.172227E+08  -1.532930E-04   1.044411E-05   0.0
+                  5   1.000    8.063170E-05 -2.010477E+09   9.473760E-05  8.172227E+08  -1.532930E-04   1.044411E-05   0.0
+0         5
+                  5   0.000    8.063170E-05 -2.010477E+09   8.063170E-05 -2.010477E+09  -5.287340E-05   3.399789E-06   0.0
+                  6   1.000    2.168404E-19 -9.536743E-07   8.063170E-05 -2.010477E+09  -5.287340E-05   3.399789E-06   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    39
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -3.786402E-04 -6.552417E-05  -3.373760E-04 -9.519008E-05   1.487310E+10   4.134837E-06   0.0
+                  2   1.000   -4.126427E-05  2.966592E-05  -3.373760E-04 -9.519008E-05   1.487310E+10   4.134837E-06   0.0
+0         2
+                  2   0.000   -4.126427E-05  2.966592E-05  -2.593253E-04 -1.632647E-05   1.341721E+10   3.848261E-06   0.0
+                  3   1.000    2.180611E-04  4.599238E-05  -2.593253E-04 -1.632647E-05   1.341721E+10   3.848261E-06   0.0
+0         3
+                  3   0.000    2.180611E-04  4.599238E-05  -6.233689E-05  7.866188E-05   1.064796E+10   3.949556E-06   0.0
+                  4   1.000    2.803980E-04 -3.266949E-05  -6.233689E-05  7.866188E-05   1.064796E+10   3.949556E-06   0.0
+0         4
+                  4   0.000    2.803980E-04 -3.266949E-05   1.305956E-04  2.085474E-05   6.836412E+09   2.988430E-06   0.0
+                  5   1.000    1.498024E-04 -5.352424E-05   1.305956E-04  2.085474E-05   6.836412E+09   2.988430E-06   0.0
+0         5
+                  5   0.000    1.498024E-04 -5.352424E-05   1.498024E-04 -5.352424E-05   2.355667E+09   1.454981E-06   0.0
+                  6   1.000   -2.168404E-19  0.0            1.498024E-04 -5.352424E-05   2.355667E+09   1.454981E-06   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    40
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -9.156996E+09  1.163019E-04  -8.484753E+09  1.652237E-04  -8.101041E-04   2.377378E-05   0.0
+                  2   1.000   -6.722428E+08 -4.892179E-05  -8.484753E+09  1.652237E-04  -8.101041E-04   2.377378E-05   0.0
+0         2
+                  2   0.000   -6.722428E+08 -4.892179E-05  -6.308278E+09  4.298747E-05  -7.683557E-04   2.059813E-05   0.0
+                  3   1.000    5.636035E+09 -9.190926E-05  -6.308278E+09  4.298747E-05  -7.683557E-04   2.059813E-05   0.0
+0         3
+                  3   0.000    5.636035E+09 -9.190926E-05  -1.243454E+09 -1.672539E-04  -6.186495E-04   1.333205E-05   0.0
+                  4   1.000    6.879489E+09  7.534461E-05  -1.243454E+09 -1.672539E-04  -6.186495E-04   1.333205E-05   0.0
+0         4
+                  4   0.000    6.879489E+09  7.534461E-05   3.413819E+09 -3.357757E-05  -4.120401E-04   7.233671E-06   0.0
+                  5   1.000    3.465670E+09  1.089222E-04   3.413819E+09 -3.357757E-05  -4.120401E-04   7.233671E-06   0.0
+0         5
+                  5   0.000    3.465670E+09  1.089222E-04   3.465670E+09  1.089222E-04  -1.399847E-04   1.259059E-06   0.0
+                  6   1.000    7.629395E-06  0.0            3.465670E+09  1.089222E-04  -1.399847E-04   1.259059E-06   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    41
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -3.314396E-04  4.530937E+09  -3.357998E-04  8.720188E+09  -3.926005E-05  -6.224968E-04   0.0
+                  2   1.000    4.360179E-06 -4.189251E+09  -3.357998E-04  8.720188E+09  -3.926005E-05  -6.224968E-04   0.0
+0         2
+                  2   0.000    4.360179E-06 -4.189251E+09  -2.572518E-04 -5.451739E+09  -1.778997E-04  -6.187948E-04   0.0
+                  3   1.000    2.616120E-04  1.262488E+09  -2.572518E-04 -5.451739E+09  -1.778997E-04  -6.187948E-04   0.0
+0         3
+                  3   0.000    2.616120E-04  1.262488E+09   3.342170E-04 -1.908239E+09  -3.378926E-04  -4.492647E-04   0.0
+                  4   1.000   -7.260507E-05  3.170727E+09   3.342170E-04 -1.908239E+09  -3.378926E-04  -4.492647E-04   0.0
+0         4
+                  4   0.000   -7.260507E-05  3.170727E+09   1.891043E-05  7.625361E+09   5.234255E-06  -3.085963E-04   0.0
+                  5   1.000   -9.151550E-05 -4.454633E+09   1.891043E-05  7.625361E+09   5.234255E-06  -3.085963E-04   0.0
+0         5
+                  5   0.000   -9.151550E-05 -4.454633E+09  -9.151550E-05 -4.454633E+09  -3.083537E-05  -5.184029E-05   0.0
+                  6   1.000    1.084202E-19  9.536743E-07  -9.151550E-05 -4.454633E+09  -3.083537E-05  -5.184029E-05   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    42
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000    5.112736E-05  2.889788E-04   5.034316E-05  5.381548E-04   3.562325E-05   2.176445E+10   0.0
+                  2   1.000    7.841954E-07 -2.491760E-04   5.034316E-05  5.381548E-04   3.562325E-05   2.176445E+10   0.0
+0         2
+                  2   0.000    7.841954E-07 -2.491760E-04  -2.772982E-05 -3.377444E-04  -1.789732E-04   1.963400E+10   0.0
+                  3   1.000    2.851401E-05  8.856842E-05  -2.772982E-05 -3.377444E-04  -1.789732E-04   1.963400E+10   0.0
+0         3
+                  3   0.000    2.851401E-05  8.856842E-05   1.481181E-04  2.134136E-05  -8.558558E-05   1.558163E+10   0.0
+                  4   1.000   -1.196041E-04  6.722706E-05   1.481181E-04  2.134136E-05  -8.558558E-05   1.558163E+10   0.0
+0         4
+                  4   0.000   -1.196041E-04  6.722706E-05  -2.527169E-05  1.517025E-04   1.621786E-04   1.000402E+10   0.0
+                  5   1.000   -9.433239E-05 -8.447549E-05  -2.527169E-05  1.517025E-04   1.621786E-04   1.000402E+10   0.0
+0         5
+                  5   0.000   -9.433239E-05 -8.447549E-05  -9.433239E-05 -8.447549E-05   7.721094E-05   3.447151E+09   0.0
+                  6   1.000   -1.084202E-19  2.710505E-20  -9.433239E-05 -8.447549E-05   7.721094E-05   3.447151E+09   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    43
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000    9.319630E-04  5.126674E+09   2.070390E-03  1.137174E+10  -1.089093E-03  -5.234960E-04   0.0
+                  2   1.000   -1.138427E-03 -6.245065E+09   2.070390E-03  1.137174E+10  -1.089093E-03  -5.234960E-04   0.0
+0         2
+                  2   0.000   -1.138427E-03 -6.245065E+09  -9.069778E-04 -1.365526E+10  -2.059246E-03  -8.305568E-04   0.0
+                  3   1.000   -2.314490E-04  7.410193E+09  -9.069778E-04 -1.365526E+10  -2.059246E-03  -8.305568E-04   0.0
+0         3
+                  3   0.000   -2.314490E-04  7.410193E+09  -1.472496E-03  1.398502E+10   8.414212E-04  -7.731444E-04   0.0
+                  4   1.000    1.241047E-03 -6.574826E+09  -1.472496E-03  1.398502E+10   8.414212E-04  -7.731444E-04   0.0
+0         4
+                  4   0.000    1.241047E-03 -6.574826E+09   3.073311E-04 -1.073396E+10   2.453442E-03  -7.601295E-04   0.0
+                  5   1.000    9.337156E-04  4.159131E+09   3.073311E-04 -1.073396E+10   2.453442E-03  -7.601295E-04   0.0
+0         5
+                  5   0.000    9.337156E-04  4.159131E+09   9.337156E-04  4.159131E+09   1.406415E-03  -1.224343E-04   0.0
+                  6   1.000    8.673617E-19 -9.536743E-07   9.337156E-04  4.159131E+09   1.406415E-03  -1.224343E-04   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    44
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+                                 F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL          WARPING
+   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE         TORQUE
+0         1
+                  1   0.000   -2.707984E-01 -4.369076E-04  -3.952909E-01 -9.471482E-04  -3.893827E+10   6.387205E-04   0.0
+                  2   1.000    1.244925E-01  5.102406E-04  -3.952909E-01 -9.471482E-04  -3.893827E+10   6.387205E-04   0.0
+0         2
+                  2   0.000    1.244925E-01  5.102406E-04  -5.256252E-02  1.066074E-03  -6.836412E+09   4.955746E-04   0.0
+                  3   1.000    1.770550E-01 -5.558334E-04  -5.256252E-02  1.066074E-03  -6.836412E+09   4.955746E-04   0.0
+0         3
+                  3   0.000    1.770550E-01 -5.558334E-04   3.085391E-01 -1.060484E-03   3.090159E+10  -1.852784E-03   0.0
+                  4   1.000   -1.314841E-01  5.046502E-04   3.085391E-01 -1.060484E-03   3.090159E+10  -1.852784E-03   0.0
+0         4
+                  4   0.000   -1.314841E-01  5.046502E-04   9.120100E-02  9.415189E-04   4.316341E+10   6.176296E-05   0.0
+                  5   1.000   -2.226851E-01 -4.368687E-04   9.120100E-02  9.415189E-04   4.316341E+10   6.176296E-05   0.0
+0         5
+                  5   0.000   -2.226851E-01 -4.368687E-04  -2.226851E-01 -4.368687E-04   1.984004E+10  -1.476271E-03   0.0
+                  6   1.000    0.0          -1.084202E-19  -2.226851E-01 -4.368687E-04   1.984004E+10  -1.476271E-03   0.0
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    45
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -4.313017E-05 -4.313017E-05  4.313017E-05  4.313017E-05  4.313017E-05 -4.313017E-05          
+                  2   1.000   -3.145357E-05 -3.145357E-05  3.145357E-05  3.145357E-05  3.145357E-05 -3.145357E-05          
+0         2
+                  2   0.000   -3.145357E-05 -3.145357E-05  3.145357E-05  3.145357E-05  3.145357E-05 -3.145357E-05          
+                  3   1.000   -2.015116E-05 -2.015116E-05  2.015116E-05  2.015116E-05  2.015116E-05 -2.015116E-05          
+0         3
+                  3   0.000   -2.015116E-05 -2.015116E-05  2.015116E-05  2.015116E-05  2.015116E-05 -2.015116E-05          
+                  4   1.000   -1.019827E-05 -1.019827E-05  1.019827E-05  1.019827E-05  1.019827E-05 -1.019827E-05          
+0         4
+                  4   0.000   -1.019827E-05 -1.019827E-05  1.019827E-05  1.019827E-05  1.019827E-05 -1.019827E-05          
+                  5   1.000   -2.958853E-06 -2.958853E-06  2.958853E-06  2.958853E-06  2.958853E-06 -2.958853E-06          
+0         5
+                  5   0.000   -2.958853E-06 -2.958853E-06  2.958853E-06  2.958853E-06  2.958853E-06 -2.958853E-06          
+                  6   1.000   -2.768677E-19 -2.768677E-19  2.529514E-19  2.529514E-19  2.529514E-19 -2.768677E-19          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    46
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    4.313017E-05 -4.313017E-05 -4.313017E-05  4.313017E-05  4.313017E-05 -4.313017E-05          
+                  2   1.000    3.145357E-05 -3.145357E-05 -3.145357E-05  3.145357E-05  3.145357E-05 -3.145357E-05          
+0         2
+                  2   0.000    3.145357E-05 -3.145357E-05 -3.145357E-05  3.145357E-05  3.145357E-05 -3.145357E-05          
+                  3   1.000    2.015116E-05 -2.015116E-05 -2.015116E-05  2.015116E-05  2.015116E-05 -2.015116E-05          
+0         3
+                  3   0.000    2.015116E-05 -2.015116E-05 -2.015116E-05  2.015116E-05  2.015116E-05 -2.015116E-05          
+                  4   1.000    1.019827E-05 -1.019827E-05 -1.019827E-05  1.019827E-05  1.019827E-05 -1.019827E-05          
+0         4
+                  4   0.000    1.019827E-05 -1.019827E-05 -1.019827E-05  1.019827E-05  1.019827E-05 -1.019827E-05          
+                  5   1.000    2.958853E-06 -2.958853E-06 -2.958853E-06  2.958853E-06  2.958853E-06 -2.958853E-06          
+0         5
+                  5   0.000    2.958853E-06 -2.958853E-06 -2.958853E-06  2.958853E-06  2.958853E-06 -2.958853E-06          
+                  6   1.000    4.818787E-21  4.818787E-21  4.818787E-21  4.818787E-21  4.818787E-21  4.818787E-21          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    47
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    2.543610E-04  2.543610E-04 -2.543610E-04 -2.543610E-04  2.543610E-04 -2.543610E-04          
+                  2   1.000    1.867341E-05  1.867341E-05 -1.867341E-05 -1.867341E-05  1.867341E-05 -1.867341E-05          
+0         2
+                  2   0.000    1.867341E-05  1.867341E-05 -1.867341E-05 -1.867341E-05  1.867341E-05 -1.867341E-05          
+                  3   1.000   -1.565565E-04 -1.565565E-04  1.565565E-04  1.565565E-04  1.565565E-04 -1.565565E-04          
+0         3
+                  3   0.000   -1.565565E-04 -1.565565E-04  1.565565E-04  1.565565E-04  1.565565E-04 -1.565565E-04          
+                  4   1.000   -1.910969E-04 -1.910969E-04  1.910969E-04  1.910969E-04  1.910969E-04 -1.910969E-04          
+0         4
+                  4   0.000   -1.910969E-04 -1.910969E-04  1.910969E-04  1.910969E-04  1.910969E-04 -1.910969E-04          
+                  5   1.000   -9.626860E-05 -9.626860E-05  9.626860E-05  9.626860E-05  9.626860E-05 -9.626860E-05          
+0         5
+                  5   0.000   -9.626860E-05 -9.626860E-05  9.626860E-05  9.626860E-05  9.626860E-05 -9.626860E-05          
+                  6   1.000   -3.973637E-19 -3.973637E-19  3.973649E-19  3.973649E-19  3.973649E-19 -3.973637E-19          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    48
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    6.843283E-04  6.843283E-04 -6.843283E-04 -6.843283E-04  6.843283E-04 -6.843283E-04          
+                  2   1.000   -3.174917E-04 -3.174917E-04  3.174917E-04  3.174917E-04  3.174917E-04 -3.174917E-04          
+0         2
+                  2   0.000   -3.174917E-04 -3.174917E-04  3.174917E-04  3.174917E-04  3.174917E-04 -3.174917E-04          
+                  3   1.000   -4.417354E-04 -4.417354E-04  4.417354E-04  4.417354E-04  4.417354E-04 -4.417354E-04          
+0         3
+                  3   0.000   -4.417354E-04 -4.417354E-04  4.417354E-04  4.417354E-04  4.417354E-04 -4.417354E-04          
+                  4   1.000    3.314594E-04  3.314594E-04 -3.314594E-04 -3.314594E-04  3.314594E-04 -3.314594E-04          
+0         4
+                  4   0.000    3.314594E-04  3.314594E-04 -3.314594E-04 -3.314594E-04  3.314594E-04 -3.314594E-04          
+                  5   1.000    5.584657E-04  5.584657E-04 -5.584657E-04 -5.584657E-04  5.584657E-04 -5.584657E-04          
+0         5
+                  5   0.000    5.584657E-04  5.584657E-04 -5.584657E-04 -5.584657E-04  5.584657E-04 -5.584657E-04          
+                  6   1.000   -2.182933E-18 -2.182933E-18 -2.712752E-18 -2.712752E-18 -2.182933E-18 -2.712752E-18          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    49
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04          
+                  2   1.000    6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04  6.885693E-04          
+0         2
+                  2   0.000    6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04          
+                  3   1.000    6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04  6.211673E-04          
+0         3
+                  3   0.000    4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04          
+                  4   1.000    4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04  4.929612E-04          
+0         4
+                  4   0.000    3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04          
+                  5   1.000    3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04  3.165006E-04          
+0         5
+                  5   0.000    1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04          
+                  6   1.000    1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04  1.090587E-04          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    50
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    2.543610E-04 -2.543610E-04 -2.543610E-04  2.543610E-04  2.543610E-04 -2.543610E-04          
+                  2   1.000    1.867341E-05 -1.867341E-05 -1.867341E-05  1.867341E-05  1.867341E-05 -1.867341E-05          
+0         2
+                  2   0.000    1.867341E-05 -1.867341E-05 -1.867341E-05  1.867341E-05  1.867341E-05 -1.867341E-05          
+                  3   1.000   -1.565565E-04  1.565565E-04  1.565565E-04 -1.565565E-04  1.565565E-04 -1.565565E-04          
+0         3
+                  3   0.000   -1.565565E-04  1.565565E-04  1.565565E-04 -1.565565E-04  1.565565E-04 -1.565565E-04          
+                  4   1.000   -1.910969E-04  1.910969E-04  1.910969E-04 -1.910969E-04  1.910969E-04 -1.910969E-04          
+0         4
+                  4   0.000   -1.910969E-04  1.910969E-04  1.910969E-04 -1.910969E-04  1.910969E-04 -1.910969E-04          
+                  5   1.000   -9.626860E-05  9.626860E-05  9.626860E-05 -9.626860E-05  9.626860E-05 -9.626860E-05          
+0         5
+                  5   0.000   -9.626860E-05  9.626860E-05  9.626860E-05 -9.626860E-05  9.626860E-05 -9.626860E-05          
+                  6   1.000   -6.692701E-18 -6.268845E-18 -6.268845E-18 -6.692701E-18 -6.268845E-18 -6.692701E-18          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    51
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -1.258594E-03 -1.258594E-03  1.258594E-03  1.258594E-03  1.258594E-03 -1.258594E-03          
+                  2   1.000    1.163681E-03  1.163681E-03 -1.163681E-03 -1.163681E-03  1.163681E-03 -1.163681E-03          
+0         2
+                  2   0.000    1.163681E-03  1.163681E-03 -1.163681E-03 -1.163681E-03  1.163681E-03 -1.163681E-03          
+                  3   1.000   -3.506910E-04 -3.506910E-04  3.506910E-04  3.506910E-04  3.506910E-04 -3.506910E-04          
+0         3
+                  3   0.000   -3.506910E-04 -3.506910E-04  3.506910E-04  3.506910E-04  3.506910E-04 -3.506910E-04          
+                  4   1.000   -8.807575E-04 -8.807575E-04  8.807575E-04  8.807575E-04  8.807575E-04 -8.807575E-04          
+0         4
+                  4   0.000   -8.807575E-04 -8.807575E-04  8.807575E-04  8.807575E-04  8.807575E-04 -8.807575E-04          
+                  5   1.000    1.237398E-03  1.237398E-03 -1.237398E-03 -1.237398E-03  1.237398E-03 -1.237398E-03          
+0         5
+                  5   0.000    1.237398E-03  1.237398E-03 -1.237398E-03 -1.237398E-03  1.237398E-03 -1.237398E-03          
+                  6   1.000   -1.692473E-18 -1.692473E-18 -1.162654E-18 -1.162654E-18 -1.162654E-18 -1.692473E-18          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    52
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -8.004286E-17 -7.720245E-17  8.334131E-17  8.050090E-17  8.334131E-17 -8.004286E-17          
+                  2   1.000    7.084300E-17  7.088656E-17 -6.754455E-17 -6.758811E-17  7.088656E-17 -6.758811E-17          
+0         2
+                  2   0.000    6.090798E-17  6.095154E-17 -7.747957E-17 -7.752313E-17  6.095154E-17 -7.752313E-17          
+                  3   1.000   -3.368019E-17 -3.209608E-17  1.710860E-17  1.552449E-17  1.710860E-17 -3.368019E-17          
+0         3
+                  3   0.000   -2.935669E-17 -2.777258E-17  2.143210E-17  1.984799E-17  2.143210E-17 -2.935669E-17          
+                  4   1.000   -1.931414E-17 -2.595881E-17  1.138955E-17  1.803422E-17  1.803422E-17 -2.595881E-17          
+0         4
+                  4   0.000   -7.843580E-18 -1.448825E-17  2.286012E-17  2.950479E-17  2.950479E-17 -1.448825E-17          
+                  5   1.000    3.359403E-17  2.835334E-17 -1.857749E-17 -1.333680E-17  3.359403E-17 -1.857749E-17          
+0         5
+                  5   0.000    2.966034E-17  2.441965E-17 -2.251118E-17 -1.727049E-17  2.966034E-17 -2.251118E-17          
+                  6   1.000    3.574581E-18  3.574581E-18  3.574581E-18  3.574581E-18  3.574581E-18  3.574581E-18          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    53
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -1.424076E-03 -1.424076E-03  1.424076E-03  1.424076E-03  1.424076E-03 -1.424076E-03          
+                  2   1.000    1.734740E-03  1.734740E-03 -1.734740E-03 -1.734740E-03  1.734740E-03 -1.734740E-03          
+0         2
+                  2   0.000    1.734740E-03  1.734740E-03 -1.734740E-03 -1.734740E-03  1.734740E-03 -1.734740E-03          
+                  3   1.000   -2.058387E-03 -2.058387E-03  2.058387E-03  2.058387E-03  2.058387E-03 -2.058387E-03          
+0         3
+                  3   0.000   -2.058387E-03 -2.058387E-03  2.058387E-03  2.058387E-03  2.058387E-03 -2.058387E-03          
+                  4   1.000    1.826341E-03  1.826341E-03 -1.826341E-03 -1.826341E-03  1.826341E-03 -1.826341E-03          
+0         4
+                  4   0.000    1.826341E-03  1.826341E-03 -1.826341E-03 -1.826341E-03  1.826341E-03 -1.826341E-03          
+                  5   1.000   -1.155314E-03 -1.155314E-03  1.155314E-03  1.155314E-03  1.155314E-03 -1.155314E-03          
+0         5
+                  5   0.000   -1.155314E-03 -1.155314E-03  1.155314E-03  1.155314E-03  1.155314E-03 -1.155314E-03          
+                  6   1.000    6.537672E-17  6.537672E-17  6.484690E-17  6.484690E-17  6.537672E-17  6.484690E-17          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    54
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+                                   S T R A I N S    I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03          
+                  2   1.000   -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03 -1.802698E-03          
+0         2
+                  2   0.000   -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04          
+                  3   1.000   -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04 -3.165006E-04          
+0         3
+                  3   0.000    1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03          
+                  4   1.000    1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03  1.430629E-03          
+0         4
+                  4   0.000    1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03          
+                  5   1.000    1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03  1.998306E-03          
+0         5
+                  5   0.000    9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04          
+                  6   1.000    9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04  9.185204E-04          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    55
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    56
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -6.210744E+04 -6.210744E+04  6.210744E+04  6.210744E+04  6.210744E+04 -6.210744E+04          
+                  2   1.000   -4.529313E+04 -4.529313E+04  4.529313E+04  4.529313E+04  4.529313E+04 -4.529313E+04          
+0         2
+                  2   0.000   -4.529313E+04 -4.529313E+04  4.529313E+04  4.529313E+04  4.529313E+04 -4.529313E+04          
+                  3   1.000   -2.901767E+04 -2.901767E+04  2.901767E+04  2.901767E+04  2.901767E+04 -2.901767E+04          
+0         3
+                  3   0.000   -2.901767E+04 -2.901767E+04  2.901767E+04  2.901767E+04  2.901767E+04 -2.901767E+04          
+                  4   1.000   -1.468551E+04 -1.468551E+04  1.468551E+04  1.468551E+04  1.468551E+04 -1.468551E+04          
+0         4
+                  4   0.000   -1.468551E+04 -1.468551E+04  1.468551E+04  1.468551E+04  1.468551E+04 -1.468551E+04          
+                  5   1.000   -4.260748E+03 -4.260748E+03  4.260748E+03  4.260748E+03  4.260748E+03 -4.260748E+03          
+0         5
+                  5   0.000   -4.260748E+03 -4.260748E+03  4.260748E+03  4.260748E+03  4.260748E+03 -4.260748E+03          
+                  6   1.000   -3.986895E-10 -3.986895E-10  3.642500E-10  3.642500E-10  3.642500E-10 -3.986895E-10          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    57
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    6.210744E+04 -6.210744E+04 -6.210744E+04  6.210744E+04  6.210744E+04 -6.210744E+04          
+                  2   1.000    4.529313E+04 -4.529313E+04 -4.529313E+04  4.529313E+04  4.529313E+04 -4.529313E+04          
+0         2
+                  2   0.000    4.529313E+04 -4.529313E+04 -4.529313E+04  4.529313E+04  4.529313E+04 -4.529313E+04          
+                  3   1.000    2.901767E+04 -2.901767E+04 -2.901767E+04  2.901767E+04  2.901767E+04 -2.901767E+04          
+0         3
+                  3   0.000    2.901767E+04 -2.901767E+04 -2.901767E+04  2.901767E+04  2.901767E+04 -2.901767E+04          
+                  4   1.000    1.468551E+04 -1.468551E+04 -1.468551E+04  1.468551E+04  1.468551E+04 -1.468551E+04          
+0         4
+                  4   0.000    1.468551E+04 -1.468551E+04 -1.468551E+04  1.468551E+04  1.468551E+04 -1.468551E+04          
+                  5   1.000    4.260748E+03 -4.260748E+03 -4.260748E+03  4.260748E+03  4.260748E+03 -4.260748E+03          
+0         5
+                  5   0.000    4.260748E+03 -4.260748E+03 -4.260748E+03  4.260748E+03  4.260748E+03 -4.260748E+03          
+                  6   1.000    6.939053E-12  6.939053E-12  6.939053E-12  6.939053E-12  6.939053E-12  6.939053E-12          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    58
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    3.662798E+05  3.662798E+05 -3.662798E+05 -3.662798E+05  3.662798E+05 -3.662798E+05          
+                  2   1.000    2.688971E+04  2.688971E+04 -2.688971E+04 -2.688971E+04  2.688971E+04 -2.688971E+04          
+0         2
+                  2   0.000    2.688971E+04  2.688971E+04 -2.688971E+04 -2.688971E+04  2.688971E+04 -2.688971E+04          
+                  3   1.000   -2.254414E+05 -2.254414E+05  2.254414E+05  2.254414E+05  2.254414E+05 -2.254414E+05          
+0         3
+                  3   0.000   -2.254414E+05 -2.254414E+05  2.254414E+05  2.254414E+05  2.254414E+05 -2.254414E+05          
+                  4   1.000   -2.751796E+05 -2.751796E+05  2.751796E+05  2.751796E+05  2.751796E+05 -2.751796E+05          
+0         4
+                  4   0.000   -2.751796E+05 -2.751796E+05  2.751796E+05  2.751796E+05  2.751796E+05 -2.751796E+05          
+                  5   1.000   -1.386268E+05 -1.386268E+05  1.386268E+05  1.386268E+05  1.386268E+05 -1.386268E+05          
+0         5
+                  5   0.000   -1.386268E+05 -1.386268E+05  1.386268E+05  1.386268E+05  1.386268E+05 -1.386268E+05          
+                  6   1.000   -5.722037E-10 -5.722037E-10  5.722055E-10  5.722055E-10  5.722055E-10 -5.722037E-10          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    59
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    9.854328E+05  9.854328E+05 -9.854328E+05 -9.854328E+05  9.854328E+05 -9.854328E+05          
+                  2   1.000   -4.571881E+05 -4.571881E+05  4.571881E+05  4.571881E+05  4.571881E+05 -4.571881E+05          
+0         2
+                  2   0.000   -4.571881E+05 -4.571881E+05  4.571881E+05  4.571881E+05  4.571881E+05 -4.571881E+05          
+                  3   1.000   -6.360990E+05 -6.360990E+05  6.360990E+05  6.360990E+05  6.360990E+05 -6.360990E+05          
+0         3
+                  3   0.000   -6.360990E+05 -6.360990E+05  6.360990E+05  6.360990E+05  6.360990E+05 -6.360990E+05          
+                  4   1.000    4.773016E+05  4.773016E+05 -4.773016E+05 -4.773016E+05  4.773016E+05 -4.773016E+05          
+0         4
+                  4   0.000    4.773016E+05  4.773016E+05 -4.773016E+05 -4.773016E+05  4.773016E+05 -4.773016E+05          
+                  5   1.000    8.041906E+05  8.041906E+05 -8.041906E+05 -8.041906E+05  8.041906E+05 -8.041906E+05          
+0         5
+                  5   0.000    8.041906E+05  8.041906E+05 -8.041906E+05 -8.041906E+05  8.041906E+05 -8.041906E+05          
+                  6   1.000   -3.143424E-09 -3.143424E-09 -3.906363E-09 -3.906363E-09 -3.143424E-09 -3.906363E-09          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    60
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05          
+                  2   1.000    9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05  9.915398E+05          
+0         2
+                  2   0.000    8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05          
+                  3   1.000    8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05  8.944809E+05          
+0         3
+                  3   0.000    7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05          
+                  4   1.000    7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05  7.098641E+05          
+0         4
+                  4   0.000    4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05          
+                  5   1.000    4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05  4.557608E+05          
+0         5
+                  5   0.000    1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05          
+                  6   1.000    1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05  1.570445E+05          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    61
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000    3.662798E+05 -3.662798E+05 -3.662798E+05  3.662798E+05  3.662798E+05 -3.662798E+05          
+                  2   1.000    2.688971E+04 -2.688971E+04 -2.688971E+04  2.688971E+04  2.688971E+04 -2.688971E+04          
+0         2
+                  2   0.000    2.688971E+04 -2.688971E+04 -2.688971E+04  2.688971E+04  2.688971E+04 -2.688971E+04          
+                  3   1.000   -2.254414E+05  2.254414E+05  2.254414E+05 -2.254414E+05  2.254414E+05 -2.254414E+05          
+0         3
+                  3   0.000   -2.254414E+05  2.254414E+05  2.254414E+05 -2.254414E+05  2.254414E+05 -2.254414E+05          
+                  4   1.000   -2.751796E+05  2.751796E+05  2.751796E+05 -2.751796E+05  2.751796E+05 -2.751796E+05          
+0         4
+                  4   0.000   -2.751796E+05  2.751796E+05  2.751796E+05 -2.751796E+05  2.751796E+05 -2.751796E+05          
+                  5   1.000   -1.386268E+05  1.386268E+05  1.386268E+05 -1.386268E+05  1.386268E+05 -1.386268E+05          
+0         5
+                  5   0.000   -1.386268E+05  1.386268E+05  1.386268E+05 -1.386268E+05  1.386268E+05 -1.386268E+05          
+                  6   1.000   -9.637489E-09 -9.027138E-09 -9.027138E-09 -9.637489E-09 -9.027138E-09 -9.637489E-09          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    62
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -1.812375E+06 -1.812375E+06  1.812375E+06  1.812375E+06  1.812375E+06 -1.812375E+06          
+                  2   1.000    1.675700E+06  1.675700E+06 -1.675700E+06 -1.675700E+06  1.675700E+06 -1.675700E+06          
+0         2
+                  2   0.000    1.675700E+06  1.675700E+06 -1.675700E+06 -1.675700E+06  1.675700E+06 -1.675700E+06          
+                  3   1.000   -5.049951E+05 -5.049951E+05  5.049951E+05  5.049951E+05  5.049951E+05 -5.049951E+05          
+0         3
+                  3   0.000   -5.049951E+05 -5.049951E+05  5.049951E+05  5.049951E+05  5.049951E+05 -5.049951E+05          
+                  4   1.000   -1.268291E+06 -1.268291E+06  1.268291E+06  1.268291E+06  1.268291E+06 -1.268291E+06          
+0         4
+                  4   0.000   -1.268291E+06 -1.268291E+06  1.268291E+06  1.268291E+06  1.268291E+06 -1.268291E+06          
+                  5   1.000    1.781853E+06  1.781853E+06 -1.781853E+06 -1.781853E+06  1.781853E+06 -1.781853E+06          
+0         5
+                  5   0.000    1.781853E+06  1.781853E+06 -1.781853E+06 -1.781853E+06  1.781853E+06 -1.781853E+06          
+                  6   1.000   -2.437161E-09 -2.437161E-09 -1.674222E-09 -1.674222E-09 -1.674222E-09 -2.437161E-09          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    63
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -1.152617E-07 -1.111715E-07  1.200115E-07  1.159213E-07  1.200115E-07 -1.152617E-07          
+                  2   1.000    1.020139E-07  1.020767E-07 -9.726415E-08 -9.732689E-08  1.020767E-07 -9.732689E-08          
+0         2
+                  2   0.000    8.770749E-08  8.777022E-08 -1.115706E-07 -1.116333E-07  8.777022E-08 -1.116333E-07          
+                  3   1.000   -4.849947E-08 -4.621835E-08  2.463638E-08  2.235526E-08  2.463638E-08 -4.849947E-08          
+0         3
+                  3   0.000   -4.227363E-08 -3.999251E-08  3.086222E-08  2.858110E-08  3.086222E-08 -4.227363E-08          
+                  4   1.000   -2.781237E-08 -3.738069E-08  1.640096E-08  2.596928E-08  2.596928E-08 -3.738069E-08          
+0         4
+                  4   0.000   -1.129476E-08 -2.086308E-08  3.291857E-08  4.248689E-08  4.248689E-08 -2.086308E-08          
+                  5   1.000    4.837540E-08  4.082881E-08 -2.675159E-08 -1.920499E-08  4.837540E-08 -2.675159E-08          
+0         5
+                  5   0.000    4.271089E-08  3.516430E-08 -3.241610E-08 -2.486950E-08  4.271089E-08 -3.241610E-08          
+                  6   1.000    5.147396E-09  5.147396E-09  5.147396E-09  5.147396E-09  5.147396E-09  5.147396E-09          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    64
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -2.050670E+06 -2.050670E+06  2.050670E+06  2.050670E+06  2.050670E+06 -2.050670E+06          
+                  2   1.000    2.498026E+06  2.498026E+06 -2.498026E+06 -2.498026E+06  2.498026E+06 -2.498026E+06          
+0         2
+                  2   0.000    2.498026E+06  2.498026E+06 -2.498026E+06 -2.498026E+06  2.498026E+06 -2.498026E+06          
+                  3   1.000   -2.964077E+06 -2.964077E+06  2.964077E+06  2.964077E+06  2.964077E+06 -2.964077E+06          
+0         3
+                  3   0.000   -2.964077E+06 -2.964077E+06  2.964077E+06  2.964077E+06  2.964077E+06 -2.964077E+06          
+                  4   1.000    2.629930E+06  2.629930E+06 -2.629930E+06 -2.629930E+06  2.629930E+06 -2.629930E+06          
+0         4
+                  4   0.000    2.629930E+06  2.629930E+06 -2.629930E+06 -2.629930E+06  2.629930E+06 -2.629930E+06          
+                  5   1.000   -1.663652E+06 -1.663652E+06  1.663652E+06  1.663652E+06  1.663652E+06 -1.663652E+06          
+0         5
+                  5   0.000   -1.663652E+06 -1.663652E+06  1.663652E+06  1.663652E+06  1.663652E+06 -1.663652E+06          
+                  6   1.000    9.414247E-08  9.414247E-08  9.337954E-08  9.337954E-08  9.414247E-08  9.337954E-08          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    65
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+                                  S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )
+                    STAT DIST/
+   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF           S-MAX         S-MIN         M.S.-T   M.S.-C
+0         1
+                  1   0.000   -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06          
+                  2   1.000   -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06 -2.595885E+06          
+0         2
+                  2   0.000   -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05          
+                  3   1.000   -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05 -4.557608E+05          
+0         3
+                  3   0.000    2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06          
+                  4   1.000    2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06  2.060106E+06          
+0         4
+                  4   0.000    2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06          
+                  5   1.000    2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06  2.877560E+06          
+0         5
+                  5   0.000    1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06          
+                  6   1.000    1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06  1.322669E+06          
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    66
+                                                                                                                                    
+0                                                                                                                                   
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    67
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+      CYCLES =  4.646440E+01
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.261577E+04
+                   MODE               1            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.261577E+04
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          2.523682E+04                59.2194              1.682454E+00
+                                             2          1.217533E+04                28.5700              8.116888E-01
+                                             3          4.293487E+03                10.0749              2.862324E-01
+                                             4          8.576085E+02                 2.0124              5.717390E-02
+                                             5          5.252886E+01                 0.1233              3.501924E-03
+
+                        TYPE = BEAM     SUBTOTAL        4.261577E+04               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    68
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+      CYCLES =  1.469333E+02
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.261577E+05
+                   MODE               2            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.261577E+05
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          2.523682E+05                59.2194              1.682454E+01
+                                             2          1.217533E+05                28.5700              8.116888E+00
+                                             3          4.293487E+04                10.0749              2.862324E+00
+                                             4          8.576085E+03                 2.0124              5.717390E-01
+                                             5          5.252886E+02                 0.1233              3.501924E-02
+
+                        TYPE = BEAM     SUBTOTAL        4.261577E+05               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    69
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+      CYCLES =  2.790229E+02
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.536772E+06
+                   MODE               3            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.536772E+06
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          4.187880E+05                27.2512              2.791920E+01
+                                             2          1.316112E+05                 8.5641              8.774079E+00
+                                             3          5.456727E+05                35.5077              3.637818E+01
+                                             4          3.850938E+05                25.0586              2.567292E+01
+                                             5          5.560586E+04                 3.6184              3.707057E+00
+
+                        TYPE = BEAM     SUBTOTAL        1.536772E+06               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    70
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+      CYCLES =  7.529902E+02
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.119202E+07
+                   MODE               4            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.119202E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          2.111026E+06                18.8619              1.407351E+02
+                                             2          2.617071E+06                23.3834              1.744714E+02
+                                             3          9.514689E+05                 8.5013              6.343126E+01
+                                             4          3.641148E+06                32.5334              2.427432E+02
+                                             5          1.871304E+06                16.7200              1.247536E+02
+
+                        TYPE = BEAM     SUBTOTAL        1.119202E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    71
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+      CYCLES =  8.153512E+02
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.312258E+07
+                   MODE               5            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.312258E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          5.120579E+06                39.0211              3.413719E+02
+                                             2          4.167168E+06                31.7557              2.778112E+02
+                                             3          2.624516E+06                20.0000              1.749677E+02
+                                             4          1.081864E+06                 8.2443              7.212428E+01
+                                             5          1.284529E+05                 0.9789              8.563530E+00
+
+                        TYPE = BEAM     SUBTOTAL        1.312258E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    72
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+      CYCLES =  8.823478E+02
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.536772E+07
+                   MODE               6            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.536772E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          4.187880E+06                27.2512              2.791920E+02
+                                             2          1.316112E+06                 8.5641              8.774079E+01
+                                             3          5.456727E+06                35.5077              3.637818E+02
+                                             4          3.850938E+06                25.0586              2.567292E+02
+                                             5          5.560586E+05                 3.6184              3.707057E+01
+
+                        TYPE = BEAM     SUBTOTAL        1.536772E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    73
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+      CYCLES =  1.405450E+03
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   3.899065E+07
+                   MODE               7            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   3.899065E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          8.841658E+06                22.6764              5.894439E+02
+                                             2          6.414269E+06                16.4508              4.276179E+02
+                                             3          7.245551E+06                18.5828              4.830367E+02
+                                             4          7.302242E+06                18.7282              4.868161E+02
+                                             5          9.186926E+06                23.5619              6.124617E+02
+
+                        TYPE = BEAM     SUBTOTAL        3.899065E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    74
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+      CYCLES =  1.507327E+03
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.484819E+07
+                   MODE               8            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.484819E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          1.750027E+07                39.0211              1.166685E+03
+                                             2          1.424186E+07                31.7557              9.494572E+02
+                                             3          8.969637E+06                20.0000              5.979758E+02
+                                             4          3.697417E+06                 8.2443              2.464944E+02
+                                             5          4.390053E+05                 0.9789              2.926702E+01
+
+                        TYPE = BEAM     SUBTOTAL        4.484819E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    75
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+      CYCLES =  2.059242E+03
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   8.370368E+07
+                   MODE               9            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   8.370368E+07
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          1.540149E+07                18.4000              1.026766E+03
+                                             2          2.205308E+07                26.3466              1.470206E+03
+                                             3          2.287897E+07                27.3333              1.525264E+03
+                                             4          1.536164E+07                18.3524              1.024109E+03
+                                             5          8.008506E+06                 9.5677              5.339004E+02
+
+                        TYPE = BEAM     SUBTOTAL        8.370368E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    76
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+      CYCLES =  2.366241E+03
+                                           E L E M E N T   S T R A I N   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.105218E+08
+                   MODE              10            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.105218E+08
+0
+                                    ELEMENT-ID          STRAIN-ENERGY           PERCENT OF TOTAL    STRAIN-ENERGY-DENSITY
+                                             1          3.509697E+07                31.7557              2.339798E+03
+                                             2          1.081864E+06                 0.9789              7.212428E+01
+                                             3          2.210435E+07                20.0000              1.473624E+03
+                                             4          4.312685E+07                39.0211              2.875123E+03
+                                             5          9.111741E+06                 8.2443              6.074494E+02
+
+                        TYPE = BEAM     SUBTOTAL        1.105218E+08               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    77
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+04
+      CYCLES =  4.646440E+01
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.261577E+04
+                   MODE               1            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.261577E+04
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          6.607282E+01                 0.1550              4.404854E-03
+                                             2          9.254238E+02                 2.1716              6.169492E-02
+                                             3          4.333635E+03                10.1691              2.889090E-01
+                                             4          1.212033E+04                28.4410              8.080222E-01
+                                             5          2.517031E+04                59.0634              1.678020E+00
+
+                        TYPE = BEAM     SUBTOTAL        4.261577E+04               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    78
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.523154E+05
+      CYCLES =  1.469333E+02
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.261577E+05
+                   MODE               2            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.261577E+05
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          6.607282E+02                 0.1550              4.404854E-02
+                                             2          9.254238E+03                 2.1716              6.169492E-01
+                                             3          4.333635E+04                10.1691              2.889090E+00
+                                             4          1.212033E+05                28.4410              8.080222E+00
+                                             5          2.517031E+05                59.0634              1.678020E+01
+
+                        TYPE = BEAM     SUBTOTAL        4.261577E+05               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    79
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+06
+      CYCLES =  2.790229E+02
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.536772E+06
+                   MODE               3            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.536772E+06
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          4.782764E+04                 3.1122              3.188509E+00
+                                             2          3.068277E+05                19.9657              2.045518E+01
+                                             3          4.779954E+05                31.1039              3.186636E+01
+                                             4          2.190224E+05                14.2521              1.460149E+01
+                                             5          4.850984E+05                31.5661              3.233989E+01
+
+                        TYPE = BEAM     SUBTOTAL        1.536772E+06               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    80
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.238404E+07
+      CYCLES =  7.529902E+02
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.119202E+07
+                   MODE               4            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.119202E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          1.383716E+06                12.3634              9.224775E+01
+                                             2          2.830776E+06                25.2928              1.887184E+02
+                                             3          1.983057E+06                17.7185              1.322038E+02
+                                             4          1.644504E+06                14.6935              1.096336E+02
+                                             5          3.349964E+06                29.9317              2.233309E+02
+
+                        TYPE = BEAM     SUBTOTAL        1.119202E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    81
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.624516E+07
+      CYCLES =  8.153512E+02
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.312258E+07
+                   MODE               5            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.312258E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          2.506190E+05                 1.9098              1.670793E+01
+                                             2          1.157367E+06                 8.8197              7.715779E+01
+                                             3          2.624516E+06                20.0000              1.749677E+02
+                                             4          4.091665E+06                31.1803              2.727777E+02
+                                             5          4.998413E+06                38.0902              3.332275E+02
+
+                        TYPE = BEAM     SUBTOTAL        1.312258E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    82
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  3.073543E+07
+      CYCLES =  8.823478E+02
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.536772E+07
+                   MODE               6            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.536772E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          4.782764E+05                 3.1122              3.188509E+01
+                                             2          3.068277E+06                19.9657              2.045518E+02
+                                             3          4.779954E+06                31.1039              3.186636E+02
+                                             4          2.190224E+06                14.2521              1.460149E+02
+                                             5          4.850984E+06                31.5661              3.233989E+02
+
+                        TYPE = BEAM     SUBTOTAL        1.536772E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    83
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  7.798129E+07
+      CYCLES =  1.405450E+03
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   3.899065E+07
+                   MODE               7            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   3.899065E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          7.992414E+06                20.4983              5.328276E+02
+                                             2          8.492085E+06                21.7798              5.661390E+02
+                                             3          4.116551E+06                10.5578              2.744367E+02
+                                             4          9.423903E+06                24.1697              6.282602E+02
+                                             5          8.965693E+06                22.9945              5.977128E+02
+
+                        TYPE = BEAM     SUBTOTAL        3.899065E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    84
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  8.969637E+07
+      CYCLES =  1.507327E+03
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   4.484819E+07
+                   MODE               8            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   4.484819E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          8.565241E+05                 1.9098              5.710161E+01
+                                             2          3.955458E+06                 8.8197              2.636972E+02
+                                             3          8.969637E+06                20.0000              5.979758E+02
+                                             4          1.398382E+07                31.1803              9.322544E+02
+                                             5          1.708275E+07                38.0902              1.138850E+03
+
+                        TYPE = BEAM     SUBTOTAL        4.484819E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    85
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  1.674074E+08
+      CYCLES =  2.059242E+03
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   8.370368E+07
+                   MODE               9            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   8.370368E+07
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          1.161057E+07                13.8710              7.740379E+02
+                                             2          2.577244E+07                30.7901              1.718163E+03
+                                             3          2.548841E+07                30.4508              1.699227E+03
+                                             4          1.543808E+07                18.4437              1.029206E+03
+                                             5          5.394179E+06                 6.4444              3.596120E+02
+
+                        TYPE = BEAM     SUBTOTAL        8.370368E+07               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    86
+                                                                                                                                    
+0                                                                                                                                   
+      EIGENVALUE =  2.210435E+08
+      CYCLES =  2.366241E+03
+                                         E L E M E N T   K I N E T I C   E N E R G I E S
+ 
+                ELEMENT-TYPE = BEAM                * TOTAL ENERGY OF ALL ELEMENTS IN PROBLEM     =   1.105218E+08
+                   MODE              10            * TOTAL ENERGY OF ALL ELEMENTS IN SET      -1 =   1.105218E+08
+0
+                                    ELEMENT-ID         KINETIC-ENERGY           PERCENT OF TOTAL   KINETIC-ENERGY-DENSITY
+                                             1          1.446749E+07                13.0902              9.644992E+02
+                                             2          3.446106E+07                31.1803              2.297404E+03
+                                             3          2.210435E+07                20.0000              1.473624E+03
+                                             4          9.747645E+06                 8.8197              6.498430E+02
+                                             5          2.974122E+07                26.9098              1.982748E+03
+
+                        TYPE = BEAM     SUBTOTAL        1.105218E+08               100.0000
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    87
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK ONRGY1   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                10                 0                 0                 0                 1                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1802 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OEKE1    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                10                 0                 0                 0                 1                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1802 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK ONRGY2   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                10                 0                 0                 0                 1                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1802 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OEF1X    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                63                 6                23                19                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      500 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     6567 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OES1X1   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                63                 6                23                19                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      555 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     7117 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OSTR1X   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                63                 6                23                19                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      555 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     7117 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    88
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4110 (OUTPBN2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1                                                                              JUNE  23, 2019  NX NASTRAN  5/23/18   PAGE    89
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     28
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+1                                        * * * END OF JOB * * *
+ 
+ 

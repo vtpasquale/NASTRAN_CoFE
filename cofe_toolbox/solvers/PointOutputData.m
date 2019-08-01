@@ -129,7 +129,9 @@ classdef PointOutputData
             nResponseVectors = size(obj.T1,2);
             sFormat = sprintf('%%14d      %c   %%15E%%15E%%15E%%15E%%15E%%15E\\n',obj.pointType);
             for i = 1:nResponseVectors
-                outputHeading.printTextOutput(fid,i)
+                if nargin > 2
+                    outputHeading.printTextOutput(fid,i)
+                end
                 fprintf(fid,'%s',dispString);
                 fprintf(fid,'\n      POINT ID.   TYPE          T1             T2             T3             R1             R2             R3\n');
                 fprintf(fid,sFormat,[double(obj.ID),obj.T1(:,i),obj.T2(:,i),obj.T3(:,i),obj.R1(:,i),obj.R2(:,i),obj.R3(:,i)]' );

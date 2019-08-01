@@ -101,28 +101,33 @@ classdef Crod < Element
             
             % Strain Energy
             if returnFlags(4)
-                strainEnergy = .5*u_e.'*f_e;
+                strainEnergy = .5*diag(u_e.'*f_e).';
             else
                 strainEnergy = [];
             end
         end
         function printTextOutput(obj,fid,elementOutputData,outputHeading)
-            if ~all([elementOutputData.elementType]==obj.ELEMENT_TYPE)
-                error('This function should only be called for ELEMENT_TYPE = %d',obj.ELEMENT_TYPE)
+            if ~all([elementOutputData.elementType]==obj(1).ELEMENT_TYPE)
+                error('This function should only be called for ELEMENT_TYPE = %d',obj(1).ELEMENT_TYPE)
             end
             
             nCrod = size(elementOutputData,1);
             nModes = size(elementOutputData(1).values,2);
             IDs = double([elementOutputData.elementID]');
             
-            % reshape data for printing
-            values = [elementOutputData.values];
-            axial = reshape(values(1,:),nCrod,nModes);
-            torsional = reshape(values(2,:),nCrod,nModes);
-            
             % response type - [uint8] CoFE code specifying response type [1=FORCE,2=STRESS,3=STRAIN,4=STRAIN ENERGY,5=KINETIC ENERGY]
             responseType = unique([elementOutputData.responseType]);
             if size(responseType,2)~=1; error('The function should only be called for a single type of data.'); end
+            
+            % reshape data for printing
+            values = [elementOutputData.values];
+            switch responseType
+                case {1 2 3}
+                    axial = reshape(values(1,:),nCrod,nModes);
+                    torsional = reshape(values(2,:),nCrod,nModes);
+                otherwise
+                    energy = values;
+            end
             
             for m = 1:nModes
                 
