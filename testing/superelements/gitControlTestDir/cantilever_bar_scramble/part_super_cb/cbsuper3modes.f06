@@ -1,0 +1,1641 @@
+1
+ 
+ 
+ 
+ 
+                                                             
+                 Copyright 2017 Siemens Product Lifecycle    
+                        Management Software Inc.             
+                         All Rights Reserved.                
+                                                             
+               This software and related documentation are   
+                 proprietary to Siemens Product Lifecycle    
+                        Management Software Inc.             
+                                                             
+              Siemens and the Siemens logo are registered    
+             trademarks of Siemens AG. NX is a trademark or  
+                registered trademark of Siemens Product      
+               Lifecycle Management Software Inc. or its     
+             subsidiaries in the United States and in other  
+             countries.  NASTRAN is a registered trademark   
+                 of the National Aeronautics and Space       
+                 Administration.  All other trademarks,      
+              registered trademarks or service marks belong  
+                      to their respective holders.           
+                                                             
+           LIMITATIONS TO U.S. GOVERNMENT RIGHTS. UNPUBLISHED
+           - RIGHTS RESERVED UNDER THE COPYRIGHT LAWS OF THE 
+            UNITED STATES. This computer software and related
+               computer software documentation have been     
+            developed exclusively at private expense and are 
+           provided subject to the following rights:  If this
+               computer software and computer  software      
+            documentation qualify as "commercial items" (as  
+             that term is defined in FAR 2.101), their use,  
+            duplication or disclosure by the U.S. Government 
+           is subject to the protections and restrictions as 
+            set forth in the Siemens commercial license for  
+            software and/or documentation, as prescribed in  
+           FAR 12.212 and FAR 27.405(b)(2)(i) (for civilian  
+             agencies) and in DFARS 227.7202-1(a) and DFARS  
+           227.7202-3(a) (for the Department of Defense), or 
+           any successor or similar regulation, as applicable
+           or as amended from time to time.  If this computer
+           software and computer documentation do not qualify
+            as "commercial items", then they are "restricted 
+           computer software" and are provided with "restric-
+            tive rights", and their use, duplication or dis- 
+            closure by the U.S. Government is subject to the 
+            protections and restrictions as set forth in FAR 
+           27.404(b) and FAR 52-227-14 (for civilian agencies
+           ), and DFARS 227.7203-5(c) and DFARS 252.227-7014 
+           (for the Department of Defense), or any successor 
+           or similar regulation, as applicable or as amended
+              from time to time.  Siemens PLM Software Inc.  
+            5800 Granite Parkway, Suite 600, Plano, TX 75024 
+
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *       N X   N a s t r a n       * *
+                * *                                 * *
+                * *        VERSION -  12.0.2        * *
+                * *                                 * *
+                * *          MAY 23, 2018           * *
+                * *                                 * *
+                * *                                 * *
+                * *Intel64 Family 6 Model 63 Steppi * *
+                * *                                 * *
+                * *MODEL Intel(R) Xeon(R) CPU E5-16 * *
+                * *                                 * *
+                * *  Windows 7 SP1 Service Pack 1   * *
+                * *                                 * *
+                * *       Compiled for X86-64       * *
+                * *                                 * *
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+1 
+  
+                        Welcome to NX Nastran
+                        -------------------------
+  
+  
+ This "news" information can be turned off by setting "news=no" in the runtime
+ configuration (RC) file.  The "news" keyword can be set in the system RC file
+ for global, or multi-user control, and in a local file for local control.
+ Individual jobs can be controlled by setting news to yes or no on the command
+ line.
+1                                                                               MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=32769 $(C:/PROGRAM FILES/SIEMENS/FEMAPV1201/NASTRAN/CONF/NAST12
+     NASTRAN BUFFPOOL=23554                                                          
+     NASTRAN DIAGA=128 DIAGB=0 $(C:/PROGRAM FILES/SIEMENS/FEMAPV1201/NASTRAN/CONF/NAS
+     NASTRAN REAL=8577351680 $(MEMORY LIMIT FOR MPI AND OTHER SPECIALIZED MODULES)   
+1                                                                               MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL SEMODES                                                                             
+     CEND                                                                                    
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     3
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1        TITLE = CANTILEVER BEAM DIVIDED INTO TWO PARTS                                        
+                  2        SUBTITLE = FIXED BOUNDARY REDUCTION                                                   
+                  3        METHOD = 1                                                                            
+                  4        SPC = 1                                                                               
+                  5      SUBCASE 1                                                                               
+                  6        LABEL = SUPERELEMENT 1                                                                
+                  7        SUPER = 1                                                                             
+                  8        METHOD = 10                                                                           
+                  9      SUBCASE 2                                                                               
+                 10        LABEL = SUPERELEMENT 2                                                                
+                 11        SUPER = 2                                                                             
+                 12        METHOD = 20                                                                           
+                 13      SUBCASE 3                                                                               
+                 14        LABEL = RESIDUAL STRUCTURE                                                            
+                 15        SET 99 = 0                                                                            
+                 16        SUPER = 99                                                                            
+                 17        METHOD = 1                                                                            
+                 18      BEGIN BULK                                                                              
+0                             INPUT BULK DATA ENTRY COUNT =          19
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     4
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                                 S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        EIGRL   1                       10      0                       MASS            
+                    2-        GRID    600001  0       5.      0.      0.      0                               
+                    3-        PARAM   USETPRT 12                                                              
+                    4-        PARAM   USETSEL -1                                                              
+                    5-        SEBULK  1       PRIMARY         MANUAL                                          
+                    6-        SEBULK  2       PRIMARY         MANUAL                                          
+                    7-        SECONCT 1       0               NO                                       0000001
+                    8-        +0000001106     600001  100001  100004  100002  100005  100003  100006   0000002
+                    9-        SECONCT 2       0               NO                                       0000003
+                   10-        +00000036       600001  200001  100007  200002  100008  200003  100009   0000004
+                   11-        SPOINT  100004  100005  100006  100007  100008  100009                          
+                              ENDDATA 
+0                       TOTAL COUNT=        12
+0                             INPUT BULK DATA ENTRY COUNT =          25
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     5
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                                 S O R T E D   B U L K   D A T A   E C H O          SUPER    =         1           
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBAR    6       1       106     7       0.      1.      0.                      
+                    2-        CBAR    7       1       7       8       0.      1.      0.                      
+                    3-        CBAR    8       1       8       949     0.      1.      0.                      
+                    4-        CBAR    9       1       949     10      0.      1.      0.                      
+                    5-        CBAR    10      1       10      11      0.      1.      0.                      
+                    6-        EIGRL   10                      3       0                       MASS            
+                    7-        GRDSET                                                  1345                    
+                    8-        GRID    7       0       6.      0.      0.      0                               
+                    9-        GRID    8       0       7.      0.      0.      0                               
+                   10-        GRID    10      0       9.      0.      0.      0                               
+                   11-        GRID    11      0       10.     0.      0.      0                               
+                   12-        GRID    106     0       5.      0.      0.      0                               
+                   13-        GRID    949     0       8.      0.      0.      0                               
+                   14-        MAT1    1       2.9E+7  1.1E+7  0.32    7.357E-46.E-6   70.                     
+                   15-        PARAM   GRDPNT  0                                                               
+                   16-        PARAM   USETPRT 12                                                              
+                   17-        PARAM   USETSEL -1                                                              
+                   18-        PBAR    1       1       0.1     0.01    0.01    0.001   0.                      
+                   19-        QSET    100001  0       100002  0       100003  0                               
+                   20-        SPOINT  100001  100002  100003                                                  
+                              ENDDATA 
+0                       TOTAL COUNT=        21
+0                             INPUT BULK DATA ENTRY COUNT =          26
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     6
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                                 S O R T E D   B U L K   D A T A   E C H O          SUPER    =         2           
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBAR    1       1       1       2       0.      1.      0.                      
+                    2-        CBAR    2       1       2       3       0.      1.      0.                      
+                    3-        CBAR    3       1       3       404     0.      1.      0.                      
+                    4-        CBAR    4       1       404     5       0.      1.      0.                      
+                    5-        CBAR    5       1       5       6       0.      1.      0.                      
+                    6-        EIGRL   20                      3       0                       MASS            
+                    7-        GRDSET                                                  1345                    
+                    8-        GRID    1       0       0.      0.      0.      0                               
+                    9-        GRID    2       0       1.      0.      0.      0                               
+                   10-        GRID    3       0       2.      0.      0.      0                               
+                   11-        GRID    5       0       4.      0.      0.      0                               
+                   12-        GRID    6       0       5.      0.      0.      0                               
+                   13-        GRID    404     0       3.      0.      0.      0                               
+                   14-        MAT1    1       2.9E+7  1.1E+7  0.32    7.357E-46.E-6   70.                     
+                   15-        PARAM   GRDPNT  0                                                               
+                   16-        PARAM   USETPRT 12                                                              
+                   17-        PARAM   USETSEL -1                                                              
+                   18-        PBAR    1       1       0.1     0.01    0.01    0.001   0.                      
+                   19-        QSET    200001  0       200002  0       200003  0                               
+                   20-        SPC     1       1       123456  0.                                              
+                   21-        SPOINT  200001  200002  200003                                                  
+                              ENDDATA 
+0                       TOTAL COUNT=        22
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =        1
+                                   NUMBER OF SPOINT   ENTRIES  =        1
+ 
+ 
+ 
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =        6
+                                   NUMBER OF SPOINT   ENTRIES  =        1
+ 
+ 
+                                   NUMBER OF CBAR     ELEMENTS =        5
+ 
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     7
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0
+0
+0
+ 
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =        6
+                                   NUMBER OF SPOINT   ENTRIES  =        1
+ 
+ 
+                                   NUMBER OF CBAR     ELEMENTS =        5
+ 
+ *** USER WARNING MESSAGE 6792 (SEPOMT)
+     THE PERMANENT SET CONSTRAINT SPECIFICATION FOR BOUNDARY GRID    600001 IN SUPERELEMENT        0
+     IS DIFFERENT FROM THE UPSTREAM SUPERELEMENT.
+     USER INFORMATION: THE PERMANENT SET CONSTRAINTS WILL BE UNIONED.
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     8
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+ 
+0                                             SUPERELEMENT DEFINITION TABLE (SORTED BY SEID)                                         
+0               PRIMARY    PROCESS  DOWNSTREAM
+ SUPERELEMENT SUPERELEMENT  ORDER  SUPERELEMENT            TYPE                                 LABEL
+ ------------ ------------ ------- ------------ -----------------------------  ------------------------------------------------
+         0            0         3          0    RESIDUAL STRUCTURE                                                                   
+         1            0         1          0    PRIMARY (BEGIN SUPER)                                                                
+         2            0         2          0    PRIMARY (BEGIN SUPER)                                                                
+ 
+0                                             SUPERELEMENT DEFINITION TABLE (SORTED BY PROCESS ORDER)                                
+0               PRIMARY    PROCESS  DOWNSTREAM
+ SUPERELEMENT SUPERELEMENT  ORDER  SUPERELEMENT            TYPE                                 LABEL
+ ------------ ------------ ------- ------------ -----------------------------  ------------------------------------------------
+         1            0         1          0    PRIMARY (BEGIN SUPER)                                                                
+         2            0         2          0    PRIMARY (BEGIN SUPER)                                                                
+         0            0         3          0    RESIDUAL STRUCTURE                                                                   
+0
+                            TABLE OF DOWNSTREAM SUPERELEMENTS FOR EACH SUPERELEMENT
+0 SUPERELEMENT                    DOWNSTREAM SUPERELEMENTS IN DOWNSTREAM ORDER
+  ------------  --------------------------------------------------------------------------------
+           1           0
+           2           0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE     9
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                             S U P E R E L E M E N T   T R E E
+0                              ( CONFIGURATION = SINGLE LEVEL   NO. LEVELS =  1     NO. TIPS =   2 )
+0   TIP     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL     LEVEL
+   INDEX     -1-       -2-       -3-       -4-       -5-       -6-       -7-       -8-       -9-      -10-      -11-      -12-
+
+      1         1                                                                                                                    
+
+      2         2                                                                                                                    
+
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    10
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                                              BOUNDARY SEQUENCE ASSIGNMENT TABLE
+0  BOUNDARY
+ SEQUENCE ID --------------------------------- ASSIGNED TO POINT ID (SUPERELEMENT) ---------------------------------
+
+          1B    600001 (       0)      106 (       1)        6 (       2)                                                            
+          2B    100004 (       0)   100001 (       1)                                                                                
+          3B    100005 (       0)   100002 (       1)                                                                                
+          4B    100006 (       0)   100003 (       1)                                                                                
+          5B    100007 (       0)   200001 (       2)                                                                                
+          6B    100008 (       0)   200002 (       2)                                                                                
+          7B    100009 (       0)   200003 (       2)                                                                                
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    11
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                      POINT/SUPERELEMENT CONNECTIVITY LIST (SORTED BY POINT ID  - "B" INDICATES BOUNDARY SEQUENCE ID)               
+0                             INTERIOR TO
+   POINT ID            TYPE  SUPERELEMEMT ------------------------------- CONNECTED TO SUPERELEMENT -------------------------------
+
+         1B                          0           1        2                                                                          
+         2B             S            0           1                                                                                   
+         3B             S            0           1                                                                                   
+         4B             S            0           1                                                                                   
+         5B             S            0           2                                                                                   
+         6B             S            0           2                                                                                   
+         7B             S            0           2                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    12
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                      POINT/SUPERELEMENT CONNECTIVITY LIST (SORTED BY FIRST POINT ID - "B" INDICATES BOUNDARY SEQUENCE ID)          
+0             FIRST           INTERIOR TO
+     COUNT   POINT ID  TYPE  SUPERELEMEMT ------------------------------- CONNECTED TO SUPERELEMENT -------------------------------
+
+         1          1B               0           1        2                                                                          
+         3          2B               0           1                                                                                   
+         3          5B               0           2                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    13
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                      POINT/SUPERELEMENT CONNECTIVITY LIST (SORTED BY COUNT - "B" INDICATES BOUNDARY SEQUENCE ID)                   
+0             FIRST           INTERIOR TO
+     COUNT   POINT ID  TYPE  SUPERELEMEMT ------------------------------- CONNECTED TO SUPERELEMENT -------------------------------
+
+         1          1B               0           1        2                                                                          
+         3          2B               0           1                                                                                   
+         3          5B               0           2                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    14
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+0                      POINT/SUPERELEMENT CONNECTIVITY LIST (SORTED BY INTERIOR SUPERELEMENT - "B" INDICATES BOUNDARY SEQUENCE ID)   
+0             FIRST           INTERIOR TO
+     COUNT   POINT ID  TYPE  SUPERELEMEMT ------------------------------- CONNECTED TO SUPERELEMENT -------------------------------
+
+         1          1B               0           1        2                                                                          
+         3          2B               0           1                                                                                   
+         3          5B               0           2                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    15
+      FIXED BOUNDARY REDUCTION                                                                                                      
+0                                                                                                                                   
+
+0                                             SUPERELEMENT        0
+         TYPE = RESIDUAL STRUCTURE                                                                                                   
+                                              LIST OF  INTERIOR POINTS           ( TOTAL NO. OF INTERIOR POINT =         7 )         
+     INDEX          -1-         -2-         -3-         -4-         -5-         -6-         -7-         -8-         -9-        -10-
+        1            1B          2B          3B          4B          5B          6B          7B                                      
+
+0                                             SUPERELEMENT        1
+         TYPE = PRIMARY (BEGIN SUPER)                                                                                                
+                                              LIST OF  EXTERIOR POINTS           ( TOTAL NO. OF EXTERIOR POINT =         4 )         
+     INDEX          -1-         -2-         -3-         -4-         -5-         -6-         -7-         -8-         -9-        -10-
+        1            1B          2B          3B          4B                                                                          
+
+0                                             SUPERELEMENT        2
+         TYPE = PRIMARY (BEGIN SUPER)                                                                                                
+                                              LIST OF  EXTERIOR POINTS           ( TOTAL NO. OF EXTERIOR POINT =         4 )         
+     INDEX          -1-         -2-         -3-         -4-         -5-         -6-         -7-         -8-         -9-        -10-
+        1            1B          5B          6B          7B                                                                          
+ ^^^ USER INFORMATION MESSAGE 9044 (PHASE0)  
+ ^^^ BULK DATA AND CASE CONTROL PARTITIONING,    RESTART CHECKING, AND UNDEFORMED PLOTTING IS    
+ ^^^ INITIATED FOR SUPERELEMENT          1 
+ *** USER WARNING MESSAGE 2053 (GP4)
+     UNDEFINED SINGLE-POINT CONSTRAINT SET            1
+ ^^^ USER INFORMATION MESSAGE 9044 (PHASE0)  
+ ^^^ BULK DATA AND CASE CONTROL PARTITIONING,    RESTART CHECKING, AND UNDEFORMED PLOTTING IS    
+ ^^^ INITIATED FOR SUPERELEMENT          2 
+ ^^^ USER INFORMATION MESSAGE 9044 (PHASE0)  
+ ^^^ BULK DATA AND CASE CONTROL PARTITIONING,    RESTART CHECKING, AND UNDEFORMED PLOTTING IS    
+ ^^^ INITIATED FOR SUPERELEMENT          0 
+ *** USER WARNING MESSAGE 2053 (GP4)
+     UNDEFINED SINGLE-POINT CONSTRAINT SET            1
+ *** USER INFORMATION MESSAGE 7552 (BNDSP3)
+     BOUNDARY GRID          1B WILL INHERIT ITS CONTRAINTS FROM UPSTREAM SUPERELEMENT(S).
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    16
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7325 (SEP2DR)
+     PROCESSING OF SUPERELEMENT        1 IS NOW INITIATED.
+ ^^^ USER INFORMATION MESSAGE 9045 (PHASE1DR)    
+ ^^^ PHASE 1 - SUPERELEMENT GENERATION, ASSEMBLY AND REDUCTION.  
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    17
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  3.678500E-04  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  3.678500E-04  0.000000E+00  0.000000E+00  0.000000E+00  2.758875E-03 *
+                      *  0.000000E+00  0.000000E+00  3.678500E-04  0.000000E+00 -2.758875E-03  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -2.758875E-03  0.000000E+00  2.151923E-02  0.000000E+00 *
+                      *  0.000000E+00  2.758875E-03  0.000000E+00  0.000000E+00  0.000000E+00  2.151923E-02 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            3.678500E-04      0.000000E+00  0.000000E+00  0.000000E+00
+                                  Y            3.678500E-04      7.500000E+00  0.000000E+00  0.000000E+00
+                                  Z            3.678500E-04      7.500000E+00  0.000000E+00  0.000000E+00
+                                                                I(S)
+                                           *  0.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  8.276625E-04  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  8.276625E-04 *
+                                                                I(Q)
+                                           *  0.000000E+00                             *
+                                           *                8.276625E-04               *
+                                           *                              8.276625E-04 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    18
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    19
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00                             
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       0 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    20
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   7 -  1     1-         1 G                                                                   1      
+                     -  2     2-                                                             1     1     1     2      
+                     -  3     3-                                                                               3      
+                     -  4     4-                                                                               4      
+                     -  5     5-                                                                               5      
+                     -  6     6-                                                             2     2     2     6      
+                   8 -  1     7-         2 G                                                                   7      
+                     -  2     8-                                                             3     3     3     8      
+                     -  3     9-                                                                               9      
+                     -  4    10-                                                                              10      
+                     -  5    11-                                                                              11      
+                     -  6    12-                                                             4     4     4    12      
+                  10 -  1    13-         3 G                                                                  13      
+                     -  2    14-                                                             5     5     5    14      
+                     -  3    15-                                                                              15      
+                     -  4    16-                                                                              16      
+                     -  5    17-                                                                              17      
+                     -  6    18-                                                             6     6     6    18      
+                  11 -  1    19-         4 G                                                                  19      
+                     -  2    20-                                                             7     7     7    20      
+                     -  3    21-                                                                              21      
+                     -  4    22-                                                                              22      
+                     -  5    23-                                                                              23      
+                     -  6    24-                                                             8     8     8    24      
+                 106 -  1    25-         5 G       1     1           1           1           9     9     9    25      
+                     -  2    26-                   2     2           2           2          10    10    10    26      
+                     -  3    27-                   3     3           3           3          11    11    11    27      
+                     -  4    28-                   4     4           4           4          12    12    12    28      
+                     -  5    29-                   5     5           5           5          13    13    13    29      
+                     -  6    30-                   6     6           6           6          14    14    14    30      
+                 949 -  1    31-         6 G                                                                  31      
+                     -  2    32-                                                            15    15    15    32      
+                     -  3    33-                                                                              33      
+                     -  4    34-                                                                              34      
+                     -  5    35-                                                                              35      
+                     -  6    36-                                                            16    16    16    36      
+              100001 -  0    37-         7 S       7                             7          17    17          37      
+              100002 -  0    38-         8 S       8                             8          18    18          38      
+              100003 -  0    39-         9 S       9                             9          19    19          39      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+
+    ---- C O L U M N   T O T A L S ----        9     6     0     6     0     9     0    19    19    16    39     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    21
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   7 -  1     1-         1 G                                           1     1           1            
+                     -  2     2-                                                       2     2     1     2            
+                     -  3     3-                                                       3     3           3            
+                     -  4     4-                                                       4     4           4            
+                     -  5     5-                                                       5     5           5            
+                     -  6     6-                                                       6     6     2     6            
+                   8 -  1     7-         2 G                                           7     7           7            
+                     -  2     8-                                                       8     8     3     8            
+                     -  3     9-                                                       9     9           9            
+                     -  4    10-                                                      10    10          10            
+                     -  5    11-                                                      11    11          11            
+                     -  6    12-                                                      12    12     4    12            
+                  10 -  1    13-         3 G                                          13    13          13            
+                     -  2    14-                                                      14    14     5    14            
+                     -  3    15-                                                      15    15          15            
+                     -  4    16-                                                      16    16          16            
+                     -  5    17-                                                      17    17          17            
+                     -  6    18-                                                      18    18     6    18            
+                  11 -  1    19-         4 G                                          19    19          19            
+                     -  2    20-                                                      20    20     7    20            
+                     -  3    21-                                                      21    21          21            
+                     -  4    22-                                                      22    22          22            
+                     -  5    23-                                                      23    23          23            
+                     -  6    24-                                                      24    24     8    24            
+                 106 -  1    25-         5 G                         1                25    25          25            
+                     -  2    26-                                     2                26    26          26            
+                     -  3    27-                                     3                27    27          27            
+                     -  4    28-                                     4                28    28          28            
+                     -  5    29-                                     5                29    29          29            
+                     -  6    30-                                     6                30    30          30            
+                 949 -  1    31-         6 G                                          31    31          31            
+                     -  2    32-                                                      32    32     9    32            
+                     -  3    33-                                                      33    33          33            
+                     -  4    34-                                                      34    34          34            
+                     -  5    35-                                                      35    35          35            
+                     -  6    36-                                                      36    36    10    36            
+              100001 -  0    37-         7 S                                          37    37          37     1      
+              100002 -  0    38-         8 S                                          38    38          38     2      
+              100003 -  0    39-         9 S                                          39    39          39     3      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+
+    ---- C O L U M N   T O T A L S ----        0     0     0     6     0     0    39    39    10    39     3     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    22
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   7 -  1     1-         1 G             1                 1                                          
+                     -  2     2-                                                                                      
+                     -  3     3-                         2                 2                                          
+                     -  4     4-                         3                 3                                          
+                     -  5     5-                         4                 4                                          
+                     -  6     6-                                                                                      
+                   8 -  1     7-         2 G             5                 5                                          
+                     -  2     8-                                                                                      
+                     -  3     9-                         6                 6                                          
+                     -  4    10-                         7                 7                                          
+                     -  5    11-                         8                 8                                          
+                     -  6    12-                                                                                      
+                  10 -  1    13-         3 G             9                 9                                          
+                     -  2    14-                                                                                      
+                     -  3    15-                        10                10                                          
+                     -  4    16-                        11                11                                          
+                     -  5    17-                        12                12                                          
+                     -  6    18-                                                                                      
+                  11 -  1    19-         4 G            13                13                                          
+                     -  2    20-                                                                                      
+                     -  3    21-                        14                14                                          
+                     -  4    22-                        15                15                                          
+                     -  5    23-                        16                16                                          
+                     -  6    24-                                                                                      
+                 106 -  1    25-         5 G                                     1                                    
+                     -  2    26-                                                 2                                    
+                     -  3    27-                                                 3                                    
+                     -  4    28-                                                 4                                    
+                     -  5    29-                                                 5                                    
+                     -  6    30-                                                 6                                    
+                 949 -  1    31-         6 G            17                17                                          
+                     -  2    32-                                                                                      
+                     -  3    33-                        18                18                                          
+                     -  4    34-                        19                19                                          
+                     -  5    35-                        20                20                                          
+                     -  6    36-                                                                                      
+              100001 -  0    37-         7 S                                                                          
+              100002 -  0    38-         8 S                                                                          
+              100003 -  0    39-         9 S                                                                          
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+
+    ---- C O L U M N   T O T A L S ----        0    20     0     0    20     6     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    23
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   7 -  1     1-         1 G                                                                          
+                     -  2     2-                                     1                                                
+                     -  3     3-                                                                                      
+                     -  4     4-                                                                                      
+                     -  5     5-                                                                                      
+                     -  6     6-                                     2                                                
+                   8 -  1     7-         2 G                                                                          
+                     -  2     8-                                     3                                                
+                     -  3     9-                                                                                      
+                     -  4    10-                                                                                      
+                     -  5    11-                                                                                      
+                     -  6    12-                                     4                                                
+                  10 -  1    13-         3 G                                                                          
+                     -  2    14-                                     5                                                
+                     -  3    15-                                                                                      
+                     -  4    16-                                                                                      
+                     -  5    17-                                                                                      
+                     -  6    18-                                     6                                                
+                  11 -  1    19-         4 G                                                                          
+                     -  2    20-                                     7                                                
+                     -  3    21-                                                                                      
+                     -  4    22-                                                                                      
+                     -  5    23-                                                                                      
+                     -  6    24-                                     8                                                
+                 106 -  1    25-         5 G                                                                          
+                     -  2    26-                                                                                      
+                     -  3    27-                                                                                      
+                     -  4    28-                                                                                      
+                     -  5    29-                                                                                      
+                     -  6    30-                                                                                      
+                 949 -  1    31-         6 G                                                                          
+                     -  2    32-                                     9                                                
+                     -  3    33-                                                                                      
+                     -  4    34-                                                                                      
+                     -  5    35-                                                                                      
+                     -  6    36-                                    10                                                
+              100001 -  0    37-         7 S                                                                          
+              100002 -  0    38-         8 S                                                                          
+              100003 -  0    39-         9 S                                                                          
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+
+    ---- C O L U M N   T O T A L S ----        0     0     0    10     0     0     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    24
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   R O W   S O R T )
+                                                       A        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    25
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       B        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    26
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       BF       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    27
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       D        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    28
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       F        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-2        7-6        8-2        8-6       10-2       10-6       11-2       11-6      106-1      106-2    =    10
+     11=      106-3      106-4      106-5      106-6      949-2      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    29
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       FE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-2        7-6        8-2        8-6       10-2       10-6       11-2       11-6      106-1      106-2    =    10
+     11=      106-3      106-4      106-5      106-6      949-2      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    30
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       FR       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-2        7-6        8-2        8-6       10-2       10-6       11-2       11-6      106-1      106-2    =    10
+     11=      106-3      106-4      106-5      106-6      949-2      949-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    31
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       G        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-2        7-3        7-4        7-5        7-6        8-1        8-2        8-3        8-4    =    10
+     11=        8-5        8-6       10-1       10-2       10-3       10-4       10-5       10-6       11-1       11-2    =    20
+     21=       11-3       11-4       11-5       11-6      106-1      106-2      106-3      106-4      106-5      106-6    =    30
+     31=      949-1      949-2      949-3      949-4      949-5      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    32
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       L        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    33
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       N        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-2        7-3        7-4        7-5        7-6        8-1        8-2        8-3        8-4    =    10
+     11=        8-5        8-6       10-1       10-2       10-3       10-4       10-5       10-6       11-1       11-2    =    20
+     21=       11-3       11-4       11-5       11-6      106-1      106-2      106-3      106-4      106-5      106-6    =    30
+     31=      949-1      949-2      949-3      949-4      949-5      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    34
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       NE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-2        7-3        7-4        7-5        7-6        8-1        8-2        8-3        8-4    =    10
+     11=        8-5        8-6       10-1       10-2       10-3       10-4       10-5       10-6       11-1       11-2    =    20
+     21=       11-3       11-4       11-5       11-6      106-1      106-2      106-3      106-4      106-5      106-6    =    30
+     31=      949-1      949-2      949-3      949-4      949-5      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    35
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       O        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-2        7-6        8-2        8-6       10-2       10-6       11-2       11-6      949-2      949-6    =    10
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    36
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       P        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-2        7-3        7-4        7-5        7-6        8-1        8-2        8-3        8-4    =    10
+     11=        8-5        8-6       10-1       10-2       10-3       10-4       10-5       10-6       11-1       11-2    =    20
+     21=       11-3       11-4       11-5       11-6      106-1      106-2      106-3      106-4      106-5      106-6    =    30
+     31=      949-1      949-2      949-3      949-4      949-5      949-6   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    37
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       Q        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100001-0   100002-0   100003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    38
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       S        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-3        7-4        7-5        8-1        8-3        8-4        8-5       10-1       10-3    =    10
+     11=       10-4       10-5       11-1       11-3       11-4       11-5      949-1      949-3      949-4      949-5    =    20
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    39
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       SG       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-1        7-3        7-4        7-5        8-1        8-3        8-4        8-5       10-1       10-3    =    10
+     11=       10-4       10-5       11-1       11-3       11-4       11-5      949-1      949-3      949-4      949-5    =    20
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    40
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       T        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=      106-1      106-2      106-3      106-4      106-5      106-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    41
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+                                                       V        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        7-2        7-6        8-2        8-6       10-2       10-6       11-2       11-6      949-2      949-6    =    10
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    42
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4415 (PRTPRN)
+     THE FOLLOWING A-SET DEGREES OF FREEDOM HAVE EITHER NULL MASSES OR NULL MASSES AND STIFFNESS.
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    43
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+0                VYXW                                                                                                               
+     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE  
+                                                                                                                                    
+
+ COLUMN           1
+          7 R3  1.00000E+00         8 R3  1.00000E+00        10 R3  1.00000E+00        11 R3  1.00000E+00       949 R3  1.00000E+00
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     QL HOUSEHOLDER METHOD IS AUTOMATICALLY SELECTED .
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    44
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+                                         (BEFORE AUGMENTATION OF RESIDUAL VECTORS)
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        7.518384E+07        8.670862E+03        1.380011E+03        1.000000E+00        7.518384E+07
+        2         2        2.711212E+09        5.206930E+04        8.287086E+03        1.000000E+00        2.711212E+09
+        3         3        1.974525E+10        1.405178E+05        2.236410E+04        1.000000E+00        1.974525E+10
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    45
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+ ^^^ USER INFORMATION MESSAGE 9037 (RESVEC  )    
+ ^^^ CHECKING RESIDUAL VECTORS FOR LINEAR INDEPENDENCE.  
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     QL HOUSEHOLDER METHOD IS AUTOMATICALLY SELECTED .
+ ^^^     
+ ^^^ FREQUENCY LIST OF RESIDUAL VECTORS FOLLOWS. 
+ ^^^     
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    46
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        6.878830E+10        2.622752E+05        4.174240E+04        1.000000E+00        6.878830E+10
+        2         2        1.476722E+11        3.842814E+05        6.116029E+04        1.000000E+00        1.476722E+11
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    47
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    48
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+                                         (AFTER AUGMENTATION OF RESIDUAL VECTORS)
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        7.518384E+07        8.670862E+03        1.380011E+03        1.000000E+00        7.518384E+07
+        2         2        2.711212E+09        5.206930E+04        8.287086E+03        1.000000E+00        2.711212E+09
+        3         3        1.974525E+10        1.405178E+05        2.236410E+04        1.000000E+00        1.974525E+10
+        4         4        6.878830E+10        2.622752E+05        4.174240E+04        1.000000E+00        6.878830E+10
+        5         5        1.476722E+11        3.842814E+05        6.116029E+04        1.000000E+00        1.476722E+11
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    49
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 1              
+0                                                                                                            SUBCASE 1              
+ ^^^ USER   WARNING MESSAGE 9354 (SEMR3) 
+ ^^^         5 MODES CALCULATED BUT ONLY           3 QSET DOF    
+ ^^^ DEFINED FOR SUPERELEMENT            1;    
+ ^^^ ADDITIONAL MODES WILL BE DISCARDED  
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    50
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7325 (SEP2DR)
+     PROCESSING OF SUPERELEMENT        2 IS NOW INITIATED.
+ ^^^ USER INFORMATION MESSAGE 9045 (PHASE1DR)    
+ ^^^ PHASE 1 - SUPERELEMENT GENERATION, ASSEMBLY AND REDUCTION.  
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    51
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  3.678500E-04  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  3.678500E-04  0.000000E+00  0.000000E+00  0.000000E+00  9.196250E-04 *
+                      *  0.000000E+00  0.000000E+00  3.678500E-04  0.000000E+00 -9.196250E-04  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -9.196250E-04  0.000000E+00  3.126725E-03  0.000000E+00 *
+                      *  0.000000E+00  9.196250E-04  0.000000E+00  0.000000E+00  0.000000E+00  3.126725E-03 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            3.678500E-04      0.000000E+00  0.000000E+00  0.000000E+00
+                                  Y            3.678500E-04      2.500000E+00  0.000000E+00  0.000000E+00
+                                  Z            3.678500E-04      2.500000E+00  0.000000E+00  0.000000E+00
+                                                                I(S)
+                                           *  0.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  8.276625E-04  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  8.276625E-04 *
+                                                                I(Q)
+                                           *  0.000000E+00                             *
+                                           *                8.276625E-04               *
+                                           *                              8.276625E-04 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    52
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                                                   
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    53
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        2     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00                             
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       0 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    54
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   1 -  1     1-         1 G                                                                   1      
+                     -  2     2-                                                                               2      
+                     -  3     3-                                                                               3      
+                     -  4     4-                                                                               4      
+                     -  5     5-                                                                               5      
+                     -  6     6-                                                                               6      
+                   2 -  1     7-         2 G                                                                   7      
+                     -  2     8-                                                             1     1     1     8      
+                     -  3     9-                                                                               9      
+                     -  4    10-                                                                              10      
+                     -  5    11-                                                                              11      
+                     -  6    12-                                                             2     2     2    12      
+                   3 -  1    13-         3 G                                                                  13      
+                     -  2    14-                                                             3     3     3    14      
+                     -  3    15-                                                                              15      
+                     -  4    16-                                                                              16      
+                     -  5    17-                                                                              17      
+                     -  6    18-                                                             4     4     4    18      
+                   5 -  1    19-         4 G                                                                  19      
+                     -  2    20-                                                             5     5     5    20      
+                     -  3    21-                                                                              21      
+                     -  4    22-                                                                              22      
+                     -  5    23-                                                                              23      
+                     -  6    24-                                                             6     6     6    24      
+                   6 -  1    25-         5 G       1     1           1           1           7     7     7    25      
+                     -  2    26-                   2     2           2           2           8     8     8    26      
+                     -  3    27-                   3     3           3           3           9     9     9    27      
+                     -  4    28-                   4     4           4           4          10    10    10    28      
+                     -  5    29-                   5     5           5           5          11    11    11    29      
+                     -  6    30-                   6     6           6           6          12    12    12    30      
+                 404 -  1    31-         6 G                                                                  31      
+                     -  2    32-                                                            13    13    13    32      
+                     -  3    33-                                                                              33      
+                     -  4    34-                                                                              34      
+                     -  5    35-                                                                              35      
+                     -  6    36-                                                            14    14    14    36      
+              200001 -  0    37-         7 S       7                             7          15    15          37      
+              200002 -  0    38-         8 S       8                             8          16    16          38      
+              200003 -  0    39-         9 S       9                             9          17    17          39      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+
+    ---- C O L U M N   T O T A L S ----        9     6     0     6     0     9     0    17    17    14    39     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    55
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   1 -  1     1-         1 G                                           1     1           1            
+                     -  2     2-                                                       2     2           2            
+                     -  3     3-                                                       3     3           3            
+                     -  4     4-                                                       4     4           4            
+                     -  5     5-                                                       5     5           5            
+                     -  6     6-                                                       6     6           6            
+                   2 -  1     7-         2 G                                           7     7           7            
+                     -  2     8-                                                       8     8     1     8            
+                     -  3     9-                                                       9     9           9            
+                     -  4    10-                                                      10    10          10            
+                     -  5    11-                                                      11    11          11            
+                     -  6    12-                                                      12    12     2    12            
+                   3 -  1    13-         3 G                                          13    13          13            
+                     -  2    14-                                                      14    14     3    14            
+                     -  3    15-                                                      15    15          15            
+                     -  4    16-                                                      16    16          16            
+                     -  5    17-                                                      17    17          17            
+                     -  6    18-                                                      18    18     4    18            
+                   5 -  1    19-         4 G                                          19    19          19            
+                     -  2    20-                                                      20    20     5    20            
+                     -  3    21-                                                      21    21          21            
+                     -  4    22-                                                      22    22          22            
+                     -  5    23-                                                      23    23          23            
+                     -  6    24-                                                      24    24     6    24            
+                   6 -  1    25-         5 G                         1                25    25          25            
+                     -  2    26-                                     2                26    26          26            
+                     -  3    27-                                     3                27    27          27            
+                     -  4    28-                                     4                28    28          28            
+                     -  5    29-                                     5                29    29          29            
+                     -  6    30-                                     6                30    30          30            
+                 404 -  1    31-         6 G                                          31    31          31            
+                     -  2    32-                                                      32    32     7    32            
+                     -  3    33-                                                      33    33          33            
+                     -  4    34-                                                      34    34          34            
+                     -  5    35-                                                      35    35          35            
+                     -  6    36-                                                      36    36     8    36            
+              200001 -  0    37-         7 S                                          37    37          37     1      
+              200002 -  0    38-         8 S                                          38    38          38     2      
+              200003 -  0    39-         9 S                                          39    39          39     3      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+
+    ---- C O L U M N   T O T A L S ----        0     0     0     6     0     0    39    39     8    39     3     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    56
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   1 -  1     1-         1 G             1                 1                                          
+                     -  2     2-                         2           1                                                
+                     -  3     3-                         3                 2                                          
+                     -  4     4-                         4                 3                                          
+                     -  5     5-                         5                 4                                          
+                     -  6     6-                         6           2                                                
+                   2 -  1     7-         2 G             7                 5                                          
+                     -  2     8-                                                                                      
+                     -  3     9-                         8                 6                                          
+                     -  4    10-                         9                 7                                          
+                     -  5    11-                        10                 8                                          
+                     -  6    12-                                                                                      
+                   3 -  1    13-         3 G            11                 9                                          
+                     -  2    14-                                                                                      
+                     -  3    15-                        12                10                                          
+                     -  4    16-                        13                11                                          
+                     -  5    17-                        14                12                                          
+                     -  6    18-                                                                                      
+                   5 -  1    19-         4 G            15                13                                          
+                     -  2    20-                                                                                      
+                     -  3    21-                        16                14                                          
+                     -  4    22-                        17                15                                          
+                     -  5    23-                        18                16                                          
+                     -  6    24-                                                                                      
+                   6 -  1    25-         5 G                                     1                                    
+                     -  2    26-                                                 2                                    
+                     -  3    27-                                                 3                                    
+                     -  4    28-                                                 4                                    
+                     -  5    29-                                                 5                                    
+                     -  6    30-                                                 6                                    
+                 404 -  1    31-         6 G            19                17                                          
+                     -  2    32-                                                                                      
+                     -  3    33-                        20                18                                          
+                     -  4    34-                        21                19                                          
+                     -  5    35-                        22                20                                          
+                     -  6    36-                                                                                      
+              200001 -  0    37-         7 S                                                                          
+              200002 -  0    38-         8 S                                                                          
+              200003 -  0    39-         9 S                                                                          
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+
+    ---- C O L U M N   T O T A L S ----        0    22     0     2    20     6     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    57
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+ -----------------------------------------------------------------------------------------------------------------------------------
+                   1 -  1     1-         1 G                                                                          
+                     -  2     2-                                                                                      
+                     -  3     3-                                                                                      
+                     -  4     4-                                                                                      
+                     -  5     5-                                                                                      
+                     -  6     6-                                                                                      
+                   2 -  1     7-         2 G                                                                          
+                     -  2     8-                                     1                                                
+                     -  3     9-                                                                                      
+                     -  4    10-                                                                                      
+                     -  5    11-                                                                                      
+                     -  6    12-                                     2                                                
+                   3 -  1    13-         3 G                                                                          
+                     -  2    14-                                     3                                                
+                     -  3    15-                                                                                      
+                     -  4    16-                                                                                      
+                     -  5    17-                                                                                      
+                     -  6    18-                                     4                                                
+                   5 -  1    19-         4 G                                                                          
+                     -  2    20-                                     5                                                
+                     -  3    21-                                                                                      
+                     -  4    22-                                                                                      
+                     -  5    23-                                                                                      
+                     -  6    24-                                     6                                                
+                   6 -  1    25-         5 G                                                                          
+                     -  2    26-                                                                                      
+                     -  3    27-                                                                                      
+                     -  4    28-                                                                                      
+                     -  5    29-                                                                                      
+                     -  6    30-                                                                                      
+                 404 -  1    31-         6 G                                                                          
+                     -  2    32-                                     7                                                
+                     -  3    33-                                                                                      
+                     -  4    34-                                                                                      
+                     -  5    35-                                                                                      
+                     -  6    36-                                     8                                                
+              200001 -  0    37-         7 S                                                                          
+              200002 -  0    38-         8 S                                                                          
+              200003 -  0    39-         9 S                                                                          
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+
+    ---- C O L U M N   T O T A L S ----        0     0     0     8     0     0     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    58
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   R O W   S O R T )
+                                                       A        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    59
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       B        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    60
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       BF       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    61
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       D        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    62
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       F        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        2-2        2-6        3-2        3-6        5-2        5-6        6-1        6-2        6-3        6-4    =    10
+     11=        6-5        6-6      404-2      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    63
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       FE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        2-2        2-6        3-2        3-6        5-2        5-6        6-1        6-2        6-3        6-4    =    10
+     11=        6-5        6-6      404-2      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    64
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       FR       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        2-2        2-6        3-2        3-6        5-2        5-6        6-1        6-2        6-3        6-4    =    10
+     11=        6-5        6-6      404-2      404-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    65
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       G        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-2        1-3        1-4        1-5        1-6        2-1        2-2        2-3        2-4    =    10
+     11=        2-5        2-6        3-1        3-2        3-3        3-4        3-5        3-6        5-1        5-2    =    20
+     21=        5-3        5-4        5-5        5-6        6-1        6-2        6-3        6-4        6-5        6-6    =    30
+     31=      404-1      404-2      404-3      404-4      404-5      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    66
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       L        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    67
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       N        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-2        1-3        1-4        1-5        1-6        2-1        2-2        2-3        2-4    =    10
+     11=        2-5        2-6        3-1        3-2        3-3        3-4        3-5        3-6        5-1        5-2    =    20
+     21=        5-3        5-4        5-5        5-6        6-1        6-2        6-3        6-4        6-5        6-6    =    30
+     31=      404-1      404-2      404-3      404-4      404-5      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    68
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       NE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-2        1-3        1-4        1-5        1-6        2-1        2-2        2-3        2-4    =    10
+     11=        2-5        2-6        3-1        3-2        3-3        3-4        3-5        3-6        5-1        5-2    =    20
+     21=        5-3        5-4        5-5        5-6        6-1        6-2        6-3        6-4        6-5        6-6    =    30
+     31=      404-1      404-2      404-3      404-4      404-5      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    69
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       O        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        2-2        2-6        3-2        3-6        5-2        5-6      404-2      404-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    70
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       P        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-2        1-3        1-4        1-5        1-6        2-1        2-2        2-3        2-4    =    10
+     11=        2-5        2-6        3-1        3-2        3-3        3-4        3-5        3-6        5-1        5-2    =    20
+     21=        5-3        5-4        5-5        5-6        6-1        6-2        6-3        6-4        6-5        6-6    =    30
+     31=      404-1      404-2      404-3      404-4      404-5      404-6   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    71
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       Q        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   200001-0   200002-0   200003-0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    72
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       S        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-2        1-3        1-4        1-5        1-6        2-1        2-3        2-4        2-5    =    10
+     11=        3-1        3-3        3-4        3-5        5-1        5-3        5-4        5-5      404-1      404-3    =    20
+     21=      404-4      404-5
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    73
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       SB       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-2        1-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    74
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       SG       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        1-1        1-3        1-4        1-5        2-1        2-3        2-4        2-5        3-1        3-3    =    10
+     11=        3-4        3-5        5-1        5-3        5-4        5-5      404-1      404-3      404-4      404-5    =    20
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    75
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       T        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        6-1        6-2        6-3        6-4        6-5        6-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    76
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+                                                       V        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=        2-2        2-6        3-2        3-6        5-2        5-6      404-2      404-6
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    77
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4415 (PRTPRN)
+     THE FOLLOWING A-SET DEGREES OF FREEDOM HAVE EITHER NULL MASSES OR NULL MASSES AND STIFFNESS.
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    78
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+0                VYXW                                                                                                               
+     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE  
+                                                                                                                                    
+
+ COLUMN           1
+          2 R3  1.00000E+00         3 R3  1.00000E+00         5 R3  1.00000E+00       404 R3  1.00000E+00
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     QL HOUSEHOLDER METHOD IS AUTOMATICALLY SELECTED .
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    79
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+ 
+                                              R E A L   E I G E N V A L U E S
+                                         (BEFORE AUGMENTATION OF RESIDUAL VECTORS)
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        3.150545E+09        5.612972E+04        8.933322E+03        1.000000E+00        3.150545E+09
+        2         2        2.343027E+10        1.530695E+05        2.436177E+04        1.000000E+00        2.343027E+10
+        3         3        8.070280E+10        2.840824E+05        4.521312E+04        1.000000E+00        8.070280E+10
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    80
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+ ^^^ USER INFORMATION MESSAGE 9037 (RESVEC  )    
+ ^^^ CHECKING RESIDUAL VECTORS FOR LINEAR INDEPENDENCE.  
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     QL HOUSEHOLDER METHOD IS AUTOMATICALLY SELECTED .
+ ^^^     
+ ^^^ FREQUENCY LIST OF RESIDUAL VECTORS FOLLOWS. 
+ ^^^     
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    81
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        1.570638E+11        3.963127E+05        6.307513E+04        1.000000E+00        1.570638E+11
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    82
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    83
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+ 
+                                              R E A L   E I G E N V A L U E S
+                                         (AFTER AUGMENTATION OF RESIDUAL VECTORS)
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        3.150545E+09        5.612972E+04        8.933322E+03        1.000000E+00        3.150545E+09
+        2         2        2.343027E+10        1.530695E+05        2.436177E+04        1.000000E+00        2.343027E+10
+        3         3        8.070280E+10        2.840824E+05        4.521312E+04        1.000000E+00        8.070280E+10
+        4         4        1.570638E+11        3.963127E+05        6.307513E+04        1.000000E+00        1.570638E+11
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    84
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 2              
+0                                                                                                            SUBCASE 2              
+ ^^^ USER   WARNING MESSAGE 9354 (SEMR3) 
+ ^^^         4 MODES CALCULATED BUT ONLY           3 QSET DOF    
+ ^^^ DEFINED FOR SUPERELEMENT            2;    
+ ^^^ ADDITIONAL MODES WILL BE DISCARDED  
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    85
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7325 (SEP2DR)
+     PROCESSING OF RESIDUAL STRUCTURE IS NOW INITIATED.
+ ^^^ USER INFORMATION MESSAGE 9045 (PHASE1DR)    
+ ^^^ PHASE 1 - SUPERELEMENT GENERATION, ASSEMBLY AND REDUCTION.  
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    86
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 7310 (VECPRN)
+     ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM WILL BE USED AS REFERENCE LOCATION.
+     RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        3     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00                             
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       0 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    87
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+ -----------------------------------------------------------------------------------------------------------------------------------
+              100004 -  0     7-         2 S       3     3           3           3           3     3     3     7      
+              100005 -  0     8-         3 S       4     4           4           4           4     4     4     8      
+              100006 -  0     9-         4 S       5     5           5           5           5     5     5     9      
+              100007 -  0    10-         5 S       6     6           6           6           6     6     6    10      
+              100008 -  0    11-         6 S       7     7           7           7           7     7     7    11      
+              100009 -  0    12-         7 S       8     8           8           8           8     8     8    12      
+              600001 -  1     1-         1 G                                                                   1      
+                     -  2     2-                   1     1           1           1           1     1     1     2      
+                     -  3     3-                                                                               3      
+                     -  4     4-                                                                               4      
+                     -  5     5-                                                                               5      
+                     -  6     6-                   2     2           2           2           2     2     2     6      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.      A     B    BE    BF     C     D     E     F    FE    FR     G     J
+
+    ---- C O L U M N   T O T A L S ----        8     8     0     8     0     8     0     8     8     8    12     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    88
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+ -----------------------------------------------------------------------------------------------------------------------------------
+              100004 -  0     7-         2 S                         3                 7     7           7            
+              100005 -  0     8-         3 S                         4                 8     8           8            
+              100006 -  0     9-         4 S                         5                 9     9           9            
+              100007 -  0    10-         5 S                         6                10    10          10            
+              100008 -  0    11-         6 S                         7                11    11          11            
+              100009 -  0    12-         7 S                         8                12    12          12            
+              600001 -  1     1-         1 G                                           1     1           1            
+                     -  2     2-                                     1                 2     2           2            
+                     -  3     3-                                                       3     3           3            
+                     -  4     4-                                                       4     4           4            
+                     -  5     5-                                                       5     5           5            
+                     -  6     6-                                     2                 6     6           6            
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     JS     K    KS     L    LM     M     N    NE     O     P     Q     R
+
+    ---- C O L U M N   T O T A L S ----        0     0     0     8     0     0    12    12     0    12     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    89
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+ -----------------------------------------------------------------------------------------------------------------------------------
+              100004 -  0     7-         2 S                                     3                                    
+              100005 -  0     8-         3 S                                     4                                    
+              100006 -  0     9-         4 S                                     5                                    
+              100007 -  0    10-         5 S                                     6                                    
+              100008 -  0    11-         6 S                                     7                                    
+              100009 -  0    12-         7 S                                     8                                    
+              600001 -  1     1-         1 G             1           1                                                
+                     -  2     2-                                                 1                                    
+                     -  3     3-                         2           2                                                
+                     -  4     4-                         3           3                                                
+                     -  5     5-                         4           4                                                
+                     -  6     6-                                                 2                                    
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     RV     S    SA    SB    SG     T    U1    U2    U3    U4    U5    U6
+
+    ---- C O L U M N   T O T A L S ----        0     4     0     4     0     8     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    90
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+          U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   C O L U M N   S O R T )
+ 
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+ -----------------------------------------------------------------------------------------------------------------------------------
+              100004 -  0     7-         2 S                                                                          
+              100005 -  0     8-         3 S                                                                          
+              100006 -  0     9-         4 S                                                                          
+              100007 -  0    10-         5 S                                                                          
+              100008 -  0    11-         6 S                                                                          
+              100009 -  0    12-         7 S                                                                          
+              600001 -  1     1-         1 G                                                                          
+                     -  2     2-                                                                                      
+                     -  3     3-                                                                                      
+                     -  4     4-                                                                                      
+                     -  5     5-                                                                                      
+                     -  6     6-                                                                                      
+ -----------------------------------------------------------------------------------------------------------------------------------
+             EXT GP.    DOF  INT DOF  INT GP.     U7    U8    U9     V                                                
+
+    ---- C O L U M N   T O T A L S ----        0     0     0     0     0     0     0     0     0     0     0     0
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    91
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                U S E T   D E F I N I T I O N   T A B L E   ( E X T E R N A L   S E Q U E N C E ,   R O W   S O R T )
+                                                       A        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    92
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       B        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    93
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       BF       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    94
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       D        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    95
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       F        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    96
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       FE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    97
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       FR       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    98
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       G        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-1   600001-2   600001-3   600001-4    =    10
+     11=   600001-5   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE    99
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       L        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   100
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       N        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-1   600001-2   600001-3   600001-4    =    10
+     11=   600001-5   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   101
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       NE       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-1   600001-2   600001-3   600001-4    =    10
+     11=   600001-5   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   102
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       P        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-1   600001-2   600001-3   600001-4    =    10
+     11=   600001-5   600001-6
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   103
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       S        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   600001-1   600001-3   600001-4   600001-5
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   104
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       SB       DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   600001-1   600001-3   600001-4   600001-5
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   105
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+                                                       T        DISPLACEMENT SET
+0               -1-        -2-        -3-        -4-        -5-        -6-        -7-        -8-        -9-       -10-
+ 
+      1=   100004-0   100005-0   100006-0   100007-0   100008-0   100009-0   600001-2   600001-6
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     QL HOUSEHOLDER METHOD IS AUTOMATICALLY SELECTED .
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: BEND
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   106
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        4.828618E+06        2.197412E+03        3.497289E+02        1.000000E+00        4.828618E+06
+        2         2        1.854609E+08        1.361840E+04        2.167436E+03        1.000000E+00        1.854609E+08
+        3         3        1.425048E+09        3.774980E+04        6.008068E+03        1.000000E+00        1.425048E+09
+        4         4        5.377332E+09        7.333029E+04        1.167088E+04        1.000000E+00        5.377332E+09
+        5         5        1.436235E+10        1.198430E+05        1.907361E+04        1.000000E+00        1.436235E+10
+        6         6        3.241360E+10        1.800378E+05        2.865390E+04        1.000000E+00        3.241360E+10
+        7         7        7.467001E+10        2.732581E+05        4.349038E+04        1.000000E+00        7.467001E+10
+        8         8        4.294994E+11        6.553620E+05        1.043041E+05        1.000000E+00        4.294994E+11
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   107
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+1    CANTILEVER BEAM DIVIDED INTO TWO PARTS                                     MAY  20, 2019  NX NASTRAN  5/23/18   PAGE   108
+      FIXED BOUNDARY REDUCTION                                                                          SUPERELEMENT 0              
+0                                                                                                            SUBCASE 3              
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     28
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+     1     1    1    1 '        '    T    T    T    T    T     T      T      F      0     F     -1            0           F
+     2     2    1    1 '        '    T    T    T    T    T     T      T      F      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+1                                        * * * END OF JOB * * *
+ 
+ 

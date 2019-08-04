@@ -1,0 +1,57 @@
+SOL SEMODES
+CEND
+  TITLE = CANTILEVER BEAM DIVIDED INTO TWO PARTS
+  SUBTITLE = FIXED BOUNDARY REDUCTION
+  METHOD = 1
+  SPC = 1
+SUBCASE 1
+  LABEL = SUPERELEMENT 1
+  SUPER = 1
+  METHOD = 10
+SUBCASE 2
+  LABEL = SUPERELEMENT 2
+  SUPER = 2
+  METHOD = 20
+SUBCASE 3
+  LABEL = RESIDUAL STRUCTURE
+  SET 99 = 0
+  SUPER = 99
+  METHOD = 1
+BEGIN BULK
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+$
+GRID           6       0      5.      0.      0.       0
+SPOINT    100001  200001
+$
+SEBULK         1 PRIMARY          MANUAL
+SEBULK         2 PRIMARY          MANUAL
+SECONCT        1       0              NO
+               6       6  100001  100001
+SECONCT        2       0              NO
+               6       6  200001  200001
+$
+$ SECONCT DOF are placed in the B SET if not in Q SET
+$
+EIGRL          1                      10       0                    MASS
+$
+$
+BEGIN SUPER=1
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+INCLUDE '..\cantileverBar1.dat'
+QSET      100001       0
+SPOINT    100001
+EIGRL         10                       3       0                    MASS
+$
+$
+BEGIN SUPER=2
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+INCLUDE '..\cantileverBar2.dat'
+QSET      200001       0
+SPOINT    200001
+EIGRL         20                       3       0                    MASS
+$
+$
+ENDDATA
