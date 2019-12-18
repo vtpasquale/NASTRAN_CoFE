@@ -1,26 +1,25 @@
-classdef Hdf5ElementForce < matlab.mixin.Heterogeneous
-    %UNTITLED5 Summary of this class goes here
-    %   Detailed explanation goes here
-    
-    %UNTITLED10 Summary of this class goes here
-    %   Detailed explanation goes here
-    
+%Hdf5ElementForce Abstract superclass for MSC Nastran HDF5 format element force output data.
+
+% A. Ricciardi
+% December 2019
+
+classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
+
+%     properties  (Abstract) % Can't make properties abstract and constant
+%         DATASET
+%     end
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/ELEMENTAL/ELEMENT_FORCE/';
     end
     methods
-        function objTable = getTable(obj)
-            objStruct=getStruct(obj);
-            objTable=struct2table(objStruct);
-        end
-        function writeToFile(obj,dataGroup,indexGroup)
+        function export(obj,dataGroup,indexGroup)
             % create element force result groups
             objDataGroup  = H5G.create(dataGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
             objIndexGroup = H5G.create(indexGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
             
             nObj = size(obj,1);
             for i = 1:nObj
-                obj(i).writeToFile_sub(objDataGroup,objIndexGroup)
+                obj(i).export_sub(objDataGroup,objIndexGroup)
             end
             
             % close groups
@@ -28,34 +27,9 @@ classdef Hdf5ElementForce < matlab.mixin.Heterogeneous
             H5G.close(objIndexGroup);
         end
     end
-    methods (Access = private)
-        function writeToFile_sub(obj,dataGroup,indexGroup)
-            objStruct=getStruct(obj);
-            struct2hdf52(dataGroup,obj.DATASET,objStruct)
-            
-            indexStruct = domainId2Index(obj.DOMAIN_ID);
-            struct2hdf52(indexGroup,obj.DATASET,indexStruct);
-        end
-        function objStruct = getStruct(obj)
-            warning('off','MATLAB:structOnObject')
-            objStruct=struct(obj);
-            warning('on','MATLAB:structOnObject')
-            objStruct=rmfield(objStruct,{'GROUP','DATASET'});
-        end
-    end
-    methods
-        function obj = constructFromFile_sub(obj,filename)
-            fieldData = h5read(filename,[obj.GROUP,obj.DATASET]);
-            for fn = fieldnames(fieldData)'    %enumerat fields
-                obj.(fn{1}) = fieldData.(fn{1});   % copy to object properties
-            end
-        end
-    end
     methods (Static = true)
         function hdf5ElementForce = constructFromFile(filename)
-            hdf5ElementForce = Hdf5ElementForce();  %create object
-                        
-            info = h5info(filename,hdf5ElementForce.GROUP);
+            info = h5info(filename,Hdf5ElementForce.GROUP);
             nDatasets = size(info.Datasets,1);
             for i = 1:nDatasets
                 

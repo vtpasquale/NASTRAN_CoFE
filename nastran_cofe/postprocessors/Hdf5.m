@@ -1,23 +1,37 @@
+%Hdf5 Container and interface class for MSC Nastran format HDF5 output files.
+% This class can read and write HDF5 output files. Elements data
+% support is limited to element types supported by CoFE.
+
+% A. Ricciardi
+% December 2019
+
 classdef Hdf5
-    %UNTITLED3 Summary of this class goes here
-    %   Detailed explanation goes here
     
     properties
+        schema % [uint32] HDF5 data schema (developed based on MSC Nastran 2018.2)
         domains@Hdf5Domains;
         elemental@Hdf5Elemental
     end
     
-    methods (Static = true)
-        function obj = constructFromFile(filename)
-            obj = Hdf5();  %create object
-            obj.domains=Hdf5Domains.constructFromFile(filename);
-            obj.elemental=Hdf5Elemental.constructFromFile(filename);
-        end
-    end
     methods
-        function writeToFile(obj,filename)
+        function obj = Hdf5(filename)
+            
+            % read and verify schema
+            obj.schema = uint32(h5readatt(filename,'/','SCHEMA'));
+            developementSchema = uint32(20182);
+            if obj.schema ~= developementSchema
+                warning('The %s HDF5 data schema is version %d. This program was developed based on schema version %s.',filename,developementSchema)
+            end
+            
+            obj.domains=Hdf5Domains(filename);
+            obj.elemental=Hdf5Elemental(filename);
+        end
+        function export(obj,filename)
             % create file
             fid = H5F.create(filename);
+            
+            % add schema attribute to root
+            h5writeatt(filename,'/','SCHEMA',obj.schema);
             
             % create base groups
             plist = 'H5P_DEFAULT';
@@ -28,10 +42,10 @@ classdef Hdf5
             nastranResultsId = H5G.create(nastranId,'RESULTS',plist,plist,plist);
             
             % add domains table
-            obj.domains.writeToFile(nastranResultsId)            
+            obj.domains.export(nastranResultsId)            
             
             % add elemental results
-            obj.elemental.writeToFile(nastranResultsId,indexNastranResultsId)  
+            obj.elemental.export(nastranResultsId,indexNastranResultsId)  
                         
             % close base groups
             H5G.close(indexNastranResultsId);
