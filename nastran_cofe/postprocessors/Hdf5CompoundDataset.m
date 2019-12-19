@@ -4,7 +4,10 @@
 % December 2019
 
 classdef (Abstract) Hdf5CompoundDataset
-
+    
+    properties
+        version % dataset version
+    end
     %     properties
     %         % A property must be created for each H5T_COMPOUND data member
     %     end
@@ -25,6 +28,7 @@ classdef (Abstract) Hdf5CompoundDataset
             for fn = fieldnames(fieldData)'    %enumerat fields
                 obj.(fn{1}) = fieldData.(fn{1});   % copy to object properties
             end
+            obj.version = h5readatt(datasetString,[obj.GROUP,obj.DATASET],'version');
         end
         function objTable = getTable(obj)
             % Creates a MATLAB table from the H5T_COMPOUND data.
@@ -38,12 +42,12 @@ classdef (Abstract) Hdf5CompoundDataset
             warning('off','MATLAB:structOnObject')
             objStruct=struct(obj);
             warning('on','MATLAB:structOnObject')
-            objStruct=rmfield(objStruct,{'GROUP','DATASET'});
+            objStruct=rmfield(objStruct,{'GROUP','DATASET','version'});
         end
         function export_sub(obj,dataGroup,indexGroup)
             % Exports the dataset to an HDF5 file.
             objStruct=getStruct(obj);
-            struct2hdf52(dataGroup,obj.DATASET,objStruct)
+            struct2hdf52(dataGroup,obj.DATASET,objStruct,obj.version)
             
             indexStruct = domainId2Index(obj.DOMAIN_ID);
             struct2hdf52(indexGroup,obj.DATASET,indexStruct);

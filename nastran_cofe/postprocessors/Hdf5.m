@@ -37,9 +37,9 @@ classdef Hdf5
             plist = 'H5P_DEFAULT';
             indexId = H5G.create(fid,'INDEX',plist,plist,plist);
             indexNastranId = H5G.create(indexId,'NASTRAN',plist,plist,plist);
-            indexNastranResultsId = H5G.create(indexNastranId,'RESULTS',plist,plist,plist);
+            indexNastranResultsId = H5G.create(indexNastranId,'RESULT',plist,plist,plist);
             nastranId = H5G.create(fid,'NASTRAN',plist,plist,plist);
-            nastranResultsId = H5G.create(nastranId,'RESULTS',plist,plist,plist);
+            nastranResultsId = H5G.create(nastranId,'RESULT',plist,plist,plist);
             
             % add domains table
             obj.domains.export(nastranResultsId)            

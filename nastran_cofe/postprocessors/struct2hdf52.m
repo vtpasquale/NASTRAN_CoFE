@@ -1,5 +1,5 @@
 % Function write a Matlab struct to an HDF5 dataset
-function struct2hdf5(file,dataset,structData)
+function struct2hdf5(file,dataset,structData,version)
 
 % The struct fields must be nx1 arrays of limited type. Dimension n must be
 % consistent.
@@ -31,14 +31,14 @@ function struct2hdf5(file,dataset,structData)
 % structData.pressure    =[24.57; 22.95;  31.23;   84.11];
 
 %% Native type sizes
-intType   =H5T.copy('H5T_NATIVE_INT');
+intType   =H5T.copy('H5T_STD_I64LE');
 intSize   =H5T.get_size(intType);
 
 strType  = H5T.copy ('H5T_C_S1');
 H5T.set_size (strType,'H5T_VARIABLE');
 strSize   =H5T.get_size(strType);
 
-doubleType=H5T.copy('H5T_NATIVE_DOUBLE');
+doubleType=H5T.copy('H5T_IEEE_F64LE');
 doubleSize=H5T.get_size(doubleType);
 
 %% structData field data
@@ -62,10 +62,11 @@ for i = 1:nFields
     elseif isa(fieldData,'int32')
         fieldDataSize(i) = intSize;
         fieldDataType(i) = intType;
+        structData.(fieldNames{i}) = int64(fieldData);
     elseif isa(fieldData,'int64')
         fieldDataSize(i) = intSize;
         fieldDataType(i) = intType;
-        structData.(fieldNames{i}) = int32(fieldData);
+        % structData.(fieldNames{i}) = int32(fieldData);
     elseif isa(fieldData,'cell')
         fieldDataSize(i) = strSize; % TODO: check cell contents, or restrict to numeric data
         fieldDataType(i) = strType;
@@ -130,6 +131,17 @@ H5P.set_chunk(dcpl,fieldColumSize(1));
 %
 dset = H5D.create (file, dataset, filetype, space,dcpl);
 H5D.write (dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', structData);
+
+%
+% Version attribute
+if nargin > 3
+    acpl_id = H5P.create('H5P_ATTRIBUTE_CREATE');
+    type_id = H5T.copy('H5T_STD_I64LE');
+    space_id = H5S.create_simple(1,1,1);
+    attr_id = H5A.create(dset,'version',type_id,space_id,acpl_id);
+    H5A.write(attr_id,'H5ML_DEFAULT',version)
+    H5A.close(attr_id);
+end
 
 %
 % Close and release resources.

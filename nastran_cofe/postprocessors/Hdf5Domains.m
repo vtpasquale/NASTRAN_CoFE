@@ -54,7 +54,7 @@ classdef Hdf5Domains < Hdf5CompoundDataset
         function export(obj,file)
             % Exports the dataset to an HDF5 file.
             objStruct=getStruct(obj);
-            struct2hdf52(file,obj.DATASET,objStruct)
+            struct2hdf52(file,obj.DATASET,objStruct,obj.version)
         end
     end
 end
