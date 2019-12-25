@@ -24,11 +24,13 @@ classdef (Abstract) Hdf5CompoundDataset
             % Imports the dataset from an HDF5 file. And converts  struct
             % data from h5read to properties of the specific dataset class
             % instance.
+            obj.version = h5readatt(datasetString,[obj.GROUP,obj.DATASET],'version');
+            
             fieldData = h5read(datasetString,[obj.GROUP,obj.DATASET]);
             for fn = fieldnames(fieldData)'    %enumerat fields
                 obj.(fn{1}) = fieldData.(fn{1});   % copy to object properties
             end
-            obj.version = h5readatt(datasetString,[obj.GROUP,obj.DATASET],'version');
+            
         end
         function objTable = getTable(obj)
             % Creates a MATLAB table from the H5T_COMPOUND data.
@@ -47,10 +49,10 @@ classdef (Abstract) Hdf5CompoundDataset
         function export_sub(obj,dataGroup,indexGroup)
             % Exports the dataset to an HDF5 file.
             objStruct=getStruct(obj);
-            struct2hdf52(dataGroup,obj.DATASET,objStruct,obj.version)
+            struct2hdf5(dataGroup,obj.DATASET,objStruct,obj.version)
             
             indexStruct = domainId2Index(obj.DOMAIN_ID);
-            struct2hdf52(indexGroup,obj.DATASET,indexStruct);
+            struct2hdf5(indexGroup,obj.DATASET,indexStruct);
         end
     end
 end

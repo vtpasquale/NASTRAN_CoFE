@@ -11,7 +11,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/ELEMENTAL/ELEMENT_FORCE/';
     end
-    methods
+    methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
             % create element force result groups
             objDataGroup  = H5G.create(dataGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
@@ -33,7 +33,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
             nDatasets = size(info.Datasets,1);
             for i = 1:nDatasets
                 
-                % convert field 1 to case-sensitive class name
+                % convert dataset name to case-sensitive class name
                 entryName =  lower(info.Datasets(i).Name);
                 entryName(1) = upper(entryName(1));
                 
