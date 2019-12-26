@@ -1,4 +1,5 @@
-% Abstract superclass for HDF5 datasets of type H5T_COMPOUND
+% Abstract superclass for HDF5 datasets of type H5T_COMPOUND.
+% Designed to work with MSC Nastran format HDF5 output files. 
 
 % A. Ricciardi
 % December 2019

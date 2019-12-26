@@ -1,4 +1,4 @@
-%Hdf5Elemental MSC Nastran format HDF5 element output data container and interface class.
+%Hdf5Elemental Container and interface class for element output data.
 
 % A. Ricciardi
 % December 2019

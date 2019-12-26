@@ -1,7 +1,32 @@
-%Hdf5 Container and interface class for MSC Nastran format HDF5 output files.
-% This class can read and write HDF5 output files. Elements data
+% Container and interface class for MSC Nastran format HDF5 output files.
+% This class can read, write, and compare HDF5 output files. Element data 
 % support is limited to element types supported by CoFE.
-
+%
+% This class is designed to be useful for CoFE postprocessing and
+% verification. The entire HDF5 data set is stored in memory, which is 
+% suitable for the modest size models that work well with CoFE. However,
+% MSC Nastran can process enormous models and create output data sets that
+% will not fit in memory. HDF5 import will fail for cases where the data is
+% too large to fit in memory; this is a hardware-dependant limitation.
+%
+% The current implemenation of this class contains and interfaces with
+% classes that represent the data stored in Group '/NASTRAN/RESULT'.
+% Corresponding data in Group '/INDEX' is dependent data; it is not stored,
+% but it is derived when the HDF5 file is exported. 
+%
+% HDF5 **.h5
+% Group '/NASTRAN' 
+%     Group '/NASTRAN/RESULT' 
+%         Dataset 'DOMAINS' 
+%         Group '/NASTRAN/RESULT/ELEMENTAL' 
+%         Group '/NASTRAN/RESULT/NODAL' 
+%         Group '/NASTRAN/RESULT/SUMMARY' 
+% 
+% Group '/INDEX' 
+%     Group '/INDEX/NASTRAN' 
+%    [mirrors /NASTRAN with corresponding index data. Index data are not 
+%     stored but are derived and exported during HDF5 export.]
+ 
 % A. Ricciardi
 % December 2019
 
@@ -9,8 +34,9 @@ classdef Hdf5
     
     properties
         schema % [uint32] HDF5 data schema (developed based on MSC Nastran 2018.2)
-        domains@Hdf5Domains;
-        elemental@Hdf5Elemental
+        domains@Hdf5Domains; % [Hdf5Domains] HDF5 domain data.
+        elemental@Hdf5Elemental % [n,1 Hdf5Elemental] HDF5 element data.
+        nodal@Hdf5Nodal % [n,1 Hdf5Nodal] HDF5 node data.
     end
     
     methods
@@ -25,6 +51,7 @@ classdef Hdf5
             
             obj.domains=Hdf5Domains(filename);
             obj.elemental=Hdf5Elemental(filename);
+            obj.nodal=Hdf5Nodal.constructFromFile(filename);
         end
         function export(obj,filename)
             % create file
@@ -41,12 +68,15 @@ classdef Hdf5
             nastranId = H5G.create(fid,'NASTRAN',plist,plist,plist);
             nastranResultsId = H5G.create(nastranId,'RESULT',plist,plist,plist);
             
-            % add domains table
-            obj.domains.export(nastranResultsId)            
+            % add domains
+            obj.domains.export(nastranResultsId)
             
             % add elemental results
-            obj.elemental.export(nastranResultsId,indexNastranResultsId)  
-                        
+            obj.elemental.export(nastranResultsId,indexNastranResultsId)
+            
+            % add nodal results
+            obj.nodal.export(nastranResultsId,indexNastranResultsId)
+
             % close base groups
             H5G.close(indexNastranResultsId);
             H5G.close(indexNastranId);

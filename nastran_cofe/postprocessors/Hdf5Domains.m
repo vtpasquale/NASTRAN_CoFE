@@ -1,4 +1,4 @@
-%Hdf5Domains MSC Nastran format HDF5 domain output data.
+% Hdf5 domain output data.
 
 % http://web.mscsoftware.com/doc/nastran/2018.2/release/DataType_v20182.xml
 % <dataset name="DOMAINS">
@@ -54,7 +54,7 @@ classdef Hdf5Domains < Hdf5CompoundDataset
         function export(obj,file)
             % Exports the dataset to an HDF5 file.
             objStruct=getStruct(obj);
-            struct2hdf52(file,obj.DATASET,objStruct,obj.version)
+            struct2hdf5(file,obj.DATASET,objStruct,obj.version)
         end
     end
 end

@@ -1,22 +1,26 @@
-% Function write a Matlab struct to an HDF5 dataset
+% Function writes numeric struct data to an HDF5 dataset as H5T_COMPOUND.
+% Designed to help create MSC Nastran format HDF5 output files. 
+%
+% INPUTS
+% locationID [H5ML.id] HDF5 location identifier
+% datasetName [char] dataset name
+% structData [struct] Data to be written as type H5T_COMPOUND to the HDF5 
+%                     location. All fields must contain [n,m numeric] data. 
+%                     Dimension n must be consistent, but m can vary.
+% version [int64] Optional. Attribute 'version' to be written.
+%
+% OUTPUTS: Void
+%
+function struct2hdf5(locationID,datasetName,structData,version)
 
-% The struct fields must be nxm arrays of limited type. Dimension n must be
-% consistent.
-
-function struct2hdf5(file,dataset,structData,version)
-
-%% Initialize types and sizes
+% Initialize types and sizes
 intType   =H5T.copy('H5T_STD_I64LE');
 intSize   =H5T.get_size(intType);
 
 doubleType=H5T.copy('H5T_IEEE_F64LE');
 doubleSize=H5T.get_size(doubleType);
 
-% strType  = H5T.copy ('H5T_C_S1');
-% H5T.set_size (strType,'H5T_VARIABLE');
-% strSize   =H5T.get_size(strType);
-
-%% structData field data
+% structData field data
 fieldNames = fieldnames(structData);
 nFields = size(fieldNames,1);
 fieldDataSize = zeros(nFields,1);
@@ -79,24 +83,15 @@ end
 
 H5S_UNLIMITED = H5ML.get_constant_value('H5S_UNLIMITED');
 space = H5S.create_simple(1,fieldColumSize(1),H5S_UNLIMITED);
-% space = H5S.create('H5S_SCALAR');
-
 
 dcpl = H5P.create('H5P_DATASET_CREATE');
 H5P.set_chunk(dcpl,fieldColumSize(1));
-% dcpl = H5P.create('H5P_DATASET_CREATE');
 
-%
 % Create the dataset and write the compound data to it.
-%
-dset = H5D.create (file, dataset, memtype, space,dcpl);
-try
+dset = H5D.create (locationID, datasetName, memtype, space,dcpl);
 H5D.write(dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', structData);
-catch
-    keyboard
-end
-%
-% Version attribute
+
+% version attribute
 if nargin > 3
     acpl_id = H5P.create('H5P_ATTRIBUTE_CREATE');
     type_id = H5T.copy('H5T_STD_I64LE');
@@ -106,11 +101,8 @@ if nargin > 3
     H5A.close(attr_id);
 end
 
-%
 % Close and release resources.
-%
 H5D.close(dset);
 H5P.close(dcpl)
 H5S.close(space);
 H5T.close(memtype);
-
