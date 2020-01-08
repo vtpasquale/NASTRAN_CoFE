@@ -31,6 +31,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
         function hdf5ElementForce = constructFromFile(filename)
             info = h5info(filename,Hdf5ElementForce.GROUP);
             nDatasets = size(info.Datasets,1);
+            ii = 0;
             for i = 1:nDatasets
                 
                 % convert dataset name to case-sensitive class name
@@ -40,7 +41,8 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
                 % check that input entry is supported
                 if exist(['Hdf5ElementForce',entryName],'class')==8
                     % Call contructor method for each entry
-                    eval(['hdf5ElementForce(i,1) = Hdf5ElementForce',entryName,'(filename);']);
+                    ii = ii + 1;
+                    eval(['hdf5ElementForce(ii,1) = Hdf5ElementForce',entryName,'(filename);']);
                 else
                     warning('Hdf5 element force entry %s not supported.',upper(entryName))
                 end

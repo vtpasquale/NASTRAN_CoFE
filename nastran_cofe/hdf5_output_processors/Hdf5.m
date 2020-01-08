@@ -37,10 +37,16 @@ classdef Hdf5
         domains@Hdf5Domains; % [Hdf5Domains] HDF5 domain data.
         elemental@Hdf5Elemental % [n,1 Hdf5Elemental] HDF5 element data.
         nodal@Hdf5Nodal % [n,1 Hdf5Nodal] HDF5 node data.
+        summary@Hdf5Summary % [n,1 Hdf5Summary] HDF5 summary data.
     end
     
     methods
         function obj = Hdf5(filename)
+            
+            % verify file exists (avoid confusing HDF5 libary errors)
+            if exist(filename,'file') ~= 2
+                error('File "%s" not found.',filename)
+            end
             
             % read and verify schema
             obj.schema = uint32(h5readatt(filename,'/','SCHEMA'));
@@ -49,9 +55,27 @@ classdef Hdf5
                 warning('The %s HDF5 data schema is version %d. This program was developed based on schema version %s.',filename,developementSchema)
             end
             
+            % read results
+            info = h5info(filename,'/NASTRAN/RESULT/');
+            
+            % domains
             obj.domains=Hdf5Domains(filename);
-            obj.elemental=Hdf5Elemental(filename);
-            obj.nodal=Hdf5Nodal.constructFromFile(filename);
+            
+            % elements
+            if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/ELEMENTAL'))
+                obj.elemental=Hdf5Elemental(filename);
+            end
+            
+            % nodes
+            if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/NODAL'))
+                obj.nodal=Hdf5Nodal.constructFromFile(filename);
+            end
+            
+            % nodes
+            if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/SUMMARY'))
+                obj.summary=Hdf5Summary.constructFromFile(filename);
+            end
+            
         end
         function export(obj,filename)
             % create file
@@ -86,6 +110,5 @@ classdef Hdf5
             H5F.close(fid);
         end
     end
-    
 end
 
