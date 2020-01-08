@@ -6,9 +6,9 @@ CEND
   SPC = 1
   LINE=99999999
   displacement=all
-  set 12=1,2
-  spcforces=12
+  spcforces=all
 BEGIN BULK
+MDLPRM,HDF5,0
 PARAM,USETPRT,12
 PARAM,USETSEL,-1
 $

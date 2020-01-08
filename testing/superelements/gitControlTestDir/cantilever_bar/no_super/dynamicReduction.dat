@@ -5,7 +5,10 @@ CEND
   METHOD = 1
   SPC = 1
   LINE=99999999
+  displacement=all
+  spcforces=all
 BEGIN BULK
+MDLPRM,HDF5,0
 PARAM,USETPRT,12
 PARAM,USETSEL,-1
 $
