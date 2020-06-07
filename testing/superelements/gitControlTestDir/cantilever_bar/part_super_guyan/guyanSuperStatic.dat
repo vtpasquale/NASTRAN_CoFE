@@ -1,0 +1,39 @@
+SOL 101
+CEND
+  TITLE = CANTILEVER BEAM DIVIDED INTO TWO PARTS
+  SUBTITLE = GYAN REDUCTION
+  SPC = 1
+DISPLACEMENT(PLOT) = ALL
+SPCFORCES(PLOT) = ALL
+STRESS(PLOT) = ALL
+STRAIN(PLOT) = ALL
+ESE(PLOT) = ALL
+FORCE(PLOT) = ALL
+SUBCASE 1
+  LOAD = 1
+SUBCASE 2
+  LOAD = 2
+BEGIN BULK
+MDLPRM,HDF5,0
+$
+GRID           6       0      5.      0.      0.       0
+$
+SEBULK         1 PRIMARY          MANUAL
+SEBULK         2 PRIMARY          MANUAL
+SECONCT        1       0              NO
+               6       6
+SECONCT        2       0              NO
+               6       6
+FORCE,1,6,,-1.,0.,1.,0.
+FORCE,2,6,,-1.,0.,2.,0.
+$
+$
+BEGIN SUPER=1
+INCLUDE '../cantileverBar1.dat'
+$
+$
+BEGIN SUPER = 2
+INCLUDE '../cantileverBar2.dat'
+$
+$
+ENDDATA

@@ -35,7 +35,7 @@ assert(all(all(abs(scalingMatrix(isDistinct,~isDistinct)) < 1e-6 )),...
 
 %% Displacments
 dispDifference = normalizedDifference(nastran_u_g*scalingMatrix,cofe_u_g);
-assert(all(dispDifference(:)<1e-4),'Displacement vectors do not match verification case.')
+assert(all(dispDifference(:)<2e-4),'Displacement vectors do not match verification case.')
 
 %% Constraint Forces
 nastranSpcforces = csvread(fullfile('nastran_runs','modesSpcforces.csv'),1,2);
@@ -52,7 +52,7 @@ cofeForce = cell2mat( {cofe.solution.force.values}' );
 
 % compare force values
 elementForcesDifference = normalizedDifference(nastranForce*scalingMatrix,cofeForce);
-assert(all(elementForcesDifference(:)<2e-4),'Element force values do not match verification case.')
+assert(all(elementForcesDifference(:)<3e-4),'Element force values do not match verification case.')
 
 %% Stress
 nastranStress = csvread(fullfile('nastran_runs','modesStress.csv'),1,2);

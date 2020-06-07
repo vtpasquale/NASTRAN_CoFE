@@ -1,5 +1,5 @@
 % clearvars; close all; clc
-% addpath(genpath(fullfile('..','..','..','cofe_toolbox')));
+% addpath(genpath(fullfile('..','..','..','nastran_cofe')));
 
 % Run case
 cofe = Cofe(fullfile('nastran_runs','modes.dat'),'output',false);
@@ -14,9 +14,19 @@ cofe_freq = cofe.solution.eigenvalueTable.frequency;
 isDistinct = findDistinctArrayEntries(cofe_freq,1e-6);
 scalingMatrix = nastran_u_g\cofe_u_g;
 
+% Test case object
+% import matlab.unittest.TestCase
+% import matlab.unittest.constraints.IsEqualTo
+% import matlab.unittest.constraints.RelativeTolerance
+% import matlab.unittest.constraints.AbsoluteTolerance
+% testCase = TestCase.forInteractiveUse;
+
 %% Frequencies
 freqDifference = normalizedDifference(nastran_freq,cofe_freq);
 assert(all(freqDifference<1e-6),'Natural frequencies don''t match the verification case.')
+% testCase.verifyThat(cofe_freq,IsEqualTo(nastran_freq,...
+%     'Within',RelativeTolerance(1e-6)),...
+%     'Natural frequencies don''t match the verification case.')
 
 %% Check modes scaling matrix
 distinctModesScalingMatrix = scalingMatrix(isDistinct,isDistinct);
@@ -33,6 +43,13 @@ assert(all(all(abs(scalingMatrix(isDistinct,~isDistinct)) < 1e-6 )),...
 %% Displacments
 dispDifference = normalizedDifference(nastran_u_g*scalingMatrix,cofe_u_g);
 assert(all(dispDifference(:)<1e-4),'Displacement vectors do not match verification case.')
+% testCase.verifyThat(cofe_u_g,IsEqualTo(nastran_u_g*scalingMatrix,...
+%     'Within',RelativeTolerance(1e-6) | AbsoluteTolerance(1e-6)),...
+%     'Displacement vectors do not match verification case.')
+
+% verifyIsEqualTo(nastran_u_g*scalingMatrix,cofe_u_g,1e-6,1e-6,...
+%      'Displacement vectors do not match verification case.')
+
 
 %% Constraint Forces
 nastranSpcforces = csvread(fullfile('nastran_runs','modesSpcforces.csv'),1,2);

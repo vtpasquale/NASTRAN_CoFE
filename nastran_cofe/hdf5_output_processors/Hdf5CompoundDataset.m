@@ -7,7 +7,7 @@
 classdef (Abstract) Hdf5CompoundDataset
     
     properties
-        version % dataset version
+        version % dataset MSC format version
     end
     %     properties
     %         % A property must be created for each H5T_COMPOUND data member
@@ -33,6 +33,13 @@ classdef (Abstract) Hdf5CompoundDataset
             end
             
         end
+        function obj = appendStruct(obj,structData)
+            % Appends the object with structure data. The field names
+            % must match the nonconstant object properties.
+            for fn = fieldnames(structData)'     %enumerat fields
+                obj.(fn{1}) = [obj.(fn{1});structData.(fn{1})]; % append object properties
+            end
+        end
         function objTable = getTable(obj)
             % Creates a MATLAB table from the H5T_COMPOUND data.
             objStruct=getStruct(obj);
@@ -45,7 +52,7 @@ classdef (Abstract) Hdf5CompoundDataset
             warning('off','MATLAB:structOnObject')
             objStruct=struct(obj);
             warning('on','MATLAB:structOnObject')
-            objStruct=rmfield(objStruct,{'GROUP','DATASET','version'});
+            objStruct=rmfield(objStruct,{'GROUP','DATASET','FORMAT_VERSION','version'});
         end
         function export_sub(obj,dataGroup,indexGroup)
             % Exports the dataset to an HDF5 file.

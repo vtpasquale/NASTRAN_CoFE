@@ -37,6 +37,7 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
             
             % Master case
             masterCaseControl = CaseControl;
+            masterCaseControl.subcase = uint32(1);
             masterCaseControl.analysis = defaultAnalysis;
             i = 1;
             while i<=n

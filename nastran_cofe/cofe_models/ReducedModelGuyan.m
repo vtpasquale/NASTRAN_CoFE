@@ -9,6 +9,8 @@ classdef ReducedModelGuyan < ReducedModel
         G_ot % ([nOdof,nTdof] double) Static boundary transformation matrix between the exterior and interior motion
 
         u_a  % ([nAdof,nModes] double) Analysis set displacements
+        p_a % ([nAdof,nLoadSets] double) Analysis set load vectors
+        
     end
     methods
         function obj = ReducedModelGuyan(model)
@@ -17,11 +19,15 @@ classdef ReducedModelGuyan < ReducedModel
             K_ot = model.K_gg(model.o,model.t);
             obj.G_ot = - K_oo\K_ot;
             obj.K_aa = model.K_gg(model.t,model.t) +  K_ot.'* obj.G_ot;
+            
             % Approximate Mass Matrix Reduction
             M_oo = model.M_gg(model.o,model.o);
             M_ot = model.M_gg(model.o,model.t);
             obj.M_aa = model.M_gg(model.t,model.t) +  M_ot.'*obj.G_ot + ...
             obj.G_ot.'*M_ot + obj.G_ot.'*M_oo*obj.G_ot;
+        
+            % Load reduction
+            obj.p_a = model.p_g(model.t,:) + obj.G_ot.'*model.p_g(model.o,:);            
         end
         function u_o = expandResult(obj,u_a)
             u_o=obj.G_ot*u_a;

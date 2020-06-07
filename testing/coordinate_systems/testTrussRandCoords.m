@@ -1,5 +1,5 @@
 % clearvars; close all; clc
-% addpath(genpath(fullfile('..','..','cofe_toolbox')));
+% addpath(genpath(fullfile('..','..','nastran_cofe')));
 
 cofe = Cofe('truss_rand_coords.dat','output',false);
 

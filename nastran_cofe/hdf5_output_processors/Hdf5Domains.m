@@ -42,11 +42,18 @@ classdef Hdf5Domains < Hdf5CompoundDataset
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/';
         DATASET = 'DOMAINS';
+        FORMAT_VERSION = uint32(0);
     end
     methods
         function obj = Hdf5Domains(arg1)
             if ischar(arg1)% arg1 = datasetString
                 obj = obj.import(arg1);
+                if obj.version ~= obj.FORMAT_VERSION
+                    metaClass = metaclass(obj); warning('Imported %s format version number is out of sync with CoFE format version number.',metaClass.Name)
+                end
+            elseif isstruct(arg1)
+                obj=obj.appendStruct(arg1);
+                obj.version = obj.FORMAT_VERSION;
             else
                 error('Constructor not implemented for this type')
             end

@@ -1,0 +1,52 @@
+SOL SEMODES
+CEND
+  TITLE = 216 Bar Truss
+  SUBTITLE = GYAN REDUCTION
+  METHOD = 1
+  SPC = 1
+  DISPLACEMENT = ALL
+SUBCASE 1
+  LABEL = SUPERELEMENT 1
+  SUPER = 1, 1
+  set 1 = 37,38,39,40,21,22,23,24
+SUBCASE 2
+  LABEL = SUPERELEMENT 2
+  SUPER = 2, 1
+  set 2 = 57,58,59,60
+SUBCASE 3
+  LABEL = RESIDUAL STRUCTURE
+  SET 99 = 0
+  SUPER = 99, 1
+  METHOD = 1
+  set 3 = 1,2,3,4,61,62,63,64
+BEGIN BULK
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+PARAM,POST,-1
+$
+SEBULK         1 PRIMARY          MANUAL
+SEBULK         2 PRIMARY          MANUAL
+SECONCT        1       0              NO
+,37,1,38,2,39,3,40,4
+,21,61,22,62,23,63,24,64
+SECONCT        2       0              NO
+,57,61,58,62,59,63,60,64
+$
+INCLUDE '..\base.bdf'
+$
+EIGRL          1                      10       0                    MASS
+$
+$
+BEGIN SUPER=1
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+INCLUDE '..\second.bdf'
+$
+$
+BEGIN SUPER = 2
+PARAM,USETPRT,12
+PARAM,USETSEL,-1
+INCLUDE '..\third.bdf'
+$
+$
+ENDDATA

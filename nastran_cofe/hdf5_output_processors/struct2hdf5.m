@@ -45,7 +45,7 @@ for i = 1:nFields
     if isa(fieldData,'double')
         fieldDataType(i) = doubleType;
         fieldDataSize(i) = doubleSize;
-    elseif isa(fieldData,'int32')
+    elseif isa(fieldData,'int32') || isa(fieldData,'uint32') 
         fieldDataType(i) = intType;
         fieldDataSize(i) = intSize;
         structData.(fieldNames{i}) = int64(fieldData);

@@ -1,5 +1,5 @@
 clear all; close all; clc
-addpath(genpath(fullfile(pwd,'..','..','cofe_toolbox')));
+addpath(genpath(fullfile(pwd,'..','..','nastran_cofe')));
 
 suite = matlab.unittest.TestSuite.fromFolder(pwd);
 % {suite.Name}'

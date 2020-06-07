@@ -13,18 +13,20 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
     end
     methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
-            % create element force result groups
-            objDataGroup  = H5G.create(dataGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-            objIndexGroup = H5G.create(indexGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-            
-            nObj = size(obj,1);
-            for i = 1:nObj
-                obj(i).export_sub(objDataGroup,objIndexGroup)
+            if size(obj,1)>0
+                % create element force result groups
+                objDataGroup  = H5G.create(dataGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                objIndexGroup = H5G.create(indexGroup,'ELEMENT_FORCE','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                
+                nObj = size(obj,1);
+                for i = 1:nObj
+                    obj(i).export_sub(objDataGroup,objIndexGroup)
+                end
+                
+                % close groups
+                H5G.close(objDataGroup);
+                H5G.close(objIndexGroup);
             end
-            
-            % close groups
-            H5G.close(objDataGroup);
-            H5G.close(objIndexGroup);
         end
     end
     methods (Static = true)

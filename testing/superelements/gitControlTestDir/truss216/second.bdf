@@ -1,0 +1,147 @@
+GRDSET                                                       456      
+$ Femap with NX Nastran Property 1 : ROD Property
+PROD           1     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 2 : ROD Property
+PROD           2     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 3 : ROD Property
+PROD           3     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 4 : ROD Property
+PROD           4     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 5 : ROD Property
+PROD           5     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 6 : ROD Property
+PROD           6     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 7 : ROD Property
+PROD           7     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 8 : ROD Property
+PROD           8     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 9 : ROD Property
+PROD           9     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 10 : ROD Property
+PROD          10     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 11 : ROD Property
+PROD          11     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 12 : ROD Property
+PROD          12     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 13 : ROD Property
+PROD          13     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 14 : ROD Property
+PROD          14     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 15 : ROD Property
+PROD          15     101      .5    999.      0.      0.
+$ Femap with NX Nastran Property 16 : ROD Property
+PROD          16     101      .5    999.      0.      0.
+$ Femap with NX Nastran Material 101 : ISOTROPIC Material
+MAT1         101    1.+73759398.     .33  2.59-4      0.      0.        
+GRID*                 21               0              0.              0.
+*                   480.               0
+GRID*                 22               0            120.              0.
+*                   480.               0
+GRID*                 23               0            120.            120.
+*                   480.               0
+GRID*                 24               0              0.            120.
+*                   480.               0
+GRID*                 25               0              0.              0.
+*                   420.               0
+GRID*                 26               0            120.              0.
+*                   420.               0
+GRID*                 27               0            120.            120.
+*                   420.               0
+GRID*                 28               0              0.            120.
+*                   420.               0
+GRID*                 29               0              0.              0.
+*                   360.               0
+GRID*                 30               0            120.              0.
+*                   360.               0
+GRID*                 31               0            120.            120.
+*                   360.               0
+GRID*                 32               0              0.            120.
+*                   360.               0
+GRID*                 33               0              0.              0.
+*                   300.               0
+GRID*                 34               0            120.              0.
+*                   300.               0
+GRID*                 35               0            120.            120.
+*                   300.               0
+GRID*                 36               0              0.            120.
+*                   300.               0
+GRID*                 37               0              0.              0.
+*                   240.               0
+GRID*                 38               0            120.              0.
+*                   240.               0
+GRID*                 39               0            120.            120.
+*                   240.               0
+GRID*                 40               0              0.            120.
+*                   240.               0
+CROD          73       1      21      25
+CROD          74       1      22      26
+CROD          75       1      23      27
+CROD          76       1      24      28
+CROD          77       2      25      22
+CROD          78       2      21      26
+CROD          79       2      26      23
+CROD          80       2      22      27
+CROD          81       2      27      24
+CROD          82       2      23      28
+CROD          83       2      28      21
+CROD          84       2      24      25
+CROD          85       3      21      22
+CROD          86       3      22      23
+CROD          87       3      23      24
+CROD          88       3      24      21
+CROD          89       4      21      23
+CROD          90       4      22      24
+CROD          91       5      25      29
+CROD          92       5      26      30
+CROD          93       5      27      31
+CROD          94       5      28      32
+CROD          95       6      29      26
+CROD          96       6      25      30
+CROD          97       6      30      27
+CROD          98       6      26      31
+CROD          99       6      31      28
+CROD         100       6      27      32
+CROD         101       6      32      25
+CROD         102       6      28      29
+CROD         103       7      25      26
+CROD         104       7      26      27
+CROD         105       7      27      28
+CROD         106       7      28      25
+CROD         107       8      25      27
+CROD         108       8      26      28
+CROD         109       9      29      33
+CROD         110       9      30      34
+CROD         111       9      31      35
+CROD         112       9      32      36
+CROD         113      10      33      30
+CROD         114      10      29      34
+CROD         115      10      34      31
+CROD         116      10      30      35
+CROD         117      10      35      32
+CROD         118      10      31      36
+CROD         119      10      36      29
+CROD         120      10      32      33
+CROD         121      11      29      30
+CROD         122      11      30      31
+CROD         123      11      31      32
+CROD         124      11      32      29
+CROD         125      12      29      31
+CROD         126      12      30      32
+CROD         127      13      33      37
+CROD         128      13      34      38
+CROD         129      13      35      39
+CROD         130      13      36      40
+CROD         131      14      37      34
+CROD         132      14      33      38
+CROD         133      14      38      35
+CROD         134      14      34      39
+CROD         135      14      39      36
+CROD         136      14      35      40
+CROD         137      14      40      33
+CROD         138      14      36      37
+CROD         139      15      33      34
+CROD         140      15      34      35
+CROD         141      15      35      36
+CROD         142      15      36      33
+CROD         143      16      33      35
+CROD         144      16      34      36

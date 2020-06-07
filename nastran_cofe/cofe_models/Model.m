@@ -76,7 +76,7 @@ classdef Model
         KD_gg % ([nGdof,nGdof] sparse) Differential stiffness matrix in nodal displacement reference frame
         M_gg  % ([nGdof,nGdof] sparse) Mass matrix in nodal displacement reference frame
         G
-        p_g % ([nGdof,1] real) load vector in nodal displacement reference frame
+        p_g % ([nGdof,nLoadSets] double) load vectors in nodal displacement reference frame
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
              
         %% Store vectors of ID numbers and other index data as seperate varables.
@@ -149,9 +149,22 @@ classdef Model
             
         end
         function solution = recover(obj,solution,u_a)
-            % Expands solution result
+            % Function to recover solution quantities from ASET solution.
+            % This method is called once for all superelements speratly but
+            % seperatly for each subcase.
+            %
+            % INPUTS
+            % obj = [nSuperElements,1 Model] Array of Model objects, one for each superelement
+            % solution = [1,nSuperElements Solution] Array of Solution objects, one for each superelement
+            % u_a = [nAset,nVectors] ASET displacement vectors
+            %
+            % OUTPUT
+            % solution = [1,nSuperElements Solution] Array of Solution objects with recovered output data
+            
+            % Checks
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
+            if size(solution,1)~=1; error('Function only operates on Solution arrays size 1 x n.'); end
             
             % Expand residual structure result
             solution(1) = obj(1).recover_sub(solution(1),u_a);
@@ -179,6 +192,51 @@ classdef Model
             if isempty(obj.caseControl(caseControlIndex).method); error('No METHOD defined in Case Control section.'); end
             nModes = obj.eigrl(obj.caseControl(caseControlIndex).method==obj.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); end
+        end
+        
+        function hdf5Domains = model2Hdf5Domains(obj)
+            % Convert model data to base (subcase 0) Hdf5 domain data
+            %
+            % INPUTS
+            % obj = [nSuperElements,1 Model] Array of Model objects, one for each superelement
+            %
+            % OUTPUTS
+            % hdf5Domains = [struct] Hdf5Domains fields and properties
+            nModel = size(obj,1);
+            
+            
+            % Initialize empty struct data
+            hdf5Domains.ID = [];
+            hdf5Domains.SE = [];
+            
+            % Loop over superelements to create base domain
+            domainId = 1;
+            for i = 2:nModel
+                hdf5Domains.ID = [hdf5Domains.ID; uint32(domainId)]; 
+                domainId = domainId + 1;
+                hdf5Domains.SE = [hdf5Domains.SE; obj(i).superElementID];
+            end
+            
+            % create residual structure base domain last
+            i = 1;
+            hdf5Domains.ID = [hdf5Domains.ID; uint32(domainId)];
+            hdf5Domains.SE = [hdf5Domains.SE; obj(i).superElementID];
+            
+            % Fill unused fields
+            fillZeros = zeros(size(hdf5Domains.ID,1),1,'uint32');
+            hdf5Domains.SUBCASE = fillZeros; 
+            hdf5Domains.ANALYSIS = fillZeros; 
+            hdf5Domains.TIME_FREQ_EIGR = zeros(size(hdf5Domains.ID,1),1,'double');
+            hdf5Domains.MODE = fillZeros;
+            hdf5Domains.STEP = fillZeros;
+            hdf5Domains.EIGI = zeros(size(hdf5Domains.ID,1),1,'double');
+            hdf5Domains.DESIGN_CYCLE = fillZeros;
+            hdf5Domains.RANDOM = fillZeros;
+            hdf5Domains.AFPM = fillZeros;
+            hdf5Domains.TRMC = fillZeros;
+            hdf5Domains.INSTANCE = fillZeros;
+            hdf5Domains.MODULE = fillZeros;
+            
         end
     end
     methods (Access = private)
@@ -221,6 +279,21 @@ classdef Model
             obj = obj.load.assemble(obj);
         end
         function solution = recover_sub(obj,solution,u_a)
+            % Function to recover solution quantities from ASET solution.
+            % This method is called speratly for each superelement and
+            % seperatly for each subcase.
+            %
+            % INPUTS
+            % obj = [1,1 Model] 
+            % solution = [1,1 Solution] Solution object without recovered output data
+            % u_a = [nAset,nVectors] ASET displacement vectors
+            %
+            % OUTPUT
+            % solution = [1,1 Solution] Solution object with recovered output data
+            
+            % Checks
+            if length(obj)~=1; error('Function is intended length(obj)==1 input.'); end
+            if length(solution)~=1; error('Function is intended length(solution)==1 input.'); end
             
             % preallocate
             nVectors = size(u_a,2);
@@ -236,12 +309,12 @@ classdef Model
             
              % store in solver object
             solution.u_g = u_g;
-            solution.u_0 = obj.R_0g*solution.u_g;
+            % solution.u_0 = obj.R_0g*solution.u_g;
             
             % constraint forces
             solution.f_g = zeros(size(solution.u_g));
             solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
-            solution.f_0 = obj.R_0g*solution.f_g;
+            % solution.f_0 = obj.R_0g*solution.f_g;
             
             % recover and store selected response data at nodes and elements 
             solution = obj.point.recover(solution,obj);

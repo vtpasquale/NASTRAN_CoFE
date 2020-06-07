@@ -10,7 +10,8 @@ classdef ReducedModelDynamic < ReducedModel
         G_oq % ([nOdof,nQdof] double) Dynamic transformation matrix between the exterior and interior motion
         tIndexInA
         qIndexInA
-
+        
+        p_a
         u_a  % ([nAdof,nModes] double) Analysis set displacements
     end
     methods
@@ -71,6 +72,8 @@ classdef ReducedModelDynamic < ReducedModel
             % Calculate reduced matrices
             K_aa = T.'*K*T;
             M_aa = T.'*M*T;
+            obj.p_a  = T.'*[model.p_g(model.o,:);
+                            model.p_g(model.t,:)];
             
             % Reorder reduced matrices and store in object
             nTQ = nTset + nQset;

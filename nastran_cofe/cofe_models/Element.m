@@ -49,9 +49,21 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             model.K_gg=K_gg;
             model.M_gg=M_gg;
         end
-        function solver = recover(obj,solver,model)
+        function solution = recover(obj,solution,model)
+            % Function to recover element quantities from solution.
+            % This method is called speratly for each superelement and
+            % seperatly for each subcase.
+            %
+            % INPUTS
+            % solution = [1,1 Solution] Solution object without recovered output data
+            % model = [1,1 Model] 
+            % 
+            %
+            % OUTPUT
+            % solution = [1,1 Solution] Solution object with recovered output data
+            
             % recovers element output data
-            caseControl = model.caseControl(solver.caseControlIndex);
+            caseControl = model.caseControl(solution.caseControlIndex);
             
             nElement = size(obj,1);
             IDs = uint32([obj.eid]).';
@@ -76,7 +88,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             
             % preallocate element_output_data objects
             % s(nstress,1) = ElementOutputData();
-            u_g = solver.u_g;
+            u_g = solution.u_g;
             F = [];
             S = [];
             E = [];
@@ -98,10 +110,10 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
                     ESE = [ESE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,4,ese)];
                 end
             end
-            solver.force = F;
-            solver.stress = S;
-            solver.strain = E;
-            solver.strainEnergy = ESE;
+            solution.force = F;
+            solution.stress = S;
+            solution.strain = E;
+            solution.ese = ESE;
         end
     end
 end

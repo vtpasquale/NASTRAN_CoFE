@@ -18,19 +18,20 @@ classdef (Abstract) Hdf5Summary < Hdf5CompoundDataset & matlab.mixin.Heterogeneo
 %     end
     methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
-            
-            % create element result groups
-            objDataGroup  = H5G.create(dataGroup ,'SUMMARY','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-            objIndexGroup = H5G.create(indexGroup,'SUMMARY','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-            
-            nObj = size(obj,1);
-            for i = 1:nObj
-                obj(i).export_sub(objDataGroup,objIndexGroup)
+            if size(obj,1)
+                % create element result groups
+                objDataGroup  = H5G.create(dataGroup ,'SUMMARY','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                objIndexGroup = H5G.create(indexGroup,'SUMMARY','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                
+                nObj = size(obj,1);
+                for i = 1:nObj
+                    obj(i).export_sub(objDataGroup,objIndexGroup)
+                end
+                
+                % close groups
+                H5G.close(objDataGroup);
+                H5G.close(objIndexGroup);
             end
-            
-            % close groups
-            H5G.close(objDataGroup);
-            H5G.close(objIndexGroup);
         end
     end
     methods (Static = true)

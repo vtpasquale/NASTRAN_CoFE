@@ -86,7 +86,7 @@ classdef CaseControl
             nInputCaseControl = size(obj,1);
             nModelSuperElements = size(model,1);
             nModelSuperElementID = size(modelSuperElementID,1);
-            if nModelSuperElements~=nModelSuperElementID;
+            if nModelSuperElements~=nModelSuperElementID
                 error('Input inconsistent: nModelSuperElements~=nModelSuperElementID');
             end
             if modelSuperElementID(1)~=0; error('Residual structure should be first superement.'); end
@@ -100,7 +100,7 @@ classdef CaseControl
             % % Set undefined superelement values to default. SUPER=ALL is 
             % % the default. However, if a SUPER command exists in the
             % % file, the default value for the SUPER command becomes 
-            % % SUPER = 0, which is backward compatible with older version 
+            % % SUPER = 0, which is backward compatible with older versions
             % % of Nastran.
             if any([obj.superelement])
                 defaultSuperelementID=int32(0);

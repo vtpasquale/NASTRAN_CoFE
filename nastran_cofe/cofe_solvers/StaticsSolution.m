@@ -5,126 +5,94 @@ classdef StaticsSolution < Solution
     
     properties
         u_g
-        u_0
         f_g
-        f_0
         
-        displacement_0
-        displacement_g
-        spcforces_0
-        spcforces_g
+        displacement
+        spcforces
         
         force
         stress
         strain
-        strainEnergy
+        ese
         
-        femapDataBlock
     end
     
     methods 
         function obj=solve_sub(obj,model)
             
+            % Residual structure analysis matricies
+            K_aa = model(1).reducedModel.K_aa;
+            % M_aa = model(1).reducedModel.M_aa;
+            p_a = model(1).reducedModel.p_a;
+            
             model0 = model(1); % Residual structure
             caseControl0 = model0.caseControl(obj.caseControlIndex);
-            
-            obj.u_g=zeros(model0.nGdof,1);
-            obj.u_0=zeros(model0.nGdof,1);
                         
             if isempty(caseControl0.load); error('No load case identification number specified.'); end
             lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); warning('No applied loads found for this case.'); end
             
-            % sets
-            f=model0.f;
-            s=model0.s;
+            % solve
+            u_a = K_aa\p_a(:,lc);
             
-            %% Solve
-            
-            % displacements
-            obj.u_g(f) = model0.K_gg(f,f)\model0.p_g(f,lc);
-            obj.u_0    = model0.R_0g*obj.u_g;
-            
-            % constraint forces
-            obj.f_g = zeros(size(obj.u_g));
-            obj.f_g(s) = model0.K_gg(s,f)*obj.u_g(f) + model0.K_gg(s,s)*obj.u_g(s);
-            obj.f_0 = model0.R_0g*obj.f_g;
-            
-            % recover and store selected response data at nodes and elements 
-            obj = model.point.recover(obj,model);
-            obj = model.element.recover(obj,model);
+            % Recover model results
+            obj = model.recover(obj,u_a);
         end
-        function femapDataBlock = constructFemapAnalysisSet(obj,femapDataBlock,caseControl)
-            ID = femapDataBlock(1).currentAnalysisStudy; % [int] ID of Study
-            if isempty(caseControl.title)
-                Title =  sprintf('CoFE Analysis Study %d',ID);% [1xN char] Title of Analysis Study
-            else
-                Title = caseControl.title;
-            end
-            Analysis_Type = 1; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
-            Analysis_Set = ID; % [int] ID of Femap Analysis Set used for solution
-            Study_Notes = 'Study Notes';% [1xN char] text
-             femapDataBlock=[femapDataBlock;...
-                 FemapDataBlock1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes)];
-        end
-        function femapDataBlock = constructFemapOutputSets(obj,femapDataBlock,caseControl,outputHeading)
-            anal_type = 1; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
-            ProcessType = 0; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)
-            value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.
-            notes = 'Notes text. '; % [1xN char] One line of text.
-            StudyID = femapDataBlock(1).currentAnalysisStudy; % [int] ID of Analysis Study
-            nas_case = caseControl.subcase; % [int] Nastran SUBCASE ID associated with these results
-            nas_rev = 0; % [int] Revision of Nastran SUBCASE
-            
-            ID = femapDataBlock(1).currentOutputSet();
-            femapDataBlock(1) = femapDataBlock(1).advanceOutputSet();
-            title = sprintf('Statics Subcase %d',caseControl.subcase); % [max 79 char] Output Set title
-            
-            femapDataBlock=[femapDataBlock;...
-                FemapDataBlock450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev)
-                ];
-        end
+        function [obj,hdf5Domains] = solution2Hdf5Domains(obj,model,startDomainId)
+            % Convert solution data to Hdf5 domain data and set obj.baseHdf5DomainID & obj.vectorHdf5DomainID values
+            %
+            % INPUTS
+            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
+            % model = [nSuperElements,1 Model] Array of Model objects, one for each superelement
+            % startDomainId = [uint32] starting domain ID
+            %
+            % OUTPUTS
+            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
+            % hdf5Domains = [struct] Hdf5Domains fields and properties
 
-%         function obj = output_sub(obj,caseControl,writeFemapFlag,fid)
-%             
-%             % Output select results
-%             if caseControl.displacement.n~=0
-%                 if caseControl.displacement.print==true
-%                     obj.displacement_g.echo(fid) % To text output file
-%                 end
-%                 if writeFemapFlag
-%                     obj.femapDataBlock = [obj.femapDataBlock;convert_2_FemapDataBlock1051(obj.displacement_0,1)];
-%                 end
-%             end
-%         end
-%             % Write output to FEMAP data blocks
-%             ID = 1;% [int] ID of output set
-%             title = 'Static Case 1'; % [max 79 char] Output Set title
-%             anal_type = 1; % [int] Type of analysis (0=Unknown, 1=Static, 2=Modes, 3=Transient, 4=Frequency Response, 5=Response Spectrum, 6=Random, 7=Linear Buckling, 8=Design Opt, 9=Explicit, 10=Nonlinear Static, 11=Nonlinear Buckling, 12=Nonlinear Transient, 19=Comp Fluid Dynamics, 20=Steady State Heat Transfer, 21=Transient Heat), 22=Advanced Nonlinear Static, 23=Advanced Nonlinear Transient, 24=Advanced Nonlinear Explicit, 25=Static Aeroelasticity, 26=Aerodynamic Flutter)
-%             ProcessType = 0; % [int] Processing option for 'As Needed' Output Sets ( 0=None, 1=Linear Combination, 2=RSS Combination, 3=Max Envelope, 4=Min Envelope, 5=AbsMax Envelope, 6=Max Envelope SetID, 7=Min Envelope SetID, 8=AbsMax Envelope SetID)
-%             value = 0.0; % [real] Time or Frequency value for this case. 0.0 for static analysis.
-%             notes = 'Notes text. '; % [1xN char] One line of text.
-%             StudyID = 1; % [int] ID of Analysis Study
-%             nas_case = caseControl.ID; % [int] Nastran SUBCASE ID associated with these results
-%             nas_rev = 0; % [int] Revision of Nastran SUBCASE
-%             
-%             obj.femapDataBlock(1,1)=FemapDataBlock450(ID,title,anal_type,ProcessType,value,notes,StudyID,nas_case,nas_rev);
-%                        
-%             obj.femapDataBlock = [obj.femapDataBlock;obj.displacement_0.convert_2_FemapDataBlock1051(ID)];
-%             obj.femapDataBlock = [obj.femapDataBlock;obj.force.convert_2_FemapDataBlock1051(model,ID)];
-%             obj.femapDataBlock = [obj.femapDataBlock;obj.stress.convert_2_FemapDataBlock1051(model,ID)];
-%             
-%             ID = 1;
-%             Title = 'Analysis Study Title';
-%             Analysis_Type = 1;
-%             Analysis_Set = 1;
-%             Study_Notes = 'Study nodes';
-%             obj.femapDataBlock(6,1) = FemapDataBlock1056(ID,Title,Analysis_Type,Analysis_Set,Study_Notes);
-%             
-%             % Write FEMAP data blocks to file
-%             fid = 1;
-%             obj.femapDataBlock.writeNeutral(fid) ;
-%             fclose('all');
+            % Checks
+            [nCase,nModel]=size(obj);
+            if nCase~=1; error('Function only operates on Solution arrays size 1 x n.'); end
+            if size(model,2)~=1; error('Function only operates on Model arrays size n x 1.'); end
+            if size(model,1)~=nModel; error('size(obj,2)~=size(model,1)'); end
+            
+            % Initialize empty struct data
+            hdf5Domains.ID = [];
+            hdf5Domains.SUBCASE = [];
+            hdf5Domains.ANALYSIS = [];
+            hdf5Domains.SE = [];
+            
+            % Loop over superelements to create vector domains
+            for i = 1:nModel
+                nVectors = size(obj(i).u_g,2);
+                
+                obj(i).vectorHdf5DomainID = uint32(startDomainId:startDomainId+nVectors-1)';
+                hdf5Domains.ID = [hdf5Domains.ID; obj(i).vectorHdf5DomainID];
+                startDomainId = hdf5Domains.ID(end)+1;
+                
+                hdf5Domains.SUBCASE = [hdf5Domains.SUBCASE;...
+                    repmat( model(i).caseControl(obj(i).caseControlIndex(i)).subcase,[nVectors,1])  ];
+                
+                hdf5Domains.ANALYSIS = [hdf5Domains.ANALYSIS;...
+                    repmat( uint32(1) ,[nVectors,1])  ];
+                
+                hdf5Domains.SE = [hdf5Domains.SE;...
+                    repmat( model(i).superElementID,[nVectors,1])  ];
+            end
+            
+            % Fill unused fields
+            fillZeros = zeros(size(hdf5Domains.ID,1),1,'uint32');
+            hdf5Domains.TIME_FREQ_EIGR = zeros(size(hdf5Domains.ID,1),1,'double');
+            hdf5Domains.MODE = fillZeros;
+            hdf5Domains.STEP = fillZeros;
+            hdf5Domains.EIGI = fillZeros;
+            hdf5Domains.DESIGN_CYCLE = fillZeros;
+            hdf5Domains.RANDOM = fillZeros;
+            hdf5Domains.AFPM = fillZeros;
+            hdf5Domains.TRMC = fillZeros;
+            hdf5Domains.INSTANCE = fillZeros;
+            hdf5Domains.MODULE = fillZeros;
+        end
     end
 end
 

@@ -146,20 +146,29 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
         end
     end
     methods (Static=true)
-        function solver = recover(solver,model)
+        function solution = recover(solution,model)
+            % Function to recover point quantities from solution.
+            % This method is called speratly for each superelement and
+            % seperatly for each subcase.
+            %
+            % INPUTS
+            % solution = [1,1 Solution] Solution object without recovered output data
+            % model = [1,1 Model] 
+            % 
+            %
+            % OUTPUT
+            % solution = [1,1 Solution] Solution object with recovered output data
+            
             % recovers node output data
-            caseControl = model.caseControl(solver.caseControlIndex);
+            caseControl = model.caseControl(solution.caseControlIndex);
 
             % displacements
             if caseControl.displacement.n ~= 0
                 responseType = 1; % 1=displacement
                 keepIndex = caseControl.displacement.getRequestMemberIndices(model.pointIDs,caseControl.outputSet);
                 
-                response = solver.u_0;
-                solver.displacement_0 = PointOutputData(responseType,response,model,keepIndex);
-                
-                response = solver.u_g;
-                solver.displacement_g = PointOutputData(responseType,response,model,keepIndex);
+                response = solution.u_g;
+                solution.displacement = PointOutputData(responseType,response,model,keepIndex);
             end
             
             % velocities
@@ -170,11 +179,8 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
                 responseType = 4; % 4=spcforces
                 keepIndex = caseControl.spcforces.getRequestMemberIndices(model.pointIDs,caseControl.outputSet);
                 
-                response = solver.f_0;
-                solver.spcforces_0 = PointOutputData(responseType,response,model,keepIndex);
-                
-                response = solver.f_g;
-                solver.spcforces_g = PointOutputData(responseType,response,model,keepIndex);
+                response = solution.f_g;
+                solution.spcforces = PointOutputData(responseType,response,model,keepIndex);
             end
         end % recover()
     end

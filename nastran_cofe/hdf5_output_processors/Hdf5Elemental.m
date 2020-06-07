@@ -20,16 +20,17 @@ classdef Hdf5Elemental
             end
         end
         function export(obj,dataGroup,indexGroup)
-            
-            % create element result groups
-            objDataGroup  = H5G.create(dataGroup ,'ELEMENTAL','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-            objIndexGroup = H5G.create(indexGroup,'ELEMENTAL','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
-
-            obj.hdf5ElementForce.export(objDataGroup,objIndexGroup)
-            
-            % close groups
-            H5G.close(objDataGroup);
-            H5G.close(objIndexGroup);
+            if size(obj,1)>0
+                % create element result groups
+                objDataGroup  = H5G.create(dataGroup ,'ELEMENTAL','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                objIndexGroup = H5G.create(indexGroup,'ELEMENTAL','H5P_DEFAULT','H5P_DEFAULT','H5P_DEFAULT');
+                
+                obj.hdf5ElementForce.export(objDataGroup,objIndexGroup)
+                
+                % close groups
+                H5G.close(objDataGroup);
+                H5G.close(objIndexGroup);
+            end
         end
     end   
 end

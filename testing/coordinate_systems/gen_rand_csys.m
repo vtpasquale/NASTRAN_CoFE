@@ -1,5 +1,5 @@
 clear all; close all; clc
-addpath(genpath(fullfile('..','..','cofe_toolbox')));
+addpath(genpath(fullfile('..','..','nastran_cofe')));
 
 % random id number
 cids = int32(randi([1,10000],100,1));
