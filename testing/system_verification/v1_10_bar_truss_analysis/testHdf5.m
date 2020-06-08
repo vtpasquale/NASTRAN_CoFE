@@ -12,10 +12,10 @@ cofeModes = Cofe(fullfile('nastran_runs','modes.dat'));
 modesHdf5 = cofeModes.solution.solution2Hdf5(cofeModes.model);
 staticHdf5 = cofeStatic.solution.solution2Hdf5(cofeStatic.model);
 
-getTable(modesHdf5.domains)
-getTable(nastranModes.domains)
-getTable(staticHdf5.domains)
-getTable(nastranStatic.domains)
+% getTable(modesHdf5.domains)
+% getTable(nastranModes.domains)
+% getTable(staticHdf5.domains)
+% getTable(nastranStatic.domains)
 
 % cofeModes.solution(1).baseHdf5DomainID
 % cofeModes.solution(1).vectorHdf5DomainID

@@ -28,6 +28,7 @@ classdef Hdf5NodalSpc_force < Hdf5Nodal
     end
     properties (Constant = true)
         DATASET = 'SPC_FORCE'
+        SCHEMA_VERSION = uint32(1); % MSC dataset schema version used for CoFE development
     end
     methods
         function obj = Hdf5NodalSpc_force(filename)

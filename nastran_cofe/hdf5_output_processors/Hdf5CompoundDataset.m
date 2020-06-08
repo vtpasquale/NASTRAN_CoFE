@@ -7,7 +7,7 @@
 classdef (Abstract) Hdf5CompoundDataset
     
     properties
-        version % dataset MSC format version
+        version % MSC dataset schema version
     end
     %     properties
     %         % A property must be created for each H5T_COMPOUND data member
@@ -15,6 +15,7 @@ classdef (Abstract) Hdf5CompoundDataset
     %     properties (Constant = true) % Can't make properties abstract and constant
     %         GROUP
     %         DATASET
+    %         SCHEMA_VERSION; % MSC dataset schema version used for CoFE development
     %     end
     methods (Abstract)
         % Export the dataset to an HDF5 file.
@@ -26,7 +27,10 @@ classdef (Abstract) Hdf5CompoundDataset
             % data from h5read to properties of the specific dataset class
             % instance.
             obj.version = h5readatt(datasetString,[obj.GROUP,obj.DATASET],'version');
-            
+            if obj.version ~= obj.SCHEMA_VERSION
+                metaClass = metaclass(obj); warning('Imported %s dataset schema version number is different than the dataset schema version used for CoFE development.',metaClass.Name)
+            end
+                
             fieldData = h5read(datasetString,[obj.GROUP,obj.DATASET]);
             for fn = fieldnames(fieldData)'    %enumerat fields
                 obj.(fn{1}) = fieldData.(fn{1});   % copy to object properties
@@ -52,7 +56,7 @@ classdef (Abstract) Hdf5CompoundDataset
             warning('off','MATLAB:structOnObject')
             objStruct=struct(obj);
             warning('on','MATLAB:structOnObject')
-            objStruct=rmfield(objStruct,{'GROUP','DATASET','FORMAT_VERSION','version'});
+            objStruct=rmfield(objStruct,{'GROUP','DATASET','SCHEMA_VERSION','version'});
         end
         function export_sub(obj,dataGroup,indexGroup)
             % Exports the dataset to an HDF5 file.

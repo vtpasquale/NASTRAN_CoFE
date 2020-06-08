@@ -33,7 +33,7 @@ PARAM,POST,-1
 PARAM    GRDPNT  0
 $
 $ Include the model
-INCLUDE 'tenbar.bdf'
+INCLUDE 'tenBar.bdf'
 $
 $
 ENDDATA

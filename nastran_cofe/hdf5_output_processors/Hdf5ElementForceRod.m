@@ -22,6 +22,7 @@ classdef Hdf5ElementForceRod < Hdf5ElementForce
     end
     properties (Constant = true)
         DATASET = 'ROD'; % Dataset name [char]
+        SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
         function obj = Hdf5ElementForceRod(filename)

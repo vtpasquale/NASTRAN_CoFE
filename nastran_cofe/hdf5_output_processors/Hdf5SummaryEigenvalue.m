@@ -32,6 +32,7 @@ classdef Hdf5SummaryEigenvalue < Hdf5Summary
     end
     properties (Constant = true)
         DATASET = 'EIGENVALUE'
+        SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
         function obj = Hdf5SummaryEigenvalue(filename)

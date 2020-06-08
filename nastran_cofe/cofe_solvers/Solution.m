@@ -110,6 +110,11 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             end
             
             % write HDF5 element results data for all analysis subcases
+            keyboard
+            obj.force
+            
+%         baseHdf5DomainID % [1,1 uint32]
+%         vectorHdf5DomainID % [nResponseVectors,1 uint32]
             
             
         end % solution2Hdf5()

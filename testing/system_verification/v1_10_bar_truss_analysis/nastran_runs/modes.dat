@@ -35,7 +35,7 @@ PARAM,COUPMASS,1
 $
 $
 $ Include the model
-INCLUDE 'tenbar.bdf'
+INCLUDE 'tenBar.bdf'
 $
 $
 ENDDATA

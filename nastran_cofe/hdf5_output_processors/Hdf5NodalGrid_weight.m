@@ -54,6 +54,7 @@ classdef Hdf5NodalGrid_weight < Hdf5Nodal
     end
     properties (Constant = true)
         DATASET = 'GRID_WEIGHT'
+        SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
         function obj = Hdf5NodalGrid_weight(filename)
