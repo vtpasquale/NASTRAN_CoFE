@@ -34,6 +34,11 @@ classdef BulkEntryPbeam < BulkEntry
                     obj.c1ThruF2(i-11) = castInputField('PBEAM','C1 thru D1',entryFields{i},'double',0.0);
                 end
             end
+            % Allow SO=YESA and X/XB=1.0, which is equivalent to omitting
+            % the fields. Femap writes these fields in some situations.
+            if strcmpi(entryFields{22},'YESA') && str2double(entryFields{23})==1.0
+                entryFields = entryFields([1:20,31:size(entryFields,2)]);
+            end
             if size(entryFields,2)>20
                 obj.k1 = castInputField('PBEAM','K1',entryFields{22},'double',1.0);
                 obj.k2 = castInputField('PBEAM','K2',entryFields{23},'double',1.0);

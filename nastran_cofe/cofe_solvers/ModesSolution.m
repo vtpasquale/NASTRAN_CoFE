@@ -65,7 +65,7 @@ classdef ModesSolution < Solution
             obj = model.recover(obj,u_a);
         end
         function [obj,hdf5Domains] = solution2Hdf5Domains(obj,model,startDomainId)
-            % Convert solution data to Hdf5 domain data and set obj.baseHdf5DomainID & obj.vectorHdf5DomainID values
+            % Convert solution data to Hdf5 domain data and set obj.vectorHdf5DomainID value
             %
             % INPUTS
             % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement

@@ -116,6 +116,39 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             solution.ese = ESE;
         end
     end
-    
+    methods (Static=true,Sealed=true)
+        function hdfElemental=solution2hdf5(solution)
+            % Generates Hdf5.elemental data from solution data
+            %
+            % INPUTS
+            % solution [nSubcases,nSuperElements Solution]
+            %
+            % OUTPUTS
+            % Hdf5Elemental = [Hdf5Elemental] element output data in HDF5 format class
+            
+            keyboard
+            
+            [nSubcases,nSuperElements]=size(solution);
+            for i = 1:nSubcases
+                for j = 1:nSuperElements
+                    
+                    elementOutputData=solution(i,j).force;
+                    if ~isempty(elementOutputData)
+                        elementTypes=unique([elementOutputData.elementType]);
+                        nElementTypes=size(elementTypes);
+                        for typeIndex = 1:nElementTypes
+                        end
+                    end
+                end
+            end
+                        
+             
+%             hdfElemental.Hdf5ElementForce
+%             hdfElemental.Hdf5Energy
+%             hdfElemental.Hdf5Strain
+%             hdfElemental.Hdf5Stress
+
+        end
+    end
 end
 

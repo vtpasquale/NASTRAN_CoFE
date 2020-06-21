@@ -316,9 +316,13 @@ classdef Model
             solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
             % solution.f_0 = obj.R_0g*solution.f_g;
             
-            % recover and store selected response data at nodes and elements 
+            % recover and store selected response data at elements 
             solution = obj.point.recover(solution,obj);
-            solution = obj.element.recover(solution,obj);
+            
+            % recover and store selected response data at elements 
+            if ~isempty(obj.element) % can be empty in superelement analysis 
+                solution = obj.element.recover(solution,obj);
+            end
         end            
     end
 end

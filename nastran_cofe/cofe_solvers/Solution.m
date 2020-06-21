@@ -6,8 +6,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
         caseControlIndex % [1,1 uint32]
     end
     properties (Hidden=true)
-        baseHdf5DomainID % [1,1 uint32]
-        vectorHdf5DomainID % [nResponseVectors,1 uint32]
+        vectorHdf5DomainID % [nResponseVectors,1 uint32] HDF5 output file Domain ID or each respone vector 
     end
     methods (Abstract)
         % The class constructor must...
@@ -85,7 +84,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             % model [nSuperElements,1 Model]        
             %
             % OUTPUTS
-            % hdf5 [HDF5] HDF5 output file object
+            % hdf5 [Hdf5] HDF5 output file object
             
             % Check inputs
             [nRowsSolution,nColumnsSolution]=size(obj);
@@ -95,7 +94,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             if nColumnsSolution~=nModel; error('nColumnsSolution~=nModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
-            % create Hdf5 instance
+            % Create Hdf5 instance
             hdf5 = Hdf5();
             
             % Model superelements domain data to HDF5 subcase 0
@@ -109,9 +108,12 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
                 hdf5.domains = hdf5.domains.appendStruct(caseIndexDomains);
             end
             
-            % write HDF5 element results data for all analysis subcases
-            keyboard
-            obj.force
+            % Create HDF5 element results data
+            
+            % pass the model object so the element classes can be found
+            % without maintaining a dictionary of element types and classes
+            hdf5.elemental = Element.solution2hdf5(obj);
+
             
 %         baseHdf5DomainID % [1,1 uint32]
 %         vectorHdf5DomainID % [nResponseVectors,1 uint32]
