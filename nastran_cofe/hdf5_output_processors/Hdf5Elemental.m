@@ -12,9 +12,11 @@ classdef Hdf5Elemental
 %         hdf5Stress@Hdf5Stress
     end
     methods
-        function obj = Hdf5Elemental(arg1)
+        function obj = Hdf5Elemental(arg1,arg2)
             if ischar(arg1)% arg1 = filename
                 obj.hdf5ElementForce = Hdf5ElementForce.constructFromFile(arg1);
+            elseif isa(arg1,'Model')
+                obj.hdf5ElementForce = Hdf5ElementForce.constructFromCofe(arg1,arg2);
             else
                 error('Constructor not implemented for this type')
             end

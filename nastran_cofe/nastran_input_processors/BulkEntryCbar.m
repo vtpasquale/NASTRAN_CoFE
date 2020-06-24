@@ -36,12 +36,12 @@ classdef BulkEntryCbar < BulkEntry
         end
         function model = entry2model_sub(obj,model)
             % Convert entry object to model object and store in model entity array
-            cbeam = Cbeam;
-            cbeam.eid = obj.eid;
-            cbeam.pid = obj.pid;
-            cbeam.g = [obj.ga,obj.gb];
-            cbeam.nu_g = obj.x;
-            model.element = [model.element;cbeam];
+            cbar = Cbar;
+            cbar.eid = obj.eid;
+            cbar.pid = obj.pid;
+            cbar.g = [obj.ga,obj.gb];
+            cbar.nu_g = obj.x;
+            model.element = [model.element;cbar];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

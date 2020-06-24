@@ -25,29 +25,118 @@
 classdef Hdf5ElementForceBeam < Hdf5ElementForce
     
     properties
-        EID % [uint32] Element identification number 
-        GRID % [integer] Number of active grids or corner grid ID
-        SD % [double] Station distance divided by length
-        BM1 % [double] Bending moment plane 1
-        BM2 % [double] Bending moment plane 2
-        TS1 % [double] Shear plane 1
-        TS2 % [double] Shear plane 2
-        AF % [double] Axial Force
-        TTRQ % [double] Total Torque
-        WTRQ % [double] Warping Torque
-        DOMAIN_ID % [uint32] Domain identifier 
+        EID % [n,1 uint32] Element identification number 
+        GRID % [11,n integer] Number of active grids or corner grid ID
+        SD % [11,n double] Station distance divided by length
+        BM1 % [11,n double] Bending moment plane 1
+        BM2 % [11,n double] Bending moment plane 2
+        TS1 % [11,n double] Shear plane 1
+        TS2 % [11,n double] Shear plane 2
+        AF % [11,n double] Axial Force
+        TTRQ % [11,n double] Total Torque
+        WTRQ % [11,n double] Warping Torque
+        DOMAIN_ID % [n,1 uint32] Domain identifier 
     end
     properties (Constant = true)
         DATASET = 'BEAM'; % Dataset name [char]
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5ElementForceBeam(filename)
-            if nargin < 1
-            else
-                obj = obj.import(filename);
+        function obj = Hdf5ElementForceBeam(arg1,arg2)
+            if nargin > 0
+                if ischar(arg1)
+                    obj = obj.import(arg1);
+                elseif isa(arg1,'ElementOutputData') 
+                    obj = obj.constructFromElementOutputData(arg1,arg2);
+                    obj.version = obj.SCHEMA_VERSION;
+                else
+                    error('Constructor not implemented for this input type')
+                end
             end
         end
-    end   
+    end
+    methods (Static = true)
+        function obj = constructFromElementOutputData(elementOutputData,domainIDs)
+            % Function to convert element force output data to HDF5
+            %
+            % INPUTS
+            % elementOutputData [nElements,1 ElementOutputData] element force output data
+            % domainIDs [nVectors,1 unit32] HDF5 domain ID numbers
+            %
+            obj = Hdf5ElementForceBeam();
+            nElements = size(elementOutputData,1);
+            nVectors = size(elementOutputData(1).values,2);
+            
+            nineZeros=[0.,0.,0.,0.,0.,0.,0.,0.,0.];
+            blockZeros = repmat(nineZeros,[nVectors,1]);
+            eid = [];
+            grid0 = [];
+            sd = zeros(nElements*nVectors,11); sd(:,11)=1.0;
+            bm1 = [];
+            bm2 = [];
+            ts1 = [];
+            ts2 = [];
+            ttrq = [];
+            af = [];
+            domain_id = [];
+            for i = 1:nElements
+                
+                eid = [eid;...
+                       repmat(elementOutputData(i).elementID,[nVectors,1])];
+                
+                grid0 = [grid0;...
+                    uint32(elementOutputData(i).values(13,:)).',...
+                    blockZeros,...
+                    uint32(elementOutputData(i).values(14,:)).'];
+                
+                bm1   = [bm1;...
+                    elementOutputData(i).values(6,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(12,:).'];
+                
+                bm2   = [bm2;...
+                    elementOutputData(i).values(5,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(11,:).'];
+                
+                ts2   = [ts2;...
+                    elementOutputData(i).values(3,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(9,:).'];
+                
+                ts1   = [ts1;...
+                    elementOutputData(i).values(2,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(8,:).'];
+                
+                ttrq = [ttrq;...
+                    elementOutputData(i).values(4,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(10,:).'];
+                
+                af    = [af;...
+                    elementOutputData(i).values(1,:).',...
+                    blockZeros,...
+                    elementOutputData(i).values(7,:).'];
+                
+                domain_id = [domain_id,domainIDs];
+                
+            end
+            
+            % Sort by domain id
+            [~,index]=sort(domain_id);
+            obj.EID  = eid(index);
+            obj.GRID = grid0(index,:).';
+            obj.SD   = sd.';
+            obj.BM1  = bm1(index,:).';
+            obj.BM2  = bm2(index,:).';
+            obj.TS1  = ts1(index,:).';
+            obj.TS2  = ts2(index,:).';
+            obj.AF   = af(index,:).';
+            obj.TTRQ = ttrq(index,:).';
+            obj.WTRQ = zeros(size(sd)).';
+            obj.DOMAIN_ID = domain_id(index).';
+        end
+    end
 end
 

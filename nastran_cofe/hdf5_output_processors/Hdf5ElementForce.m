@@ -11,6 +11,9 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/ELEMENTAL/ELEMENT_FORCE/';
     end
+    methods (Abstract)
+        constructFromElementOutputData(elementOutputData)
+    end
     methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
             if size(obj,1)>0
@@ -50,7 +53,58 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
                 end
             end
         end
+        function hdf5ElementForce=constructFromCofe(model,solution)
+            % Creates Hdf5ElementForce object from CoFE data
+            %
+            % INPUTS
+            % model [nSuperElements,1 Model]
+            % solution [nSubcases,nSuperElements Solution]
+            %
+            % OUTPUTS
+            % hdf5ElementForce = [Hdf5ElementForce] element force output data in HDF5 format class
+            hdf5ElementForce=[];
+            [nSubcases,nSuperElements]=size(solution);
+            for i = 1:nSubcases
+                for j = 1:nSuperElements
+                    
+                    % Domain IDs
+                    domainIDs = solution(i,j).vectorHdf5DomainID.'; % [nResponseVectors,1 uint32] HDF5 output file Domain ID or each respone vector
+                    
+                    % Process element force data
+                    elementOutputData=solution(i,j).force;
+                    if ~isempty(elementOutputData)
+                        elementTypes = [elementOutputData.elementType];
+                        uniqueElementTypes=unique(elementTypes);
+                        nElementTypes=size(uniqueElementTypes,2);
+                        for typeIndex = 1:nElementTypes
+                            dataIndicies = elementTypes==uniqueElementTypes(typeIndex);
+                            data = elementOutputData(dataIndicies);
+                            elementObject = model(j).element(data(1).elementID==model(j).elementEIDs);                            
+                            hdf5ElementForceConstructor = str2func(elementObject.HDF5_ELEMENT_FORCE_CLASSNAME);
+                            hdf5ElementForceNext = hdf5ElementForceConstructor(data,domainIDs);
+                            if isempty(hdf5ElementForce)
+                                hdf5ElementForce=hdf5ElementForceNext;
+                            else
+                                hdf5ElementForce = hdf5ElementForce.append(hdf5ElementForceNext);
+                            end
+                        end
+                    end
+                end
+            end
+        end
     end
-    
+    methods (Sealed = true, Access = private)
+        function obj=append(obj,hdf5ElementForceNext)
+            nObj = size(obj,1);
+            nextMetaClass = metaclass(hdf5ElementForceNext);
+            for i = 1:nObj
+                if isa(obj(i),nextMetaClass.Name)
+                    obj(i) = obj(i).appendObj(hdf5ElementForceNext);
+                    return
+                end
+            end
+            % Only gets here if this is a new element type
+            obj = [obj;hdf5ElementForceNext];
+        end
+    end
 end
-

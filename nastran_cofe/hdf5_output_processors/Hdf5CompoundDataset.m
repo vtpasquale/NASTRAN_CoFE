@@ -44,6 +44,11 @@ classdef (Abstract) Hdf5CompoundDataset
                 obj.(fn{1}) = [obj.(fn{1});structData.(fn{1})]; % append object properties
             end
         end
+        function obj = appendObj(obj1,obj2)
+            % Appends the object data with data from another object
+            obj2Struct = getStruct(obj2);
+            obj = appendStruct(obj1,obj2Struct);
+        end
         function objTable = getTable(obj)
             % Creates a MATLAB table from the H5T_COMPOUND data.
             objStruct=getStruct(obj);

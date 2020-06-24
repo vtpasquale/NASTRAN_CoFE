@@ -8,9 +8,12 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         g % [1,: int] Node identification numbers of connection points.
         gdof % [ngdof,1 int] Indices of of element degrees of freedom in global set
     end
-    properties (Abstract=true,Hidden=true)
-        ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
-    end
+%     properties (Abstract=true,Hidden=true)
+%         ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+%         HDF5_ELEMENT_FORCE_CLASSNAME
+% %         HDF5_STRESS_CLASSNAME
+% %         HDF5_STRAIN_CLASSNAME
+%     end
     methods (Abstract)
         obj = assemble_sub(obj,model) % Calculate element matricies
         obj = recover_sub(obj,u_g) % Recover element response values
@@ -114,40 +117,6 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             solution.stress = S;
             solution.strain = E;
             solution.ese = ESE;
-        end
-    end
-    methods (Static=true,Sealed=true)
-        function hdfElemental=solution2hdf5(solution)
-            % Generates Hdf5.elemental data from solution data
-            %
-            % INPUTS
-            % solution [nSubcases,nSuperElements Solution]
-            %
-            % OUTPUTS
-            % Hdf5Elemental = [Hdf5Elemental] element output data in HDF5 format class
-            
-            keyboard
-            
-            [nSubcases,nSuperElements]=size(solution);
-            for i = 1:nSubcases
-                for j = 1:nSuperElements
-                    
-                    elementOutputData=solution(i,j).force;
-                    if ~isempty(elementOutputData)
-                        elementTypes=unique([elementOutputData.elementType]);
-                        nElementTypes=size(elementTypes);
-                        for typeIndex = 1:nElementTypes
-                        end
-                    end
-                end
-            end
-                        
-             
-%             hdfElemental.Hdf5ElementForce
-%             hdfElemental.Hdf5Energy
-%             hdfElemental.Hdf5Strain
-%             hdfElemental.Hdf5Stress
-
         end
     end
 end

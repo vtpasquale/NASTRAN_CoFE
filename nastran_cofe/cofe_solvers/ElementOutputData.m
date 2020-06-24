@@ -14,7 +14,6 @@ classdef ElementOutputData
         %         ese % [1,nResponseVectors] Element strain energy
         %         eke % [1,nResponseVectors] Element kinetic energy
     end
-    
     methods
         function obj = ElementOutputData(elementID,elementType,responseType,values)
             obj.elementID = elementID;

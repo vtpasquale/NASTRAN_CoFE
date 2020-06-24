@@ -25,12 +25,49 @@ classdef Hdf5ElementForceRod < Hdf5ElementForce
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5ElementForceRod(filename)
-            if nargin < 1
-            else
-                obj = obj.import(filename);
+        function obj = Hdf5ElementForceRod(arg1,arg2)
+            if nargin > 0
+                if ischar(arg1)
+                    obj = obj.import(arg1);
+                elseif isa(arg1,'ElementOutputData') 
+                    obj = obj.constructFromElementOutputData(arg1,arg2);
+                    obj.version = obj.SCHEMA_VERSION;
+                else
+                    error('Constructor not implemented for this input type')
+                end
             end
         end
-    end   
+    end
+    methods (Static=true)
+        function obj = constructFromElementOutputData(elementOutputData,domainIDs)
+            % Function to convert element force output data to HDF5
+            %
+            % INPUTS
+            % elementOutputData [nElements,1 ElementOutputData] element force output data
+            % domainIDs [nVectors,1 unit32] HDF5 domain ID numbers
+            %
+            obj = Hdf5ElementForceRod();
+            nElements = size(elementOutputData,1);
+            nVectors = size(elementOutputData(1).values,2);
+            eid = [];
+            af = [];
+            trq = [];
+            domain_id = [];
+            for i = 1:nElements
+                eid = [eid,repmat(elementOutputData(i).elementID,[1,nVectors])];
+                af = [af,elementOutputData(i).values(1,:)];
+                trq = [trq,elementOutputData(i).values(2,:)];
+                domain_id = [domain_id,domainIDs];
+            end
+            % sort by domain id
+            [~,index]=sort(domain_id);
+            obj.EID = eid(index).';
+            obj.AF = af(index).';
+            obj.TRQ = trq(index).';
+            obj.DOMAIN_ID = domain_id(index).';
+        end
+    end
+    
+    
 end
 

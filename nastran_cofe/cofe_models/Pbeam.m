@@ -1,4 +1,5 @@
 % Class for beam element properties.
+% Used for bar element properties as well. 
 % Anthony Ricciardi
 %
 classdef Pbeam < Property

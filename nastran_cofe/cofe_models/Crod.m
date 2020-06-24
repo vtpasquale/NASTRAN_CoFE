@@ -18,8 +18,11 @@ classdef Crod < Element
         j % [double] Torsional constant.
         c % [double] Coefficient to determine torsional stress.
     end
-    properties (Hidden = true)
+    properties (Constant=true,Hidden = true)
         ELEMENT_TYPE = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+        HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceRod';
+    end
+    properties (Hidden = true)
         E % [double] Elastic modulus
         G % [double] Shear modulus
     end
@@ -157,7 +160,7 @@ classdef Crod < Element
                 end
             end
             
-        end
+        end        
     end
     methods (Access=private,Static=true)
         function [T_e0,k_e,m_e] = crodMat(p1,p2,E,G,A,J,rho,nsm)

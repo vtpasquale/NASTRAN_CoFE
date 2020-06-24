@@ -109,10 +109,11 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             end
             
             % Create HDF5 element results data
-            
             % pass the model object so the element classes can be found
             % without maintaining a dictionary of element types and classes
-            hdf5.elemental = Element.solution2hdf5(obj);
+            hdf5.elemental = Hdf5Elemental(model,obj);
+            
+%             hdf5.elemental = Element.solution2hdf5(obj,model);
 
             
 %         baseHdf5DomainID % [1,1 uint32]

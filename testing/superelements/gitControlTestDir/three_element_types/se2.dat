@@ -1,0 +1,34 @@
+$ Femap Constraint Set 1 : Physical Constraints
+SPC1           1  123456      15
+SPC1           1  123456      27
+$ Femap Property 2 : BAR Property (Rectangular Bar)
+$ Femap PropShape 2 : 1,0,30.,60.,0.,0.,0.,0.
+$ Femap PropMethod 2 : 1,0,1,0.3
+$ Femap PropOrient 2 : 1,0,0.,1.,2.,3.,4.,-1.,0.,0.
+PBAR           2     501   1800. 540000. 135000.370930.8      0.        +       
++           -30.    -15.     30.    -15.     30.     15.    -30.     15.+       
++       .8499306.8507011      0.
+$ Femap Property 3 : Rung
+PROD           3     5011256.637251327.4      0.      0.
+$ Femap Material 501 : AISI 4340 Steel
+MAT1         501   2.9+7             .327.3315-4   6.6-6     70.        +       
++        215000. 240000. 156000.
+MAT4         5014.8611-4   38.647.3315-4                        
+GRID*                 11               0           2160.              0.
+*                     0.               0
+GRID*                 13               0           2520.              0.
+*                     0.               0
+GRID*                 15               0           2880.              0.
+*                     0.               0
+GRID*                 25               0           2160.           -360.
+*                     0.               0
+GRID*                 26               0           2520.           -360.
+*                     0.               0
+GRID*                 27               0           2880.           -360.
+*                     0.               0
+CBAR          15       2      11      13      0.      1.      0.
+CBAR          16       2      13      15      0.      1.      0.
+CBAR          31       2      25      26      0.      1.      0.
+CBAR          32       2      26      27      0.      1.      0.
+CROD          52       3      25      11
+CROD          53       3      26      13
