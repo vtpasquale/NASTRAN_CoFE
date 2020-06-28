@@ -31,10 +31,16 @@ classdef Hdf5NodalEigenvector < Hdf5Nodal
         SCHEMA_VERSION = uint32(1); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5NodalEigenvector(filename)
-            if nargin < 1
-            else
-                obj = obj.import(filename);
+        function obj = Hdf5NodalEigenvector(arg1,arg2)
+            if nargin > 0
+                if ischar(arg1)
+                    obj = obj.importCompoundDatasetFromHdf5File(arg1);
+                elseif isa(arg1,'NodeOutputData') 
+                    obj = obj.constructFromNodeOutputData(arg1,arg2);
+                    obj.version = obj.SCHEMA_VERSION;
+                else
+                    error('Constructor not implemented for this input type')
+                end
             end
         end
     end

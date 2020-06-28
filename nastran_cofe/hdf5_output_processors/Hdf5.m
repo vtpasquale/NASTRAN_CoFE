@@ -89,6 +89,31 @@ classdef Hdf5
             H5G.close(nastranId);
             H5F.close(fid);
         end
+        
+        function compare(obj1,obj2)
+            % Compare HDF5 objects. Used to mainly to verify CoFE solutions
+            %
+            % INPUTS
+            % obj1 HDF5 object 1
+            % obj2 HDF5 object 2
+            %
+            % OUTPUTS
+            if obj1.schema~=obj2.schema
+                warning('The HDF5 object files being compared use different schema versions. This may cause issues.')
+            end
+            
+            % Domains - sort and compare
+            obj2CompareIndex = sortCompare(obj1.domains,obj2.domains);
+            
+            % Node results - Eigenvector scaling
+
+            
+            % Element results
+            obj1.elemental.compare(obj2.elemental,obj2CompareIndex)
+            
+            
+            
+        end
     end
     methods (Access=private)
         function obj = constructFromFile(obj,filename)

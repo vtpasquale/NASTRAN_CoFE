@@ -44,10 +44,13 @@ classdef Hdf5Domains < Hdf5CompoundDataset
         DATASET = 'DOMAINS';
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
+%     properties (Hidden = true)
+%         compareIndex % domain vector index used for comparison to another HDF5 object
+%     end
     methods
         function obj = Hdf5Domains(arg1)
             if ischar(arg1)% arg1 = datasetString
-                obj = obj.import(arg1);
+                obj = obj.importCompoundDatasetFromHdf5File(arg1);
             elseif isstruct(arg1)
                 obj.version = obj.SCHEMA_VERSION;
                 obj=obj.appendStruct(arg1);
@@ -59,6 +62,30 @@ classdef Hdf5Domains < Hdf5CompoundDataset
             % Exports the dataset to an HDF5 file.
             objStruct=getStruct(obj);
             struct2hdf5(file,obj.DATASET,objStruct,obj.version)
+        end
+        function obj2CompareIndex = sortCompare(obj1,obj2)
+            % Compare and sort HDF5 domain objects. Used to mainly for CoFE solution verification.
+            n1 = size(obj1.ID,1);
+            n2 = size(obj2.ID,1);
+            if n1~=n2; error('HDF5 domain objects being compared are different sizes'); end
+            if obj1.version~=obj2.version; warning('The HDF5 domain objects being compared use different schema versions. This may cause issues.'); end
+            
+            % Compare and sort using select domain integer properties
+            domain1IntegerProperties = [obj1.SUBCASE,obj1.STEP,obj1.ANALYSIS,...
+                obj1.MODE,obj1.DESIGN_CYCLE,obj1.RANDOM,obj1.SE];
+            domain2IntegerProperties = uint32([obj2.SUBCASE,obj2.STEP,obj2.ANALYSIS,...
+                obj2.MODE,obj2.DESIGN_CYCLE,obj2.RANDOM,obj2.SE]);
+            obj1.compareIndex=uint32(1:n1);
+            if all(all(domain1IntegerProperties==domain2IntegerProperties))
+               obj2CompareIndex=1:n1;
+            else
+                warning('Attempting to sort HDF5 Domain objects for comparison.')
+                [~,~,obj2CompareIndex]=intersect(domain1IntegerProperties,domain2IntegerProperties,'rows','stable');
+                if ~all(all(domain1IntegerProperties==domain2IntegerProperties(obj2CompareIndex,:)))
+                    error('Sorting for HDF5 domain comparison failed.')
+                end
+            end
+            obj2CompareIndex=uint32(obj2CompareIndex);
         end
     end
 end

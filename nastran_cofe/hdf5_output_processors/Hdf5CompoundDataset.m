@@ -22,7 +22,7 @@ classdef (Abstract) Hdf5CompoundDataset
         export(obj,file)
     end
     methods
-        function obj = import(obj,datasetString)
+        function obj = importCompoundDatasetFromHdf5File(obj,datasetString)
             % Imports the dataset from an HDF5 file. And converts  struct
             % data from h5read to properties of the specific dataset class
             % instance.
@@ -53,6 +53,62 @@ classdef (Abstract) Hdf5CompoundDataset
             % Creates a MATLAB table from the H5T_COMPOUND data.
             objStruct=getStruct(obj);
             objTable=struct2table(objStruct);
+        end
+        function compareCompoundDataset(obj1,obj2,obj2index)
+           % Compare HDF5 compound dataset objects. Used to mainly to verify CoFE solutions.
+           % INPUTS
+           % obj1 [Hdf5CompoundDataset] result one (typically CoFE result)
+           % obj2 [Hdf5CompoundDataset] result one (typically Nastran result)
+           % obj2index [n,1 uint32] sorted index for consistent HDF5 domains
+           
+           obj1Struct = getStruct(obj1);
+           obj2Struct = getStruct(obj2);
+           
+           % loop over domain IDS
+           uniqueDomainIDs = unique(obj1Struct.DOMAIN_ID);
+           for i = 1:size(uniqueDomainIDs,1)
+               index1 = uniqueDomainIDs(i)==obj1Struct.DOMAIN_ID;
+               index2 = obj2index(uniqueDomainIDs(i))==obj2Struct.DOMAIN_ID;
+               % loop over field names
+               fnLoop=fieldnames(rmfield(obj1Struct,{'DOMAIN_ID'}))';
+               for fn = fnLoop
+                   comparisonFailed = false;
+                   
+                   result1 = obj1.(fn{1});
+                   result2 = obj2.(fn{1});
+                   
+                   % Manage multidimensional results
+                   if size(result1,2)>1
+                       result1DomainI = result1(:,index1);
+                       result2DomainI = result2(:,index2);
+                   else
+                       result1DomainI = result1(index1);
+                       result2DomainI = result2(index2);
+                   end
+                   
+                   % Type management
+                   if isa(result1,'double')
+                       normalizedDifference=calculateNormalizedDifference(result1DomainI,result2DomainI);
+                       if any(any(abs(normalizedDifference)>0.01))
+                           comparisonFailed = true;
+                           normalizedDifference
+                       end
+                   elseif isinteger(result1)
+                       if any(any(result1DomainI~=result2DomainI))
+                           comparisonFailed = true;
+                       end
+                   else
+                       error('Data type unsupported')
+                   end
+                   
+                   % Error if comparison failed
+                   if comparisonFailed
+                       [result1DomainI,result2DomainI]
+                       metaClass = metaclass(obj1);
+                       warning('HDF5 comparison failed for Class %s Property %s',metaClass.Name,fn{1})
+                   end
+               end
+           end
         end
     end
     methods (Access = protected)

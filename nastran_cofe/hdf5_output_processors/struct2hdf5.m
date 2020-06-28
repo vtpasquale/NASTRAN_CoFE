@@ -94,6 +94,7 @@ H5D.write(dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', structData);
 
 % version attribute
 if nargin > 3
+    if isempty(version); error('Should not input empty argument - this will cause problems.'); end
     acpl_id = H5P.create('H5P_ATTRIBUTE_CREATE');
     type_id = H5T.copy('H5T_STD_I64LE');
     space_id = H5S.create_simple(1,1,1);

@@ -31,6 +31,27 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
                 H5G.close(objIndexGroup);
             end
         end
+        function compare(obj1,obj2,obj2index)
+            % Function to compare objects
+            
+            % sort metaclass types
+            for i = 1:size(obj1,1)
+                metaClass1=metaclass(obj1(i));
+                className1{i} = metaClass1.Name;
+            end
+            for i = 1:size(obj2,1)
+                metaClass2=metaclass(obj2(i));
+                className2{i} = metaClass2.Name;
+            end
+            
+            % loop over types
+            for i = 1:size(obj1,1)
+                j = find(strcmp(className1,className2{i}));
+                if length(j)~=1; error('Issue with result type identification for comparison.'); end
+                compareCompoundDataset(obj1(i),obj2(j),obj2index)
+            end
+            
+        end
     end
     methods (Static = true)
         function hdf5ElementForce = constructFromFile(filename)
@@ -53,7 +74,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
                 end
             end
         end
-        function hdf5ElementForce=constructFromCofe(model,solution)
+        function hdf5ElementForce = constructFromCofe(model,solution)
             % Creates Hdf5ElementForce object from CoFE data
             %
             % INPUTS

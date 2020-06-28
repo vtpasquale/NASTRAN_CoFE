@@ -113,8 +113,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             % without maintaining a dictionary of element types and classes
             hdf5.elemental = Hdf5Elemental(model,obj);
             
-%             hdf5.elemental = Element.solution2hdf5(obj,model);
-
+            hdf5.nodal = Hdf5Nodal.constructFromCofe(obj);
             
 %         baseHdf5DomainID % [1,1 uint32]
 %         vectorHdf5DomainID % [nResponseVectors,1 uint32]

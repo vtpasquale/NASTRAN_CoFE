@@ -39,7 +39,7 @@ classdef Hdf5ElementForceBar < Hdf5ElementForce
         function obj = Hdf5ElementForceBar(arg1,arg2)
             if nargin > 0
                 if ischar(arg1)
-                    obj = obj.import(arg1);
+                    obj = obj.importCompoundDatasetFromHdf5File(arg1);
                 elseif isa(arg1,'ElementOutputData') 
                     obj = obj.constructFromElementOutputData(arg1,arg2);
                     obj.version = obj.SCHEMA_VERSION;

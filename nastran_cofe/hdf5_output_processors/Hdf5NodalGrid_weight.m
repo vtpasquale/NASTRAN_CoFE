@@ -60,7 +60,7 @@ classdef Hdf5NodalGrid_weight < Hdf5Nodal
         function obj = Hdf5NodalGrid_weight(filename)
             if nargin < 1
             else
-                obj = obj.import(filename);
+                obj = obj.importCompoundDatasetFromHdf5File(filename);
             end
         end
     end

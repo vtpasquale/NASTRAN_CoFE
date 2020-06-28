@@ -38,7 +38,7 @@ classdef Hdf5SummaryEigenvalue < Hdf5Summary
         function obj = Hdf5SummaryEigenvalue(filename)
             if nargin < 1
             else
-                obj = obj.import(filename);
+                obj = obj.importCompoundDatasetFromHdf5File(filename);
             end
         end
     end
