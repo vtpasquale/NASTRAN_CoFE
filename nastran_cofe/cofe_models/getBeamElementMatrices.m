@@ -1,4 +1,4 @@
-function [T_e0,k_e,m_e] = getBeamElementMatrices(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag)
+function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag)
 % Returns the element matrices for a prismatic BEAM/BAR element in 3D space.
 %
 % Inputs
@@ -19,7 +19,9 @@ function [T_e0,k_e,m_e] = getBeamElementMatrices(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,ns
 % T_e0 = [3,3 double] transformation matrix from the basic reference frame to the element reference frame
 % k_e = [12,12 double] element stiffness matrix in the element reference frame
 % m_e = [12,12 double] element mass matrix in the element reference frame
-
+% volume [double] element volume
+% mass [double] element mass
+            
 % Anthony Ricciardi
 
 L = normCS(p2-p1); % norm(p2-p1) is not complex-step friendly % sqrt( (p2(1)-p1(1)).^2 + (p2(2)-p1(2)).^2 + (p2(3)-p1(3)).^2 );
@@ -112,5 +114,10 @@ end
 %     mR([2,6,8,12],[2,6,8,12]) = rIz;
 %     mR([3,5,9,11],[3,5,9,11]) = rIy;
 %     m_e = m_e + mR;
+
+% Volume and mass
+volume = L*A;
+mass = volume*rho;
+
 
 end

@@ -13,6 +13,9 @@ classdef Cbar < Element
         R_eg % [12 x 12 double] rotation matrix from the element reference frame to the nodal displacement reference frame.
         k_e % [12 x 12 double] element stiffness matrix in the element reference frame
         m_e % [12 x 12 double] element mass matrix in the element reference frame
+        
+        volume % [double] element volume
+        mass % [double] element mass
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(34); % [uint8] Element code corresponding to Nastran item codes documentation.
@@ -33,7 +36,8 @@ classdef Cbar < Element
             pty = model.property.getProperty(obj.pid,model,'Pbeam');
             
             % Element matricies
-            [T_e0,obj.k_e,obj.m_e] = getBeamElementMatrices(p1,p2,nu_0,...
+            [T_e0,obj.k_e,obj.m_e,obj.volume,obj.mass] = ...
+                getBeamElementMatrices(p1,p2,nu_0,...
                 pty.E,pty.G,pty.a,pty.i2,pty.i1,pty.j,pty.rho,pty.nsm,...
                 pty.k1,pty.k2,model.coupledMassFlag);
             

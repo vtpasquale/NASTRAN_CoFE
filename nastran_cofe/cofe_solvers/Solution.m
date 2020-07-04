@@ -76,51 +76,6 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             end
             fclose(fid);
         end % printTextOutput()
-        function hdf5 = solution2Hdf5(obj,model)
-            % Convert solution data to Hdf5 data
-            %
-            % INPUTS
-            % obj   [nSubcases,nSuperElements Solution]
-            % model [nSuperElements,1 Model]        
-            %
-            % OUTPUTS
-            % hdf5 [Hdf5] HDF5 output file object
-            
-            % Check inputs
-            [nRowsSolution,nColumnsSolution]=size(obj);
-            [nModel,nColumnsModel]=size(model);
-            nCases = size(model(1).caseControl,1);
-            if nRowsSolution~=nCases; error('The solution object array is inconsistent with the residual structure case control array.'); end
-            if nColumnsSolution~=nModel; error('nColumnsSolution~=nModel'); end
-            if nColumnsModel~=1; error('nColumnsModel~=1'); end
-            
-            % Create Hdf5 instance
-            hdf5 = Hdf5();
-            
-            % Model superelements domain data to HDF5 subcase 0
-            modelDomains = model.model2Hdf5Domains();
-            hdf5.domains = Hdf5Domains(modelDomains);
-                        
-            % Append Hdf5 domain data for all analysis subcases
-            for caseIndex = 1:nCases
-                startDomainId = hdf5.domains.ID(end)+1;
-                [obj(caseIndex,:),caseIndexDomains] = obj(caseIndex,:).solution2Hdf5Domains(model,startDomainId);
-                hdf5.domains = hdf5.domains.appendStruct(caseIndexDomains);
-            end
-            
-            % Create HDF5 element results data
-            % pass the model object so the element classes can be found
-            % without maintaining a dictionary of element types and classes
-            hdf5.elemental = Hdf5Elemental(model,obj);
-            
-            hdf5.nodal = Hdf5Nodal.constructFromCofe(obj);
-            
-%         baseHdf5DomainID % [1,1 uint32]
-%         vectorHdf5DomainID % [nResponseVectors,1 uint32]
-            
-            
-        end % solution2Hdf5()
-        
     end
     methods (Sealed = true, Access = private)
         function printTextOutput_sub(obj,model,fid,outputHeading)

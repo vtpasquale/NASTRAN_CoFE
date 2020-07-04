@@ -12,7 +12,7 @@
 % The current implemenation of this class contains and interfaces with
 % classes that represent the data stored in Group '/NASTRAN/RESULT'.
 % Corresponding data in Group '/INDEX' is dependent data; it is not stored,
-% but it is derived when the HDF5 file is exported.
+% but it is derived from stored data when the HDF5 file is exported.
 %
 % HDF5 **.h5
 % Group '/NASTRAN'
@@ -28,7 +28,6 @@
 %     stored but are derived and exported during HDF5 export.]
 
 % A. Ricciardi
-% December 2019
 
 classdef Hdf5
     
@@ -41,13 +40,15 @@ classdef Hdf5
     end
     
     methods
-        function obj = Hdf5(inputArg)
+        function obj = Hdf5(arg1)
             % Class constructor for Hdf5. Input argument is an MSC Nastran
             % format HDF5 file or a CoFE model and solution data.
             
             if nargin>0
-                if ischar(inputArg)
-                    obj = obj.constructFromFile(inputArg);
+                if ischar(arg1)
+                    obj = obj.constructFromFile(arg1);
+                elseif isa(arg1,'Cofe')
+                    obj = obj.constructFromCofe(arg1.model,arg1.solution);
                 else
                     error('Input to Hdf5 class constructor must be empty or type char.')
                 end
@@ -88,8 +89,7 @@ classdef Hdf5
             H5G.close(nastranResultsId);
             H5G.close(nastranId);
             H5F.close(fid);
-        end
-        
+        end       
         function compare(obj1,obj2)
             % Compare HDF5 objects. Used to mainly to verify CoFE solutions
             %
@@ -149,6 +149,41 @@ classdef Hdf5
             if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/SUMMARY'))
                 obj.summary=Hdf5Summary.constructFromFile(filename);
             end
+        end
+        function obj = constructFromCofe(obj,model,solution)
+            % Convert CoFE data to Hdf5 data
+            %
+            % INPUTS
+            % model [nSuperElements,1 Model]
+            % solution [nSubcases,nSuperElements Solution]
+            
+            % Check inputs
+            [nRowsSolution,nColumnsSolution]=size(solution);
+            [nModel,nColumnsModel]=size(model);
+            nCases = size(model(1).caseControl,1);
+            if nRowsSolution~=nCases; error('The solution object array is inconsistent with the residual structure case control array.'); end
+            if nColumnsSolution~=nModel; error('nColumnsSolution~=nModel'); end
+            if nColumnsModel~=1; error('nColumnsModel~=1'); end
+            
+            % Model superelements domain data to HDF5 subcase 0
+            modelDomains = model.model2Hdf5Domains();
+            obj.domains = Hdf5Domains(modelDomains);
+                        
+            % Append Hdf5 domain data for all analysis subcases
+            for caseIndex = 1:nCases
+                startDomainId = obj.domains.ID(end)+1;
+                [solution(caseIndex,:),caseIndexDomains] = solution(caseIndex,:).solution2Hdf5Domains(model,startDomainId);
+                obj.domains = obj.domains.appendStruct(caseIndexDomains);
+            end
+            
+            % Create HDF5 element results data
+            % pass the model object so the element classes can be found
+            % without maintaining a dictionary of element types and classes
+            obj.elemental = Hdf5Elemental(model,solution);
+            
+            % Create HDF5 nodes results data
+            obj.nodal = Hdf5Nodal.constructFromCofe(solution);
+            
         end
     end
 end

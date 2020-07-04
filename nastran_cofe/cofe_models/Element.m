@@ -7,6 +7,13 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         eid % [int] Element identification number.
         g % [1,: int] Node identification numbers of connection points.
         gdof % [ngdof,1 int] Indices of of element degrees of freedom in global set
+        
+        R_eg % [12 x 12 double] rotation matrix from the element reference frame to the nodal displacement reference frame
+        k_e % [12 x 12 double] element stiffness matrix in the element reference frame
+        m_e % [12 x 12 double] element mass matrix in the element reference frame
+        
+        volume % [double] element volume
+        mass % [double] element mass
     end
 %     properties (Abstract=true,Hidden=true)
 %         ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation

@@ -56,7 +56,6 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                 end
             end            
         end
-        
         function hdf5Nodal = constructFromCofe(solution)
             % Creates Hdf5Nodal object from CoFE data
             %
@@ -81,7 +80,7 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                         else
                             hdf5NodalNext = Hdf5NodalDisplacement();
                         end
-                        hdf5NodalNext = hdf5NodalNext.constructFromRegularNodeOutputData(nodeDisplacementData,domainIDs);
+                        hdf5NodalNext = hdf5NodalNext.constructFromNodeOutputData(nodeDisplacementData,domainIDs);
                         if isempty(hdf5Nodal)
                             hdf5Nodal = hdf5NodalNext;
                         else
@@ -93,7 +92,7 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                     nodeSpcForceData=solution(i,j).spcforces;
                     if ~isempty(nodeSpcForceData)
                         hdf5NodalNext = Hdf5NodalSpc_force();
-                        hdf5NodalNext = hdf5NodalNext.constructFromRegularNodeOutputData(nodeSpcForceData,domainIDs);
+                        hdf5NodalNext = hdf5NodalNext.constructFromNodeOutputData(nodeSpcForceData,domainIDs);
                         if isempty(hdf5Nodal)
                             hdf5Nodal = hdf5NodalNext;
                         else
@@ -103,12 +102,11 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                     
                 end
             end
-        end
-                
+        end           
     end
     
-    methods (Sealed = true, Access = private)
-        function obj = constructFromRegularNodeOutputData(obj,nodeOutputData,domainIDs)
+    methods (Access = private)
+        function obj = constructFromNodeOutputData(obj,nodeOutputData,domainIDs)
             % Function to convert node eigenvector output data to HDF5
             %
             % INPUTS
@@ -128,7 +126,8 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
             obj.DOMAIN_ID = domainMatrix(:);
             obj.version = obj.SCHEMA_VERSION;
         end
-        
+    end
+    methods (Sealed = true, Access = private)
         function obj=append(obj,hdf5NodalNext)
             nObj = size(obj,1);
             nextMetaClass = metaclass(hdf5NodalNext);
