@@ -31,7 +31,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
                 H5G.close(objIndexGroup);
             end
         end
-        function compare(obj1,obj2,obj2index)
+        function compare(obj1,obj2,obj2index,compareExponent)
             % Function to compare objects
             
             % sort metaclass types
@@ -48,7 +48,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
             for i = 1:size(obj1,1)
                 j = find(strcmp(className1,className2{i}));
                 if length(j)~=1; error('Issue with result type identification for comparison.'); end
-                compareCompoundDataset(obj1(i),obj2(j),obj2index)
+                compareCompoundDataset(obj1(i),obj2(j),obj2index,compareExponent)
             end
             
         end

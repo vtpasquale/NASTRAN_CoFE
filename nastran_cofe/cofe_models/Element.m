@@ -126,8 +126,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
                 end
                 if ~isempty(eke)
                     if isa(solution,'ModesSolution')
-                        w2 = solution.eigenvalueTable.eigenvalue;
-                        eke = repmat(w2.',[3,1]).*eke;
+                        eke = repmat(solution.w2.',[3,1]).*eke;
                         eke(2,:) = 100*eke(2,:)./solution.totalEnergy.';
                         EKE = [EKE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,5,eke)];
                     end

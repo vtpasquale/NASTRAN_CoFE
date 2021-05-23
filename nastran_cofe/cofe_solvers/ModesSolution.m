@@ -19,9 +19,9 @@ classdef ModesSolution < Solution
         strain
         ese
         eke
-        
-        totalEnergy
-    
+    end
+    properties (Hidden = true)
+        w2 % [nResponseVectors,1 double] eigenvalue for modes solutions (saved seperatly from eigenvalueTable to calculate element kinetic energy inside superelements)
     end
     
     methods
@@ -70,23 +70,24 @@ classdef ModesSolution < Solution
             % Recover model results
             obj = model.recover(obj,u_a);
         end
-        function [obj,hdf5Domains] = solution2Hdf5Domains(obj,model,startDomainId)
+        function [modesSolution,hdf5Domains] = solution2Hdf5Domains(modesSolution,model,startDomainId)
             % Convert solution data to Hdf5 domain data and set obj.vectorHdf5DomainID value
             %
             % INPUTS
-            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
-            % model = [nSuperElements,1 Model] Array of Model objects, one for each superelement
+            % modesSolution = [1,1 ModesSolution] Modes Solution object
+            % model = [1,1 Model] Model object
             % startDomainId = [uint32] starting domain ID
             %
             % OUTPUTS
-            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
+            % obj = [1,1 ModesSolution] ModesSolution objects with vectorHdf5DomainID property set
             % hdf5Domains = [struct] Hdf5Domains fields and properties
             
             % Checks
-            [nCase,nModel]=size(obj);
-            if nCase~=1; error('Function only operates on Solution arrays size 1 x n.'); end
-            if size(model,2)~=1; error('Function only operates on Model arrays size n x 1.'); end
-            if size(model,1)~=nModel; error('size(obj,2)~=size(model,1)'); end
+            [nCase,nModel]=size(modesSolution);
+            if nCase~=1; error('Function only operates on Solution size 1 x 1.'); end
+            if nModel~=1; error('Function only operates on Solution size 1 x 1.'); end
+            if size(model,2)~=1; error('Function only operates on Model size 1 x 1.'); end
+            if size(model,1)~=1; error('Function only operates on Model size 1 x 1.'); end
             
             % Initialize empty struct data
             hdf5Domains.ID = [];
@@ -95,29 +96,26 @@ classdef ModesSolution < Solution
             hdf5Domains.TIME_FREQ_EIGR = [];
             hdf5Domains.MODE = [];
             hdf5Domains.SE = [];
-                        
-            % Loop over superelements to create vector domains
-            for i = 1:nModel
-                nVectors = size(obj(i).u_g,2);
-                
-                obj(i).vectorHdf5DomainID = uint32(startDomainId:startDomainId+nVectors-1)';
-                hdf5Domains.ID = [hdf5Domains.ID; obj(i).vectorHdf5DomainID];
-                startDomainId = hdf5Domains.ID(end)+1;
-                
-                hdf5Domains.SUBCASE = [hdf5Domains.SUBCASE;...
-                    repmat( model(i).caseControl(obj(i).caseControlIndex).subcase,[nVectors,1])  ];
-                
-                hdf5Domains.ANALYSIS = [hdf5Domains.ANALYSIS;...
-                    repmat( uint32(2) ,[nVectors,1])  ];
-                
-                hdf5Domains.TIME_FREQ_EIGR = [hdf5Domains.TIME_FREQ_EIGR;...
-                    obj(1).eigenvalueTable.eigenvalue];
-                
-                hdf5Domains.MODE = [hdf5Domains.MODE; uint32(1:nVectors)'];
-                
-                hdf5Domains.SE = [hdf5Domains.SE;...
-                    repmat( model(i).superElementID,[nVectors,1])  ];
-            end
+            
+            nVectors = size(modesSolution.u_g,2);
+            
+            modesSolution.vectorHdf5DomainID = uint32(startDomainId:startDomainId+nVectors-1)';
+            hdf5Domains.ID = [hdf5Domains.ID; modesSolution.vectorHdf5DomainID];
+            startDomainId = hdf5Domains.ID(end)+1;
+            
+            hdf5Domains.SUBCASE = [hdf5Domains.SUBCASE;...
+                repmat( model.caseControl(modesSolution.caseControlIndex).subcase,[nVectors,1])  ];
+            
+            hdf5Domains.ANALYSIS = [hdf5Domains.ANALYSIS;...
+                repmat( uint32(2) ,[nVectors,1])  ];
+            
+            hdf5Domains.TIME_FREQ_EIGR = [hdf5Domains.TIME_FREQ_EIGR;...
+                modesSolution.w2];
+            
+            hdf5Domains.MODE = [hdf5Domains.MODE; uint32(1:nVectors)'];
+            
+            hdf5Domains.SE = [hdf5Domains.SE;...
+                repmat( model.superElementID,[nVectors,1])  ];
             
             % Fill unused fields
             fillZeros = zeros(size(hdf5Domains.ID,1),1,'uint32');

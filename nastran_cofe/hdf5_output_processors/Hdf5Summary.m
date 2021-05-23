@@ -1,21 +1,21 @@
-%Hdf5Nodal Abstract superclass for MSC Nastran HDF5 format output summary data.
+%Hdf5Summary Abstract superclass for MSC Nastran HDF5 summary data.
 
 % A. Ricciardi
 % Jan 2020
 
 classdef (Abstract) Hdf5Summary < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
     
-%     properties  (Abstract) % Can't make properties abstract and constant
-%         DATASET
-%     end
+    %     properties  (Abstract) % Can't make properties abstract and constant
+    %         DATASET
+    %     end
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/SUMMARY/';
     end
-%     methods (Static = true)
-%         function obj = Hdf5Summary(arg1)
-%             % no class constructor for abstract classes
-%         end
-%     end
+    %     methods (Static = true)
+    %         function obj = Hdf5Summary(arg1)
+    %             % no class constructor for abstract classes
+    %         end
+    %     end
     methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
             if size(obj,1)
@@ -54,8 +54,40 @@ classdef (Abstract) Hdf5Summary < Hdf5CompoundDataset & matlab.mixin.Heterogeneo
                 else
                     warning('Hdf5 summary result %s not supported.',upper(resultName))
                 end
-            end            
+            end
+        end
+        
+        function hdf5Summary = constructFromCofe(solution)
+            % Function to solution output data to HDF5 summary
+            %
+            % INPUTS
+            % solution [nSubcases,nSuperElements Solution]
+            hdf5Summary = [];
+            nSubcases=size(solution,1);
+            for i = 1:nSubcases
+                if isa(solution(i,1),'ModesSolution')
+                    hdf5SummaryNext = Hdf5SummaryEigenvalue(solution(i,1));
+                    if isempty(hdf5Summary)
+                        hdf5Summary=hdf5SummaryNext;
+                    else
+                        hdf5Summary = hdf5Summary.append(hdf5SummaryNext);
+                    end
+                end
+            end
+        end
+    end
+    methods (Sealed = true, Access = private)
+        function obj=append(obj,hdf5SummaryNext)
+            nObj = size(obj,1);
+            nextMetaClass = metaclass(hdf5SummaryNext);
+            for i = 1:nObj
+                if isa(obj(i),nextMetaClass.Name)
+                    obj(i) = obj(i).appendObj(hdf5SummaryNext);
+                    return
+                end
+            end
+            % Only gets here if this is a new element type
+            obj = [obj;hdf5SummaryNext];
         end
     end
 end
-

@@ -37,9 +37,9 @@ classdef Hdf5Elemental
                 H5G.close(objIndexGroup);
             end
         end
-        function compare(obj1,obj2,obj2index)
+        function compare(obj1,obj2,obj2index,compareExponent)
             % Function to compare objects
-            obj1.hdf5ElementForce.compare(obj2.hdf5ElementForce,obj2index)
+            obj1.hdf5ElementForce.compare(obj2.hdf5ElementForce,obj2index,compareExponent)
             
         end
     end   

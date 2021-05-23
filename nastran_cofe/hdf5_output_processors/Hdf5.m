@@ -103,13 +103,19 @@ classdef Hdf5
             end
             
             % Domains - sort and compare
-            obj2CompareIndex = sortCompare(obj1.domains,obj2.domains);
+            [obj2CompareIndex,compareExponent] = sortCompare(obj1.domains,obj2.domains);
             
             % Node results - Eigenvector scaling
+            % scaling may be more trouble than it is worth. Repeated
+            % eigenvalues complicate matters. Consider comparing unsigned
+            % quantities only (eigenvalues, element energy) or squared
+            % quantities (e.g., u_g^2)
+            
+            
 
             
             % Element results
-            obj1.elemental.compare(obj2.elemental,obj2CompareIndex)
+            obj1.elemental.compare(obj2.elemental,obj2CompareIndex,compareExponent)
             
             
             
@@ -158,22 +164,31 @@ classdef Hdf5
             % solution [nSubcases,nSuperElements Solution]
             
             % Check inputs
-            [nRowsSolution,nColumnsSolution]=size(solution);
-            [nModel,nColumnsModel]=size(model);
+            [nSubcases,nSuperElements2]=size(solution);
+            [nSuperElements,nColumnsModel]=size(model);
             nCases = size(model(1).caseControl,1);
-            if nRowsSolution~=nCases; error('The solution object array is inconsistent with the residual structure case control array.'); end
-            if nColumnsSolution~=nModel; error('nColumnsSolution~=nModel'); end
+            if nSubcases~=nCases; error('The solution object array is inconsistent with the residual structure case control array.'); end
+            if nSuperElements2~=nSuperElements; error('nColumnsSolution~=nModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
             
-            % Model superelements domain data to HDF5 subcase 0
-            modelDomains = model.model2Hdf5Domains();
-            obj.domains = Hdf5Domains(modelDomains);
-                        
-            % Append Hdf5 domain data for all analysis subcases
-            for caseIndex = 1:nCases
-                startDomainId = obj.domains.ID(end)+1;
-                [solution(caseIndex,:),caseIndexDomains] = solution(caseIndex,:).solution2Hdf5Domains(model,startDomainId);
-                obj.domains = obj.domains.appendStruct(caseIndexDomains);
+            
+            % create Hdf5Domains
+            for i = 1:nSuperElements
+                % Model superelements domain data to HDF5 subcase 0
+                modelDomain = model(i).model2Hdf5Domains();
+                if i == 1
+                    obj.domains = Hdf5Domains(modelDomain);
+                else
+                    modelDomain.ID = obj.domains.ID(end)+1;
+                    obj.domains = obj.domains.appendStruct(modelDomain);
+                end
+                
+                % Append Hdf5 domain data for all analysis subcases
+                for j = 1:nCases
+                    startDomainId = obj.domains.ID(end)+1;
+                    [solution(j,i),caseIndexDomains] = solution(j,i).solution2Hdf5Domains(model(i),startDomainId);
+                    obj.domains = obj.domains.appendStruct(caseIndexDomains);
+                end
             end
             
             % Create HDF5 element results data
@@ -183,6 +198,9 @@ classdef Hdf5
             
             % Create HDF5 nodes results data
             obj.nodal = Hdf5Nodal.constructFromCofe(solution);
+            
+            % Create HDF5 summary data
+            obj.summary = Hdf5Summary.constructFromCofe(solution);
             
         end
     end

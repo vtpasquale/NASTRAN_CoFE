@@ -35,11 +35,39 @@ classdef Hdf5SummaryEigenvalue < Hdf5Summary
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5SummaryEigenvalue(filename)
-            if nargin < 1
-            else
-                obj = obj.importCompoundDatasetFromHdf5File(filename);
+        function obj = Hdf5SummaryEigenvalue(arg1)
+            if nargin > 0
+                if ischar(arg1)
+                    obj = obj.importCompoundDatasetFromHdf5File(arg1);
+                elseif isa(arg1,'ModesSolution') 
+                    obj = obj.constructFromModesSolution(arg1);
+                    obj.version = obj.SCHEMA_VERSION;
+                else
+                    error('Constructor not implemented for this input type')
+                end
             end
+        end
+    end
+    methods (Static = true)
+        function obj = constructFromModesSolution(modesSolution)
+            % Function to construct HDF5 summary from modes solution
+            %
+            % INPUTS
+            % modesSolution [1,1 ModesSolution] Modes Solution
+            if length(modesSolution)~=1; error('Input should be a single modes solution'); end
+            obj=Hdf5SummaryEigenvalue();
+            et = modesSolution.eigenvalueTable;
+            n = size(et.eigenvalue,1);
+            obj.MODE  = int32(1:n).';
+            obj.ORDER = obj.MODE ;
+            obj.EIGEN = et.eigenvalue;
+            obj.OMEGA = et.angularFrequency;
+            obj.FREQ  = et.frequency;
+            obj.MASS  = et.generalizedMass;
+            obj.STIFF = et.generalizedStiffness;
+            obj.RESFLG = zeros(n,1,'int32');
+            obj.FLDFLG = zeros(n,1,'int32');
+            obj.DOMAIN_ID = modesSolution.vectorHdf5DomainID;
         end
     end
 end

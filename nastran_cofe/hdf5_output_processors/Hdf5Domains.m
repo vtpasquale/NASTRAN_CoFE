@@ -63,7 +63,7 @@ classdef Hdf5Domains < Hdf5CompoundDataset
             objStruct=getStruct(obj);
             struct2hdf5(file,obj.DATASET,objStruct,obj.version)
         end
-        function obj2CompareIndex = sortCompare(obj1,obj2)
+        function [obj2CompareIndex,compareExponent] = sortCompare(obj1,obj2)
             % Compare and sort HDF5 domain objects. Used to mainly for CoFE solution verification.
             n1 = size(obj1.ID,1);
             n2 = size(obj2.ID,1);
@@ -86,6 +86,10 @@ classdef Hdf5Domains < Hdf5CompoundDataset
                 end
             end
             obj2CompareIndex=uint32(obj2CompareIndex);
+
+            % square doubles when comparing eigenvectors
+            compareExponent=ones(size(obj2CompareIndex));
+            compareExponent(obj2.ANALYSIS(obj2CompareIndex)==2)=2.0;
         end
     end
 end

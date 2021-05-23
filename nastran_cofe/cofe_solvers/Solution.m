@@ -7,7 +7,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
     end
     properties (Hidden=true)
         vectorHdf5DomainID % [nResponseVectors,1 uint32] HDF5 output file Domain ID or each respone vector
-        totalResponseEnergy % [nResponseVectors,1 double] total energy of the response (strain and kinetic)
+        totalEnergy % [nResponseVectors,1 double] total energy of the response (strain and kinetic)
     end
     methods (Abstract)
         % The class constructor must...
@@ -26,16 +26,27 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             % obj = [1,nSuperElements Solution] Array of Solution objects, one for each superelement
             % K_aa [na,na sparse double] analysis set stiffness matrix
             % u_a [na nResponseVectors] analysis set response
+            if size(obj,1)~=1; error('This function is for one subcase multiple superelements.'); end
+            
+            
             obj(1).totalEnergy = 0.5*diag(u_a.'*K_aa*u_a);
             % check for modes: obj(1).totalEnergy == 0.5*obj(1).eigenvalueTable.eigenvalue.*diag(u_a.'*M_aa*u_a);
             
-            % Save for all superelements
+            % Save total energy for all superelements
             nSuperElements = size(obj,2);
             if nSuperElements > 1
                 for i = 2:nSuperElements
                     obj(i).totalEnergy = obj(1).totalEnergy;
                 end
             end
+            
+            % Save omega^2 for all superelements (for kinetic energy calculation)
+            if isa(obj(1),'ModesSolution')
+                for i = 1:nSuperElements
+                    obj(i).w2 = obj(1).eigenvalueTable.eigenvalue;
+                end
+            end
+            
         end
     end
     methods (Sealed = true)

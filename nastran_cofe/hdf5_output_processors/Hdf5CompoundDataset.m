@@ -54,12 +54,13 @@ classdef (Abstract) Hdf5CompoundDataset
             objStruct=getStruct(obj);
             objTable=struct2table(objStruct);
         end
-        function compareCompoundDataset(obj1,obj2,obj2index)
+        function compareCompoundDataset(obj1,obj2,obj2index,compareExponent)
            % Compare HDF5 compound dataset objects. Used to mainly to verify CoFE solutions.
            % INPUTS
            % obj1 [Hdf5CompoundDataset] result one (typically CoFE result)
            % obj2 [Hdf5CompoundDataset] result one (typically Nastran result)
            % obj2index [n,1 uint32] sorted index for consistent HDF5 domains
+           % compareExponent [n,1 double] exponent used for comparing signed data (any data type double). Square when comparing eigenvector data to avoid sign issues.
            
            obj1Struct = getStruct(obj1);
            obj2Struct = getStruct(obj2);
@@ -69,6 +70,7 @@ classdef (Abstract) Hdf5CompoundDataset
            for i = 1:size(uniqueDomainIDs,1)
                index1 = uniqueDomainIDs(i)==obj1Struct.DOMAIN_ID;
                index2 = obj2index(uniqueDomainIDs(i))==obj2Struct.DOMAIN_ID;
+               compareExponentI = compareExponent(uniqueDomainIDs(i));
                % loop over field names
                fnLoop=fieldnames(rmfield(obj1Struct,{'DOMAIN_ID'}))';
                for fn = fnLoop
@@ -88,7 +90,8 @@ classdef (Abstract) Hdf5CompoundDataset
                    
                    % Type management
                    if isa(result1,'double')
-                       normalizedDifference=calculateNormalizedDifference(result1DomainI,result2DomainI);
+                       normalizedDifference=calculateNormalizedDifference(...
+                           result1DomainI.^compareExponentI,result2DomainI.^compareExponentI);
                        if any(any(abs(normalizedDifference)>0.01))
                            comparisonFailed = true;
                            normalizedDifference
