@@ -165,10 +165,10 @@ classdef Model
             [nModel,mModel]=size(obj);
             if mModel~=1; error('Function only operates on Model arrays size n x 1.'); end
             if size(solution,1)~=1; error('Function only operates on Solution arrays size 1 x n.'); end
-            
+                        
             % Expand residual structure result
             solution(1) = obj(1).recover_sub(solution(1),u_a);
-            
+                      
             % Expand superelement results
             if nModel>1
                 for i = 2:nModel

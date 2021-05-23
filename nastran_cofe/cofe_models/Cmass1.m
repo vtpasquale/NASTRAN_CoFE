@@ -16,9 +16,11 @@ classdef Cmass1 < Element
         % gdof_plot
         ELEMENT_TYPE = uint8(999); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
     end
-    properties (Constant=true)
+    properties % (Constant=true)
         k_e = 0; % [1 x 1] element stiffness matrix in the element reference frame
         R_eg = 1;% [1 x 1] rotation matrix from the element reference frame to the nodal displacement reference frame
+        volume  = 0;% [double] element volume
+        mass = 0;% [double] element mass
     end
     methods
         function obj=assemble_sub(obj,model)           
@@ -28,12 +30,15 @@ classdef Cmass1 < Element
             
             pty = model.property.getProperty(obj.pid,model,'Pmass');
             obj.m_e = pty.m;
+            
+            
         end
-        function [force,stress,strain,strain_energy] = recover_sub(obj,u_g,returnIO,opts)
+        function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             force=[];
             stress=[];
             strain=[];
-            strain_energy=[];
+            strainEnergy=[];
+            kineticEnergy=[];
         end
     end
 end

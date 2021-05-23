@@ -30,7 +30,7 @@ classdef ElementOutputData
         function obj = set.responseType(obj,in)
             if isnumeric(in)==0; error('ElementOutputData.responseType must be a number'); end
             if mod(in,1) ~= 0; error('ElementOutputData.responseType must be an integer'); end
-            if in < 1 || in > 4; error('ElementOutputData.responseType must be greater than zero and less than 5.'); end
+            if in < 1 || in > 5; error('ElementOutputData.responseType must be greater than zero and less than 6.'); end
             obj.responseType=uint8(in);
         end
         function printTextOutput(obj,fid,model,outputHeading)

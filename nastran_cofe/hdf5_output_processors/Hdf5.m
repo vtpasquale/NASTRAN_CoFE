@@ -50,7 +50,7 @@ classdef Hdf5
                 elseif isa(arg1,'Cofe')
                     obj = obj.constructFromCofe(arg1.model,arg1.solution);
                 else
-                    error('Input to Hdf5 class constructor must be empty or type char.')
+                    error('Input to Hdf5 class constructor must be empty, type char, or type Cofe.')
                 end
             end
             

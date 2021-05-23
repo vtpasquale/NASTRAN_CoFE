@@ -47,10 +47,10 @@ classdef Cbar < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
         end
-        function [force,stress,strain,strainEnergy] = recover_sub(obj,u_g,model,returnFlags)
+        function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
             % u_g [nGodf,nVectors double] Response vector in nodal displacement reference frame
-            % returnFlags [1,4 logical] [force,stress,strain,strain_energy] 1 -> recover, 0 -> return empty array []
+            % returnFlags [1,5 logical] [force,stress,strain,strainEnergy,kineticEnergy] 1 -> recover, 0 -> return empty array []
             %
             % OUTPUTS
             % force = [12,nVectors double] Element forces
@@ -80,7 +80,12 @@ classdef Cbar < Element
             %      End B Long. Stress or Strain at Point E;
             %      End B Long. Stress or Strain at Point F];
             %
-            % strainEnergy = [1,nVectors double] Element strain energy
+            % strainEnergy  = [3,nVectors double] Element strain energy
+            % kineticEnergy = [3,nVectors double] Element kinetic energy
+            %   indices:
+            %    [ energy           
+            %      energy----------> converted to percent total later by Element.recover()
+            %      energyDensity];
             
             
             % Check inputs
@@ -126,9 +131,22 @@ classdef Cbar < Element
             
             % Strain Energy
             if returnFlags(4)
-                strainEnergy = .5*diag(u_e.'*f_e).';
+                strainEnergy0 = .5*diag(u_e.'*f_e).';
+                strainEnergy = [strainEnergy0;
+                                strainEnergy0;%---> converted to percent total later by Element.recover()
+                                (1/obj.volume)*strainEnergy0];
             else
                 strainEnergy = [];
+            end
+            
+            % Kinetic Energy
+            if returnFlags(5)
+                kineticEnergy0 = .5*diag(u_e.'*obj.m_e*u_e).';
+                kineticEnergy = [kineticEnergy0;
+                                 kineticEnergy0;%---> converted to percent total later by Element.recover()
+                                 (1/obj.volume)*kineticEnergy0];
+            else
+                kineticEnergy = [];
             end
         end
         function printTextOutput(obj,fid,elementOutputData,outputHeading)

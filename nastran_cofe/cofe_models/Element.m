@@ -23,7 +23,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
 %     end
     methods (Abstract)
         obj = assemble_sub(obj,model) % Calculate element matricies
-        obj = recover_sub(obj,u_g) % Recover element response values
+        [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags) % Recover element response values
     end
     methods (Sealed=true)
         function obj = preprocess(obj)
@@ -78,8 +78,8 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             nElement = size(obj,1);
             IDs = uint32([obj.eid]).';
             
-            % returnIO [nElement,4] [force,stress,strain,strain_energy]
-            returnFlags = false(nElement,4);
+            % returnFlags [nElement,5] [force,stress,strain,strain_energy,kinetic_energy]
+            returnFlags = false(nElement,5);
             returnFlags(...
                 caseControl.force.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 1) = true;
@@ -92,6 +92,9 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             returnFlags(...
                 caseControl.ese.getRequestMemberIndices(IDs,caseControl.outputSet),...
                 4) = true;
+            returnFlags(...
+                caseControl.eke.getRequestMemberIndices(IDs,caseControl.outputSet),...
+                5) = true;
             
             % Any element indices where element results are requested
             recoverIndex = uint32(find(any(returnFlags,2)));
@@ -103,10 +106,11 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             S = [];
             E = [];
             ESE = [];
+            EKE = [];
             for i = 1:size(recoverIndex,1)
                 elementIndex = recoverIndex(i);
                 oi = obj(elementIndex);
-                [f,s,e,ese] = oi.recover_sub(u_g,model,returnFlags(elementIndex,:));
+                [f,s,e,ese,eke] = oi.recover_sub(u_g,model,returnFlags(elementIndex,:));
                 if ~isempty(f)
                     F = [F;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,1,f)];
                 end
@@ -117,13 +121,23 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
                     E = [E;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,3,e)];
                 end
                 if ~isempty(ese)
+                    ese(2,:) = 100*ese(2,:)./solution.totalEnergy.';
                     ESE = [ESE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,4,ese)];
+                end
+                if ~isempty(eke)
+                    if isa(solution,'ModesSolution')
+                        w2 = solution.eigenvalueTable.eigenvalue;
+                        eke = repmat(w2.',[3,1]).*eke;
+                        eke(2,:) = 100*eke(2,:)./solution.totalEnergy.';
+                        EKE = [EKE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,5,eke)];
+                    end
                 end
             end
             solution.force = F;
             solution.stress = S;
             solution.strain = E;
             solution.ese = ESE;
+            solution.eke = EKE;
         end
     end
 end

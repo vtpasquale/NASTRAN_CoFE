@@ -2,13 +2,13 @@ clearvars; close all; clc
 addpath(genpath(fullfile('..','..','nastran_cofe')));
 
 %% Run cases
-full = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','noReduction.dat'),'output',false);
-guyanNoSuper   = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','guyanReduction.dat'),'output',false);
-dynamicNoSuper = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','dynamicReduction.dat'),'output',false);
-guyan = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_guyan','guyanSuper.dat'),'output',false);
-cb1 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper1Mode.dat'),'output',false);
-cb2 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper2Modes.dat'),'output',false);
-cb3 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper3Modes.dat'),'output',false);
+full = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','noReduction.dat'),'writeOutput2Disk',false);
+guyanNoSuper   = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','guyanReduction.dat'),'writeOutput2Disk',false);
+dynamicNoSuper = Cofe(fullfile('gitControlTestDir','cantilever_bar','no_super','dynamicReduction.dat'),'writeOutput2Disk',false);
+guyan = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_guyan','guyanSuper.dat'),'writeOutput2Disk',false);
+cb1 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper1Mode.dat'),'writeOutput2Disk',false);
+cb2 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper2Modes.dat'),'writeOutput2Disk',false);
+cb3 = Cofe(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper3Modes.dat'),'writeOutput2Disk',false);
 
 %% Print tables
 full.solution(1).eigenvalueTable.printTextOutput(1)
@@ -31,7 +31,7 @@ cb3.solution(1).eigenvalueTable.printTextOutput(1)
 % getTable(fullHdf5.domains)
 
 
-
-cb3Hdf5 = cb3.solution.solution2Hdf5(cb3.model);
-delete('cb3.h5')
-cb3Hdf5.export('cb3.h5')
+% 
+% cb3Hdf5 = cb3.solution.solution2Hdf5(cb3.model);
+% delete('cb3.h5')
+% cb3Hdf5.export('cb3.h5')

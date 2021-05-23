@@ -75,7 +75,7 @@ classdef Hdf5Domains < Hdf5CompoundDataset
                 obj1.MODE,obj1.DESIGN_CYCLE,obj1.RANDOM,obj1.SE];
             domain2IntegerProperties = uint32([obj2.SUBCASE,obj2.STEP,obj2.ANALYSIS,...
                 obj2.MODE,obj2.DESIGN_CYCLE,obj2.RANDOM,obj2.SE]);
-            obj1.compareIndex=uint32(1:n1);
+            % obj1.compareIndex=uint32(1:n1);
             if all(all(domain1IntegerProperties==domain2IntegerProperties))
                obj2CompareIndex=1:n1;
             else

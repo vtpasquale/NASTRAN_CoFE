@@ -2,7 +2,7 @@
 % addpath(genpath(fullfile('..','..','..','cofe_toolbox')));
 
 % Run case
-cofe = Cofe(fullfile('nastran_runs','modes-000.dat'),'output',false);
+cofe = Cofe(fullfile('nastran_runs','modes-000.dat'),'writeOutput2Disk',false);
 
 % Start processing displacements to save isSignInconsistent
 nastran_u_g = csvread(fullfile('nastran_runs','modes-u_g.csv'),1,3);

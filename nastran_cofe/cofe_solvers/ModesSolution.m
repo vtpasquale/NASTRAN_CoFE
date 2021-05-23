@@ -18,6 +18,9 @@ classdef ModesSolution < Solution
         stress
         strain
         ese
+        eke
+        
+        totalEnergy
     
     end
     
@@ -60,6 +63,9 @@ classdef ModesSolution < Solution
             
             % Store Eigenvalue table
             obj(1).eigenvalueTable = EigenvalueTable(eigenvalues,diag(u_a.'*M_aa*u_a),diag(u_a.'*K_aa*u_a));
+            
+            % Calculate Total Energy
+            obj = obj.calculateTotalEnergy(K_aa,u_a);
             
             % Recover model results
             obj = model.recover(obj,u_a);

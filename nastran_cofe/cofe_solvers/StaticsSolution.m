@@ -14,7 +14,9 @@ classdef StaticsSolution < Solution
         stress
         strain
         ese
+        eke
         
+        totalEnergy
     end
     
     methods 
@@ -32,8 +34,11 @@ classdef StaticsSolution < Solution
             lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); warning('No applied loads found for this case.'); end
             
-            % solve
+            % Solve
             u_a = K_aa\p_a(:,lc);
+            
+            % Calculate Total Energy
+            obj = obj.calculateTotalEnergy(K_aa,u_a);
             
             % Recover model results
             obj = model.recover(obj,u_a);

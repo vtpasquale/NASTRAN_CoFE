@@ -5,7 +5,7 @@ full = Hdf5(fullfile('gitControlTestDir','cantilever_bar','no_super','noReductio
 guyan = Hdf5(fullfile('gitControlTestDir','cantilever_bar','part_super_guyan','guyanSuper.h5'));
 cb1 = Hdf5(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper1Mode.h5'));
 cb2 = Hdf5(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper2Modes.h5'));
-cb3 = Hdf5(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbSuper3Modes.h5'));
+cb3 = Hdf5(fullfile('gitControlTestDir','cantilever_bar','part_super_cb','cbsuper3modes.h5'));
 
 baseline = full.summary.FREQ(1:4);
 staticReduction = [guyan.summary.FREQ(1:2);NaN(2,1)];
