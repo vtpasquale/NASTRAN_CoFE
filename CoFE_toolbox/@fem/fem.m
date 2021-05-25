@@ -28,6 +28,7 @@ classdef fem
         CONM2@conm2;
         CORD2R@cord2r;
         CQUAD4@cquad4;
+        CTRIA3@ctria3;
         CROD@crod;
         EIGRL@eigrl;
         FORCE@force;
