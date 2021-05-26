@@ -21,7 +21,7 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                 sol = 101;
             end
             switch upper(sol)
-                case {101,'101','STATICS','SESTATICS'}
+                case {101,'101','STATICS','SESTATIC','SESTATICS'}
                     defaultAnalysis = 'STATICS';
                 case {103,'103','MODES','SEMODES'}
                     defaultAnalysis = 'MODES';

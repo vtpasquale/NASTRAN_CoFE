@@ -200,7 +200,10 @@ classdef Hdf5
             obj.nodal = Hdf5Nodal.constructFromCofe(solution);
             
             % Create HDF5 summary data
-            obj.summary = Hdf5Summary.constructFromCofe(solution);
+            obj_summary = Hdf5Summary.constructFromCofe(solution);
+            if ~isempty(obj_summary)
+                obj.summary = obj_summary;
+            end
             
         end
     end

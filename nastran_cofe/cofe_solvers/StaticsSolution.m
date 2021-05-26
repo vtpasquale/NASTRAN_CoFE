@@ -15,8 +15,6 @@ classdef StaticsSolution < Solution
         strain
         ese
         eke
-        
-        totalEnergy
     end
     
     methods 
