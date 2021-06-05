@@ -20,6 +20,8 @@ classdef Cbeam < Element
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(2); % [uint8] Element code corresponding to Nastran item codes documentation.
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBeam';
+        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainBeam';
+        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressBeam';
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -64,23 +66,25 @@ classdef Cbeam < Element
             %     7 |  Beam EndB Axial Force
             %     8 |  Beam EndB Plane1 Shear Force
             %     9 |  Beam EndB Plane2 Shear Force
-            %    12 |  Beam EndB Torque 
-            %    10 |  Beam EndB Plane1 Moment
-            %    11 |  Beam EndB Plane2 Moment
+            %    10 |  Beam EndB Torque 
+            %    11 |  Beam EndB Plane1 Moment
+            %    12 |  Beam EndB Plane2 Moment
             %    13 |  Beam EndA Grid ID (for HDF5) 
             %    14 |  Beam EndB Grid ID (for HDF5) ]
             %
             % stress  = [8,nVectors double] Element stresses
             % strain  = [8,nVectors double] Element strains
             %   indices:
-            %    [ End A Long. Stress or Strain at Point C;
-            %      End A Long. Stress or Strain at Point D;
-            %      End A Long. Stress or Strain at Point E;
-            %      End A Long. Stress or Strain at Point F;
-            %      End B Long. Stress or Strain at Point C;
-            %      End B Long. Stress or Strain at Point D;
-            %      End B Long. Stress or Strain at Point E;
-            %      End B Long. Stress or Strain at Point F];
+            %    [1 |  End A Long. Stress or Strain at Point C
+            %     2 |  End A Long. Stress or Strain at Point D
+            %     3 |  End A Long. Stress or Strain at Point E
+            %     4 |  End A Long. Stress or Strain at Point F
+            %     5 |  End B Long. Stress or Strain at Point C
+            %     6 |  End B Long. Stress or Strain at Point D
+            %     7 |  End B Long. Stress or Strain at Point E
+            %     8 |  End B Long. Stress or Strain at Point F
+            %     9 |  Beam EndA Grid ID (for HDF5)
+            %    10 |  Beam EndB Grid ID (for HDF5) ]
             %
             % strainEnergy  = [3,nVectors double] Element strain energy
             % kineticEnergy = [3,nVectors double] Element kinetic energy
@@ -123,14 +127,16 @@ classdef Cbeam < Element
             
             % Stress
             if returnFlags(2)
-                stress = s;
+                stress = [s;
+                          double(repmat(obj.g.',[1,nVectors]))];
             else
                 stress = [];
             end
             
             % Strain
             if returnFlags(3)
-                strain = (1/pty.E)*s;
+                strain = [(1/pty.E)*s;
+                          double(repmat(obj.g.',[1,nVectors]))];
             else
                 strain = [];
             end

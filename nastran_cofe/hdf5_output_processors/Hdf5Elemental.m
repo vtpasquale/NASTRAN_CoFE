@@ -8,17 +8,21 @@ classdef Hdf5Elemental
     properties        
         hdf5ElementForce@Hdf5ElementForce;
         hdf5ElementEnergy@Hdf5ElementEnergy;
-%         hdf5Strain@Hdf5Strain
-%         hdf5Stress@Hdf5Stress
+        hdf5ElementStrain@Hdf5ElementStrain
+        hdf5ElementStress@Hdf5ElementStress
     end
     methods
         function obj = Hdf5Elemental(arg1,arg2)
             if ischar(arg1)% arg1 = filename
                 obj.hdf5ElementForce = Hdf5ElementForce.constructFromFile(arg1);
                 obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromFile(arg1);
+                obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromFile(arg1);
+                obj.hdf5ElementStress = Hdf5ElementStress.constructFromFile(arg1);
             elseif isa(arg1,'Model')
                 obj.hdf5ElementForce = Hdf5ElementForce.constructFromCofe(arg1,arg2);
                 obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromCofe(arg1,arg2);
+                obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromCofe(arg1,arg2);
+                obj.hdf5ElementStress = Hdf5ElementStress.constructFromCofe(arg1,arg2);
             else
                 error('Constructor not implemented for this type')
             end
@@ -31,6 +35,8 @@ classdef Hdf5Elemental
                 
                 obj.hdf5ElementForce.export(objDataGroup,objIndexGroup)
                 obj.hdf5ElementEnergy.export(objDataGroup,objIndexGroup)
+                obj.hdf5ElementStrain.export(objDataGroup,objIndexGroup)
+                obj.hdf5ElementStress.export(objDataGroup,objIndexGroup)
                 
                 % close groups
                 H5G.close(objDataGroup);
@@ -41,7 +47,8 @@ classdef Hdf5Elemental
             % Function to compare objects
             obj1.hdf5ElementForce.compare(obj2.hdf5ElementForce,obj2index,compareExponent)
             obj1.hdf5ElementEnergy.compare(obj2.hdf5ElementEnergy,obj2index,compareExponent)
-            
+            obj1.hdf5ElementStrain.compare(obj2.hdf5ElementStrain,obj2index,compareExponent)
+            obj1.hdf5ElementStress.compare(obj2.hdf5ElementStress,obj2index,compareExponent)
         end
     end   
 end

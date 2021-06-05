@@ -22,8 +22,10 @@ classdef Crod < Element
         c % [double] Coefficient to determine torsional stress.
     end
     properties (Constant=true,Hidden = true)
-        ELEMENT_TYPE = uint8(1); % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+        ELEMENT_TYPE = uint8(1); % [uint8] Nastran element code corresponding to Nastran item codes documentation
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceRod';
+        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainRod';
+        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressRod';
     end
     properties (Hidden = true)
         E % [double] Elastic modulus
@@ -69,7 +71,8 @@ classdef Crod < Element
             % stress(2,nvectors) = Torsional stress
             % strain(1,nvectors) = Axial strain
             % strain(2,nvectors) = Torsional strain
-            % strainEnergy(1,nvectors) = element
+            % strainEnergy(1,nvectors) = element strain energy
+            % kineticEnergy(1,nvectors) = element kinetic energy
             
             % Check inputs
             if ~any(returnFlags); error('This function is not intended to be called if no vaules are to be recovered'); end

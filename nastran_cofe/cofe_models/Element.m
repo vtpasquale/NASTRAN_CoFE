@@ -16,10 +16,10 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         mass % [double] element mass
     end
 %     properties (Abstract=true,Hidden=true)
-%         ELEMENT_TYPE % [uint8] NASTRAN element code corresponding to NASTRAN item codes documentation
+%         ELEMENT_TYPE % [uint8] Nastran element code corresponding to Nastran item codes documentation
 %         HDF5_ELEMENT_FORCE_CLASSNAME
-% %         HDF5_STRESS_CLASSNAME
-% %         HDF5_STRAIN_CLASSNAME
+%         HDF5_STRAIN_CLASSNAME
+%         HDF5_STRESS_CLASSNAME
 %     end
     methods (Abstract)
         obj = assemble_sub(obj,model) % Calculate element matricies
