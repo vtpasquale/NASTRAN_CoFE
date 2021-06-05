@@ -56,6 +56,12 @@ classdef Hdf5
             
         end
         function export(obj,filename)
+            
+            % delete existing h5 file
+            if exist(filename,'file')==2
+                delete(filename)
+            end
+            
             % create file
             fid = H5F.create(filename);
             
@@ -98,21 +104,24 @@ classdef Hdf5
             % obj2 HDF5 object 2
             %
             % OUTPUTS
-            if obj1.schema~=obj2.schema
-                warning('The HDF5 object files being compared use different schema versions. This may cause issues.')
-            end
+            % Void. Warning issued when comparisons fail.
+            
+%             if obj1.schema~=obj2.schema
+%                 warning('The HDF5 object files being compared use different schema versions. This may cause issues.')
+%             end
             
             % Domains - sort and compare
             [obj2CompareIndex,compareExponent] = sortCompare(obj1.domains,obj2.domains);
             
-            % Node results - Eigenvector scaling
-            % scaling may be more trouble than it is worth. Repeated
-            % eigenvalues complicate matters. Consider comparing unsigned
-            % quantities only (eigenvalues, element energy) or squared
-            % quantities (e.g., u_g^2)
+            % Eigenvector scaling may be more trouble than it is worth. We
+            % could considering compring unsigned quantities only (e.g.,
+            % eigenvalues, element energy). Repeated eigenvalues complicate 
+            % matters. Here we are comparing squared quantities (e.g., u_g^2)
+            % to aviod sign issues. See the compareExponent variable. 
+            % Repeated eigenvalues will still cause issues.
             
-            
-
+            % Node results
+            obj1.nodal.compare(obj2.nodal,obj2CompareIndex,compareExponent)
             
             % Element results
             obj1.elemental.compare(obj2.elemental,obj2CompareIndex,compareExponent)
@@ -130,10 +139,10 @@ classdef Hdf5
             
             % read and verify schema
             obj.schema = uint32(h5readatt(filename,'/','SCHEMA'));
-            developementSchema = uint32(20182);
-            if obj.schema ~= developementSchema
-                warning('The %s HDF5 data schema is version %d. This program was developed based on schema version %d.',filename,obj.schema,developementSchema)
-            end
+%             developementSchema = uint32(20182);
+%             if obj.schema ~= developementSchema
+%                 warning('The %s HDF5 data schema is version %d. This program was developed based on schema version %d.',filename,obj.schema,developementSchema)
+%             end
             
             % read results
             info = h5info(filename,'/NASTRAN/RESULT/');

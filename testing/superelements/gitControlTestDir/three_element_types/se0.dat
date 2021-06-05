@@ -2,3 +2,12 @@ GRID*                 11               0           2160.              0.
 *                     0.               0
 GRID*                 25               0           2160.           -360.
 *                     0.               0
+$ Femap Load Set 1 : axial
+FORCE          1      11       0      1.      1.      0.      0.
+FORCE          1      25       0      1.      1.      0.      0.
+$ Femap Load Set 2 : bend
+FORCE          2      11       0      1.      0.      0.      1.
+FORCE          2      25       0      1.      0.      0.      1.
+$ Femap Load Set 3 : twist
+FORCE          3      11       0      1.      0.      0.      1.
+FORCE          3      25       0      1.      0.      0.     -1.

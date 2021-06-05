@@ -95,9 +95,9 @@ classdef Hdf5ElementForceBar < Hdf5ElementForce
             [~,index]=sort(domain_id);
             obj.EID =eid(index);
             obj.BM1A=bm1a(index);
-            obj.BM2A=bm2a(index);
+            obj.BM2A=-1*bm2a(index); % Nastran uses inconsistent sign convention
             obj.BM1B=bm1b(index);
-            obj.BM2B=bm2b(index);
+            obj.BM2B=-1*bm2b(index); % Nastran uses inconsistent sign convention
             obj.TS1 =ts1(index);
             obj.TS2 =ts2(index);
             obj.AF  =af(index);

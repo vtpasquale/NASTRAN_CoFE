@@ -1,7 +1,7 @@
 % clearvars; close all; clc
 % addpath(genpath(fullfile('..','..','nastran_cofe')));
 
-cofe = Cofe('truss_rand_coords.dat','output',false);
+cofe = Cofe('truss_rand_coords.dat','writeOutput2Disk',false);
 
 %% Transform node locations to local reference frame
 
@@ -35,21 +35,21 @@ for i = 1:size(csysList,1)
     cofeLocation(:,i) = coordinateSystem.x_c(cofe.model.point(nodeID).x_0);
 end
 
-locationDifference = normalizedDifference(location,cofeLocation);
+locationDifference = calculateNormalizedDifference(location,cofeLocation);
 assert(all(locationDifference(:)<1e-6),'Coordinate transformation error.') % [location;cofeLocation]
 
 %% Displacement in global (local) reference frames
 nastran_u_g = csvread('truss_rand_coords_u_g.csv',1,2);
-cofe_u_g = [cofe.solution.displacement_g.T1,cofe.solution.displacement_g.T2,cofe.solution.displacement_g.T3];
-u_gDifference = normalizedDifference(nastran_u_g,cofe_u_g);
+cofe_u_g = [cofe.solution.displacement.T1,cofe.solution.displacement.T2,cofe.solution.displacement.T3];
+u_gDifference = calculateNormalizedDifference(nastran_u_g,cofe_u_g);
 assert(all(u_gDifference(:)<1e-5),'Displacement result different than verification case.') % [location;cofeLocation]
 
 
-%% Displacement in basic reference frame
-nastran_u_0 = csvread('truss_rand_coords_u_0.csv',1,2);
-cofe_u_0 = [cofe.solution.displacement_0.T1,cofe.solution.displacement_0.T2,cofe.solution.displacement_0.T3];
-u_0Difference = normalizedDifference(nastran_u_0,cofe_u_0);
-assert(all(u_0Difference(:)<1e-5),'Displacement result different than verification case.') % [location;cofeLocation]
+% %% Displacement in basic reference frame
+% nastran_u_0 = csvread('truss_rand_coords_u_0.csv',1,2);
+% cofe_u_0 = [cofe.solution.displacement_0.T1,cofe.solution.displacement_0.T2,cofe.solution.displacement_0.T3];
+% u_0Difference = calculateNormalizedDifference(nastran_u_0,cofe_u_0);
+% assert(all(u_0Difference(:)<1e-5),'Displacement result different than verification case.') % [location;cofeLocation]
 
 
 

@@ -313,8 +313,20 @@ classdef Model
             
             % constraint forces
             solution.f_g = zeros(size(solution.u_g));
-            solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
-            % solution.f_0 = obj.R_0g*solution.f_g;
+            if isa(solution,'StaticsSolution')
+                solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) ...
+                                      + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
+                                      % - obj.p_g(obj.s,:); TODO - revisit this with load case sorting
+            elseif isa(solution,'ModesSolution')
+                w2 = repmat(solution.eigenvalueTable.eigenvalue.',[obj.nGdof,1]);
+                a_g= -1*w2.*solution.u_g;
+                solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) ...
+                                      + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:) ...
+                                      + obj.M_gg(obj.s,obj.f)*a_g(obj.f,:) ...
+                                      + obj.M_gg(obj.s,obj.s)*a_g(obj.s,:);
+            else
+                error('Update for new solution')
+            end
             
             % recover and store selected response data at elements 
             solution = obj.point.recover(solution,obj);

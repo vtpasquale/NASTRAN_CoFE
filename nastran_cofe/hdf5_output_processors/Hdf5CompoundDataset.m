@@ -27,9 +27,9 @@ classdef (Abstract) Hdf5CompoundDataset
             % data from h5read to properties of the specific dataset class
             % instance.
             obj.version = h5readatt(datasetString,[obj.GROUP,obj.DATASET],'version');
-            if obj.version ~= obj.SCHEMA_VERSION
-                metaClass = metaclass(obj); warning('Imported %s dataset schema version number is different than the dataset schema version used for CoFE development.',metaClass.Name)
-            end
+%             if obj.version ~= obj.SCHEMA_VERSION
+%                 metaClass = metaclass(obj); warning('Imported %s dataset schema version number is different than the dataset schema version used for CoFE development.',metaClass.Name)
+%             end
                 
             fieldData = h5read(datasetString,[obj.GROUP,obj.DATASET]);
             for fn = fieldnames(fieldData)'    %enumerat fields
@@ -65,6 +65,9 @@ classdef (Abstract) Hdf5CompoundDataset
            obj1Struct = getStruct(obj1);
            obj2Struct = getStruct(obj2);
            
+           % Print what is being compared (consider commenting this out)
+           fprintf(1,'Comparing %s%s\n' ,obj1.GROUP,obj1.DATASET)
+           
            % loop over domain IDS
            uniqueDomainIDs = unique(obj1Struct.DOMAIN_ID);
            for i = 1:size(uniqueDomainIDs,1)
@@ -95,6 +98,7 @@ classdef (Abstract) Hdf5CompoundDataset
                        if any(any(abs(normalizedDifference)>0.01))
                            comparisonFailed = true;
                            normalizedDifference
+                           [result1DomainI,result2DomainI,result1DomainI.^compareExponentI,result2DomainI.^compareExponentI]
                        end
                    elseif isinteger(result1)
                        if any(any(result1DomainI~=result2DomainI))
@@ -106,7 +110,7 @@ classdef (Abstract) Hdf5CompoundDataset
                    
                    % Error if comparison failed
                    if comparisonFailed
-                       [result1DomainI,result2DomainI]
+                       % [result1DomainI,result2DomainI]
                        metaClass = metaclass(obj1);
                        warning('HDF5 comparison failed for Class %s Property %s',metaClass.Name,fn{1})
                    end

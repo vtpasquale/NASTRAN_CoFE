@@ -1,8 +1,7 @@
 %Hdf5ElementEnergy Abstract superclass for MSC Nastran HDF5 format element energy output data.
 
-% This could work as well without being an abstract class. Keeping it abstract for consistentcy.
 % A. Ricciardi
-% December 2019
+% June 2021
 
 classdef (Abstract) Hdf5ElementEnergy < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
 
@@ -31,8 +30,8 @@ classdef (Abstract) Hdf5ElementEnergy < Hdf5CompoundDataset & matlab.mixin.Heter
                 H5G.close(objDataGroup);
                 H5G.close(objIndexGroup);
             end
-        end
-        function compare(obj1,obj2,obj2index)
+        end        
+        function compare(obj1,obj2,obj2index,compareExponent)
             % Function to compare objects
             
             % sort metaclass types
@@ -47,11 +46,76 @@ classdef (Abstract) Hdf5ElementEnergy < Hdf5CompoundDataset & matlab.mixin.Heter
             
             % loop over types
             for i = 1:size(obj1,1)
-                j = find(strcmp(className1,className2{i}));
+                j = find(strcmp(className1{i},className2));
                 if length(j)~=1; error('Issue with result type identification for comparison.'); end
-                compareCompoundDataset(obj1(i),obj2(j),obj2index)
+                
+                % remove ID = 100000000
+                obj2j = obj2(j).removeId100000000();
+                
+                % remove DEN = NAN
+                obj2j = obj2j.removeDenNaN();
+                
+                % only compare element data that is present in obj2(j)
+                obj1i= keepData(obj1(i),obj2j);
+                
+                % force IDENT = IDENT. IDENT not supported. Warning not useful.
+                obj1i.IDENT = obj2j.IDENT;
+                
+                compareCompoundDataset(obj1i,obj2j,obj2index,compareExponent)
             end
             
+        end
+        function objOut = removeId100000000(objIn)
+            % Remove obscure undocumented data from Nastran data
+            objOut = objIn;
+            keepIndex = objIn.ID~=100000000;
+            objOut.ID = objIn.ID(keepIndex,:);
+            objOut.ENERGY = objIn.ENERGY(keepIndex,:);
+            objOut.PCT = objIn.PCT(keepIndex,:);
+            objOut.DEN = objIn.DEN(keepIndex,:);
+            objOut.IDENT = objIn.IDENT(keepIndex,:);
+            objOut.DOMAIN_ID = objIn.DOMAIN_ID(keepIndex,:);
+        end
+        function objOut = removeDenNaN(objIn)
+            % Remove obscure undocumented data from Nastran data
+            objOut = objIn;
+            if ~any(isnan(objIn.DEN))
+                return % objOut = objIn;
+            end
+            keepIndex = ~isnan(objIn.DEN);
+            objOut.ID = objIn.ID(keepIndex,:);
+            objOut.ENERGY = objIn.ENERGY(keepIndex,:);
+            objOut.PCT = objIn.PCT(keepIndex,:);
+            objOut.DEN = objIn.DEN(keepIndex,:);
+            objOut.IDENT = objIn.IDENT(keepIndex,:);
+            objOut.DOMAIN_ID = objIn.DOMAIN_ID(keepIndex,:);
+        end
+        function objOut = keepData(objIn,objKeepData)
+            % Nastran does not write out all element energies even with ESE(thresh = 0)=ALL
+            % Only compare data that is present in the reference output.
+            keepData = [objKeepData.ID,objKeepData.DOMAIN_ID];
+            objData = [objIn.ID,objIn.DOMAIN_ID];
+            
+            keepDataN = size(keepData,1);
+            objDataN = size(objData,1);
+            
+            objOut=objIn;
+            if objDataN==keepDataN
+                if all(all(keepData==objData))
+                    return % objOut=objIn;
+                end
+            end
+            
+            keepIndex = false(objDataN,1);
+            for i = 1:keepDataN
+                keepIndex(all( objData == keepData(i,:), 2 )) = true;
+            end
+            objOut.ID = objIn.ID(keepIndex,:);
+            objOut.ENERGY = objIn.ENERGY(keepIndex,:);
+            objOut.PCT = objIn.PCT(keepIndex,:);
+            objOut.DEN = objIn.DEN(keepIndex,:);
+            objOut.IDENT = objIn.IDENT(keepIndex,:);
+            objOut.DOMAIN_ID = objIn.DOMAIN_ID(keepIndex,:);
         end
     end
     methods (Static = true)

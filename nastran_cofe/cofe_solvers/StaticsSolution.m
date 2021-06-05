@@ -20,13 +20,18 @@ classdef StaticsSolution < Solution
     methods 
         function obj=solve_sub(obj,model)
             
-            % Residual structure analysis matricies
-            K_aa = model(1).reducedModel.K_aa;
-            % M_aa = model(1).reducedModel.M_aa;
-            p_a = model(1).reducedModel.p_a;
+            % confirm case control index uniqueness
+            caseControlIndex = unique([obj.caseControlIndex]);
+            if size(caseControlIndex,2)~=1; error('Case control number issue'); end
             
-            model0 = model(1); % Residual structure
-            caseControl0 = model0.caseControl(obj.caseControlIndex);
+            % Residual structure model and case control
+            model0 = model(1);
+            caseControl0 = model0.caseControl(caseControlIndex);
+            
+            % Residual structure analysis matricies
+            K_aa = model0.reducedModel.K_aa;
+            % M_aa = model0.reducedModel.M_aa;
+            p_a = model0.reducedModel.p_a;
                         
             if isempty(caseControl0.load); error('No load case identification number specified.'); end
             lc = find(caseControl0.load==model0.loadSIDs);

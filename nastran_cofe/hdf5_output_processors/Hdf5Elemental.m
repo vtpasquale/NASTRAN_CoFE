@@ -40,6 +40,7 @@ classdef Hdf5Elemental
         function compare(obj1,obj2,obj2index,compareExponent)
             % Function to compare objects
             obj1.hdf5ElementForce.compare(obj2.hdf5ElementForce,obj2index,compareExponent)
+            obj1.hdf5ElementEnergy.compare(obj2.hdf5ElementEnergy,obj2index,compareExponent)
             
         end
     end   

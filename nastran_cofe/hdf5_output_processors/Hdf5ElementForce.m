@@ -46,7 +46,7 @@ classdef (Abstract) Hdf5ElementForce < Hdf5CompoundDataset & matlab.mixin.Hetero
             
             % loop over types
             for i = 1:size(obj1,1)
-                j = find(strcmp(className1,className2{i}));
+                j = find(strcmp(className1{i},className2));
                 if length(j)~=1; error('Issue with result type identification for comparison.'); end
                 compareCompoundDataset(obj1(i),obj2(j),obj2index,compareExponent)
             end

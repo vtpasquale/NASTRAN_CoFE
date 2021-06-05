@@ -1,4 +1,5 @@
 clear all; close all; clc
 addpath(genpath(fullfile('..','..','nastran_cofe')));
 
-runtests
+results = runtests;
+table(results)

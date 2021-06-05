@@ -5,17 +5,17 @@
 
 classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
     
-%     properties  (Abstract) % Can't make properties abstract and constant
-%         DATASET
-%     end
+    %     properties  (Abstract) % Can't make properties abstract and constant
+    %         DATASET
+    %     end
     properties (Constant = true)
         GROUP = '/NASTRAN/RESULT/NODAL/';
     end
-%     methods (Static = true)
-%         function obj = Hdf5Nodal(arg1)
-%             % no class constructor for abstract classes
-%         end
-%     end
+    %     methods (Static = true)
+    %         function obj = Hdf5Nodal(arg1)
+    %             % no class constructor for abstract classes
+    %         end
+    %     end
     methods (Sealed = true)
         function export(obj,dataGroup,indexGroup)
             if size(obj,1)>0
@@ -32,6 +32,27 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                 H5G.close(objDataGroup);
                 H5G.close(objIndexGroup);
             end
+        end
+        function compare(obj1,obj2,obj2index,compareExponent)
+            % Function to compare objects
+
+            % sort metaclass types
+            for i = 1:size(obj1,1)
+                metaClass1=metaclass(obj1(i));
+                className1{i} = metaClass1.Name;
+            end
+            for i = 1:size(obj2,1)
+                metaClass2=metaclass(obj2(i));
+                className2{i} = metaClass2.Name;
+            end
+            
+            % loop over types
+            for i = 1:size(obj1,1)
+                j = find(strcmp(className1{i},className2));
+                if length(j)~=1; error('Issue with result type identification for comparison.'); end
+                compareCompoundDataset(obj1(i),obj2(j),obj2index,compareExponent)
+            end
+            
         end
     end
     methods (Static = true)
@@ -54,7 +75,7 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                 else
                     warning('Hdf5 element nodal result %s not supported.',upper(resultName))
                 end
-            end            
+            end
         end
         function hdf5Nodal = constructFromCofe(solution)
             % Creates Hdf5Nodal object from CoFE data
@@ -102,7 +123,7 @@ classdef (Abstract) Hdf5Nodal < Hdf5CompoundDataset & matlab.mixin.Heterogeneous
                     
                 end
             end
-        end           
+        end
     end
     
     methods (Access = private)

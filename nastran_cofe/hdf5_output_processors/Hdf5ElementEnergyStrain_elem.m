@@ -19,7 +19,7 @@ classdef Hdf5ElementEnergyStrain_elem < Hdf5ElementEnergy
         ENERGY % [double] Strain energy
         PCT % [double] Strain energy percent of total
         DEN % [double]  Strain energy density
-        IDENT % [double] ???
+        IDENT % [uint32] ???
         DOMAIN_ID % [uint32] Domain identifier
     end
     properties (Constant = true)
@@ -73,7 +73,7 @@ classdef Hdf5ElementEnergyStrain_elem < Hdf5ElementEnergy
             obj.ENERGY=energy(index);
             obj.PCT=pct(index);
             obj.DEN=den(index);
-            obj.IDENT=zeros(size(obj.ID)); % undocumented - fill with zeros
+            obj.IDENT=zeros(size(obj.ID),'uint32'); % undocumented - fill with zeros
             obj.DOMAIN_ID = domain_id(index).';
         end
     end
