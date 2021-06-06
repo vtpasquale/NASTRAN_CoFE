@@ -142,7 +142,7 @@ classdef Hdf5ElementForceBeam < Hdf5ElementForce
             obj.GRID = grid0(index,:).';
             obj.SD   = sd.';
             obj.BM1  = bm1(index,:).'; 
-            obj.BM2  = bm2(index,:).'; 
+            obj.BM2  = -1*bm2(index,:).'; % Nastran uses inconsistent sign convention
             obj.TS1  = ts1(index,:).';
             obj.TS2  = ts2(index,:).';
             obj.AF   = af(index,:).';

@@ -1,0 +1,163 @@
+MSC Nastran V2019.0 (Intel Windows 10 Pro for Wor 6.2 9200) Control File: 
+----------------------------------------------------------------- 
+$ sysfield=SCR*(RAW=YES,BUFFIO=YES,wnum=16,wsize=16mb) $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[2])
+$ sysfield=DBALL(RAW=YES,BUFFIO=YES,wnum=16,wsize=16mb) $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[3])
+Nastran BUFFSIZE=65537 $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[9])
+Nastran SYSTEM(580)=1 $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[10])
+JID='s:/aricciar/20210521_cofe/v2_svanberg_bar_analysis/modes.dat'
+OUT='./modes'
+MEM=32726MB      $ 
+MACH='Intel'
+OPER='Windows 10 Pro for Wor'
+OSV='6.2 9200'
+MODEL='Xeon/3333 (Z440-63W10)'
+NPROC='16'
+CONFIG=6
+NPROC=16
+symbol=DELDIR='c:/msc.software/msc_nastran/20190/msc20190/nast/del' $(program default)
+symbol=DEMODIR='c:/msc.software/msc_nastran/20190/msc20190/nast/demo' $(program default)
+symbol=LM_NO_SNMP=1 $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[12])
+symbol=MKL_INTERFACE_LAYER=ILP64 $(c:/msc.software/msc_nastran/20190/conf/nast20190.rcf[1])
+symbol=SSSALTERDIR='c:/msc.software/msc_nastran/20190/msc20190/nast/sssalter' $(program default)
+symbol=TPLDIR='c:/msc.software/msc_nastran/20190/msc20190/nast/tpl' $(program default)
+SDIR='s:/scratch/modes.T1028_16'
+DBS='s:/scratch/modes'
+SCR='no'
+SMEM=100
+BPOOL=8181.5MB
+DMPMEM=estimate
+NEWDEL='c:/msc.software/msc_nastran/20190/msc20190/win64i8/sss'
+DEL='MSCDEF'
+DML=MSCDEF
+SDL=MSCDEF
+AUTH='1700@supermicro;1700@lsv1;1700@lsv2;1700@lsv3'
+AUTHQUE=20
+MSGCAT='c:/msc.software/msc_nastran/20190/msc20190/win64i8/analysis.msg'
+MSGDEST='f06'
+NEWS='c:/msc.software/msc_nastran/20190/msc20190/nast/news.txt'
+----------------------------------------------------------------- 
+MSC_ISHELLPATH=C:\MSC.Software\MSC_Nastran\20190\msc20190\actran\win64\Actran_19.0.rc0.115900\bin;C:\MSC.Software\MSC_Nastran\20190\msc20190\nast; 
+MSC_JIDPATH= 
+PATH=c:\msc.software\msc_nastran\20190\msc20190\win64i8;c:\msc.software\msc_nastran\20190\msc20190\win64i8\nCode\bin;c:\msc.software\msc_nastran\20190\msc20190\win64i8\nvidia;c:\msc.software\msc_nastran\20190\msc20190\win64i8\lib;c:\msc.software\msc_nastran\20190\msc20190\win64i8;C:\Apps\Vibrata_v3.2.0;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64_win\mpirt;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\ia32_win\mpirt;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64_win\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\ia32_win\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Files\fortran\bin\Intel64;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\SOLIDWORKS 2019 Data;C:\MSC.Software\Patran_x64\20180\bin;C:\ZAERO\;C:\SIMULIA\Commands;U:\atas\exe_win;C:\ProgramData\Oracle\Java\javapath;C:\ProgramData\Microsoft\Windows\Start Menu\Programs;C:\Program Files (x86)\Microsoft Office\Office16;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\ShoreTel\Connect\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft MPI\Bin\;C:\Program Files\MSC.Software\Adams\2018_1\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\MATLAB\MATLAB Runtime\v91\runtime\win64;C:\Program Files\MATLAB\R2019a\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Siemens\NXI67\Team67;C:\Siemens\FEMAPv2019p1;C:\Siemens\NXI67\bin;C:\Siemens\NXI67;C:\Siemens\NX 12.0;C:\Utilityapps\PuTTY\;C:\UtilityApps\Anaconda3;C:\UtilityApps\convert;C:\UtilityApps\cygwin64\bin;C:\UtilityApps\emacs-26.1-x86_64\bin;C:\UtilityApps\Foxit Software\Foxit Reader;C:\UtilityApps\KDiff3;C:\UtilityApps\PFE32\pfe101i;C:\UtilityApps\XnViewMP;C:\UtilityApps\setnas;C:\UtilityApps\jEdit;C:\UtilityApps\convert;C:\UtilityApps\Allercalc;U:\projects\templates\;C:\Siemens\Iona660\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\MATLAB\MATLAB Runtime\v95\runtime\win64;C:\Users\aricciar\AppData\Local\Microsoft\WindowsApps;C:\Users\aricciar\AppData\Local\Pandoc\ 
+SCA_SERVICE_CATALOG="c:\msc.software\msc_nastran\20190\msc20190\res\SCAServiceCatalog.xml" 
+SCA_RESOURCE_DIR="c:\msc.software\msc_nastran\20190\msc20190\res" 
+Cmd Line:    C:\MSC.Software\MSC_Nastran\20190\msc20190\win64i8\nastran.exe JID=S:\aricciar\20210521_CoFE\v2_svanberg_bar_analysis\modes.dat 
+Current Dir: S:\aricciar\20210521_CoFE\v2_svanberg_bar_analysis 
+Time Cmd:    c:\msc.software\msc_nastran\20190\msc20190\win64i8\msctime 
+Executable:  c:\msc.software\msc_nastran\20190\msc20190\win64i8\analysis.exe 
+Arch= Kywd:  [Not specified]  
+MSC_MSG:     stderr  
+FPE:         yes  
+----------------------------------------------------------------- 
+Current resource limits:
+ Physical memory:                    65452 MB
+ Physical memory available:          57410 MB
+ Paging file size:                  129452 MB
+ Paging file size available:        121484 MB
+ Virtual memory:                 134217727 MB
+ Virtual memory available:       134213509 MB
+----------------------------------------------------------------- 
+System configuration:
+ Hostname:         Z440-63W10.ata-engineering.com
+ Architecture:     win64i8
+ Platform:         Intel Windows 10 Pro for Wor 6.2 9200 (Windows Compute Cluster)
+ Model:            Xeon/3333
+ Clock freq.:      3333 MHz
+ Number of CPUs:   16
+ Executable:       standard
+ Raw model ID:     6
+ Config number:    6
+ Physical memory:  65452 MB
+ Virtual memory:   129452 MB
+ Numeric format:   64-bit little-endian IEEE.
+ Bytes per word:   8
+ Disk block size:  512 bytes (64 words)
+ Remote shell cmd: "c:/msc.software/msc_nastran/20190/msc20190/win64i8/mscrmtcmd.exe" (Windows non-CCS nodes, UNIX)
+                   <ccs_cmd> (Windows CCS nodes)
+----------------------------------------------------------------- 
+MSC Nastran started  Sat Jun  5 23:04:18 EDT 2021 
+ 23:04:44  Beginning Analysis
+SCA Kernel 22.2.602065 successfully initialized
+BLAS/LAPACK .dll "c:\msc.software\msc_nastran\20190\msc20190\win64i8\libimalloc.dll" has been loaded.
+BLAS/LAPACK .dll "c:\msc.software\msc_nastran\20190\msc20190\win64i8\mkl_core.dll" has been loaded.
+BLAS/LAPACK .dll "c:\msc.software\msc_nastran\20190\msc20190\win64i8\mkl_intel_thread.dll" has been loaded.
+BLAS/LAPACK .dll "c:\msc.software\msc_nastran\20190\msc20190\win64i8\mkl_rt.dll" has been loaded.
+BLAS/LAPACK .dll "c:\msc.software\msc_nastran\20190\msc20190\win64i8\MSCblas.dll" has been loaded.
+
+ 23:04:49  MSC Authorization Information - System Attributes (1004, 0)
+ 23:04:49  -----------------------------------------------------------
+  Date:          Sat Jun  5 23:04:48 2021
+  MSC Id:        dc4a3e954913 (ethernet) (Intel)
+  Hostname:      Z440-63W10 (user aricciar, display DESKTOP-O45TGPO)
+  License files: 1700@supermicro
+                 1700@lsv1
+                 1700@lsv2
+                 1700@lsv3
+  CEID:          7570A6F3-3A6977F4
+  User:          aricciar
+  Display:       DESKTOP-O45TGPO
+  LAPI Version:  LAPI 10.4.6 (FLEXlm 11.13.1.3)
+
+  * * * * * * * * * * * * * * * * * * * *
+  * * * * * * * * * * * * * * * * * * * *
+  * *                                 * *
+  * *   MSC Customer Entitlement ID   * *
+  * *        7570A6F3-3A6977F4        * *
+  * *                                 * *
+  * * * * * * * * * * * * * * * * * * * *
+  * * * * * * * * * * * * * * * * * * * *
+
+ 23:04:52  MSC Authorization Information - Checkout Successful (1016, 0)
+ 23:04:52  -------------------------------------------------------------
+ 23:04:52  Acquired 1 license for MSC Nastran from license server on host lsv1
+
+
+Beginning bulk data processing using the IFPStar component.
+For more information on IFPStar, please see KB article KB8019200
+on our support pages, at http://simcompanion.mscsoftware.com.
+
+ 23:04:53  Reading INCLUDE file "s:\aricciar\20210521_CoFE\v2_svanberg_bar_analysis\svanberg.bdf"
+ 23:04:53  40 records read from INCLUDE file "s:\aricciar\20210521_CoFE\v2_svanberg_bar_analysis\svanberg.bdf"
+ 23:04:53  40 records read from JID file "s:/aricciar/20210521_cofe/v2_svanberg_bar_analysis/modes.dat"
+ 23:04:53  A total of 80 records were read from 2 files.
+
+Processing of bulk data entries is complete.
+
+ 23:04:56  Analysis started.
+ 23:04:56  Geometry access/verification to CAD part initiated (if needed).
+ 23:04:56  Geometry access/verification to CAD part successfully completed (if needed).
+ 23:04:56  Finite element model generation started.
+ 23:04:57  Finite element model generated 36 degrees of freedom.
+ 23:04:57  Finite element model generation successfully completed.
+ 23:04:57  Application of Loads and Boundary Conditions to the finite element model started.
+ 23:04:57  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 23:04:57  Solution of the system equations for normal modes started.
+ 23:04:57  Solution of the system equations for normal modes successfully completed.
+ 23:04:57  Normal modes analysis completed.
+ 23:04:57  21 records read from JID file "s:/aricciar/20210521_cofe/v2_svanberg_bar_analysis/modes.dat"
+ 23:04:57  NSEXIT: EXIT(0)
+ 23:04:57  Analysis complete  0
+createMemPool, context=RMRGDROT
+Real:       13.226 seconds ( 0:00:13.226)
+User:        1.968 seconds ( 0:00:01.968)
+Sys:         2.531 seconds ( 0:00:02.531)
+ ==================================================
+ OS:              6.2
+ OEM ID:         9
+ Number of processors:         16
+ Page size:         4096
+ Processor type:         8664
+ Minimum application address:         10000
+ Maximum application address:         fffeffff
+ Active processor mask:         65535
+ Nsocket:         0
+ Ncore:           16
+ Ram:          65452 Mb
+ ==================================================
+ Time Summary                 CPU       Wall   ( Time in Seconds )
+ Consider using SOLVE=AUTO if you have not.
+ =====================================================
+ Detailed performance information can be found in the 
+ "MSC Nastran High Performance Computing User's Guide"
+ =====================================================
+MSC Nastran finished Sat Jun  5 23:04:59 EDT 2021 

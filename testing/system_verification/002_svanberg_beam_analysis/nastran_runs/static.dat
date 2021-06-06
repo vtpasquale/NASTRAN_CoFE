@@ -6,7 +6,7 @@ CEND
 $ **********************************************************
 $   C A S E    C O N T R O L
 $ **********************************************************
-ECHO = NONE
+ECHO = SORT
 DISPLACEMENT = ALL
 STRESS = ALL
 STRAIN = ALL
@@ -25,6 +25,7 @@ $   ANALYSIS MODEL
 $ ---------------------------------------------
 $
 BEGIN BULK
+MDLPRM,HDF5,0
 PARAM    AUTOSPC NO
 PARAM    GRDPNT  0
 PARAM    POST    -1
