@@ -1,4 +1,5 @@
-function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag)
+function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,...
+                E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag,torsionMassFlag)
 % Returns the element matrices for a prismatic BEAM/BAR element in 3D space.
 %
 % Inputs
@@ -14,6 +15,7 @@ function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,E,G,A,Iy
 % nsm [double] nonstructural mass per unit length
 % k1, k2 [double] Shear stiffness factor K in K.*A.*G for plane 1 and plane 2
 % coupledMassFlag [logical] Coupled mass provided if true, lumped mass otherwise.
+% torsionMassFlag [logical] Torsion mass terms included if true.
 %
 % Outputs
 % T_e0 = [3,3 double] transformation matrix from the basic reference frame to the element reference frame
@@ -86,11 +88,13 @@ m_e(11,5) = m_e(5,11); m_e(8,6) = m_e(6,8); m_e(12,6) = m_e(6,12);
 m_e(12,8) = m_e(8,12); m_e(11,9) = m_e(9,11);
 m_e = (rho.*A+nsm).*a./105.*m_e;
 
-% Add torsional intertia
-m_e(4,4)   = (Iz+Iy)./A.*m_e(1,1);
-m_e(4,10)  = m_e(4,4)./2;
-m_e(10,10) = m_e(4,4);
-m_e(10,4)  = m_e(4,10);
+% Torsional intertia (CBEAM only)
+if torsionMassFlag
+    m_e(4,4)   = (Iz+Iy)./A.*m_e(1,1);
+    m_e(4,10)  = m_e(4,4)./2;
+    m_e(10,10) = m_e(4,4);
+    m_e(10,4)  = m_e(4,10);
+end
 
 if ~coupledMassFlag
     % convert to lumped mass formulation

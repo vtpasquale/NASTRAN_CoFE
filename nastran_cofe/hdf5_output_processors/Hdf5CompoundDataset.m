@@ -97,6 +97,8 @@ classdef (Abstract) Hdf5CompoundDataset
                            result1DomainI.^compareExponentI,result2DomainI.^compareExponentI);
                        if any(any(abs(normalizedDifference)>0.01))
                            comparisonFailed = true;
+                           fprintf(1,'Domain ID: %d\n',uniqueDomainIDs(i))
+                           fprintf(1,'Result: %s\n',fn{1})
                            normalizedDifference
                            [result1DomainI,result2DomainI,result1DomainI.^compareExponentI,result2DomainI.^compareExponentI]
                        end

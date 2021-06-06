@@ -20,6 +20,8 @@ classdef Cbar < Element
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(34); % [uint8] Element code corresponding to Nastran item codes documentation.
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBar';
+        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainBar';
+        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressBar';
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -39,7 +41,7 @@ classdef Cbar < Element
             [T_e0,obj.k_e,obj.m_e,obj.volume,obj.mass] = ...
                 getBeamElementMatrices(p1,p2,nu_0,...
                 pty.E,pty.G,pty.a,pty.i2,pty.i1,pty.j,pty.rho,pty.nsm,...
-                pty.k1,pty.k2,model.coupledMassFlag);
+                pty.k1,pty.k2,model.coupledMassFlag,false);
             
             % Transformation matrix
             obj.R_eg(10:12,10:12) = T_e0*n2.T_g0.';
