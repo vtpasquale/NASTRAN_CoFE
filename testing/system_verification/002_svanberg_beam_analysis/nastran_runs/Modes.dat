@@ -1,0 +1,39 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+SOL 103
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+DISPLACEMENT = ALL
+STRESS = ALL
+STRAIN = ALL
+ESE = ALL
+EKE = ALL
+FORCE = ALL
+SPCFORCES = ALL
+SPC = 1
+METHOD = 1
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+BEGIN BULK
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+$ Eigenvalue method
+EIGRL   1                       10                              MASS
+$
+PARAM    AUTOSPC NO
+PARAM    GRDPNT  0
+PARAM    POST    -1
+$
+$
+$ Include the model
+INCLUDE 'svanberg.bdf'
+$
+$
+ENDDATA
