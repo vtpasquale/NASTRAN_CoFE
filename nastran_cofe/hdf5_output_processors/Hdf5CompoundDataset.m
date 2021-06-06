@@ -97,10 +97,10 @@ classdef (Abstract) Hdf5CompoundDataset
                            result1DomainI.^compareExponentI,result2DomainI.^compareExponentI);
                        if any(any(abs(normalizedDifference)>0.01))
                            comparisonFailed = true;
-                           fprintf(1,'Domain ID: %d\n',uniqueDomainIDs(i))
-                           fprintf(1,'Result: %s\n',fn{1})
-                           normalizedDifference
-                           [result1DomainI,result2DomainI,result1DomainI.^compareExponentI,result2DomainI.^compareExponentI]
+                           % fprintf(1,'Domain ID: %d\n',uniqueDomainIDs(i))
+                           % fprintf(1,'Result: %s\n',fn{1})
+                           % normalizedDifference
+                           % [result1DomainI,result2DomainI,result1DomainI.^compareExponentI,result2DomainI.^compareExponentI]
                        end
                    elseif isinteger(result1)
                        if any(any(result1DomainI~=result2DomainI))
@@ -114,7 +114,9 @@ classdef (Abstract) Hdf5CompoundDataset
                    if comparisonFailed
                        % [result1DomainI,result2DomainI]
                        metaClass = metaclass(obj1);
-                       warning('HDF5 comparison failed for Class %s Property %s',metaClass.Name,fn{1})
+                       msgid = sprintf('compareFail:hdf5%s%s',obj1.GROUP,obj1.DATASET);
+                       msgid = strrep(msgid,'/','_');
+                       warning(msgid,'HDF5 comparison failed for Class %s Property %s',metaClass.Name,fn{1})
                    end
                end
            end
