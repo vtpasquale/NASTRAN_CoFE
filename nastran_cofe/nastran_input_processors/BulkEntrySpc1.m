@@ -71,7 +71,8 @@ classdef BulkEntrySpc1 < BulkEntry
             if ~strcmpi(echostr(end-1:end),'\n')
                 echostr=[echostr,'\n'];
             end
-            fprintf(fid,echostr,obj.sid,obj.c,obj.g);
+            objc = str2num(num2str(obj.c)');
+            fprintf(fid,echostr,obj.sid,objc,obj.g);
         end
     end
 end

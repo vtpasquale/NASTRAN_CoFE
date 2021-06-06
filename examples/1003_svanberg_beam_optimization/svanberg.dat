@@ -1,0 +1,75 @@
+INIT MASTER(S)
+NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1
+ID FEMAP,FEMAP
+SOL SESTATIC
+CEND
+  DISPLACEMENT(PLOT) = ALL
+  SPC = 1
+  LOAD = 1
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap
+$   Version    : 2020.2.0
+$   Translator : Simcenter Nastran
+$   From Model : 
+$   Date       : Sun Jun  6 13:50:47 2021
+$   Output To  : C:\Users\aricciar\AppData\Local\Temp\
+$ ***************************************************************************
+$
+$ It's easiest to write the design2entries() function when design-dependent
+$ entries appear first.
+$
+$ Femap Property 101 : BEAM Property
+PBEAM        101     501  15000.   2500.    250.      0.  25000.      0.+       
++             .1      .1     -.1      .1     -.1     -.1      .1     -.1+       
++           YESA      1.                                                +       
++             0.      0.                                                        
+$ Femap Property 102 : BEAM Property
+PBEAM        102     501  15000.   2500.    250.      0.  25000.      0.+       
++             .1      .1     -.1      .1     -.1     -.1      .1     -.1+       
++           YESA      1.                                                +       
++             0.      0.                                                        
+$ Femap Property 103 : BEAM Property
+PBEAM        103     501  15000.   2500.    250.      0.  25000.      0.+       
++             .1      .1     -.1      .1     -.1     -.1      .1     -.1+       
++           YESA      1.                                                +       
++             0.      0.                                                        
+$ Femap Property 104 : BEAM Property
+PBEAM        104     501  15000.   2500.    250.      0.  25000.      0.+       
++             .1      .1     -.1      .1     -.1     -.1      .1     -.1+       
++           YESA      1.                                                +       
++             0.      0.                                                        
+$ Femap Property 105 : BEAM Property
+PBEAM        105     501  15000.   2500.    250.      0.  25000.      0.+       
++             .1      .1     -.1      .1     -.1     -.1      .1     -.1+       
++           YESA      1.                                                +       
++             0.      0.                                                        
+$
+PARAM,PRGPST,YES
+PARAM,POST,-1
+PARAM,OGEOM,NO
+PARAM,AUTOSPC,YES
+PARAM,K6ROT,100.
+PARAM,GRDPNT,0
+CORD2C         1       0      0.      0.      0.      0.      0.      1.+FEMAPC1
++FEMAPC1      1.      0.      1.        
+CORD2S         2       0      0.      0.      0.      0.      0.      1.+FEMAPC2
++FEMAPC2      1.      0.      1.        
+$ Femap Load Set 1 : NASTRAN 1
+FORCE          1       6       0      1.      0.      0.   -1.+8
+$ Femap Constraint Set 1 : NASTRAN SPC 1
+SPC1           1  123456       1
+$ Femap Material 501 : ISOTROPIC Material
+MAT1         501  1.44+95.4135+8     .335.370788      0.      0.        
+GRID           1       0      0.      0.      0.       0
+GRID           2       0      1.      0.      0.       0
+GRID           3       0      2.      0.      0.       0
+GRID           4       0      3.      0.      0.       0
+GRID           5       0      4.      0.      0.       0
+GRID           6       0      5.      0.      0.       0
+CBEAM          1     101       1       2      0.      1.      0.
+CBEAM          2     102       2       3      0.      1.      0.
+CBEAM          3     103       3       4      0.      1.      0.
+CBEAM          4     104       4       5      0.      1.      0.
+CBEAM          5     105       5       6      0.      1.      0.
+ENDDATA 138feb1c

@@ -8,27 +8,35 @@ classdef Cofe
         solution % [nSubcases,nSuperElements Solution]
     end
     methods
-        function [obj,optional] = Cofe(inputFile,varargin)
+        function [obj,optional] = Cofe(inputData,varargin)
             % Class constructor and primary user interface function.
             %
             % REQUIRED INPUT
-            % inputFile = [char] Nastran-formatted input file name.
+            % inputData = [char] Nastran-formatted input file name. (Typical)
+            %               OR
+            %             [BdfEntries] BdfEntries object for restart. (For optimization)
             %
             % OPTIONAL INPUT PARAMETERS 
             % Default parameter values should be used most of the time.
             % Parameters can be past as a struct or as name-value pairs.
-            % 
-            % 'returnInputFields' = [logical, default = false]
-            %                       If true, Nastran input file field data  
-            %                       is returned in the optional output
-            %                       struct. Model preprocessing, 
-            %                       assembly, solution, and hard disk 
-            %                       output are suppressed.
             %
-            %    'getInputFields' = [logical, default = false]
+            %      'getBdfFields' = [logical, default = false]
             %                       If true, Nastran input file field data  
-            %                       is returned in the optional output
-            %                       struct.
+            %                       (BdfFields object) is returned in the
+            %                        'optional' output struct.
+            %
+            %   'stopAfterFields' = [logical, default = false]
+            %                       If true, CoFE will stop immidiately
+            %                       after processing the input file fields.
+            %
+            %     'getBdfEntries' = [logical, default = false]
+            %                       If true, Nastran input file entry data  
+            %                       (BdfEntries object) is returned in the
+            %                        'optional' output struct.
+            %
+            %  'stopAfterEntries' = [logical, default = false]
+            %                       If true, CoFE will stop immidiately
+            %                       after processing the input file entries.
             %
             %      'bulkDataOnly' = [logical, default = false]
             %                       Can be set to true for reading Nastran
@@ -68,9 +76,16 @@ classdef Cofe
             %                    that is meant for users who want to parse 
             %                    a Nastran input file using CoFE but not 
             %                    necessarily use CoFE for the analysis
-            %                    solution. Request using the 
-            %                    'returnInputFields' or 'getInputFields' 
-            %                    inputs parameters.
+            %                    solution. Request using the 'getBdfFields' 
+            %                    input parameter.
+            %
+            %         .bdfFields [BdfFields] Nastran input file fields 
+            %                    object. This is supplemental functionality 
+            %                    that is meant for users who want to parse 
+            %                    a Nastran input file using CoFE but not 
+            %                    necessarily use CoFE for the analysis
+            %                    solution. Request using the 'getBdfFields' 
+            %                    input parameter.
             %
             %          .hdf5 [Hdf5] Container and interface class for HDF5  
             %                output file in MSC Nastran format. Usually it  
@@ -84,28 +99,39 @@ classdef Cofe
             %% Process function inputs
             p = inputParser;
             p.CaseSensitive = false;
-            p.addRequired('inputFile',@ischar);
+            p.addRequired('inputData');
+            if ~any([ischar(inputData),isa(inputData,'BdfEntries')])
+                error('Input argument ''inputData'' must be type ''char'' or type ''BdfEntries''.')
+            end
             p.addParameter('bulkDataOnly'     ,false,@islogical);
-            p.addParameter('returnInputFields',false,@islogical);
-            p.addParameter('getInputFields'   ,false,@islogical);
+            p.addParameter('getBdfFields'     ,false,@islogical);
+            p.addParameter('stopAfterFields'  ,false,@islogical);
+            p.addParameter('getBdfEntries'    ,false,@islogical);
+            p.addParameter('stopAfterEntries' ,false,@islogical);
             p.addParameter('preprocess'       ,true,@islogical);
             p.addParameter('assemble'         ,true,@islogical);
             p.addParameter('solve'            ,true,@islogical);
             p.addParameter('writeOutput2Disk' ,true,@islogical);
             p.addParameter('getHdf5Object'    ,false,@islogical);
-            p.parse(inputFile,varargin{:});
-            fieldOptions = [p.Results.returnInputFields,...
-                            p.Results.getInputFields];
+            p.parse(inputData,varargin{:});            
             
-            
-            %% Nastran input file processing
-            bdfLines  = BdfLines(inputFile,p.Results.bulkDataOnly);
-            bdfFields = BdfFields(bdfLines);
-            if any(fieldOptions)
-                optional.bdfFields = bdfFields;
-                if fieldOptions(1); return; end
+            %% Input data processing
+            if ischar(inputData)
+                bdfLines  = BdfLines(inputData,p.Results.bulkDataOnly);
+                
+                bdfFields = BdfFields(bdfLines);
+                if p.Results.getBdfFields; optional.bdfFields = bdfFields; end
+                if p.Results.stopAfterFields; return; end
+                
+                bdfEntries = BdfEntries(bdfFields);
+                if p.Results.getBdfEntries; optional.bdfEntries = bdfEntries; end
+                if p.Results.stopAfterEntries; return; end
+                
+                writeOutput2Disk = p.Results.writeOutput2Disk;
+            else
+                bdfEntries = inputData;
+                writeOutput2Disk = false;
             end
-            bdfEntries = BdfEntries(bdfFields);
             obj.model = bdfEntries.entries2model();
             
             %% Preprocess model
@@ -133,7 +159,7 @@ classdef Cofe
             end
             
             % Write output to hard disk
-            if ~p.Results.writeOutput2Disk; return; end
+            if ~writeOutput2Disk; return; end
             [~,outputFile] = fileparts(inputFile);
             % Export Hdf5 data to hard disk
             hdf5.export([outputFile,'.h5']);

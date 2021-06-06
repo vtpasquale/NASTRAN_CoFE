@@ -1,0 +1,83 @@
+INIT MASTER(S)
+NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1
+ID FEMAP,FEMAP
+SOL SESTATIC
+CEND
+  TITLE = Simcenter Nastran Static Analysis Set
+  DISPLACEMENT(PLOT)=ALL
+  STRESS(PLOT,CORNER) = ALL
+  SPC = 1
+  LOAD = 88
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap
+$   Version    : 2020.2.0
+$   Translator : Simcenter Nastran
+$   From Model : 
+$   Date       : Sun Jun  6 16:51:53 2021
+$   Output To  : C:\Users\aricciar\AppData\Local\Temp\
+$ ***************************************************************************
+$
+$ It's easiest to write the design2entries() function when design-dependent
+$ entries appear first.
+$
+$ Femap Property 101 : ROD Property
+PROD         101     501      5.  25000.      0.      0.
+$ Femap Property 201 : ROD Property
+PROD         201     501      5.  25000.      0.      0.
+$ Femap Property 301 : ROD Property
+PROD         301     501      5.  25000.      0.      0.
+$ Femap Property 401 : ROD Property
+PROD         401     501      5.  25000.      0.      0.
+$ Femap Property 501 : ROD Property
+PROD         501     501      5.  25000.      0.      0.
+$ Femap Property 601 : ROD Property
+PROD         601     501      5.  25000.      0.      0.
+$ Femap Property 701 : ROD Property
+PROD         701     501      5.  25000.      0.      0.
+$ Femap Property 801 : ROD Property
+PROD         801     501      5.  25000.      0.      0.
+$ Femap Property 901 : ROD Property
+PROD         901     501      5.  25000.      0.      0.
+$ Femap Property 1001 : ROD Property
+PROD        1001     501      5.  25000.      0.      0.
+$
+PARAM,PRGPST,YES
+PARAM,POST,-1
+PARAM,OGEOM,NO
+PARAM,AUTOSPC,YES
+PARAM,K6ROT,100.
+PARAM,GRDPNT,0
+CORD2C         1       0      0.      0.      0.      0.      0.      1.+FEMAPC1
++FEMAPC1      1.      0.      1.        
+CORD2S         2       0      0.      0.      0.      0.      0.      1.+FEMAPC2
++FEMAPC2      1.      0.      1.        
+$ Femap Load Set 88 : NASTRAN 88
+FORCE         88       2       0      1.      0.      0.-100000.
+FORCE         88       4       0      1.      0.      0.-100000.
+$ Femap Constraint Set 1 : NASTRAN SPC 1
+SPC1           1    2456       1
+SPC1           1    2456       2
+SPC1           1    2456       3
+SPC1           1    2456       4
+SPC1           1  123456       5
+SPC1           1  123456       6
+$ Femap Material 501 : ISOTROPIC Material
+MAT1         501    1.+73759398.     .33      .1      0.      0.        
+GRID           1       0    720.      0.      0.       0
+GRID           2       0    720.      0.   -360.       0
+GRID           3       0    360.      0.      0.       0
+GRID           4       0    360.      0.   -360.       0
+GRID           5       0      0.      0.      0.       0
+GRID           6       0      0.      0.   -360.       0
+CROD           1     101       5       3
+CROD           2     201       3       1
+CROD           3     301       6       4
+CROD           4     401       4       2
+CROD           5     501       3       4
+CROD           6     601       1       2
+CROD           7     701       5       4
+CROD           8     801       6       3
+CROD           9     901       3       2
+CROD          10    1001       4       1
+ENDDATA 298ecd89

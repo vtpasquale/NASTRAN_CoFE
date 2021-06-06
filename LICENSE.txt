@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2013-2017 Anthony Ricciardi <pasquale@vt.edu>
+Copyright (c) 2013-2021 Anthony Ricciardi <pasquale@vt.edu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -------------------------------------------------------------------------------
+SQP_SLT - Optimization tools used with CoFE optimization examples.
+
+Files in the \examples\canfield_slp_sqp\ directory are Copyrighted (c) by  
+Robert A. Canfield and must be used accordance with the associated license  
+file "\examples\canfield_slp_sqp\LICENSE.txt". 
+
+-------------------------------------------------------------------------------
 PUBLICATION
 
 The Software was originally created to produce results for the following 
@@ -31,4 +38,4 @@ Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N.,
 Journal of Aircraft, Vol. 53, No. 1 (2016), pp. 20-32.
 
 If the Software is used to generate results for published work, the user is 
-asked to cite the author's associated work.  
+asked to cite the author's associated work. 

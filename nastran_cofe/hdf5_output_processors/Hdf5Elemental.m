@@ -19,10 +19,18 @@ classdef Hdf5Elemental
                 obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromFile(arg1);
                 obj.hdf5ElementStress = Hdf5ElementStress.constructFromFile(arg1);
             elseif isa(arg1,'Model')
-                obj.hdf5ElementForce = Hdf5ElementForce.constructFromCofe(arg1,arg2);
-                obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromCofe(arg1,arg2);
-                obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromCofe(arg1,arg2);
-                obj.hdf5ElementStress = Hdf5ElementStress.constructFromCofe(arg1,arg2);
+                if ~isempty(arg2.force)
+                    obj.hdf5ElementForce = Hdf5ElementForce.constructFromCofe(arg1,arg2);
+                end
+                if ~isempty(arg2.ese)
+                    obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromCofe(arg1,arg2);
+                end
+                if ~isempty(arg2.strain)
+                    obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromCofe(arg1,arg2);
+                end
+                if ~isempty(arg2.stress)
+                    obj.hdf5ElementStress = Hdf5ElementStress.constructFromCofe(arg1,arg2);
+                end
             else
                 error('Constructor not implemented for this type')
             end

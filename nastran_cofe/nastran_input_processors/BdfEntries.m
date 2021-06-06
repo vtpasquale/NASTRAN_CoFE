@@ -29,5 +29,14 @@ classdef BdfEntries
             % Save case control data to applicable Model superelements 
             model = caseControl.caseControl2model(model,obj.superElementID);
         end
+        function echo(obj,fid)
+            if size(obj.bulkEntry,1)~=1; error('Update echo for superelement before using with superelements'); end
+            fprintf(fid,'SOL %s\n',obj.sol);
+            fprintf(fid,'CEND\n');
+            obj.caseEntry.echo(fid)
+            fprintf(fid,'BEGIN BULK\n');
+            obj.bulkEntry{1}.echo(fid)
+            fprintf(fid,'ENDDATA\n');
+        end
     end
 end

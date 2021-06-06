@@ -50,7 +50,7 @@ classdef (Abstract) CaseEntryOutpuRequest
             if obj.outputRequest.print
                 lhs = 'PRINT';
             else
-                lhs = 'POST';
+                lhs = 'PLOT';
             end
             fprintf(fid,'%s(%s)=%s\n',entryName,lhs,rhs);
         end % echoOutputRequest()
