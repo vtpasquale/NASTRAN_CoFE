@@ -51,6 +51,19 @@ classdef Hdf5ElementStressBeam < Hdf5ElementStress
                 end
             end
         end
+        function obj1 = appendObj(obj1,obj2)
+            % Appends the object data with data from another object
+            % This is usually inherited from Hdf5CompoundDataset. This
+            % element needs special treatment.
+            obj2Struct = getStruct(obj2);
+            enumerateFieldnames=fieldnames(obj2Struct)';
+            for fn = enumerateFieldnames([1,12])
+                obj1.(fn{1}) = [obj1.(fn{1});obj2Struct.(fn{1})]; % append object properties
+            end
+            for fn = enumerateFieldnames(2:11)
+                obj1.(fn{1}) = [obj1.(fn{1}),obj2Struct.(fn{1})]; % append object properties
+            end
+        end
     end
     methods (Static=true)
         function obj = constructFromElementOutputData(elementOutputData,domainIDs)
