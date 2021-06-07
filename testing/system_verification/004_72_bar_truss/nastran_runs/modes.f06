@@ -1,0 +1,590 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2018 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2019.0.0-CL621679   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          DEC 18, 2018           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *  MODEL Xeon/3144 (Z440-63W10)   * *
+                                              * * Windows 10 Pro for Wor 6.2 9200 * *
+                                              * * Compiled for 8664 (SINGLE Mode) * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1News file - (November 7, 2018)
+  
+               Welcome to MSC Nastran 2019.0
+  
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+     Dynamics
+     -  RFORCE and GRAV loads can now be optionally applied to a subset of
+        the model
+  
+     SOL 128 (Nonlinear Harmonics) Rotordynamics Enhancements
+     -  Option to reset initial conditions
+     -  Nonlinear load output
+     -  Output for multiple harmonics
+     -  Support for continuation procedure for frequency-independent analysis
+  
+     Pyramid Element
+     -  The linear and quadratic pyramid element is available in linear
+        solutions: statics, modes, buckling, frequency and transient dynamics,
+        linear contact, acoustics, fatigue, rotordynamics, aeroelasticity and
+        design optimization
+     -  The element is also available in SOL 400 for linear, nlstatics,
+        nltransient and linear perturbation solutions
+  
+     Assembly
+     -  Module Instantiation:  Allow copy of a primary Module to create
+        a secondary Module at a new position by translation, rotation and mirror
+  
+     Contact
+     -  Support geometry adjustment of initial stress free in S2S Contact
+     -  Support model check output in S2S Contact
+     -  Allow user input minimum angle between segments on BCPARA
+  
+     SOL 400 Implicit Nonlinear Analysis
+     -  Support Automatic SGLUE setup for permanent glued contact with large
+        deformation
+     -  Reduce the debug output when using "NLOPRM NLDBG(N3DSUM)"
+     -  Support MONPNT1, MONPNT3, MONSUM, MONSUM1, and MONSUMT in NLSTAT
+        and NLTRAN
+  
+     SOL 700 Explicit Nonlinear Analysis
+     -  Support failure of ACS surface and DMP of ACS algorithm
+     -  Support Occupant Safety, including Articulated Total Body (ATB),
+        Initial Metric Method (IMM) and Air bag fabric material model (MATFAB)
+     -  Support Viscoelastic Material (MATVE), Localized Cohesive friction, and
+        User Defined Services (UDS)
+  
+     High Performance Computing (HPC)
+1    -  Improved performance and scalability of acoustic coupling reduction
+        with ACMS for large models
+     -  Improved performance for ACMS Phase 1 for large solid models
+     -  Improved performance (up to 10X) in the RANDOM module
+     -  New DMP implementation for Panel Participation factor calculation
+        (PFCALC) with linear parallel scaling
+     -  Performance enhancements for FASTFR through shared-memory
+        parallelization (SMP) of frequency processing
+  
+  
+     Results HDF5 Database
+     -  Support outputs of Aerodynamic solution SOL144, 145 and 146 results
+     -  Support Modal effective  mass, Modules,  Contact Check and
+        Global contact body data
+     -  Support Bar/Beam end loads under the shear stress effect of 2D elements
+  
+  
+     Documentation
+     The complete documentation set is provided in a separate installer and
+     when installed is available at: MSC_DOC_DIR/doc/pdf_nastran directory.
+     Where MSC_DOC_DIR is the directory where documentation was installed
+     This help set has cross references between documents, links to how-to
+     videos, and example files.
+  
+     Individual MSC Nastran documents are available for download from the
+       Simcompanion Website at:
+       http://simcompanion.mscsoftware.com/
+  
+     These documents were updated for the MSC Nastran 2019 Release
+  
+         1.  MSC Nastran 2019.0 Installation and Operations Guide
+         2.  MSC Nastran 2019.0 Quick Reference Guide
+         3.  MSC Nastran 2019.0 Release Guide
+         4.  MSC Nastran 2019.0 Linear Statics Analysis User's Guide
+         5.  MSC Nastran 2019.0 Dynamic Analysis User's Guide
+         6.  MSC Nastran 2019.0 Superelements User's Guide
+         7.  MSC Nastran 2019.0 Rotordynamics User's Guide
+         8.  MSC Nastran 2019.0 Demonstration Problems Manual
+         9.  MSC Nastran 2019.0 Nastran Embedded Fatigue User's Guide
+        10.  MSC Nastran 2019.0 Design Sensitivity and Optimization
+        11.  MSC Nastran 2019.0 Nonlinear User's Guide SOL 400
+        12.  MSC Nastran 2019.0 DMAP Programmer's Guide
+        13.  MSC Nastran 2019.0 High Performance Computing User's Guide
+        14.  MSC Nastran 2019.0 DEMATD Guide
+        15.  MSC Nastran 2019.0 Explicit Nonlinear (SOL 700) User's Guide
+  
+   Please refer to  MSC_DOC_DIR/doc/pdf_nastran/nastran_library.pdf
+   for the complete document set:
+  
+  
+1  Additional information about the release can be found at the MSC Nastran
+   Product Support page: http://simcompanion.mscsoftware.com
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+1                                                                              JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     $ SYSFIELD=SCR*(RAW=YES,BUFFIO=YES,WNUM=16,WSIZE=16MB) $(C:/MSC.SOFTWARE/MSC_NAS
+     $ SYSFIELD=DBALL(RAW=YES,BUFFIO=YES,WNUM=16,WSIZE=16MB) $(C:/MSC.SOFTWARE/MSC_NA
+     NASTRAN BUFFSIZE=65537 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20190/CONF/NAST20190.RCF[9]
+     NASTRAN SYSTEM(580)=1 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20190/CONF/NAST20190.RCF[10]
+1                                                                              JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL SEMODES                                                                             
+     CEND                                                                                    
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1        TITLE = SIMCENTER NASTRAN STATIC ANALYSIS SET                                         
+                  2        ECHO = NONE                                                                           
+                  3        DISPLACEMENT(PLOT) = ALL                                                              
+                  4        SPCFORCE(PLOT) = ALL                                                                  
+                  5        FORCE(PLOT,CORNER) = ALL                                                              
+                  6        STRESS(PLOT,CORNER) = ALL                                                             
+                  7        STRAIN(PLOT,FIBER,CORNER) = ALL                                                       
+                  8        SPC = 1                                                                               
+                  9        METHOD = 1                                                                            
+                 10      BEGIN BULK                                                                              
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                       CORD2C                        1
+                                       CORD2S                        1
+                                         CROD                       72
+                                        EIGRL                        1
+                                        FORCE                        5
+                                         GRID                       20
+                                         MAT1                        1
+                                       MDLPRM                        1
+                                        PARAM                        2
+                                         PROD                       16
+                                         SPC1                        2
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 4109 (OUTPX2)
+     THE LABEL IS XXXXXXXX FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          8 RECORDS.)
+                (TOTAL DATA WRITTEN FOR LABEL =         17 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM168, TRL =
+                    101                 0              5120                 8                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM1   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         163 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          30 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         234 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM2X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM201, TRL =
+                    102                 0                 4                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM2   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         291 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         322 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM3X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM301, TRL =
+                    103                 0                 0                64                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM3   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          38 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          69 WORDS.)
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK GEOM4X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR GEOM4705, TRL =
+                    104                 0                 0                 0                64                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS GEOM4   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          31 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          62 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EPTX     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EPT01, TRL =
+                    105               128                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          99 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =         130 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK MPTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR MPT, TRL =
+                    101             32768                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS MPT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          15 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          46 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK DYNAMICS WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR DYNAMICS, TRL =
+                    103               256                 0                 0                 0                 0                 0
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS DYNAMICS
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =          30 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          61 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK EDTS     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR EDT, TRL =
+                    105                 0                 0                 0                 0                 0                 4
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS EDT     
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =           7 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =          20 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =          37 WORDS.)
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK PVT, TRAILER[101, 8, 0, 0, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK CASECC, TRAILER[102, 1, 0, 1000, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK CSTM, TRAILER[104, 20, 2, 6, 1, 24, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM1Q, TRAILER[101, 0, 5120, 8, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK EPT, TRAILER[101, 128, 0, 0, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK MPT, TRAILER[102, 32768, 0, 0, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM2, TRAILER[103, 0, 4, 0, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM3S, TRAILER[104, 0, 0, 64, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (DATA BLOCK GEOM3S IS NOT SUPPORTED)
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM4S, TRAILER[105, 0, 0, 0, 64, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (DATA BLOCK GEOM4S IS NOT SUPPORTED)
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM1, TRAILER[101, 0, 5120, 8, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK DYNAMIC, TRAILER[102, 256, 0, 0, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK EDT, TRAILER[103, 0, 0, 0, 0, 0, 4])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM3, TRAILER[101, 0, 0, 64, 0, 0, 0])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeInput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK GEOM4, TRAILER[102, 0, 0, 0, 64, 0, 0])
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  1.104751E+00  0.000000E+00  0.000000E+00  0.000000E+00  1.453038E+02 -6.628506E+01 *
+                      *  0.000000E+00  1.104751E+00  0.000000E+00 -1.453038E+02  0.000000E+00  6.628506E+01 *
+                      *  0.000000E+00  0.000000E+00  1.104751E+00  6.628506E+01 -6.628506E+01  0.000000E+00 *
+                      *  0.000000E+00 -1.453038E+02  6.628506E+01  3.288435E+04 -3.977103E+03 -8.718226E+03 *
+                      *  1.453038E+02  0.000000E+00 -6.628506E+01 -3.977103E+03  3.288435E+04 -8.718226E+03 *
+                      * -6.628506E+01  6.628506E+01  0.000000E+00 -8.718226E+03 -8.718226E+03  1.590841E+04 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.104751E+00      0.000000E+00  6.000000E+01  1.315263E+02
+                                  Y            1.104751E+00      6.000000E+01  0.000000E+00  1.315263E+02
+                                  Z            1.104751E+00      6.000000E+01  6.000000E+01  0.000000E+00
+                                                                I(S)
+                                           *  9.795987E+03 -4.547474E-13  0.000000E+00 *
+                                           * -4.547474E-13  9.795987E+03  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  7.954207E+03 *
+                                                                I(Q)
+                                           *  9.795987E+03                             *
+                                           *                9.795987E+03               *
+                                           *                              7.954207E+03 *
+                                                                 Q
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OGPWG, TRAILER[101, 0, 0, 0, 0, 0, 1])
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+ *** USER INFORMATION MESSAGE 5010 (LNCILS)
+     STURM SEQUENCE DATA FOR EIGENVALUE EXTRACTION.
+     TRIAL EIGENVALUE = 5.801469D+03, CYCLES = 1.212241D+01 THE STURM COUNT = 0
+
+ TABLE OF SHIFTS:  (LNNRIGL)
+ SHIFT #        SHIFT VALUE         FREQUENCY, CYCLES     # EIGENVALUES BELOW    # NEW EIGENVALUES FOUND
+     1.        5.8014692E+03          1.2122414E+01                 0                       48
+
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+0
+
+
+                          E I G E N V A L U E  A N A L Y S I S   S U M M A R Y   (READ MODULE) 
+
+
+
+                                     BLOCK SIZE USED ......................     7
+
+                                     NUMBER OF DECOMPOSITIONS .............     1
+
+                                     NUMBER OF ROOTS FOUND ................    10
+
+                                     NUMBER OF SOLVES REQUIRED ............     9
+
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         1        2.558172E+04        1.599429E+02        2.545570E+01        1.000000E+00        2.558172E+04
+        2         2        2.558172E+04        1.599429E+02        2.545570E+01        1.000000E+00        2.558172E+04
+        3         3        5.986478E+04        2.446728E+02        3.894089E+01        1.000000E+00        5.986478E+04
+        4         4        1.855421E+05        4.307459E+02        6.855535E+01        1.000000E+00        1.855421E+05
+        5         5        2.144648E+05        4.631034E+02        7.370520E+01        1.000000E+00        2.144648E+05
+        6         6        2.144648E+05        4.631034E+02        7.370520E+01        1.000000E+00        2.144648E+05
+        7         7        4.866123E+05        6.975760E+02        1.110227E+02        1.000000E+00        4.866123E+05
+        8         8        6.430268E+05        8.018895E+02        1.276247E+02        1.000000E+00        6.430268E+05
+        9         9        7.372875E+05        8.586545E+02        1.366591E+02        1.000000E+00        7.372875E+05
+       10        10        7.372875E+05        8.586545E+02        1.366591E+02        1.000000E+00        7.372875E+05
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  SPCFORCE RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX   -3.099973E+03     ----          ----          ----       0.000000E+00  1.859984E+05                             
+               FY       ----       2.153246E+04     ----       0.000000E+00     ----       1.291947E+06                             
+               FZ       ----          ----       1.091394E-11 -4.248687E+06 -6.116726E+05     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -3.099973E+03  2.153246E+04  1.091394E-11 -4.248687E+06 -6.116726E+05  1.477946E+06
+0        2     FX   -2.153246E+04     ----          ----          ----       0.000000E+00  1.291947E+06                             
+               FY       ----      -3.099973E+03     ----       0.000000E+00     ----      -1.859984E+05                             
+               FZ       ----          ----       2.000888E-11  6.116726E+05 -4.248687E+06     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -2.153246E+04 -3.099973E+03  2.000888E-11  6.116726E+05 -4.248687E+06  1.105949E+06
+0        3     FX   -4.911271E-11     ----          ----          ----       0.000000E+00  2.431085E+06                             
+               FY       ----       7.275958E-12     ----       0.000000E+00     ----       2.431085E+06                             
+               FZ       ----          ----      -4.144235E-12  1.091394E-10 -7.615307E-09     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -4.911271E-11  7.275958E-12 -4.144235E-12  1.091394E-10 -7.615307E-09  4.862170E+06
+0        4     FX   -1.818989E-10     ----          ----          ----       0.000000E+00  5.733455E-09                             
+               FY       ----      -6.730261E-11     ----       0.000000E+00     ----      -8.149073E-09                             
+               FZ       ----          ----      -1.769219E+05 -1.061531E+07  1.061531E+07     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -1.818989E-10 -6.730261E-11 -1.769219E+05 -1.061531E+07  1.061531E+07 -2.415618E-09
+0        5     FX    5.237055E+04     ----          ----          ----       0.000000E+00 -3.142233E+06                             
+               FY       ----       9.228114E+04     ----       0.000000E+00     ----       5.536869E+06                             
+               FZ       ----          ----      -1.828084E-10 -7.737351E+05  4.391030E+05     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  5.237055E+04  9.228114E+04 -1.828084E-10 -7.737351E+05  4.391030E+05  2.394636E+06
+0        6     FX   -9.228114E+04     ----          ----          ----       0.000000E+00  5.536869E+06                             
+               FY       ----       5.237055E+04     ----       0.000000E+00     ----       3.142233E+06                             
+               FZ       ----          ----       8.185452E-11 -4.391030E+05 -7.737351E+05     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -9.228114E+04  5.237055E+04  8.185452E-11 -4.391030E+05 -7.737351E+05  8.679101E+06
+0        7     FX    1.746230E-10     ----          ----          ----       0.000000E+00 -5.940022E+06                             
+               FY       ----      -5.020411E-10     ----       0.000000E+00     ----      -5.940022E+06                             
+               FZ       ----          ----       1.360930E-09  2.442539E-07 -1.638667E-07     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  1.746230E-10 -5.020411E-10  1.360930E-09  2.442539E-07 -1.638667E-07 -1.188004E+07
+0        8     FX   -2.177330E-09     ----          ----          ----       0.000000E+00  2.480569E+06                             
+               FY       ----       1.133230E-09     ----       0.000000E+00     ----      -2.480569E+06                             
+               FZ       ----          ----      -3.929017E-10 -1.778826E-07 -1.920853E-07     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -2.177330E-09  1.133230E-09 -3.929017E-10 -1.778826E-07 -1.920853E-07  2.225861E-07
+0        9     FX   -2.449202E+01     ----          ----          ----       0.000000E+00  1.469521E+03                             
+               FY       ----      -1.237980E+05     ----       0.000000E+00     ----      -7.427877E+06                             
+               FZ       ----          ----      -1.979060E-09  8.517411E+06 -1.685073E+03     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -2.449202E+01 -1.237980E+05 -1.979060E-09  8.517411E+06 -1.685073E+03 -7.426408E+06
+0       10     FX   -1.237980E+05     ----          ----          ----       0.000000E+00  7.427877E+06                             
+               FY       ----       2.449202E+01     ----       0.000000E+00     ----       1.469521E+03                             
+               FZ       ----          ----      -4.802132E-10 -1.685073E+03 -8.517411E+06     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS -1.237980E+05  2.449202E+01 -4.802132E-10 -1.685073E+03 -8.517411E+06  7.429347E+06
+*** User Information: Select OptionX for OUTPUT2 Datablock OQG1    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OQG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OQG1, TRL =
+                    101                 0              1600                 0                 0                 0                 2
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OQG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         160 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        3165 WORDS.)
+*** User Information: Select OptionX for OUTPUT2 Datablock OUG1    
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OUG1     WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OUG1, TRL =
+                    101                 0              1600                 0                 0                 0                 2
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OUG1    
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         160 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        3165 WORDS.)
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OLAMA, TRAILER[101, 10, 0, 0, 0, 0, 0])
+*** User Information: Select OptionX for OUTPUT2 Datablock OEF1X   
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OEF1X    WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OEF1X, TRL =
+                    101                63                 6                 7                21                 0                 2
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OEF1X   
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         216 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        3725 WORDS.)
+*** User Information: Select OptionX for OUTPUT2 Datablock OES1X1  
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OES1X1   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OES1X1, TRL =
+                    101                63                 6                 7                21                 0                 2
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OES1X1  
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         360 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        5165 WORDS.)
+*** User Information: Select OptionX for OUTPUT2 Datablock OSTR1X  
+ *** USER INFORMATION MESSAGE 4114 (OUTPX2)
+     DATA BLOCK OSTR1X   WRITTEN ON FORTRAN UNIT  12 IN BINARY (LTLEND) FORMAT USING NDDL DESCRIPTION FOR OSTR1X, TRL =
+                    101                63                 6                 7                21                 0                 2
+     NAME OF DATA BLOCK WRITTEN ON FORTRAN UNIT IS OSTR1X  
+        (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =      131074 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =         360 WORDS.)
+           (NUMBER OF FORTRAN RECORDS WRITTEN =         110 RECORDS.)
+           (TOTAL DATA WRITTEN FOR DATA BLOCK =        5165 WORDS.)
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OUG1, TRAILER[101, 0, 1600, 0, 0, 0, 2])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OES1X, TRAILER[101, 63, 6, 7, 21, 0, 2])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OEF1X, TRAILER[102, 63, 6, 7, 21, 0, 2])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OSTR1X, TRAILER[103, 63, 6, 7, 21, 0, 2])
+ *** USER INFORMATION MESSAGE 3 (crdb::nastran::Processor::writeOutput)
+ *** USER INFORMATION MESSAGE  (WRITE DATA BLOCK OQG1, TRAILER[102, 0, 1600, 0, 0, 0, 2])
+ *** USER INFORMATION MESSAGE 4110 (OUTPX2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1    SIMCENTER NASTRAN STATIC ANALYSIS SET                                     JUNE   7, 2021  MSC Nastran 12/18/18   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     71
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    5 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+

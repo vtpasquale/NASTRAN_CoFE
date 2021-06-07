@@ -14,21 +14,30 @@ classdef Hdf5Elemental
     methods
         function obj = Hdf5Elemental(arg1,arg2)
             if ischar(arg1)% arg1 = filename
-                obj.hdf5ElementForce = Hdf5ElementForce.constructFromFile(arg1);
-                obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromFile(arg1);
-                obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromFile(arg1);
-                obj.hdf5ElementStress = Hdf5ElementStress.constructFromFile(arg1);
+                info = h5info(arg1,'/NASTRAN/RESULT/ELEMENTAL');
+                if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/ELEMENTAL/ELEMENT_FORCE'))
+                    obj.hdf5ElementForce = Hdf5ElementForce.constructFromFile(arg1);
+                end
+                if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/ELEMENTAL/ENERGY'))
+                    obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromFile(arg1);
+                end
+                if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/ELEMENTAL/STRAIN'))
+                    obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromFile(arg1);
+                end
+                if any(strcmp({info.Groups.Name},'/NASTRAN/RESULT/ELEMENTAL/STRESS'))
+                    obj.hdf5ElementStress = Hdf5ElementStress.constructFromFile(arg1);
+                end
             elseif isa(arg1,'Model')
-                if ~isempty(arg2.force)
+                if ~isempty([arg2.force])
                     obj.hdf5ElementForce = Hdf5ElementForce.constructFromCofe(arg1,arg2);
                 end
-                if ~isempty(arg2.ese)
+                if ~isempty([arg2.ese])
                     obj.hdf5ElementEnergy = Hdf5ElementEnergy.constructFromCofe(arg1,arg2);
                 end
-                if ~isempty(arg2.strain)
+                if ~isempty([arg2.strain])
                     obj.hdf5ElementStrain = Hdf5ElementStrain.constructFromCofe(arg1,arg2);
                 end
-                if ~isempty(arg2.stress)
+                if ~isempty([arg2.stress])
                     obj.hdf5ElementStress = Hdf5ElementStress.constructFromCofe(arg1,arg2);
                 end
             else

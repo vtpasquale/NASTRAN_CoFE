@@ -160,7 +160,7 @@ classdef Cofe
             
             % Write output to hard disk
             if ~writeOutput2Disk; return; end
-            [~,outputFile] = fileparts(inputFile);
+            [~,outputFile] = fileparts(inputData);
             % Export Hdf5 data to hard disk
             hdf5.export([outputFile,'.h5']);
             

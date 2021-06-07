@@ -1,13 +1,13 @@
 function [obj,con] = fun1(x,initialBdfEntries)
-% Objective function and constrants for optimization
+% Objective function and constraints for optimization
 %
 % INPUTS
-%  x = [n,1 double] vector of design variable values.
+%  x = [nDesignVariables,1 double] vector of design variable values.
 %  initialBdfEntries = [BdfEntries] Initial BdfEntries object to be updated based on design variable values.
 %
 % OUTPUTS
-% obj = [double] objective function value
-% con = [double] constraint function value
+% obj = [1,1 double] objective function value
+% con = [nConstraints,1 double] constraint function values
 
 bdfEntries = design2entries(x,initialBdfEntries);
 cofe = Cofe(bdfEntries);

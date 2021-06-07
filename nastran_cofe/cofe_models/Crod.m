@@ -51,7 +51,8 @@ classdef Crod < Element
             
             % Element matricies
             [T_e0,obj.k_e,obj.m_e,obj.volume,obj.mass] = ...
-                obj.crodMat(p1,p2,pty.E,pty.G,pty.a,pty.j,pty.rho,pty.nsm);
+                obj.crodMat(p1,p2,pty.E,pty.G,pty.a,pty.j,pty.rho,...
+                            pty.nsm,model.coupledMassFlag);
             
             % Transformation matrix
             obj.R_eg(10:12,10:12) = T_e0*n2.T_g0.';
@@ -183,7 +184,7 @@ classdef Crod < Element
         end        
     end
     methods (Access=private,Static=true)
-        function [T_e0,k_e,m_e,volume,mass] = crodMat(p1,p2,E,G,A,J,rho,nsm)
+        function [T_e0,k_e,m_e,volume,mass] = crodMat(p1,p2,E,G,A,J,rho,nsm,coupledMassFlag)
             % Function returns the element stiffness, mass, and rotation matrices for CROD space truss elements.
             % Anthony Ricciardi
             %
@@ -196,6 +197,7 @@ classdef Crod < Element
             % J = torsional constant
             % rho = material density
             % nsm = nonstructural mass per unit length
+            % coupledMassFlag [logical] Coupled mass provided if true, lumped mass otherwise.
             %
             % Outputs
             % T_e0 = [3,3 double] Transformation matrix from the basic reference frame to the element reference frame
@@ -242,6 +244,11 @@ classdef Crod < Element
                 0         0         0         0         0         0         0         0         0         0         0         0
                 0         0         0         0         0         0         0         0         0         0         0         0];
             m_e = (1/6*(rho*A+nsm)*L)*m;
+            
+            if ~coupledMassFlag
+                % convert to lumped mass
+                m_e = diag(sum(m_e,2));
+            end
             
             % Volume and mass
             volume = L*A;
