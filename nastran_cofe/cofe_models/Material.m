@@ -31,7 +31,7 @@ classdef (Abstract) Material < matlab.mixin.Heterogeneous
             end
             material = obj(index);
             if size(material,1)~=1
-                error('Material PID = %d is defined more than once.',id)
+                error('Material MID = %d is defined more than once.',id)
             end
             if nargin > 3
                 if ~isa(material,enforceTypeOption)

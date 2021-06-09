@@ -4,8 +4,21 @@
 classdef BulkEntryPbeam < BulkEntry
     
     properties
-        pid % [uint32] Property identification number
-        mid % [uint32] Material identification number
+        pid  % [uint32] Property identification number
+        mid1 % [uint32] Membrane material identification number
+        mid2 % [uint32] Bending material identification number
+        mid3 % [uint32] Transverse shear material identification number
+        mid4 % [uint32] Transverse shear material identification number
+        t    % [double] Default membrane thickness
+        bendRatio % [double] 12I/T^3 = ratio of the actual bending moment inertia of the shell, I, to the bending moment of inertia of a homogeneous shell, T^3/12. 
+        shearRatio % [double] Ts/T = ratio of the shear thickness, Ts, to the membrane thickness of the shell, T. The typical value is for a homogeneous shell is 0.833333.
+        nsm % [double] Nonstructural mass per unit area.
+        z1 
+        z2 
+        mid4
+
+        
+        
         a % [double] Area of the cross section
         i1 % [double] Area moments of inertia
         i2 % [double] Area moments of inertia

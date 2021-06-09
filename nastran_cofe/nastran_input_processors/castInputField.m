@@ -10,6 +10,7 @@
 %       char            -- Character
 %       uint8           -- 8-bit unsigned integer
 %       uint32          -- 32-bit unsigned integer
+%       int32           -- 32-bit signed integer
 %       double          -- Double precision floating point number (this is the traditional MATLAB numeric type)
 % dataDefault [type, [], NaN] default value.
 %                        Set to NaN if explicit user input is required.
@@ -74,7 +75,7 @@ switch dataType
             error('castInputField:dataFormatIssue',...
                 'There is a formating problem with the %s field on a(n) %s entry.',fieldName,entryName)
         end
-    case {'uint8','uint32'}
+    case {'uint8','uint32','int32'}
         out = sscanf(fieldData,'%f'); % out = str2double(data);
         if any([isnan(out),isempty(out)])
             error('castInputField:dataFormatIssue',...

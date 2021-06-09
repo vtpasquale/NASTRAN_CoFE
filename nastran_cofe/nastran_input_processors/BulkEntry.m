@@ -38,7 +38,7 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
                 % convert field 1 to case-sensitive class name
                 entryName =  lower(fields{1});
                 entryName(1) = upper(entryName(1));
-                if strcmp(entryName(end),'*');
+                if strcmp(entryName(end),'*')
                     entryName = entryName(1:end-1);
                 end
                 % check that input entry is supported
