@@ -19,15 +19,17 @@ classdef Ctria3 < Element
         
         volume % [double] element volume
         mass % [double] element mass
-    end
-    properties (Access=private)
-        % x_e
+
+        Bm % [double] membrane strain-dispacement matrix
+        E2Dm % [3,3 double] 2D elasticity matrix
+        tAverage % [double] average thickness
+        T_e0 % [3,3 double] Transformation from basic to element reference frame
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(74); % [uint8] Element code corresponding to Nastran item codes documentation.
 %         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBeam';
-%         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainBeam';
-%         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressBeam';
+        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
+        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -79,21 +81,21 @@ classdef Ctria3 < Element
 %                 dNdetai ] * x_e(1:2,:).';
 %             dNdxzy = J\[dNdxii;
 %                 dNdetai ];
-%             B =[dNdxzy(1,1)     0             dNdxzy(1,2)     0            dNdxzy(1,3)     0          ;
+%             Bm=[dNdxzy(1,1)     0             dNdxzy(1,2)     0            dNdxzy(1,3)     0          ;
 %                 0               dNdxzy(2,1)   0               dNdxzy(2,2)  0               dNdxzy(2,3);
 %                 dNdxzy(2,1)     dNdxzy(1,1)   dNdxzy(2,2)     dNdxzy(1,2)  dNdxzy(2,3)     dNdxzy(1,3)];
             
             % B calculated using CMPW (7.2-8) fast analytic method
             X = x_e(1,:); Y = x_e(2,:);
             detJ = (X(2)-X(1))*(Y(3)-Y(1)) - (X(3)-X(1))*(Y(2)-Y(1));
-            B = 1/(detJ)*...
+            Bm= 1/(detJ)*...
                 [Y(2)-Y(3),0,Y(3)-Y(1),0,Y(1)-Y(2),0;
                  0,X(3)-X(2),0,X(1)-X(3),0,X(2)-X(1);
                  X(3)-X(2),Y(2)-Y(3),X(1)-X(3),Y(3)-Y(1),X(2)-X(1),Y(1)-Y(2)];
              
              % membrane stiffness matrix
              area = detJ/2;
-             km = B.'*E2Dm*B*tAverage*area;
+             km = Bm.'*E2Dm*Bm*tAverage*area;
              
              obj.k_e = zeros(18);
              memDof = [1,2,7,8,13,14];
@@ -125,6 +127,12 @@ classdef Ctria3 < Element
              obj.R_eg(7:9,7:9)     = T_e0*n2.T_g0.';
              obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
              obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
+             
+             % save to properties
+             obj.E2Dm=E2Dm;
+             obj.Bm=Bm;
+             obj.tAverage=tAverage;
+             obj.T_e0 = T_e0;
         end
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
@@ -134,34 +142,34 @@ classdef Ctria3 < Element
             % OUTPUTS
             % force = [14,nVectors double] Element forces
             %   indices:
-            %    [1 |  Beam EndA Axial Force
-            %     2 |  Beam EndA Plane1 Shear Force
-            %     3 |  Beam EndA Plane2 Shear Force
-            %     4 |  Beam EndA Torque
-            %     5 |  Beam EndA Plane1 Moment
-            %     6 |  Beam EndA Plane2 Moment
-            %     7 |  Beam EndB Axial Force
-            %     8 |  Beam EndB Plane1 Shear Force
-            %     9 |  Beam EndB Plane2 Shear Force
-            %    10 |  Beam EndB Torque 
-            %    11 |  Beam EndB Plane1 Moment
-            %    12 |  Beam EndB Plane2 Moment
-            %    13 |  Beam EndA Grid ID (for HDF5) 
-            %    14 |  Beam EndB Grid ID (for HDF5) ]
+            %    [1 |  Membrane force x
+            %     2 |  Membrane force y
+            %     3 |  Membrane force xy
+            %     4 |  Bending moment x
+            %     5 |  Bending moment y
+            %     6 |  Bending moment xy
+            %     7 |  Shear x
+            %     8 |  Shear y           ]
             %
             % stress  = [8,nVectors double] Element stresses
             % strain  = [8,nVectors double] Element strains
             %   indices:
-            %    [1 |  End A Long. Stress or Strain at Point C
-            %     2 |  End A Long. Stress or Strain at Point D
-            %     3 |  End A Long. Stress or Strain at Point E
-            %     4 |  End A Long. Stress or Strain at Point F
-            %     5 |  End B Long. Stress or Strain at Point C
-            %     6 |  End B Long. Stress or Strain at Point D
-            %     7 |  End B Long. Stress or Strain at Point E
-            %     8 |  End B Long. Stress or Strain at Point F
-            %     9 |  Beam EndA Grid ID (for HDF5)
-            %    10 |  Beam EndB Grid ID (for HDF5) ]
+            %    [1 |  Z1=Fiber Distance 1
+            %     2 |  Normal x at Z1
+            %     3 |  Normal y at Z1
+            %     4 |  Shear xy at Z1
+            %     5 |  Shear angle at Z1
+            %     6 |  Major principal at Z1
+            %     7 |  Minor principal at Z1
+            %     8 |  von Mises or maximum shear at Z1
+            %     9 |  Z2=Fiber Distance 2
+            %    10 |  Normal x at Z2
+            %    11 |  Normal y at Z2
+            %    12 |  Shear xy at Z2
+            %    13 |  Shear angle at Z2
+            %    14 |  Major principal at Z2
+            %    15 |  Minor principal at Z2
+            %    16 |  von Mises or maximum shear at Z2    ]
             %
             % strainEnergy  = [3,nVectors double] Element strain energy
             % kineticEnergy = [3,nVectors double] Element kinetic energy
@@ -176,51 +184,79 @@ classdef Ctria3 < Element
             % Check inputs
             if ~any(returnFlags); error('This function is not intended to be called if no vaules are to be recovered'); end
             
-            % Element displacements and forces
+            % Element displacements
             u_e = obj.R_eg*u_g(obj.gdof,:);
-            f_e = obj.k_e*u_e;
             nVectors = size(u_e,2);
+            z = obj.tAverage/2;
             
             % Force
             if returnFlags(1)
-                force = [-f_e(1:6 ,:);
-                          f_e(7:12,:); 
-                          double(repmat(obj.g.',[1,nVectors]))];
+                f_e = obj.k_e*u_e;
+                force = [];
             else
                 force = [];
-            end
-                        
-            % Calcualte stress for stress or strain recovery
-            if any(returnFlags(2:3))
-                pty = model.property.getProperty(obj.pid,model,'Pbeam');
-                [C1,C2,D1,D2,E1,E2,F1,F2]=pty.getStressLocations();
-                force2stress = [1/pty.a, 0, 0, 0, C2/pty.i2, -C1/pty.i1;
-                                1/pty.a, 0, 0, 0, D2/pty.i2, -D1/pty.i1;
-                                1/pty.a, 0, 0, 0, E2/pty.i2, -E1/pty.i1;
-                                1/pty.a, 0, 0, 0, F2/pty.i2, -F1/pty.i1];
-                s = [-force2stress*f_e(1:6,:);
-                      force2stress*f_e(7:end,:)];
             end
             
             % Stress
             if returnFlags(2)
-                stress = [s;
-                          double(repmat(obj.g.',[1,nVectors]))];
+                membraneStress = obj.E2Dm*obj.Bm*u_e([1,2,7,8,13,14],:);
+                
+                vonMises = calculateVonMises(membraneStress);
+                [s1,s2,angle] = calculatePrincipal(membraneStress);
+                
+                
+                stress = [
+                    -z*ones(1,nVectors);
+                    membraneStress(1,:)
+                    membraneStress(2,:)
+                    membraneStress(3,:)
+                    angle
+                    s1
+                    s2
+                    vonMises
+                    z*ones(1,nVectors);
+                    membraneStress(1,:)
+                    membraneStress(2,:)
+                    membraneStress(3,:)
+                    angle
+                    s1
+                    s2
+                    vonMises];
+                
             else
                 stress = [];
             end
             
             % Strain
             if returnFlags(3)
-                strain = [(1/pty.E)*s;
-                          double(repmat(obj.g.',[1,nVectors]))];
+                membraneStrain = obj.Bm*u_e([1,2,7,8,13,14],:);
+                vonMises = calculateVonMises(membraneStrain);
+                [s1,s2,angle] = calculatePrincipal(membraneStrain);
+                
+                strain = [
+                    -z*ones(1,nVectors);
+                    membraneStrain(1,:)
+                    membraneStrain(2,:)
+                    membraneStrain(3,:)
+                    angle
+                    s1
+                    s2
+                    vonMises
+                    z*ones(1,nVectors);
+                    membraneStrain(1,:)
+                    membraneStrain(2,:)
+                    membraneStrain(3,:)
+                    angle
+                    s1
+                    s2
+                    vonMises];
             else
                 strain = [];
             end
             
             % Strain Energy
             if returnFlags(4)
-                strainEnergy0 = .5*diag(u_e.'*f_e).';
+                strainEnergy0 = .5*diag(u_e.'*obj.k_e*u_e).';
                 strainEnergy = [strainEnergy0;
                                 strainEnergy0;%---> converted to percent total later by Element.recover()
                                 (1/obj.volume)*strainEnergy0];
