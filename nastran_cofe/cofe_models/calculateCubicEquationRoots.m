@@ -8,9 +8,11 @@ function [x1,x2,x3] = calculateCubicEquationRoots(a,b,c,d)
 %   d       f(x) = a.*x.^3 + b.*x.^2 + c.*x + d
 %
 % OUTPUTS
-%   x1      Roots (n-dimensional arrays). Each array contains
-%   x2      one of the three roots of the equation(s).
-%   x3
+% 
+%   x1      Roots (n-dimensional arrays). Each array contains one of the 
+%   x2      three roots of the equation(s). Root are sorted in descending
+%   x3      order such that
+%                  real(x1) <= real(x2) <= real(x3)
 %
 % This function is designed for the unique situation where the user needs 
 % to evaluate many independent cubic equations at once. Input coefficients 
@@ -43,7 +45,8 @@ function [x1,x2,x3] = calculateCubicEquationRoots(a,b,c,d)
 if ~all([isfloat(a),isfloat(b),isfloat(c),isfloat(d)])
     error('cubicRoots:InputType','Inputs must be a floating point number array.')
 end
-if ~all([all(size(a)==size(b)),all(size(a)==size(c)),all(size(a)==size(d))])
+sizeA=size(a);
+if ~all([all(sizeA==size(b)),all(sizeA==size(c)),all(sizeA==size(d))])
     error('cubicRoots:InputSize','Input dimensions must be consistent')
 end
 if any(a(:)==0)
@@ -54,7 +57,7 @@ if any(a(:)==0)
 end
 
 % preallocate arrays
-x1=zeros(size(a));
+x1=zeros(sizeA);
 x2=x1;
 x3=x1;
 
@@ -75,7 +78,7 @@ if any(cUndefinedFlag(:))
     x3(cUndefinedFlag) = x1(cUndefinedFlag);
 end
 if any(cDefinedFlag(:))
-    c = zeros(size(a));
+    c = zeros(sizeA);
     % keep the larger of the two possible c constants
     c1=c;
     c2=c;

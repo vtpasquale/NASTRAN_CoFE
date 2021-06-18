@@ -17,20 +17,23 @@ if n == 3
     s2 = c1 - c2; 
     angle = .5*atan2d(2*s(3,:),(s(1,:)-s(2,:)));
 elseif n == 6
-    a = s(1,:) + s(2,:) + s(3,:);
-    b = s(1,:).*s(2,:) + s(2,:).*s(3,:) + s(1,:).*s(3,:) ...
+    a = ones(1,size(s,2));
+    b = s(1,:) + s(2,:) + s(3,:);
+    c = s(1,:).*s(2,:) + s(2,:).*s(3,:) + s(1,:).*s(3,:) ...
         - s(4,:).^2 - s(5,:).^2 - s(6,:).^2 ;
-    c = s(1,:).*s(2,:).*s(3,:) + 2*s(4,:).*s(5,:).*s(6,:) ...
+    d = s(1,:).*s(2,:).*s(3,:) + 2*s(4,:).*s(5,:).*s(6,:) ...
         - s(1,:).*s(4,:).^2 ...
         - s(2,:).*s(5,:).^2 ...
         - s(3,:).*s(6,:).^2;
-    
-%     https://math.vanderbilt.edu/schectex/courses/cubic/
-
-%     roots([0,0;-a(1:2);b(1:2);-c(1:2)]')
-% 
-%     keyboard
-    
+    [x1,x2,x3] = calculateCubicEquationRoots(a,-1*b,c,-1*d);
+    s1 = real(x3);
+    % i1 = imag(x3);
+    s2 = real(x1);
+    % i2 = imag(x1);
+    warning('This process will not work with complex step')
+    if nargout>2
+        error('angle output not implemented for 3D')
+    end
 else
     error('Input stress/strain dimension not allowed.')
 end

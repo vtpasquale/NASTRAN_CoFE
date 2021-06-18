@@ -49,6 +49,7 @@ classdef TestCalculateCubicEquationRoots < matlab.unittest.TestCase
             if residual > 1e-12
                 error('Root calculation accuracy fail.')
             end
+            testCase.sortCheck(x1,x2,x3)
         end
         function worksForDifferentArrayDimensions(testCase,inputDimensions,coefficentType)
             % Error when a required field is empty
@@ -63,6 +64,7 @@ classdef TestCalculateCubicEquationRoots < matlab.unittest.TestCase
             if residual > 1e-8
                 error('Root calculation accuracy fail.')
             end
+            testCase.sortCheck(x1,x2,x3)
         end
         function worksWhenD0EqualsZero(testCase,coefficentType)
             a = testCase.makeRandomSizeInputMatrix(3,coefficentType);
@@ -75,6 +77,7 @@ classdef TestCalculateCubicEquationRoots < matlab.unittest.TestCase
             if residual > 1e-8
                 error('Root calculation accuracy fail.')
             end
+            testCase.sortCheck(x1,x2,x3)
         end
         function worksWhenD0AndD1NearOrEqualZero(testCase,coefficentType)
             a = testCase.makeRandomSizeInputMatrix(3,coefficentType);
@@ -87,6 +90,7 @@ classdef TestCalculateCubicEquationRoots < matlab.unittest.TestCase
             if residual > 1e-8
                 error('Root calculation accuracy fail.')
             end
+            testCase.sortCheck(x1,x2,x3)
         end
         function errorWhenQuadratic(testCase,inputDimensions)
             % Error when one input matrix is a different size than others
@@ -129,6 +133,14 @@ classdef TestCalculateCubicEquationRoots < matlab.unittest.TestCase
             zero2 = a.*x2.^3 + b.*x2.^2 + c.*x2 + d;
             zero3 = a.*x3.^3 + b.*x3.^2 + c.*x3 + d;
             residual = max(abs([zero1(:);zero2(:);zero3(:)]));
+        end
+        function sortCheck(x1,x2,x3)
+            check1 = abs(x1)<abs(x2);
+            check2 = abs(x1)<abs(x3);
+            check3 = abs(x2)<abs(x3);
+            if any([check1(:);check2(:);check3(:)])
+                error('Root sorting failure')
+            end
         end
     end
 end

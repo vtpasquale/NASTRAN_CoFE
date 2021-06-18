@@ -1,4 +1,4 @@
-% Class for CBEAM entry
+% Class for CTRIA3 entry
 % Anthony Ricciardi
 %
 classdef BulkEntryCtria3 < BulkEntry

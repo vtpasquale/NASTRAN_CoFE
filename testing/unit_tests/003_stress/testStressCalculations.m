@@ -28,3 +28,12 @@ assert(all(differenceMinPrin2D<1e-5),'Failed comparison')
 
 differenceAngle2D = calculateNormalizedDifference(angle2D.',data2D.sAngle);
 assert(all(differenceAngle2D<1e-5),'Failed comparison')
+
+%% principal3D
+[sMajPrin3D,sMinPrin3D] = calculatePrincipal(stress3D);
+
+differenceMajPrin3D = calculateNormalizedDifference(sMajPrin3D.',data3D.s1);
+assert(all(differenceMajPrin3D<1e-5),'Failed comparison')
+
+differenceMinPrin3D = calculateNormalizedDifference(sMinPrin3D.',data3D.s2);
+assert(all(differenceMinPrin3D<1.5e-4),'Failed comparison')
