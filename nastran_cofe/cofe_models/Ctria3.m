@@ -27,7 +27,7 @@ classdef Ctria3 < Element
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(74); % [uint8] Element code corresponding to Nastran item codes documentation.
-%         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBeam';
+        HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceTria3';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
     end
@@ -191,8 +191,9 @@ classdef Ctria3 < Element
             
             % Force
             if returnFlags(1)
-                f_e = obj.k_e*u_e;
-                force = [];
+                membraneForce = obj.tAverage*obj.E2Dm*obj.Bm*u_e([1,2,7,8,13,14],:);
+                force = zeros(8,nVectors);
+                force(1:3,:) = membraneForce;
             else
                 force = [];
             end

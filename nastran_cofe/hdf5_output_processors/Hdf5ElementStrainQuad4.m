@@ -18,7 +18,7 @@
 % A. Ricciardi
 % June 2021
 
-classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
+classdef Hdf5ElementStrainQuad4 < Hdf5ElementStrain
     
     properties
         EID % [uint32] Element identification number
@@ -33,11 +33,11 @@ classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
         DOMAIN_ID % [uint32] Domain identifier
     end
     properties (Constant = true)
-        DATASET = 'TRIA3'; % Dataset name [char]
+        DATASET = 'QUAD'; % Dataset name [char]
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5ElementStrainTria3(arg1,arg2)
+        function obj = Hdf5ElementStrainQuad4(arg1,arg2)
             if nargin > 0
                 if ischar(arg1)
                     obj = obj.importCompoundDatasetFromHdf5File(arg1);
@@ -58,7 +58,7 @@ classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
             % elementOutputData [nElements,1 ElementOutputData] element strain output data
             % domainIDs [nVectors,1 unit32] HDF5 domain ID numbers
             %
-            obj = Hdf5ElementStrainTria3();
+            obj = Hdf5ElementStrainQuad4();
             nElements = size(elementOutputData,1);
             nVectors = size(elementOutputData(1).values,2);
             eid = [];

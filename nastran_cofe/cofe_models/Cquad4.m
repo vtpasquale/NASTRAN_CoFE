@@ -32,9 +32,9 @@ classdef Cquad4 < Element
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(33); % [uint8] Element code corresponding to Nastran item codes documentation.
-        %         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBeam';
-        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
-        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
+        HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceQuad4';
+        HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainQuad4';
+        HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressQuad4';
         GAUSS_POINT = 1/sqrt(3);
         MEMBRANE_DOF = uint8([1,2,7,8,13,14,19,20]);
     end
@@ -82,7 +82,6 @@ classdef Cquad4 < Element
             end
             
             % Gauss integration
-            % nonreducedStiffness = zeros(8);
             membraneTranslationStiffness = zeros(8);
             consistentMass = zeros(4);
             obj.volume = 0;
@@ -91,9 +90,6 @@ classdef Cquad4 < Element
             Eta= obj.GAUSS_POINT*[-1 -1  1  1];
             for i = 1:4
                 [B,NiNi,detJ,tGauss] = obj.calculateBJt(Xi(i),Eta(i),x_e,tNodes);
-                
-                % nonreducedStiffness = nonreducedStiffness + B.'*E2Dm*B*detJ*tGauss;
-                
                 membraneTranslationStiffness = membraneTranslationStiffness + B(1:2,:).'*E2Dm(1:2,1:2)*B(1:2,:)*detJ*tGauss;
                 consistentMass = consistentMass + NiNi*(pty.nsm+pty.rho*tGauss)*detJ;
                 obj.volume = obj.volume + detJ*tGauss;
@@ -196,8 +192,9 @@ classdef Cquad4 < Element
             
             % Force
             if returnFlags(1)
-                f_e = obj.k_e*u_e;
-                force = [];
+                membraneForce = obj.centerT*obj.E2Dm*obj.centerB*u_e(obj.MEMBRANE_DOF,:);
+                force = zeros(8,nVectors);
+                force(1:3,:) = membraneForce;
             else
                 force = [];
             end

@@ -1,4 +1,4 @@
-%Hdf5ElementStrainBeam HDF5 data class for QUAD strain data.
+%Hdf5ElementStressBeam HDF5 data class for QUAD4 stress data.
 
 % http://web.mscsoftware.com/doc/nastran/2018.2/release/DataType_v20182.html
 % https://web.mscsoftware.com/doc/nastran/2018.2/release/DataType_v20182.xml
@@ -18,7 +18,7 @@
 % A. Ricciardi
 % June 2021
 
-classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
+classdef Hdf5ElementStressQuad4 < Hdf5ElementStress
     
     properties
         EID % [uint32] Element identification number
@@ -33,11 +33,11 @@ classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
         DOMAIN_ID % [uint32] Domain identifier
     end
     properties (Constant = true)
-        DATASET = 'TRIA3'; % Dataset name [char]
+        DATASET = 'QUAD4'; % Dataset name [char]
         SCHEMA_VERSION = uint32(0); % MSC dataset schema version used for CoFE development
     end
     methods
-        function obj = Hdf5ElementStrainTria3(arg1,arg2)
+        function obj = Hdf5ElementStressQuad4(arg1,arg2)
             if nargin > 0
                 if ischar(arg1)
                     obj = obj.importCompoundDatasetFromHdf5File(arg1);
@@ -52,13 +52,13 @@ classdef Hdf5ElementStrainTria3 < Hdf5ElementStrain
     end
     methods (Static=true)
         function obj = constructFromElementOutputData(elementOutputData,domainIDs)
-            % Function to convert element strain output data to HDF5
+            % Function to convert element stress output data to HDF5
             %
             % INPUTS
-            % elementOutputData [nElements,1 ElementOutputData] element strain output data
+            % elementOutputData [nElements,1 ElementOutputData] element stress output data
             % domainIDs [nVectors,1 unit32] HDF5 domain ID numbers
             %
-            obj = Hdf5ElementStrainTria3();
+            obj = Hdf5ElementStressQuad4();
             nElements = size(elementOutputData,1);
             nVectors = size(elementOutputData(1).values,2);
             eid = [];
