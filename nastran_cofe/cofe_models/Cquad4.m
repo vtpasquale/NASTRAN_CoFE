@@ -21,14 +21,17 @@ classdef Cquad4 < Element
         volume % [double] element volume
         mass % [double] element mass
         
-        % Bm % [double] membrane strain-dispacement matrix
-        E2Dm % [3,3 double] 2D elasticity matrix
+        E2dMem % [3,3 double] Membrane elasticity matrix
+        E2dBend % [3,3 double] Bending elasticity matrix
+        E2dShear % [2,2 double] Transverse shear elasticity matrix
+        
         % tNodes % [4,1 double] thickness of element at grid points G1 through G4
         T_e0 % [3,3 double] Transformation from basic to element reference frame
         
         % stress recovery data
         centerT % [double] element thickness at center point
-        centerB % [double] membrane strain-dispacement matrix at center point
+        centerBm % [double] membrane strain-dispacement matrix at center point
+        centerBp % [double] plate strain-dispacement matrix at center point
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(33); % [uint8] Element code corresponding to Nastran item codes documentation.
@@ -37,9 +40,26 @@ classdef Cquad4 < Element
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressQuad4';
         GAUSS_POINT = 1/sqrt(3);
         MEMBRANE_DOF = uint8([1,2,7,8,13,14,19,20]);
+        PLATE_DOF = uint8([3,4,5,9,10,11,15,16,17,21,22,23]);
+        T_PSI_THETA = [...
+     1     0     0     0     0     0     0     0     0     0     0     0
+     0     0    -1     0     0     0     0     0     0     0     0     0
+     0     1     0     0     0     0     0     0     0     0     0     0
+     0     0     0     1     0     0     0     0     0     0     0     0
+     0     0     0     0     0    -1     0     0     0     0     0     0
+     0     0     0     0     1     0     0     0     0     0     0     0
+     0     0     0     0     0     0     1     0     0     0     0     0
+     0     0     0     0     0     0     0     0    -1     0     0     0
+     0     0     0     0     0     0     0     1     0     0     0     0
+     0     0     0     0     0     0     0     0     0     1     0     0
+     0     0     0     0     0     0     0     0     0     0     0    -1
+     0     0     0     0     0     0     0     0     0     0     1     0];
     end
     methods
         function obj=assemble_sub(obj,model)
+            
+            
+            
             
             % geometry Data
             n1 = model.point.getNode(obj.g(1),model);
@@ -61,44 +81,86 @@ classdef Cquad4 < Element
             
             % node positions in element coordinate system
             x_e = T_e0*([x1, x2, x3, x4] - [x0, x0, x0, x0]);
+            x2D_e = x_e(1:2,:);
             
-            % Property and material data
-            pty = model.property.getProperty(obj.pid,model,'Pshell');
-            E2Dm = pty.E2Dm;
-            ptyT = pty.t;
+            % Property and material
+            pshell = model.property.getProperty(obj.pid,model,'Pshell');
+            pshellT = pshell.t;
+            if pshell.isMembrane
+                obj.E2dMem = pshell.E2dMembrane;
+            end
+            if pshell.isPlate
+                obj.E2dBend = pshell.E2dBend;
+                obj.E2dShear = pshell.E2dShear;
+            end
             
-            % thinkness data
+            % Element thinkness
             if obj.tFlag
-                if isempty(ptyT); error('PSHELL thinkness must be specified if PSHELL TFLAG=0.'); end
+                if isempty(pshellT); error('PSHELL thinkness must be specified if PSHELL TFLAG=0.'); end
                 if isempty(obj.t); error('CQUAD4 thinkness must be specified if PSHELL TFLAG=0.'); end
-                tNodes = ptyT*obj.t;
+                tNodes = pshellT*obj.t;
             else
                 if ~isempty(obj.t)
-                    if isempty(ptyT); error('No shell thinkness defined. Shell thickness must be specifed on PSHELL or CQUAD4 entries.'); end
+                    if isempty(pshellT); error('No shell thinkness defined. Shell thickness must be specifed on PSHELL or CQUAD4 entries.'); end
                     tNodes = obj.t;
                 else
-                    tNodes = ones(4,1)*ptyT;
+                    tNodes = ones(4,1)*pshellT;
                 end
             end
             
-            % Gauss integration
-            membraneTranslationStiffness = zeros(8);
+            % Four-point integration
+            if pshell.isMembrane
+                membraneTranslationStiffness = zeros(8);
+            end
+            if pshell.isPlate
+                bendingStiffness = zeros(12);
+            end
             consistentMass = zeros(4);
             obj.volume = 0;
             obj.area = 0;
             Xi = obj.GAUSS_POINT*[-1  1  1 -1];
             Eta= obj.GAUSS_POINT*[-1 -1  1  1];
             for i = 1:4
-                [B,NiNi,detJ,tGauss] = obj.calculateBJt(Xi(i),Eta(i),x_e,tNodes);
-                membraneTranslationStiffness = membraneTranslationStiffness + B(1:2,:).'*E2Dm(1:2,1:2)*B(1:2,:)*detJ*tGauss;
-                consistentMass = consistentMass + NiNi*(pty.nsm+pty.rho*tGauss)*detJ;
+                
+                % Gauss point evaluation
+                [N,dNdxi,dNdeta] = Cquad4.evaluateShapeFunctions(Xi(i),Eta(i));
+                [J,detJ,invJ] =    Cquad4.calculateJacobian2D(dNdxi,dNdeta,x2D_e);
+                
+                % Thickness at point
+                tGauss = N * tNodes;
+                
+                % Consistent mass matrix integration
+                consistentMass = consistentMass + N.'*N*(pshell.nsm+pshell.rho*tGauss)*detJ;
+                
+                % Stiffness integration
+                if pshell.isMembrane
+                    Bm = Cquad4.calculateMembraneB(dNdxi,dNdeta,invJ);
+                    membraneTranslationStiffness = membraneTranslationStiffness ...
+                        + Bm(1:2,:).'*obj.E2dMem(1:2,1:2)*Bm(1:2,:)*detJ*tGauss;
+                end
+                if pshell.isPlate
+                    Bp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
+                    bendingStiffness = bendingStiffness ...
+                        + (tGauss^3/12)*Bp(1:3,:).'*obj.E2dBend*Bp(1:3,:)*detJ;
+                end
+                
+                % Volume and area integratino
                 obj.volume = obj.volume + detJ*tGauss;
                 obj.area = obj.area + detJ;
             end
             
-            % center point recover and reduced-order integration shear stiffness
-            [obj.centerB,~,detJ,obj.centerT] = obj.calculateBJt(0,0,x_e,tNodes);
-            membraneShearStiffness = 4*obj.centerB(3,:).'*E2Dm(3,3)*obj.centerB(3,:)*detJ*obj.centerT;
+            % Reduced-order integration and center point recovery data
+            [N,dNdxi,dNdeta] = Cquad4.evaluateShapeFunctions(0,0);
+            [J,detJ,invJ] =    Cquad4.calculateJacobian2D(dNdxi,dNdeta,x2D_e);
+            obj.centerT = N * tNodes;
+            if pshell.isMembrane
+                obj.centerBm = Cquad4.calculateMembraneB(dNdxi,dNdeta,invJ);
+                membraneShearStiffness = 4*obj.centerBm(3,:).'*obj.E2dMem(3,3)*obj.centerBm(3,:)*detJ*obj.centerT;
+            end
+            if pshell.isPlate
+                obj.centerBp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
+                transverseShearStiffness = 4*obj.centerBp(4:5,:).'*obj.E2dShear*obj.centerBp(4:5,:)*detJ*obj.centerT;
+            end
             
             % element total mass
             obj.mass = sum(consistentMass(:));
@@ -106,6 +168,7 @@ classdef Cquad4 < Element
             % element stiffness matrix
             obj.k_e = zeros(24);
             obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
+            obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
             
             % element mass matrix
             me = zeros(24);
@@ -128,13 +191,8 @@ classdef Cquad4 < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
             
-            % save to properties
-            obj.E2Dm=E2Dm;
-            % obj.Bm=Bm;
-            % obj.tNodes=tNodes;
-            obj.T_e0 = T_e0;
-            
-            
+            % save select properties
+            obj.T_e0 = T_e0;            
         end
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
@@ -192,7 +250,7 @@ classdef Cquad4 < Element
             
             % Force
             if returnFlags(1)
-                membraneForce = obj.centerT*obj.E2Dm*obj.centerB*u_e(obj.MEMBRANE_DOF,:);
+                membraneForce = obj.centerT*obj.E2dMem*obj.centerBm*u_e(obj.MEMBRANE_DOF,:);
                 force = zeros(8,nVectors);
                 force(1:3,:) = membraneForce;
             else
@@ -206,7 +264,7 @@ classdef Cquad4 < Element
             
             % Stress
             if returnFlags(2)
-                membraneStress = obj.E2Dm*obj.centerB*u_e(obj.MEMBRANE_DOF,:);
+                membraneStress = obj.E2dMem*obj.centerBm*u_e(obj.MEMBRANE_DOF,:);
                 
                 vonMises = calculateVonMises(membraneStress);
                 [s1,s2,angle] = calculatePrincipal(membraneStress);
@@ -236,7 +294,7 @@ classdef Cquad4 < Element
             
             % Strain
             if returnFlags(3)
-                membraneStrain = obj.centerB*u_e(obj.MEMBRANE_DOF,:);
+                membraneStrain = obj.centerBm*u_e(obj.MEMBRANE_DOF,:);
                 vonMises = calculateVonMises(membraneStrain);
                 [s1,s2,angle] = calculatePrincipal(membraneStrain);
                 
@@ -283,35 +341,39 @@ classdef Cquad4 < Element
         end
     end
     methods (Access=private, Static=true)
-        function [B,NiNi,detJ,t] = calculateBJt(xi,eta,x_e,tNodes)
-            % Calculate strain-dispacement matrix
-            % shape function evaluations
-            Ni      = .25*[(1-xi)*(1-eta),(1+xi)*(1-eta),(1+xi)*(1+eta),(1-xi)*(1+eta)];
-            dNdxii  = .25*[      -(1-eta),       (1-eta),       (1+eta),      -(1+eta)];
-            dNdetai = .25*[(1-xi)*-1     ,(1+xi)*-1     ,(1+xi)        ,(1-xi)        ];
-            
-            % consistent mass distribution matrix
-            NiNi = Ni.'*Ni;
-            
-            % Thickness at point
-            t = Ni * tNodes;
-            
-            % 2D Jacobian
-            J = [dNdxii;dNdetai]* x_e(1:2,:).';
+        function [N,dNdxi,dNdeta] = evaluateShapeFunctions(xi,eta)
+            N      = .25*[(1-xi)*(1-eta),(1+xi)*(1-eta),(1+xi)*(1+eta),(1-xi)*(1+eta)];
+            dNdxi  = .25*[      -(1-eta),       (1-eta),       (1+eta),      -(1+eta)];
+            dNdeta = .25*[(1-xi)*-1     ,(1+xi)*-1     ,(1+xi)        ,(1-xi)        ];
+        end
+        function [J,detJ,invJ]=calculateJacobian2D(dNdxi,dNdeta,x2D_e)
+            J = [dNdxi;dNdeta]*x2D_e.';
             detJ = det(J);
             invJ=(1/detJ)*[J(2,2),-J(1,2);-J(2,1),J(1,1)];
-            zeros2 = zeros(2);
-            
-            B = ...
-                [1 0 0 0;
+        end
+        function B = calculateMembraneB(dNdxi,dNdeta,invJ)
+            % Membrane strain-dispacement matrix
+            B = [1 0 0 0;
                 0 0 0 1;
                 0 1 1 0]*...
-                [invJ   zeros2;
-                zeros2 invJ]*...
-                [dNdxii(1)  0 dNdxii(2)  0 dNdxii(3)  0 dNdxii(4)  0;
-                dNdetai(1) 0 dNdetai(2) 0 dNdetai(3) 0 dNdetai(4) 0;
-                0   dNdxii(1) 0 dNdxii(2)  0 dNdxii(3)  0 dNdxii(4);
-                0  dNdetai(1) 0 dNdetai(2) 0 dNdetai(3) 0 dNdetai(4)];
+                [invJ     zeros(2);
+                 zeros(2) invJ    ]*...
+                [dNdxi(1)  0 dNdxi(2)  0 dNdxi(3)  0 dNdxi(4)  0;
+                dNdeta(1) 0 dNdeta(2) 0 dNdeta(3) 0 dNdeta(4) 0;
+                0   dNdxi(1) 0 dNdxi(2)  0 dNdxi(3)  0 dNdxi(4);
+                0  dNdeta(1) 0 dNdeta(2) 0 dNdeta(3) 0 dNdeta(4)];
+        end
+        function B = calculateMindlinPlateB(N,dNdxi,dNdeta,invJ)
+            % Mindlin plate strain-dispacement matrix
+            dNdxy = invJ*[dNdxi; dNdeta];
+            dNdx  = dNdxy(1,:);
+            dNdy  = dNdxy(2,:);
+            B = [0        dNdx(1) 0       0       dNdx(2) 0       0       dNdx(3) 0       0       dNdx(4) 0 
+                 0        0       dNdy(1) 0       0       dNdy(2) 0       0       dNdy(3) 0       0       dNdy(4)
+                 dNdy(1)  dNdx(1) 0       dNdy(2) dNdx(2) 0       dNdy(3) dNdx(3) 0       dNdy(4) dNdx(4) 0 
+                -dNdx(1)  N(1)    0      -dNdx(2) N(2)    0      -dNdx(3) N(3)    0      -dNdx(4) N(4)    0
+                -dNdy(1)  0       N(1)   -dNdy(2) 0       N(2)   -dNdy(3) 0       N(3)   -dNdy(4) 0       N(4)] ...
+                *Cquad4.T_PSI_THETA;
         end
     end
 end

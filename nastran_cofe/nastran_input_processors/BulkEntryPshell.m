@@ -16,6 +16,9 @@ classdef BulkEntryPshell < BulkEntry
         z1  % [double] Fiber distance for stress calculations
         z2  % [double] Fiber distance for stress calculations
     end
+    properties (Hidden = true, Constant = true)
+        DEFAULT_SHEAR_RATIO = 5/6;
+    end
     
     methods
         function obj = BulkEntryPshell(entryFields)
@@ -26,7 +29,7 @@ classdef BulkEntryPshell < BulkEntry
             obj.mid2 = castInputField('PSHELL','MID2',entryFields{5},'int32',[],-1);
             obj.bendRatio = castInputField('PSHELL','12I/T**3',entryFields{6},'double',1.0,0);
             obj.mid3 = castInputField('PSHELL','MID3',entryFields{7},'uint32',[],1);
-            obj.shearRatio = castInputField('PSHELL','TS/T',entryFields{8},'double',1.0,0);
+            obj.shearRatio = castInputField('PSHELL','TS/T',entryFields{8},'double',obj.DEFAULT_SHEAR_RATIO,0);
             obj.nsm = castInputField('PSHELL','NSM',entryFields{9},'double',0.0,0);
             if size(entryFields,2)>10
                 obj.z1 = castInputField('PSHELL','Z1',entryFields{12},'double',[]);
@@ -38,16 +41,20 @@ classdef BulkEntryPshell < BulkEntry
             % Convert entry object to model object and store in model entity array
             pshell = Pshell;
             pshell.pid = obj.pid;
-            pshell.mid1 = obj.mid1;
             pshell.t = obj.t;
             pshell.bendRatio = obj.bendRatio;
+            pshell.shearRatio = obj.shearRatio;
             pshell.nsm = obj.nsm;
             
-            % checks 
-            if pshell.mid1 < 1; error('Only membrane response supported.'); end
-            if ~isempty(obj.mid2) | obj.mid2==-1; error('Only membrane response supported.'); end
-            if ~isempty(obj.mid3); error('Only membrane response supported.'); end
-            if ~isempty(obj.mid2); error('Only membrane response supported.'); end
+            pshell.mid1 = obj.mid1;
+            pshell.mid2 = obj.mid2;
+            pshell.mid3 = obj.mid3;
+            pshell.mid4 = obj.mid4;
+%             % checks 
+%             if pshell.mid1 < 1; error('Only membrane response supported.'); end
+%             if ~isempty(obj.mid2) | obj.mid2==-1; error('Only membrane response supported.'); end
+%             if ~isempty(obj.mid3); error('Only membrane response supported.'); end
+%             if ~isempty(obj.mid2); error('Only membrane response supported.'); end
             
             model.property = [model.property;pshell];
         end
