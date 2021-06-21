@@ -140,6 +140,8 @@ classdef Cquad4 < Element
                 end
                 if pshell.isPlate
                     Bp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
+%                     bendingStiffness = bendingStiffness ...
+%                         + (tGauss^3/12)*Bp(1:2,:).'*obj.E2dBend(1:2,1:2)*Bp(1:2,:)*detJ;
                     bendingStiffness = bendingStiffness ...
                         + (tGauss^3/12)*Bp(1:3,:).'*obj.E2dBend*Bp(1:3,:)*detJ;
                 end
@@ -160,6 +162,7 @@ classdef Cquad4 < Element
             if pshell.isPlate
                 obj.centerBp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
                 transverseShearStiffness = 4*obj.centerBp(4:5,:).'*obj.E2dShear*obj.centerBp(4:5,:)*detJ*obj.centerT;
+%                 bendingStiffness = bendingStiffness + 4*(tGauss^3/12)*obj.centerBp(3,:).'*obj.E2dBend(3,3)*obj.centerBp(3,:)*detJ;
             end
             
             % element total mass
@@ -167,8 +170,12 @@ classdef Cquad4 < Element
             
             % element stiffness matrix
             obj.k_e = zeros(24);
-            obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
-            obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
+            if pshell.isMembrane
+                obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
+            end
+            if pshell.isPlate
+                obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
+            end
             
             % element mass matrix
             me = zeros(24);
@@ -370,7 +377,7 @@ classdef Cquad4 < Element
             dNdy  = dNdxy(2,:);
             B = [0        dNdx(1) 0       0       dNdx(2) 0       0       dNdx(3) 0       0       dNdx(4) 0 
                  0        0       dNdy(1) 0       0       dNdy(2) 0       0       dNdy(3) 0       0       dNdy(4)
-                 dNdy(1)  dNdx(1) 0       dNdy(2) dNdx(2) 0       dNdy(3) dNdx(3) 0       dNdy(4) dNdx(4) 0 
+                 0        dNdy(1) dNdx(1) 0       dNdy(2) dNdx(2) 0       dNdy(3) dNdx(3) 0       dNdy(4) dNdx(4) 
                 -dNdx(1)  N(1)    0      -dNdx(2) N(2)    0      -dNdx(3) N(3)    0      -dNdx(4) N(4)    0
                 -dNdy(1)  0       N(1)   -dNdy(2) 0       N(2)   -dNdy(3) 0       N(3)   -dNdy(4) 0       N(4)] ...
                 *Cquad4.T_PSI_THETA;
