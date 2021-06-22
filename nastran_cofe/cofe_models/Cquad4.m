@@ -32,6 +32,9 @@ classdef Cquad4 < Element
         centerT % [double] element thickness at center point
         centerBm % [double] membrane strain-dispacement matrix at center point
         centerBp % [double] plate strain-dispacement matrix at center point
+        
+        isMembrane % [logical] true if property includes membrane terms
+        isPlate % [logical] true if property includes plate terms
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(33); % [uint8] Element code corresponding to Nastran item codes documentation.
@@ -57,10 +60,6 @@ classdef Cquad4 < Element
     end
     methods
         function obj=assemble_sub(obj,model)
-            
-            
-            
-            
             % geometry Data
             n1 = model.point.getNode(obj.g(1),model);
             n2 = model.point.getNode(obj.g(2),model);
@@ -87,14 +86,20 @@ classdef Cquad4 < Element
             pshell = model.property.getProperty(obj.pid,model,'Pshell');
             pshellT = pshell.t;
             if pshell.isMembrane
+                obj.isMembrane = true;
                 obj.E2dMem = pshell.E2dMembrane;
+            else
+                obj.isMembrane = false;
             end
             if pshell.isPlate
+                obj.isPlate = true;
                 obj.E2dBend = pshell.E2dBend;
                 obj.E2dShear = pshell.E2dShear;
+            else
+                obj.isPlate = false;
             end
             
-            % Element thinkness
+            % Element thickness
             if obj.tFlag
                 if isempty(pshellT); error('PSHELL thinkness must be specified if PSHELL TFLAG=0.'); end
                 if isempty(obj.t); error('CQUAD4 thinkness must be specified if PSHELL TFLAG=0.'); end
@@ -109,10 +114,10 @@ classdef Cquad4 < Element
             end
             
             % Four-point integration
-            if pshell.isMembrane
+            if obj.isMembrane
                 membraneTranslationStiffness = zeros(8);
             end
-            if pshell.isPlate
+            if obj.isPlate
                 bendingStiffness = zeros(12);
             end
             consistentMass = zeros(4);
@@ -133,12 +138,12 @@ classdef Cquad4 < Element
                 consistentMass = consistentMass + N.'*N*(pshell.nsm+pshell.rho*tGauss)*detJ;
                 
                 % Stiffness integration
-                if pshell.isMembrane
+                if obj.isMembrane
                     Bm = Cquad4.calculateMembraneB(dNdxi,dNdeta,invJ);
                     membraneTranslationStiffness = membraneTranslationStiffness ...
                         + Bm(1:2,:).'*obj.E2dMem(1:2,1:2)*Bm(1:2,:)*detJ*tGauss;
                 end
-                if pshell.isPlate
+                if obj.isPlate
                     Bp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
 %                     bendingStiffness = bendingStiffness ...
 %                         + (tGauss^3/12)*Bp(1:2,:).'*obj.E2dBend(1:2,1:2)*Bp(1:2,:)*detJ;
@@ -155,11 +160,11 @@ classdef Cquad4 < Element
             [N,dNdxi,dNdeta] = Cquad4.evaluateShapeFunctions(0,0);
             [J,detJ,invJ] =    Cquad4.calculateJacobian2D(dNdxi,dNdeta,x2D_e);
             obj.centerT = N * tNodes;
-            if pshell.isMembrane
+            if obj.isMembrane
                 obj.centerBm = Cquad4.calculateMembraneB(dNdxi,dNdeta,invJ);
                 membraneShearStiffness = 4*obj.centerBm(3,:).'*obj.E2dMem(3,3)*obj.centerBm(3,:)*detJ*obj.centerT;
             end
-            if pshell.isPlate
+            if obj.isPlate
                 obj.centerBp = Cquad4.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
                 transverseShearStiffness = 4*obj.centerBp(4:5,:).'*obj.E2dShear*obj.centerBp(4:5,:)*detJ*obj.centerT;
 %                 bendingStiffness = bendingStiffness + 4*(tGauss^3/12)*obj.centerBp(3,:).'*obj.E2dBend(3,3)*obj.centerBp(3,:)*detJ;
@@ -170,10 +175,10 @@ classdef Cquad4 < Element
             
             % element stiffness matrix
             obj.k_e = zeros(24);
-            if pshell.isMembrane
+            if obj.isMembrane
                 obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
             end
-            if pshell.isPlate
+            if obj.isPlate
                 obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
             end
             
