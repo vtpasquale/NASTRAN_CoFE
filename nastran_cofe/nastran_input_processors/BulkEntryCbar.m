@@ -41,7 +41,7 @@ classdef BulkEntryCbar < BulkEntry
             cbar.pid = obj.pid;
             cbar.g = [obj.ga,obj.gb];
             cbar.nu_g = obj.x;
-            model.element = [model.element;cbar];
+            model.element(end+1,1) = cbar;
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

@@ -99,36 +99,52 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             % Any element indices where element results are requested
             recoverIndex = uint32(find(any(returnFlags,2)));
             
-            % preallocate element_output_data objects
-            % s(nstress,1) = ElementOutputData();
+            % Create empty ElementOutputData objects
+            F = ElementOutputData.empty(0,1);
+            S = ElementOutputData.empty(0,1);
+            E = ElementOutputData.empty(0,1);
+            ESE = ElementOutputData.empty(0,1);
+            EKE = ElementOutputData.empty(0,1);
+            % preallocation performace is similar
+            %             nReturn=sum(returnFlags);
+            %             F(nReturn(1),1) = ElementOutputData;
+            %             S(nReturn(2),1) = ElementOutputData;
+            %             E(nReturn(3),1) = ElementOutputData;
+            %             ESE(nReturn(4),1) = ElementOutputData;
+            %             EKE(nReturn(5),1) = ElementOutputData;
+            %             iF = 0; iS = 0; iE = 0;
+            
+            % Type Codes
+            forceCode = uint8(1);
+            stressCode = uint8(2);
+            strainCode = uint8(3);
+            eseCode = uint8(4);
+            ekeCode = uint8(5);
+            
+            % Recover Element Data
             u_g = solution.u_g;
-            F = [];
-            S = [];
-            E = [];
-            ESE = [];
-            EKE = [];
             for i = 1:size(recoverIndex,1)
                 elementIndex = recoverIndex(i);
                 oi = obj(elementIndex);
                 [f,s,e,ese,eke] = oi.recover_sub(u_g,model,returnFlags(elementIndex,:));
                 if ~isempty(f)
-                    F = [F;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,1,f)];
+                    F(end+1,1)=ElementOutputData(oi.eid,oi.ELEMENT_TYPE,forceCode,f);
                 end
                 if ~isempty(s)
-                    S = [S;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,2,s)];
+                    S(end+1,1)=ElementOutputData(oi.eid,oi.ELEMENT_TYPE,stressCode,s);
                 end
                 if ~isempty(e)
-                    E = [E;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,3,e)];
+                    E(end+1,1)=ElementOutputData(oi.eid,oi.ELEMENT_TYPE,strainCode,e);
                 end
                 if ~isempty(ese)
                     ese(2,:) = 100*ese(2,:)./solution.totalEnergy.';
-                    ESE = [ESE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,4,ese)];
+                    ESE(end+1,1)=ElementOutputData(oi.eid,oi.ELEMENT_TYPE,eseCode,ese);
                 end
                 if ~isempty(eke)
                     if isa(solution,'ModesSolution')
                         eke = repmat(solution.w2.',[3,1]).*eke;
                         eke(2,:) = 100*eke(2,:)./solution.totalEnergy.';
-                        EKE = [EKE;ElementOutputData(oi.eid,oi.ELEMENT_TYPE,5,eke)];
+                        EKE(end+1,1)=ElementOutputData(oi.eid,oi.ELEMENT_TYPE,ekeCode,eke);
                     end
                 end
             end

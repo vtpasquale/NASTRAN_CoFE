@@ -50,7 +50,7 @@ classdef BulkEntryCtria3 < BulkEntry
             ctria3.g = [obj.g1,obj.g2,obj.g3];
             ctria3.tFlag = obj.tFlag;
             ctria3.t = [obj.t1,obj.t2,obj.t3];
-            model.element = [model.element;ctria3];
+            model.element(end+1,1) = ctria3;
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

@@ -31,7 +31,7 @@ classdef BulkEntryCmass1 < BulkEntry
             if ~isempty(obj.g2)
                 error('Nonblank G2 on CMASS1 EID = %d. Nonblank G2 is not supported.',cmass1.eid)
             end
-            model.element = [model.element;cmass1];
+            model.element(end+1,1) = cmass1;
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

@@ -26,7 +26,7 @@ classdef BulkEntryCrod < BulkEntry
             crod.eid = obj.eid;
             crod.pid = obj.pid;
             crod.g = [obj.g1,obj.g2];
-            model.element = [model.element;crod];
+            model.element(end+1,1) = crod;
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)

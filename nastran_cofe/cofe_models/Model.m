@@ -13,8 +13,8 @@ classdef Model
         coordinateSystem@CoordinateSystem;
         material@Material;
         property@Property;
-        point@Point; % Grid points (nodes) and scalar points
-        element@Element;
+        point=Point.empty(0,1); % Grid points (nodes) and scalar points
+        element=Element.empty(0,1);
         spcs@Spcs;
         %         mpc@Mpc;
         load@Load;

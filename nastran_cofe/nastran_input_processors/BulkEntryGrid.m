@@ -43,7 +43,7 @@ classdef BulkEntryGrid < BulkEntry
                 end
             end
             node.ps=ps;
-            model.point=[model.point;node];
+            model.point(end+1,1)=node;
         end
         function echo_sub(obj,fid)
             % Print the entry in NASTRAN free field format to a text file with file id fid

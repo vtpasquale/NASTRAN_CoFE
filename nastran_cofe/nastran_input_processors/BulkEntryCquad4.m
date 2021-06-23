@@ -54,7 +54,7 @@ classdef BulkEntryCquad4 < BulkEntry
             cquad4.g = [obj.g1,obj.g2,obj.g3,obj.g4];
             cquad4.tFlag = obj.tFlag;
             cquad4.t = [obj.t1,obj.t2,obj.t3,obj.t4];
-            model.element = [model.element;cquad4];
+            model.element(end+1,1) = cquad4;
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)
