@@ -40,7 +40,8 @@ classdef Ctria3 < Element
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
         MEMBRANE_DOF = uint8([1,2,7,8,13,14]);
-        PLATE_DOF = uint8([3,4,5,9,10,11,15,16,17]);
+        PLATE_DOF =     uint8([3,4,5,9,10,11,15,16,17]);
+        BEND_ROT_DOF =     uint8([2,3,5,6,8,9]);
         T_PSI_THETA = [...
             1     0     0     0     0     0     0     0     0
             0     0    -1     0     0     0     0     0     0
@@ -114,12 +115,13 @@ classdef Ctria3 < Element
             area = detJ/2;
             
             % Tying points for mixed interpolation of transverse shear
-            [ert1,est2,c]=Ctria3.evaluateTyingPoints(dNdxi,dNdeta,invJ);
+            % [ert1,est2,c]=Ctria3.evaluateTyingPoints(dNdxi,dNdeta,invJ);
             
             % three-point integration
             if obj.isPlate
                 w3 = 1/3; % integration weight factor
                 bendingStiffness = zeros(9);
+                sumBp = 0;
                 transverseShearStiffness = zeros(9);
                 R = [2/3 1/6 1/6];
                 S = [1/6 1/6 2/3];
@@ -137,18 +139,13 @@ classdef Ctria3 < Element
                     bendingStiffness = bendingStiffness ...
                         + w3*(tGauss^3/12)*Bp(1:3,:).'*obj.E2dBend*Bp(1:3,:)*area;
                     
-                    % Heuristic constants I pulled out of nowhere. 
-                    % tGauss^2 alleviates the locking I'm seeting.
-                    heuristic = 12*tGauss^2;
-%                     heuristicM = 18*tGauss^2;
-                    
-                    % consistent interpolation
-                    transverseShearStiffness = transverseShearStiffness + heuristic * w3*Bp(4:5,:).'*obj.E2dShear*Bp(4:5,:)*area*tGauss;
+                    % Average Bp for shear calculation
+                    sumBp = sumBp + Bp;
                     
                     % mixed interpolation
 %                     Bs = [ert1 + c*S(i); est2 - c*R(i)];
 %                     transverseShearStiffness = transverseShearStiffness...
-%                         + heuristicM *w3*Bs.'*obj.E2dShear*Bs*area *tGauss;
+%                         + w3*Bs.'*obj.E2dShear*Bs*area *tGauss;
  
                 end
             end
@@ -161,21 +158,16 @@ classdef Ctria3 < Element
                 membraneStiffness = obj.centerBm.'*obj.E2dMem*obj.centerBm*area*obj.centerT;
             end
             if obj.isPlate
-                obj.centerBp = Ctria3.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
+                
+                obj.centerBp = (1/3)*sumBp;
+                % obj.centerBp = Ctria3.calculateMindlinPlateB(N,dNdxi,dNdeta,invJ);
+                
                 % consistent interpolation
-%                 transverseShearStiffness = obj.centerBp(4:5,:).'*obj.E2dShear*obj.centerBp(4:5,:)*area*obj.centerT;
+                transverseShearStiffness = obj.centerBp(4:5,:).'*obj.E2dShear*obj.centerBp(4:5,:)*area*obj.centerT;
                 
                 % mixed interpolation
 %                 Bs = [ert1 + c*(1/3); est2 - c*(1/3)];
 %                 transverseShearStiffness = Bs.'*obj.E2dShear*Bs*area*obj.centerT;
-                
-                
-%                 [diag(transverseShearStiffness),diag(transverseShearStiffness2),diag(transverseShearStiffness3)]
-                %
-                %                 % Translation terms identical
-                %                 transverseShearStiffness([1,4,7],[1,4,7])
-                %                 transverseShearStiffness2([1,4,7],[1,4,7])
-                %                 transverseShearStiffness3([1,4,7],[1,4,7])
             end
             
             % element stiffness matrix
@@ -184,7 +176,12 @@ classdef Ctria3 < Element
                 obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneStiffness;
             end
             if obj.isPlate
-                obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
+                % shear correction factor inspired by Tessler and Hughes MIN3 approach
+                alpha = (1/pshell.shearRatio)*...
+                        trace(transverseShearStiffness(obj.BEND_ROT_DOF,obj.BEND_ROT_DOF))/...
+                        trace(bendingStiffness(obj.BEND_ROT_DOF,obj.BEND_ROT_DOF));
+                phi2 = 1/(1+3*alpha); % equivalent to C = 1/6 - different than MIN3 optimium
+                obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + phi2*transverseShearStiffness;
             end
             
             % element total mass and volume
