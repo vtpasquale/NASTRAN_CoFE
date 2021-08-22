@@ -19,12 +19,14 @@ classdef Ctria3 < Element
         
         volume % [double] element volume
         mass % [double] element mass
+        area % [double] element area ( = detJ/2)
         
         E2dMem % [3,3 double] Membrane elasticity matrix
         E2dBend % [3,3 double] Bending elasticity matrix
         E2dShear % [2,2 double] Transverse shear elasticity matrix
         
         T_e0 % [3,3 double] Transformation from basic to element reference frame
+        
         
         % stress recovery data
         centerT % [double] element thickness at center point
@@ -52,6 +54,24 @@ classdef Ctria3 < Element
             0     0     0     0     0     0     1     0     0
             0     0     0     0     0     0     0     0    -1
             0     0     0     0     0     0     0     1     0];
+        TZ_2_ELEMENT_DOF = [0 0 0
+                            0 0 0
+                            1 0 0
+                           0 0 0
+                           0 0 0
+                           0 0 0
+                            0 0 0
+                            0 0 0
+                            0 1 0
+                           0 0 0
+                           0 0 0
+                           0 0 0
+                            0 0 0
+                            0 0 0
+                            0 0 1
+                           0 0 0
+                           0 0 0
+                           0 0 0];
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -210,6 +230,28 @@ classdef Ctria3 < Element
             obj.R_eg(7:9,7:9)     = T_e0*n2.T_g0.';
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
+            
+            % Save area
+            obj.area = area;
+        end
+        function [gdof,p_g]=processPressureLoad_sub(obj,pload)
+            R = [2/3 1/6 1/6];
+            S = [1/6 1/6 2/3];
+            w3 = 1/3; % integration weight factor
+            pressureForce_e = zeros(3,1);
+            for i = 1:3 
+                % Gauss point evaluation
+                N = Ctria3.evaluateShapeFunctions(R(i),S(i));
+                                
+                % pressure at point
+                pGauss = N.' .* pload.p(1:3);
+                
+                % Pressure integration
+                pressureForce_e = pressureForce_e + w3*obj.area*pGauss;
+            end
+            p_e = obj.TZ_2_ELEMENT_DOF*pressureForce_e;
+            p_g = obj.R_eg.'*p_e;
+            gdof = obj.gdof; 
         end
         
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
