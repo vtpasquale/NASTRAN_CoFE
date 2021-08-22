@@ -40,6 +40,12 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
                 error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',EIDS(nonunique)))
             end
         end
+        function [gdof,p_g]=processPressureLoad(obj,pload)
+            if size(obj,1)~=1
+                error('processPressureLoad() is set up to process a single element object.')
+            end
+            [gdof,p_g]=obj.processPressureLoad_sub(pload);
+        end
         function model = assemble(obj,model)
             % assemble element and global matricies
             
@@ -59,6 +65,17 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             model.K_gg=K_gg;
             model.M_gg=M_gg;
         end
+        function element = getElement(obj,id,model)
+            % returns a single element object with the requested id from the element array
+            index = (id == model.elementEIDs);
+            if ~any(index)
+                error('Element ID = %d is referenced, but is undefined.',id);
+            end
+            element = obj(index);
+            if size(element,1)~=1
+                error('Element ID = %d is defined more than once.',id)
+            end
+        end % getPoint()
         function solution = recover(obj,solution,model)
             % Function to recover element quantities from solution.
             % This method is called speratly for each superelement and

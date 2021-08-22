@@ -27,6 +27,7 @@ classdef Cquad4 < Element
         
         % tNodes % [4,1 double] thickness of element at grid points G1 through G4
         T_e0 % [3,3 double] Transformation from basic to element reference frame
+        x2D_e % [4,2 double] node xy locations in element reference frame
         
         % stress recovery data
         centerT % [double] element thickness at center point
@@ -57,6 +58,30 @@ classdef Cquad4 < Element
      0     0     0     0     0     0     0     0     0     1     0     0
      0     0     0     0     0     0     0     0     0     0     0    -1
      0     0     0     0     0     0     0     0     0     0     1     0];
+        TZ_2_ELEMENT_DOF = [0 0 0 0
+                            0 0 0 0
+                            1 0 0 0
+                           0 0 0 0
+                           0 0 0 0
+                           0 0 0 0
+                            0 0 0 0
+                            0 0 0 0
+                            0 1 0 0
+                           0 0 0 0
+                           0 0 0 0
+                           0 0 0 0
+                            0 0 0 0
+                            0 0 0 0
+                            0 0 1 0
+                           0 0 0 0
+                           0 0 0 0
+                           0 0 0 0
+                            0 0 0 0
+                            0 0 0 0
+                            0 0 0 1
+                           0 0 0 0
+                           0 0 0 0
+                           0 0 0 0];
     end
     methods
         function obj=assemble_sub(obj,model)
@@ -204,7 +229,27 @@ classdef Cquad4 < Element
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
             
             % save select properties
-            obj.T_e0 = T_e0;            
+            obj.T_e0 = T_e0;
+            obj.x2D_e = x2D_e;
+        end
+        function [gdof,p_g]=processPressureLoad_sub(obj,pload)
+            Xi = obj.GAUSS_POINT*[-1  1  1 -1];
+            Eta= obj.GAUSS_POINT*[-1 -1  1  1];
+            pressureForce_e = zeros(4,1);
+            for i = 1:4 
+                % Gauss point evaluation
+                [N,dNdxi,dNdeta] = Cquad4.evaluateShapeFunctions(Xi(i),Eta(i));
+                [~,detJ] =    Cquad4.calculateJacobian2D(dNdxi,dNdeta,obj.x2D_e);
+                                
+                % pressure at point
+                pGauss = N.' .* pload.p;
+                
+                % Pressure integration
+                pressureForce_e = pressureForce_e + detJ*pGauss;
+            end
+            p_e = obj.TZ_2_ELEMENT_DOF*pressureForce_e;
+            p_g = obj.R_eg.'*p_e;
+            gdof = obj.gdof; 
         end
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS

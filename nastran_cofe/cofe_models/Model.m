@@ -190,6 +190,7 @@ classdef Model
         end
         function nModes = getNumModes(obj,caseControlIndex)
             if isempty(obj.caseControl(caseControlIndex).method); error('No METHOD defined in Case Control section.'); end
+            if isempty(obj.eigrl); error('No EIGRL entry defined in Bulk Data section.'); end
             nModes = obj.eigrl(obj.caseControl(caseControlIndex).method==obj.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); end
         end
@@ -259,7 +260,6 @@ classdef Model
             
             obj = obj.point.preprocess(obj); % defines model.point, model.pointIDs, model.gNodeFlag, model.nGdof
             obj.element = obj.element.preprocess();
-            obj.load = obj.load.preprocess(obj);
             
             % Process single-point constraint sets
             obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
@@ -276,6 +276,7 @@ classdef Model
             % Assemble
             obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies
+            obj.load = obj.load.preprocess(obj);
             obj = obj.load.assemble(obj);
         end
         function solution = recover_sub(obj,solution,u_a)

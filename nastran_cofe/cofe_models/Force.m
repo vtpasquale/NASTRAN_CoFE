@@ -10,7 +10,7 @@ classdef Force < Load
         f % [3,1 double] Force vector expressed in coordinate system defined by CID.
         
         gdof % [1,3 uint32] index of global degrees of freedom 
-        p_g % [3,1 double] Force vector expressed in the nodal displacement coordinate system defined at grind point g.
+        p_g % [3,1 double] Force vector expressed in the nodal displacement coordinate system defined at grid points.
     end
     methods
         function obj=preprocess_sub(obj,model)
