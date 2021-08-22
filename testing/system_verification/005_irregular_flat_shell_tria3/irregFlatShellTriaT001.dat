@@ -13,12 +13,12 @@ CEND
 SUBCASE 1
   SUBTITLE = Bend
   LOAD = 1
-SUBCASE 2
-  SUBTITLE = Normal
-  LOAD = 2
-SUBCASE 3
-  SUBTITLE = Shear
-  LOAD = 3
+$ SUBCASE 2
+$   SUBTITLE = Normal
+$   LOAD = 2
+$ SUBCASE 3
+$   SUBTITLE = Shear
+$   LOAD = 3
 BEGIN BULK
 $GRDSET                                                 PS
 GRDSET                                                  6
