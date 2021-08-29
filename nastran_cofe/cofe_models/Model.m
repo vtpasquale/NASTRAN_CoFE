@@ -276,7 +276,6 @@ classdef Model
             % Assemble
             obj = obj.point.assemble(obj);
             obj = obj.element.assemble(obj); % element and global matricies
-            obj.load = obj.load.preprocess(obj);
             obj = obj.load.assemble(obj);
         end
         function solution = recover_sub(obj,solution,u_a)

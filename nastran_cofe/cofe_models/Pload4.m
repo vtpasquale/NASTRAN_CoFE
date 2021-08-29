@@ -12,13 +12,13 @@ classdef Pload4 < Load
         p_g % [n,1 double] Force vector expressed in the nodal displacement coordinate system defined at global degrees of freedom.
     end
     methods
-        function obj=preprocess_sub(obj,model)
+        function [p_g,gdof]=assemble_sub(obj,model)
             felement = model.element.getElement(obj.eid,model);
             if ~ismethod(felement, 'processPressureLoad_sub')
                 metaClass = metaclass(felement);
                 error('Element EID =  %d is element type %s. PLOAD4 is not implented for elements of this type.\n',felement.eid,upper(metaClass.Name) )
             end
-            [obj.gdof,obj.p_g]=felement.processPressureLoad_sub(obj);
+            [gdof,p_g]=felement.processPressureLoad_sub(obj);
         end
     end
 end

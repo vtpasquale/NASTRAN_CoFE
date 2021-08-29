@@ -4,21 +4,8 @@
 classdef BulkEntryPbeam < BulkEntry
     
     properties
-        pid  % [uint32] Property identification number
-        mid1 % [uint32] Membrane material identification number
-        mid2 % [uint32] Bending material identification number
-        mid3 % [uint32] Transverse shear material identification number
-        mid4 % [uint32] Transverse shear material identification number
-        t    % [double] Default membrane thickness
-        bendRatio % [double] 12I/T^3 = ratio of the actual bending moment inertia of the shell, I, to the bending moment of inertia of a homogeneous shell, T^3/12. 
-        shearRatio % [double] Ts/T = ratio of the shear thickness, Ts, to the membrane thickness of the shell, T. The typical value is for a homogeneous shell is 0.833333.
-        nsm % [double] Nonstructural mass per unit area.
-        z1 
-        z2 
-        mid4
-
-        
-        
+        pid % [uint32] Property identification number
+        mid % [uint32] Material identification number
         a % [double] Area of the cross section
         i1 % [double] Area moments of inertia
         i2 % [double] Area moments of inertia
@@ -32,6 +19,7 @@ classdef BulkEntryPbeam < BulkEntry
     
     methods
         function obj = BulkEntryPbeam(entryFields)
+            if iscell(entryFields)
             % Construct using entry field data input as cell array of char
             obj.pid = castInputField('PBEAM','PID',entryFields{2},'uint32',NaN,1);
             obj.mid = castInputField('PBEAM','MID',entryFields{3},'uint32',NaN,1);
@@ -58,6 +46,21 @@ classdef BulkEntryPbeam < BulkEntry
             end
             if size(entryFields,2)>30
                 error('PBEAM is supported, but not the format on EID = %d',obj.eid);
+            end
+            elseif isstruct(entryFields)
+                obj.pid = entryFields.pid;
+                obj.mid = entryFields.mid;
+                obj.a   = entryFields.a;
+                obj.i1  = entryFields.i1;
+                obj.i2  = entryFields.i2;
+                obj.i12 = entryFields.i12;
+                obj.j   = entryFields.j;
+                obj.nsm = entryFields.nsm;
+                obj.c1ThruF2 = entryFields.c1ThruF2;
+                obj.k1  = entryFields.k1;
+                obj.k2  = entryFields.k2;
+            else
+                error('Input type not supported.')                
             end
         end
         function model = entry2model_sub(obj,model)
