@@ -3,17 +3,10 @@
 %
 classdef ModesSolution < Solution
     
-    properties
-        u_g
-        f_g
-        
+    properties       
         eigenvalueTable
-        
         displacement
-        %         velocity
-        %         acceleration
         spcforces
-        
         force
         stress
         strain
@@ -21,6 +14,8 @@ classdef ModesSolution < Solution
         eke
     end
     properties (Hidden = true)
+        u_g
+        f_g
         w2 % [nResponseVectors,1 double] eigenvalue for modes solutions (saved seperatly from eigenvalueTable to calculate element kinetic energy inside superelements)
     end
     

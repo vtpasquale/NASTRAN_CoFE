@@ -3,18 +3,18 @@
 %
 classdef StaticsSolution < Solution
     
-    properties
-        u_g
-        f_g
-        
+    properties        
         displacement
         spcforces
-        
         force
         stress
         strain
         ese
         eke
+    end
+    properties (Hidden = true)
+        u_g
+        f_g
     end
     
     methods 
