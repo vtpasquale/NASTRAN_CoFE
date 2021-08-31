@@ -25,11 +25,11 @@ classdef Hdf5ElementStressQuad4 < Hdf5ElementStress
         FD1 % [double] Z1 = Fiber distance
         X1 % [double] Normal in X at Z1
         Y1 % [double] Normal in Y at Z1
-        TXY1 % [double] Shear in XY at Z1
+        XY1 % [double] Shear in XY at Z1
         FD2 % [double] Z2 = Fiber distance
         X2 % [double] Normal in X at Z2
         Y2 % [double] Normal in Y at Z2
-        TXY2 % [double] Shear in XY at Z2
+        XY2 % [double] Shear in XY at Z2
         DOMAIN_ID % [uint32] Domain identifier
     end
     properties (Constant = true)
@@ -65,11 +65,11 @@ classdef Hdf5ElementStressQuad4 < Hdf5ElementStress
             fd1 = [];
             x1 = [];
             y1 = [];
-            txy1 = [];
+            xy1 = [];
             fd2 = [];
             x2 = [];
             y2 = [];
-            txy2 = [];
+            xy2 = [];
             domain_id = [];
             for i = 1:nElements
                 eid = [eid,repmat(elementOutputData(i).elementID,[1,nVectors])];
@@ -77,12 +77,12 @@ classdef Hdf5ElementStressQuad4 < Hdf5ElementStress
                 fd1 = [fd1,elementOutputData(i).values(1,:)];
                 x1 = [x1,elementOutputData(i).values(2,:)];
                 y1 = [y1,elementOutputData(i).values(3,:)];
-                txy1 = [txy1,elementOutputData(i).values(4,:)];
+                xy1 = [xy1,elementOutputData(i).values(4,:)];
                 
                 fd2 = [fd2,elementOutputData(i).values(9,:)];
                 x2 = [x2,elementOutputData(i).values(10,:)];
                 y2 = [y2,elementOutputData(i).values(11,:)];
-                txy2 = [txy2,elementOutputData(i).values(12,:)];
+                xy2 = [xy2,elementOutputData(i).values(12,:)];
                 
                 domain_id = [domain_id,domainIDs];
             end
@@ -93,12 +93,12 @@ classdef Hdf5ElementStressQuad4 < Hdf5ElementStress
             obj.FD1 = fd1(index).';
             obj.X1 = x1(index).';
             obj.Y1 = y1(index).';
-            obj.TXY1 = txy1(index).';
+            obj.XY1 = xy1(index).';
             
             obj.FD2 = fd2(index).';
             obj.X2 = x2(index).';
             obj.Y2 = y2(index).';
-            obj.TXY2 = txy2(index).';
+            obj.XY2 = xy2(index).';
             
             obj.DOMAIN_ID = domain_id(index).';
         end

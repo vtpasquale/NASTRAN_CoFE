@@ -307,70 +307,104 @@ classdef Ctria3 < Element
             % Element displacements
             u_e = obj.R_eg*u_g(obj.gdof,:);
             nVectors = size(u_e,2);
-            z = obj.centerT/2;
+            
+            % Membrane values
+            if obj.isMembrane
+                membraneStrain = obj.centerBm*u_e(obj.MEMBRANE_DOF,:);
+                membraneForce = obj.centerT*obj.E2dMem*membraneStrain;
+            else
+                membraneStrain = zeros(3,nVectors);
+                membraneForce = zeros(3,nVectors);
+            end
+            
+            % Plate values
+            if obj.isPlate
+                plateCurvature = obj.centerBp*u_e(obj.PLATE_DOF,:);
+                plateMoment = (obj.centerT^3/12)*obj.E2dBend*plateCurvature(1:3,:);
+                plateShear = obj.E2dShear*plateCurvature(4:5,:);
+            else
+                plateCurvature = zeros(5,nVectors);
+                plateMoment = zeros(3,nVectors);
+                plateShear = zeros(2,nVectors);
+            end
             
             % Force
             if returnFlags(1)
-                membraneForce = obj.centerT*obj.E2dMem*obj.centerBm*u_e([1,2,7,8,13,14],:);
                 force = zeros(8,nVectors);
                 force(1:3,:) = membraneForce;
+                force(4:6,:) = plateMoment;
+                force(7:8,:) = plateShear;
             else
                 force = [];
             end
             
+            % stress or strain data
+            if any(returnFlags(2:3))
+                z = obj.centerT/2;
+            end
+            
             % Stress
             if returnFlags(2)
-                membraneStress = obj.E2dMem*obj.centerBm*u_e([1,2,7,8,13,14],:);
+                membraneStress = (1/obj.centerT)*membraneForce;
+                bendingStress = (6/obj.centerT^2)*plateMoment; 
+                topStress    = membraneStress - bendingStress;
+                bottomStress = membraneStress + bendingStress;
                 
-                vonMises = calculateVonMises(membraneStress);
-                [s1,s2,angle] = calculatePrincipal(membraneStress);
+                vonMisesT = calculateVonMises(topStress);
+                vonMisesB = calculateVonMises(bottomStress);
                 
+                [s1T,s2T,angleT] = calculatePrincipal(topStress);
+                [s1B,s2B,angleB] = calculatePrincipal(bottomStress);
                 
                 stress = [
                     -z*ones(1,nVectors);
-                    membraneStress(1,:)
-                    membraneStress(2,:)
-                    membraneStress(3,:)
-                    angle
-                    s1
-                    s2
-                    vonMises
+                    bottomStress(1,:)
+                    bottomStress(2,:)
+                    bottomStress(3,:)
+                    angleB
+                    s1B
+                    s2B
+                    vonMisesB
                     z*ones(1,nVectors);
-                    membraneStress(1,:)
-                    membraneStress(2,:)
-                    membraneStress(3,:)
-                    angle
-                    s1
-                    s2
-                    vonMises];
-                
+                    topStress(1,:)
+                    topStress(2,:)
+                    topStress(3,:)
+                    angleT
+                    s1T
+                    s2T
+                    vonMisesT];
             else
                 stress = [];
             end
             
             % Strain
             if returnFlags(3)
-                membraneStrain = obj.centerBm*u_e([1,2,7,8,13,14],:);
-                vonMises = calculateVonMises(membraneStrain);
-                [s1,s2,angle] = calculatePrincipal(membraneStrain);
+                topStrain    = membraneStrain - z*plateCurvature(1:3,:);
+                bottomStrain = membraneStrain + z*plateCurvature(1:3,:);
+                
+                vonMisesT = calculateVonMises(topStrain);
+                vonMisesB = calculateVonMises(bottomStrain);
+                
+                [s1T,s2T,angleT] = calculatePrincipal(topStrain);
+                [s1B,s2B,angleB] = calculatePrincipal(bottomStrain);
                 
                 strain = [
                     -z*ones(1,nVectors);
-                    membraneStrain(1,:)
-                    membraneStrain(2,:)
-                    membraneStrain(3,:)
-                    angle
-                    s1
-                    s2
-                    vonMises
+                    bottomStrain(1,:)
+                    bottomStrain(2,:)
+                    bottomStrain(3,:)
+                    angleB
+                    s1B
+                    s2B
+                    vonMisesB
                     z*ones(1,nVectors);
-                    membraneStrain(1,:)
-                    membraneStrain(2,:)
-                    membraneStrain(3,:)
-                    angle
-                    s1
-                    s2
-                    vonMises];
+                    topStrain(1,:)
+                    topStrain(2,:)
+                    topStrain(3,:)
+                    angleT
+                    s1T
+                    s2T
+                    vonMisesT];
             else
                 strain = [];
             end
