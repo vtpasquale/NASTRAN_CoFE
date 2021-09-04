@@ -6,7 +6,7 @@ classdef Parameter
     properties
         n % [char] Parameter name
         v1 % [char] Parameter value 1
-        v2 % [char] Parameter value 1 
+        v2 % [char] Parameter value 2 
     end
     methods
         function model = preprocess(obj,model)          
@@ -32,6 +32,29 @@ classdef Parameter
                     model.coupledMassFlag = false;
                 end
             end
+            
+            % Drilling stiffness parameter
+            k6rot = obj.getParameter('K6ROT');
+            if isempty(k6rot)
+                model.k6rot = 100.;
+            else
+                model.k6rot = castInputField('PARAM','K6ROT',k6rot,'double',NaN);
+                if model.k6rot<0
+                    error('PARAM K6ROT cannot be negative.')
+                end
+            end
+            
+            % Weight-to-mass scale factor
+            wtmass = obj.getParameter('WTMASS');
+            if isempty(wtmass)
+                model.wtmass = 1.;
+            else
+                model.wtmass = castInputField('PARAM','WTMASS',wtmass,'double',NaN);
+                if model.wtmass<0
+                    error('PARAM WTMASS cannot be negative.')
+                end
+            end
+            
         end % preprocess() 
         function [value1,value2] = getParameter(obj,name)
             index = strcmpi({obj.n}',name);

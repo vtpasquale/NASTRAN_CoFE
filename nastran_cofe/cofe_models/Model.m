@@ -91,7 +91,11 @@ classdef Model
         
         nodeFlag % ([nPoints,1] logical) flags nodes in point array (not scalar points)
         nGdof % [uint32] number of global degrees of freedom
+        
+        % parameters
         coupledMassFlag % [logical] Coupled mass formulation is used if true, lumped mass formulation used otherwise.
+        k6rot % [double] Used for the calculation of drilling stiffness
+        wtmass % [double] Mass matrix scale factor - applied after assembly
         
         %% Default Grid point properties:
         %  - Specified Grid points default to these options if not specified explicitly

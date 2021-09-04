@@ -44,6 +44,7 @@ classdef Cquad4 < Element
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressQuad4';
         GAUSS_POINT = 1/sqrt(3);
         MEMBRANE_DOF = uint8([1,2,7,8,13,14,19,20]);
+        DRILLING_DOF = uint8([6,12,18,24]);
         PLATE_DOF = uint8([3,4,5,9,10,11,15,16,17,21,22,23]);
         T_PSI_THETA = [...
      1     0     0     0     0     0     0     0     0     0     0     0
@@ -202,10 +203,25 @@ classdef Cquad4 < Element
             obj.k_e = zeros(24);
             if obj.isMembrane
                 obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
+
+                % drilling stiffness
+                k6rot = 100;
+                % Nastran Element User's guide equation for CQUAD8 and CTRIA6
+                % krot = k6rot/1e6 * (obj.E2dBend(1,1)+obj.E2dBend(2,2))
+                
+                % reverse engineered equation for CQUAD4 K(6,6)
+                krot = k6rot/1e7 * obj.E2dBend(3,3);
+                
+                % Application similar to Zienkiewicz approach as documented
+                % in 16.4-2 in CMPW Eq. 16.4-2.
+                obj.k_e(obj.DRILLING_DOF,obj.DRILLING_DOF) = krot*(1/3)*[ 3,-1,-1,-1;
+                                                                         -1, 3,-1,-1;
+                                                                         -1,-1, 3,-1;
+                                                                         -1,-1,-1, 3];
             end
             if obj.isPlate
                 obj.k_e(obj.PLATE_DOF,obj.PLATE_DOF) = bendingStiffness + transverseShearStiffness;
-            end
+            end          
             
             % element mass matrix
             me = zeros(24);

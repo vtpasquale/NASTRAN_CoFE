@@ -63,7 +63,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             end
             model.element=obj;
             model.K_gg=K_gg;
-            model.M_gg=M_gg;
+            model.M_gg=model.wtmass*M_gg;
         end
         function element = getElement(obj,id,model)
             % returns a single element object with the requested id from the element array
