@@ -42,8 +42,9 @@ classdef Ctria3 < Element
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
         MEMBRANE_DOF = uint8([1,2,7,8,13,14]);
-        PLATE_DOF =     uint8([3,4,5,9,10,11,15,16,17]);
-        BEND_ROT_DOF =     uint8([2,3,5,6,8,9]);
+        DRILLING_DOF = uint8([6,12,18]);
+        PLATE_DOF =    uint8([3,4,5,9,10,11,15,16,17]);
+        BEND_ROT_DOF = uint8([2,3,5,6,8,9]);
         T_PSI_THETA = [...
             1     0     0     0     0     0     0     0     0
             0     0    -1     0     0     0     0     0     0
@@ -194,6 +195,19 @@ classdef Ctria3 < Element
             obj.k_e = zeros(18);
             if obj.isMembrane
                 obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneStiffness;
+                
+                % drilling stiffness
+                % Nastran Element User's guide equation for CQUAD8 and CTRIA6
+                % krot = model.k6rot/1e6 * (obj.E2dBend(1,1)+obj.E2dBend(2,2))
+                
+                % reverse engineered equation for CQUAD4 K(6,6)
+                krot = model.k6rot/1e7 * obj.E2dBend(3,3);
+                
+                % Application similar to Zienkiewicz approach as documented
+                % in 16.4-2 in CMPW Eq. 16.4-2.
+                obj.k_e(obj.DRILLING_DOF,obj.DRILLING_DOF) = krot*[  1,-.5,-.5;
+                                                                   -.5,  1,-.5;
+                                                                   -.5,-.5,  1];
             end
             if obj.isPlate
                 % shear correction factor inspired by Tessler and Hughes MIN3 approach

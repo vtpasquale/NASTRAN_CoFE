@@ -8,9 +8,16 @@ classdef OutputRequest
                      %    0 -> No response will be output
                      %    n -> Response points in OutputSet.ID = n will be output
         
-        print = true; % [logical] Determines output medium
+        print = true; % [logical] Set by the input file processor, but 
+                      % currently unused. Designed to specify the output 
+                      % medium. Print output is difficult to maintain, so
+                      % it is currently unsupported. All requested output
+                      % is stored in the solution object and optionally
+                      % written to binary output, depending on MDLPRM.
+                      % 
+                      % Optional future usage:
                       %  true -> Requested output will be printed to a human-readable text output file
-                      % false -> Requested output will be printed to a FEMAP neutral file
+                      % false -> Requested output will be printed to a binary file
     end
     methods
         function obj = set.n(obj,in)

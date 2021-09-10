@@ -205,12 +205,11 @@ classdef Cquad4 < Element
                 obj.k_e(obj.MEMBRANE_DOF,obj.MEMBRANE_DOF) = membraneTranslationStiffness + membraneShearStiffness;
 
                 % drilling stiffness
-                k6rot = 100;
                 % Nastran Element User's guide equation for CQUAD8 and CTRIA6
-                % krot = k6rot/1e6 * (obj.E2dBend(1,1)+obj.E2dBend(2,2))
+                % krot = model.k6rot/1e6 * (obj.E2dBend(1,1)+obj.E2dBend(2,2))
                 
                 % reverse engineered equation for CQUAD4 K(6,6)
-                krot = k6rot/1e7 * obj.E2dBend(3,3);
+                krot = model.k6rot/1e7 * obj.E2dBend(3,3);
                 
                 % Application similar to Zienkiewicz approach as documented
                 % in 16.4-2 in CMPW Eq. 16.4-2.

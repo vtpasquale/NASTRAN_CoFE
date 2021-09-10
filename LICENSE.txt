@@ -30,12 +30,11 @@ file "\examples\canfield_slp_sqp\LICENSE.txt".
 -------------------------------------------------------------------------------
 PUBLICATION
 
-The Software was originally created to produce results for the following 
+This software was originally created to produce results for the following 
 article:
 
 Ricciardi, A. P., Canfield, R. A., Patil, M. P., and Lindsley, N., 
 ``Nonlinear Aeroelastic Scaled-Model Design,'' doi: 10.2514/1.C033171. 
 Journal of Aircraft, Vol. 53, No. 1 (2016), pp. 20-32.
 
-If the Software is used to generate results for published work, the user is 
-asked to cite the author's associated work. 
+Please cite the article if this software is used to generate published results.

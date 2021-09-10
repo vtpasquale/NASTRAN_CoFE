@@ -25,8 +25,8 @@ classdef (Abstract) CaseEntry < matlab.mixin.Heterogeneous
                     defaultAnalysis = 'STATICS';
                 case {103,'103','MODES','SEMODES'}
                     defaultAnalysis = 'MODES';
-                case {105,'105','BUCK','SEBUCK'}
-                    defaultAnalysis = 'BUCK';
+%                 case {105,'105','BUCK','SEBUCK'}
+%                     defaultAnalysis = 'BUCK';
                 otherwise
                     error('SOL type %s not supported.',num2str(sol))
             end
