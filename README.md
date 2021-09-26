@@ -8,7 +8,7 @@ CoFE reads Nastran-format text input files and writes Nastran-format HDF5 output
 
 CoFE is **NOT** a wrapper for Nastran. It is an independent solver that clones a subset of commercial-Nastran capabilities.
 
-### Benefits of Compatibility
+### Benefits of Nastran Compatibility
 The main benefits of Nastran compatibility are:
 - Preprocessors are available to process the input. There are too many to list them all, but examples include PATRAN, Femap, and Gmsh.
 - Postprocessors are available to process the output. CoFE writes MSC Nastran-format HDF5 output files (other versions of Nastran have independent HDF5 output formats with completely different schemas). MSC HDF5 format can be postprocessed using PATRAN. No other postprocessor works with MSC HDF5 format, but the Femap development working to support this format.

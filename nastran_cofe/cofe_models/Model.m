@@ -16,7 +16,7 @@ classdef Model
         point=Point.empty(0,1); % Grid points (nodes) and scalar points
         element=Element.empty(0,1);
         spcs@Spcs;
-        %         mpc@Mpc;
+        mpcs@Mpcs;
         load@Load;
         
         superElement@SuperElement;
@@ -75,7 +75,7 @@ classdef Model
         K_gg  % ([nGdof,nGdof] sparse) Elastic stiffness matrix in nodal displacement reference frame
         KD_gg % ([nGdof,nGdof] sparse) Differential stiffness matrix in nodal displacement reference frame
         M_gg  % ([nGdof,nGdof] sparse) Mass matrix in nodal displacement reference frame
-        G
+        G_m 
         p_g % ([nGdof,nLoadSets] double) load vectors in nodal displacement reference frame
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
              
@@ -270,7 +270,7 @@ classdef Model
             [obj.sb,obj.sd]=obj.spcs.preprocess(obj);
             
             % Process multi-point constraint sets
-            % obj.m, obj.n
+            obj = obj.mpcs.preprocess(obj);
             
             % preprocess model sets
             obj = obj.dofSet.preprocess(obj);
@@ -279,7 +279,8 @@ classdef Model
         function obj = assemble_sub(obj)
             % Assemble
             obj = obj.point.assemble(obj);
-            obj = obj.element.assemble(obj); % element and global matricies
+            obj = obj.element.assemble(obj);
+            obj = obj.mpcs.assemble(obj);
             obj = obj.load.assemble(obj);
         end
         function solution = recover_sub(obj,solution,u_a)
