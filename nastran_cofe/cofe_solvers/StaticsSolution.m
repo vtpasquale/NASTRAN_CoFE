@@ -33,7 +33,7 @@ classdef StaticsSolution < Solution
             % M_aa = model0.reducedModel.M_aa;
             p_a = model0.reducedModel.p_a;
                         
-            if isempty(caseControl0.load); error('No load case identification number specified.'); end
+            if isempty(caseControl0.load); warning('No load case identification number specified.'); end
             lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); warning('No applied loads found for this case.'); end
             

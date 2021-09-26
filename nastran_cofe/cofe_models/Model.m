@@ -63,7 +63,7 @@ classdef Model
         % seconct % ([nGdof,1] logical) Degrees-of-freedom connected to other superelements, as specified on seconct entrires
         
         %% Set-related data
-        sd % ([nGdof,numSID] sparse) Enforced displacement values due to single-point constraints that are included in boundary conditions
+        sd % ([nGdof,nLoadSets] sparse) Enforced displacement values due to single-point constraints (nonzero values are specified using SPCD entries - which vary by load ID, not constraint ID)
         % superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
         
         seconctIndexInGSet  % [nSeconctDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
@@ -300,7 +300,7 @@ classdef Model
             if length(obj)~=1; error('Function is intended length(obj)==1 input.'); end
             if length(solution)~=1; error('Function is intended length(solution)==1 input.'); end
             
-            % preallocate
+            % Preallocate
             nVectors = size(u_a,2);
             u_g=zeros(obj.nGdof,nVectors);
             
@@ -308,11 +308,16 @@ classdef Model
             u_o = obj.reducedModel.expandResult(u_a);
             u_g(obj.a,:) = u_a;
             u_g(obj.o,:) = u_o;
-            
-            % prescribed DOF
+                        
+            % Prescribed DOF
              u_g(obj.s,:) = repmat(obj.sd(obj.s),[1,nVectors]);
             
-             % store in solver object
+            % Dependent DOF
+            if ~isempty(obj.G_m)
+                u_g(obj.m,:) = obj.G_m*u_g(obj.n,:);
+            end
+             
+            % Store in solver object
             solution.u_g = u_g;
             % solution.u_0 = obj.R_0g*solution.u_g;
             

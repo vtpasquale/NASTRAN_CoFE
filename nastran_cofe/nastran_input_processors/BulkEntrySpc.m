@@ -37,7 +37,7 @@ classdef BulkEntrySpc < BulkEntry
             spcon1.sid = obj.sid;
             spcon1.c = obj.c1;
             spcon1.g = obj.g1;
-            spcon1.d = obj.g1;
+            spcon1.d = obj.d1;
             if isempty(obj.g2)
                 model.spcs=[model.spcs;spcon1];
             else
@@ -45,7 +45,7 @@ classdef BulkEntrySpc < BulkEntry
                 spcon2.sid = obj.sid;
                 spcon2.c = obj.c2;
                 spcon2.g = obj.g2;
-                spcon2.d = obj.g2;
+                spcon2.d = obj.d2;
                 model.spcs=[model.spcs;spcon1;spcon2];
             end
         end

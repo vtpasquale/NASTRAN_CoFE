@@ -6,23 +6,23 @@
 %
 classdef (Abstract) ReducedModel
     properties (Abstract)
-        K_aa % ([nAdof,nAdof] double - possibly sparse) Elastic stiffness matrix of analysis set
-        M_aa % ([nAdof,nAdof] double - possibly sparse) Mass matrix of analysis set
+        K_aa % ([nAdof,nAdof] sparse double) Elastic stiffness matrix of analysis set
+        M_aa % ([nAdof,nAdof] sparse double) Mass matrix of analysis set
         u_a  % ([nAdof,nModes] double) Analysis set displacements
         p_a %  ([nAdof,nLoadSets] double) Analysis set load vectors
     end
     methods (Abstract)
         expandResult(obj)
     end
-    methods (Sealed = true)
-        function obj=expand(obj,u_a)
-            [nReducedModel,mReducedModel]=size(obj);
-            if mReducedModel~=1; error('Function only operates on ReducedModel arrays size n x 1.'); end
-            for i = 1:nReducedModel
-                obj(i) = obj(i).expand_sub(obj(i),u_a);
-            end
-        end
-    end
+% %     methods (Sealed = true)
+% %         function obj=expand(obj,u_a)
+% %             [nReducedModel,mReducedModel]=size(obj);
+% %             if mReducedModel~=1; error('Function only operates on ReducedModel arrays size n x 1.'); end
+% %             for i = 1:nReducedModel
+% %                 obj(i) = obj(i).expand_sub(obj(i),u_a);
+% %             end
+% %         end
+% %     end
     methods (Sealed = true, Static = true)
         function reducedModel = constructFromModel(model)
             % Function creates a reduced model from a model.
