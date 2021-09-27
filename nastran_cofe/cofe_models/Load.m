@@ -4,7 +4,7 @@
 classdef (Abstract) Load < matlab.mixin.Heterogeneous
 
     properties (Abstract)
-        sid % [int] Load set identification number.
+        sid % [uint32] Load set identification number.
     end
     methods (Abstract)
         assemble_sub(obj,model)
@@ -23,17 +23,32 @@ classdef (Abstract) Load < matlab.mixin.Heterogeneous
         function model = assemble(obj,model)
             nLoads = size(obj,1);
             nCases = size(model.loadSIDs,1);
+            
+            % Preallocate
             p_g = zeros(model.nGdof,nCases);
+            u_s = spalloc(model.nGdof,nCases, ceil(model.nGdof/100) );
+            
+            % Type flags
             isLoadCombination = arrayfun(@(x)isa(x,'LoadCombination'),obj);
+            isEnforcedDisplacement = arrayfun(@(x)isa(x,'Spcd'),obj);
             
-            
-            % Loop through loads and apply. Skip load combinations.
+            % Loop through loads and apply. 
             for i=1:nLoads
-                if ~isLoadCombination(i)
+                if ~isLoadCombination(i) % Skip load combinations.
+                    
+                    % Pull object and find the load case ID
                     oi=obj(i);
                     lc = find(oi.sid==model.loadSIDs);
-                    [pe_g,gdof]=oi.assemble_sub(model);
-                    p_g(gdof,lc)=p_g(gdof,lc)+pe_g;
+                    
+                    if isEnforcedDisplacement(i)
+                        % Calculate enforced dispacement
+                        [ue_s,gdof]=oi.assemble_sub(model);
+                        u_s(gdof,lc)=u_s(gdof,lc)+ue_s;
+                        
+                    else % Asseble typical applied load
+                        [pe_g,gdof]=oi.assemble_sub(model);
+                        p_g(gdof,lc)=p_g(gdof,lc)+pe_g;
+                    end
                 end
             end
             
@@ -67,6 +82,7 @@ classdef (Abstract) Load < matlab.mixin.Heterogeneous
             
             % save to model
             model.p_g=p_g;
+            model.u_s=u_s;
         end
     end
     

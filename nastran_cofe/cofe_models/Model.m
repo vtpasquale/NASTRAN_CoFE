@@ -63,7 +63,6 @@ classdef Model
         % seconct % ([nGdof,1] logical) Degrees-of-freedom connected to other superelements, as specified on seconct entrires
         
         %% Set-related data
-        sd % ([nGdof,nLoadSets] sparse) Enforced displacement values due to single-point constraints (nonzero values are specified using SPCD entries - which vary by load ID, not constraint ID)
         % superElementConnections % ([nGdof,nSuperElements] sparse) Superelement connections, exists only in residual structure model
         
         seconctIndexInGSet  % [nSeconctDof,1 uint32] GSET index (in this superelement) of boundary DOF defined by SECONCT
@@ -72,13 +71,15 @@ classdef Model
         
         
         %% Matricies
-        K_gg  % ([nGdof,nGdof] sparse) Elastic stiffness matrix in nodal displacement reference frame
-        KD_gg % ([nGdof,nGdof] sparse) Differential stiffness matrix in nodal displacement reference frame
-        M_gg  % ([nGdof,nGdof] sparse) Mass matrix in nodal displacement reference frame
+        K_gg  % ([nGdof,nGdof] sparse double) Elastic stiffness matrix in nodal displacement reference frame
+        % KD_gg % ([nGdof,nGdof] sparse double) Differential stiffness matrix in nodal displacement reference frame
+        M_gg  % ([nGdof,nGdof] sparse double) Mass matrix in nodal displacement reference frame
         G_m 
         p_g % ([nGdof,nLoadSets] double) load vectors in nodal displacement reference frame
+        u_s % ([nGdof,nLoadSets] sparse double) Enforced displacement values due to single-point constraints (nonzero values are specified using SPCD entries - which vary by load ID, not constraint ID) 
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
-             
+        
+        
         %% Store vectors of ID numbers and other index data as seperate varables.
         % This speeds up assembly because repeated concatenation is expensive.
         coordinateSystemCIDs
@@ -267,7 +268,7 @@ classdef Model
             
             % Process single-point constraint sets
             obj.sg = obj.point.getPerminantSinglePointConstraints(obj);
-            [obj.sb,obj.sd]=obj.spcs.preprocess(obj);
+            obj.sb = obj.spcs.preprocess(obj);
             
             % Process multi-point constraint sets
             obj = obj.mpcs.preprocess(obj);
@@ -310,7 +311,7 @@ classdef Model
             u_g(obj.o,:) = u_o;
                         
             % Prescribed DOF
-             u_g(obj.s,:) = repmat(obj.sd(obj.s),[1,nVectors]);
+             u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
             
             % Dependent DOF
             if ~isempty(obj.G_m)

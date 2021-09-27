@@ -15,6 +15,7 @@ classdef StaticsSolution < Solution
     properties (Hidden = true)
         u_g
         f_g
+        loadCaseIndex
     end
     
     methods 
@@ -36,6 +37,7 @@ classdef StaticsSolution < Solution
             if isempty(caseControl0.load); warning('No load case identification number specified.'); end
             lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); warning('No applied loads found for this case.'); end
+            obj.loadCaseIndex = lc;
             
             % Solve
             u_a = K_aa\p_a(:,lc);

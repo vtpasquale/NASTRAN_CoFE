@@ -50,7 +50,7 @@ classdef BulkEntrySpc1 < BulkEntry
             spcon.sid = obj.sid;
             spcon.c = obj.c;
             spcon.g = obj.g;
-            spcon.d=0.0;
+            % spcon.d=0.0;
             model.spcs=[model.spcs;spcon];
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid

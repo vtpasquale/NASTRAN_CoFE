@@ -37,7 +37,10 @@ classdef BulkEntrySpc < BulkEntry
             spcon1.sid = obj.sid;
             spcon1.c = obj.c1;
             spcon1.g = obj.g1;
-            spcon1.d = obj.d1;
+            if obj.d1~=0
+                error('SPC D1 field must be zero. Use the SPCD entry to specify nonzero enforced displacement values.')
+            end
+            % spcon1.d = obj.d1;
             if isempty(obj.g2)
                 model.spcs=[model.spcs;spcon1];
             else
@@ -45,7 +48,10 @@ classdef BulkEntrySpc < BulkEntry
                 spcon2.sid = obj.sid;
                 spcon2.c = obj.c2;
                 spcon2.g = obj.g2;
-                spcon2.d = obj.d2;
+                if obj.d2~=0
+                    error('SPC D2 field must be zero or blank. Use the SPCD entry to specify nonzero enforced displacement values.')
+                end
+                % spcon2.d = obj.d2;
                 model.spcs=[model.spcs;spcon1;spcon2];
             end
         end

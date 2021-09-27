@@ -35,7 +35,10 @@ classdef ReducedModelFull < ReducedModel
             
             obj.K_aa = K_nn(model.f,model.f);
             obj.M_aa = M_nn(model.f,model.f);
-            obj.p_a =  p_n(model.f,:) - K_nn(model.f,model.s)*model.sd(model.s,:);
+            if any(and(any(model.u_s,2),~model.s))
+                error('A global coordinate (Gi and Ci) referenced by an SPCD entry must also be referenced on a SPC or SPC1 Bulk Data entry and selected by the SPC Case Control command.')
+            end
+            obj.p_a =  p_n(model.f,:) - K_nn(model.f,model.s)*model.u_s(model.s,:);
         end
         function u_o = expandResult(obj,u_a)
             u_o = [];
