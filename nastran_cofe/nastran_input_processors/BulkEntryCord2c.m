@@ -12,8 +12,10 @@ classdef BulkEntryCord2c < Cord2
     end
     methods
         function bulkEntryCord2c = BulkEntryCord2c(entryFields) 
-            % Construct using entry field data input as cell array of char 
-            bulkEntryCord2c=constructCord2(bulkEntryCord2c,entryFields);
+            % Construct using entry field data input as cell array of char
+            if nargin > 0
+                bulkEntryCord2c=constructCord2(bulkEntryCord2c,entryFields);
+            end
         end
         function model = entry2model_sub(obj,model)
             % Convert entry object to model object and store in model entity array

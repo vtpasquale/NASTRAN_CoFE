@@ -8,7 +8,7 @@ classdef (Abstract) ReducedModel
     properties (Abstract)
         K_aa % ([nAdof,nAdof] sparse double) Elastic stiffness matrix of analysis set
         M_aa % ([nAdof,nAdof] sparse double) Mass matrix of analysis set
-        u_a  % ([nAdof,nModes] double) Analysis set displacements
+        % u_a  % ([nAdof,nModes] double) Analysis set displacements
         p_a %  ([nAdof,nLoadSets] double) Analysis set load vectors
     end
     methods (Abstract)

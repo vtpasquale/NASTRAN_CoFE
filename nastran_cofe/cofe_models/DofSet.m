@@ -163,7 +163,7 @@ classdef DofSet
             model.s = model.sb | model.sg;
             
             % free structural degrees-of-freedom
-            model.f = ~model.s; % & ~obj.m
+            model.f = ~model.s & ~model.m;
             
             if model.superElementID ~=0
                 % Superelement processing

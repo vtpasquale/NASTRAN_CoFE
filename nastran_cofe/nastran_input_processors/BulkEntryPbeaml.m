@@ -64,6 +64,7 @@ classdef BulkEntryPbeaml < BulkEntry
         function bulkDataEntryPbeam = pbeaml2pbeam(obj)
             bulkPbeam.pid = obj.pid;
             bulkPbeam.mid = obj.mid;
+            bulkPbeam.nsm = obj.nsm;
             switch obj.type
                 case 'BAR'
                     b = obj.dim(1);

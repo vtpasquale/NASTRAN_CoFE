@@ -16,15 +16,17 @@ classdef BulkEntryGrid < BulkEntry
     end
     methods
         function obj = BulkEntryGrid(entryFields)
-            % Construct using entry field data input as cell array of char
-            obj.id = castInputField('GRID','ID',entryFields{2},'uint32',NaN,1);
-            obj.cp = castInputField('GRID','CP',entryFields{3},'uint32',[] ,0);
-            obj.x1 = castInputField('GRID','X1',entryFields{4},'double',0.0);
-            obj.x2 = castInputField('GRID','X2',entryFields{5},'double',0.0);
-            obj.x3 = castInputField('GRID','X3',entryFields{6},'double',0.0);
-            obj.cd = castInputField('GRID','CD',entryFields{7},'uint32',[] ,0);
-            obj.ps = castInputField('GRID','PS',entryFields{8},'uint32',[]);
-            obj.seid = castInputField('GRID','SEID',entryFields{9},'uint32',[]);
+            if nargin > 0
+                % Construct using entry field data input as cell array of char
+                obj.id = castInputField('GRID','ID',entryFields{2},'uint32',NaN,1);
+                obj.cp = castInputField('GRID','CP',entryFields{3},'uint32',[] ,0);
+                obj.x1 = castInputField('GRID','X1',entryFields{4},'double',0.0);
+                obj.x2 = castInputField('GRID','X2',entryFields{5},'double',0.0);
+                obj.x3 = castInputField('GRID','X3',entryFields{6},'double',0.0);
+                obj.cd = castInputField('GRID','CD',entryFields{7},'uint32',[] ,0);
+                obj.ps = castInputField('GRID','PS',entryFields{8},'uint32',[]);
+                obj.seid = castInputField('GRID','SEID',entryFields{9},'uint32',[]);
+            end
         end
         function model = entry2model_sub(obj,model)
             % Convert entry object to model object and store in model entity array

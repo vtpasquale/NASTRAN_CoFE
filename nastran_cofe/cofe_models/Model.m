@@ -70,15 +70,25 @@ classdef Model
         % seconctIndexInASet0 % [nSeconctDof,1 uint32] ASET index (in residual structure) of boundary DOF defined by SECONCT
         
         
-        %% Matricies
+        %% G set matricies
         K_gg  % ([nGdof,nGdof] sparse double) Elastic stiffness matrix in nodal displacement reference frame
         % KD_gg % ([nGdof,nGdof] sparse double) Differential stiffness matrix in nodal displacement reference frame
         M_gg  % ([nGdof,nGdof] sparse double) Mass matrix in nodal displacement reference frame
-        G_m 
         p_g % ([nGdof,nLoadSets] double) load vectors in nodal displacement reference frame
-        u_s % ([nGdof,nLoadSets] sparse double) Enforced displacement values due to single-point constraints (nonzero values are specified using SPCD entries - which vary by load ID, not constraint ID) 
         R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
         
+        %% Multipoint constraint matricies
+        G_m % [nNdof,nMdof double] multipoint constraint matrix (u(m,:) = G_m*u(n,:))
+        
+        % Create n set matricies using same dimension as g set so that
+        % g set indexing can be used (i.e., The real K_nn = K_nn(n,n)).
+        % This maintains the f set indcies, so K_ff = K_nn(f,f).
+        K_nn % ([nGdof,nGdof] sparse double) Elastic stiffness matrix of indepedent set
+        M_nn % ([nGdof,nGdof] sparse double) Mass matrix of indepedent set
+        p_n %  ([nGdof,nLoadSets] double) Indepedent set load vectors     
+        
+        %% Single point constraint matrices
+        u_s % ([nGdof,nLoadSets] sparse double) Enforced displacement values due to single-point constraints (nonzero values are specified using SPCD entries - which vary by load ID, not constraint ID) 
         
         %% Store vectors of ID numbers and other index data as seperate varables.
         % This speeds up assembly because repeated concatenation is expensive.
@@ -127,6 +137,7 @@ classdef Model
             % Assemble individual superelements
             for i = 1:nModel
                 obj(i) = obj(i).assemble_sub();
+                obj(i) = obj(i).mpcPartition();
             end
             
             % Reduce Part Superelements and add to residual structure
@@ -284,13 +295,42 @@ classdef Model
             obj = obj.mpcs.assemble(obj);
             obj = obj.load.assemble(obj);
         end
+        function obj = mpcPartition(obj)
+            % Multipoint constraint partitioning
+            
+            % Create n set matricies using same dimension as g set so that
+            % g set indexing can be used (i.e., The real K_nn = K_nn(n,n)).
+            % This maintains the f set indcies, so K_ff = K_nn(f,f).
+            if isempty(obj.G_m)
+                obj.K_nn = obj.K_gg;
+                obj.M_nn = obj.M_gg;
+                obj.p_n  = obj.p_g; %  ... % Applied forces - obj.K_nn(:,obj.s)*obj.u_s(obj.s,:);  % Enforced displacements
+            else
+                % concise local variables without class properties name overlap
+                nG=obj.nGdof;
+                N = obj.n;
+                M = obj.m;
+                Gm = obj.G_m;
+                
+                % initialize            
+                obj.K_nn = spalloc(nG,nG,nnz(obj.K_gg));
+                obj.M_nn = spalloc(nG,nG,nnz(obj.M_gg));
+                obj.p_n  = zeros(size(obj.p_g));
+                
+                % partition
+                obj.K_nn(N,N) = obj.K_gg(N,N) +  obj.K_gg(N,M)*Gm + Gm.'* obj.K_gg(N,M).' + Gm.'* obj.K_gg(M,M)*Gm;
+                obj.M_nn(N,N) = obj.M_gg(N,N) +  obj.M_gg(N,M)*Gm + Gm.'* obj.M_gg(N,M).' + Gm.'* obj.M_gg(M,M)*Gm;
+                obj.p_n(N,:)  = obj.p_g(N,:) + Gm'*obj.p_g(M,:); % Applied forces - obj.K_nn(N,obj.s)*obj.u_s(obj.s,:);  % Enforced displacements
+            end            
+            
+        end
         function solution = recover_sub(obj,solution,u_a)
             % Function to recover solution quantities from ASET solution.
             % This method is called speratly for each superelement and
             % seperatly for each subcase.
             %
             % INPUTS
-            % obj = [1,1 Model] 
+            % obj = [1,1 Model]
             % solution = [1,1 Solution] Solution object without recovered output data
             % u_a = [nAset,nVectors] ASET displacement vectors
             %
@@ -300,52 +340,54 @@ classdef Model
             % Checks
             if length(obj)~=1; error('Function is intended length(obj)==1 input.'); end
             if length(solution)~=1; error('Function is intended length(solution)==1 input.'); end
-            
-            % Preallocate
             nVectors = size(u_a,2);
+            
+            % % % Displacement expansion
             u_g=zeros(obj.nGdof,nVectors);
-            
-            % Expand reduced model result to free and independent set
-            u_o = obj.reducedModel.expandResult(u_a);
+            %
+            % Analysis DOF
             u_g(obj.a,:) = u_a;
+            %
+            % Omitted DOF - from model reduction
+            u_o = obj.reducedModel.expandResult(u_a);
             u_g(obj.o,:) = u_o;
-                        
-            % Prescribed DOF
-             u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
-            
-            % Dependent DOF
+            %
+            % Prescribed DOF - from single point constraints
+            u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
+            %
+            % Dependent DOF - from multipoint constraints
             if ~isempty(obj.G_m)
                 u_g(obj.m,:) = obj.G_m*u_g(obj.n,:);
             end
-             
+            %
             % Store in solver object
             solution.u_g = u_g;
-            % solution.u_0 = obj.R_0g*solution.u_g;
-            
-            % constraint forces
-            solution.f_g = zeros(size(solution.u_g));
+
+            % % % Constraint expansion
+            solution.f_g=zeros(obj.nGdof,nVectors);
             if isa(solution,'StaticsSolution')
-                solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) ...
-                                      + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:);
-                                      % - obj.p_g(obj.s,:); TODO - revisit this with load case sorting
+                solution.f_g(obj.s,:) = ...
+                      obj.K_nn(obj.s,obj.f)*solution.u_g(obj.f,:) ...
+                    + obj.K_nn(obj.s,obj.s)*solution.u_g(obj.s,:) ...
+                    - obj.p_n(obj.s,solution.loadCaseIndex);
             elseif isa(solution,'ModesSolution')
                 w2 = repmat(solution.eigenvalueTable.eigenvalue.',[obj.nGdof,1]);
                 a_g= -1*w2.*solution.u_g;
                 solution.f_g(obj.s,:) = obj.K_gg(obj.s,obj.f)*solution.u_g(obj.f,:) ...
-                                      + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:) ...
-                                      + obj.M_gg(obj.s,obj.f)*a_g(obj.f,:) ...
-                                      + obj.M_gg(obj.s,obj.s)*a_g(obj.s,:);
+                    + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:) ...
+                    + obj.M_gg(obj.s,obj.f)*a_g(obj.f,:) ...
+                    + obj.M_gg(obj.s,obj.s)*a_g(obj.s,:);
             else
                 error('Update for new solution')
             end
             
-            % recover and store selected response data at elements 
+            % recover and store selected response data at elements
             solution = obj.point.recover(solution,obj);
             
-            % recover and store selected response data at elements 
-            if ~isempty(obj.element) % can be empty in superelement analysis 
+            % recover and store selected response data at elements
+            if ~isempty(obj.element) % can be empty in superelement analysis
                 solution = obj.element.recover(solution,obj);
             end
-        end            
+        end
     end
 end

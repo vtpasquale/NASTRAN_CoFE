@@ -6,33 +6,35 @@ classdef BulkEntryRbe2 < BulkEntry
         eid % [uint32] Element identification number.
         gn  % [uint32] Identification number of grid point to which all six independent degrees-of freedom for the element are assigned.
         cm  % [nComponents,1 uint32] Component numbers of the dependent degrees-of-freedom in the global coordinate system at grid points GMi. (Integers 1 through 6 with no embedded blanks.)
-        gm  % [nDependentNodes,1 uint32] Grid point identification numbers at which dependent degrees-of-freedom are assigned.
+        gm  % [1,nDependentNodes uint32] Grid point identification numbers at which dependent degrees-of-freedom are assigned.
     end
     
     methods
         function obj = BulkEntryRbe2(entryFields)
-            % Construct using entry field data input as cell array of char
-            obj.eid = castInputField('RBE2','EID',entryFields{2},'uint32',NaN,1);
-            obj.gn = castInputField('RBE2','GN',entryFields{3},'uint32',NaN,1);
-            obj.cm = castInputField('RBE2','CM',entryFields{4},'uint32',NaN,1,123456);
-            obj.cm = expandComponents(obj.cm,'RBE2 CM',false);
-
-            obj.gm(1) = castInputField('RBE2','GM1',entryFields{5},'uint32',NaN);
-            n=size(entryFields,2);
-            col = 6;
-            while col<=n
-                if strcmp(entryFields{col},'')
-                    break
-                else
-                    obj.gm=[obj.gm,castInputField('RBE2','GMi',entryFields{col},'uint32',NaN)];
+            if nargin > 0
+                % Construct using entry field data input as cell array of char
+                obj.eid = castInputField('RBE2','EID',entryFields{2},'uint32',NaN,1);
+                obj.gn = castInputField('RBE2','GN',entryFields{3},'uint32',NaN,1);
+                obj.cm = castInputField('RBE2','CM',entryFields{4},'uint32',NaN,1,123456);
+                obj.cm = expandComponents(obj.cm,'RBE2 CM',false);
+                
+                obj.gm(1) = castInputField('RBE2','GM1',entryFields{5},'uint32',NaN);
+                n=size(entryFields,2);
+                col = 6;
+                while col<=n
+                    if strcmp(entryFields{col},'')
+                        break
+                    else
+                        obj.gm=[obj.gm,castInputField('RBE2','GMi',entryFields{col},'uint32',NaN)];
+                    end
+                    col = col + 1;
+                    if mod(col,10)==0
+                        col=col+2;
+                    end
                 end
-                col = col + 1;
-                if mod(col,10)==0
-                    col=col+2;
+                if size(unique(obj.gm),2)~=size(obj.gm,2)
+                    error('GRID IDs specified in RBE2 EID = %d should be unique.',obj.eid)
                 end
-            end
-            if size(unique(obj.gm),2)~=size(obj.gm,2)
-                error('GRID IDs specified in RBE2 EID = %d should be unique.',obj.eid)
             end
         end
         function model = entry2model_sub(obj,model)
