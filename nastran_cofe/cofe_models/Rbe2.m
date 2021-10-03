@@ -34,7 +34,8 @@ classdef Rbe2 < Mpcs
             T_0n = zeros(6);
             T_0n(1:3,1:3) = nSetNode.T_g0.';
             T_0n(4:6,4:6) = T_0n(1:3,1:3);
-            R_n6 = repmat(eye(6)*T_0n,[nDependentNodes,1]);
+            % R_n6 = repmat(eye(6)*T_0n,[nDependentNodes,1]);
+            R_n6 = zeros(6*nDependentNodes,6);
 
             % All 6 DOF indices for each node with dependent DOF
             mSetNodesGdof = [mSetNode.gdof];
@@ -64,13 +65,15 @@ classdef Rbe2 < Mpcs
                 T_0m(4:6,4:6) = T_0m(1:3,1:3);
                 
                 index = (1:6)+6*(i-1);
-                R_m6(index,index) = ...
-                -1*[1     0     0     0    -r(3)  r(2)
-                    0     1     0     r(3)  0    -r(1)
-                    0     0     1    -r(2)  r(1)  0
+                R_n6(index,:) = ...
+                -1*[1     0     0     0     r(3) -r(2)
+                    0     1     0    -r(3)  0     r(1)
+                    0     0     1     r(2) -r(1)  0
                     0     0     0     1     0     0
                     0     0     0     0     1     0
-                    0     0     0     0     0     1   ]*T_0m;
+                    0     0     0     0     0     1   ]*T_0n;
+                R_m6(index,index) = eye(6)*T_0m;
+                
             end
             
             % Partition to only dependent DOF
