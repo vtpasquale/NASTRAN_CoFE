@@ -79,7 +79,7 @@ classdef Hdf5Domains < Hdf5CompoundDataset
             if all(all(domain1IntegerProperties==domain2IntegerProperties))
                obj2CompareIndex=1:n1;
             else
-                warning('Attempting to sort HDF5 Domain objects for comparison.')
+                warning('compareWarn:hdf5_sorting','Attempting to sort HDF5 Domain objects for comparison.')
                 [~,~,obj2CompareIndex]=intersect(domain1IntegerProperties,domain2IntegerProperties,'rows','stable');
                 if ~all(all(domain1IntegerProperties==domain2IntegerProperties(obj2CompareIndex,:)))
                     error('Sorting for HDF5 domain comparison failed.')

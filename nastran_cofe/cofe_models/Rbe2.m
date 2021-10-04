@@ -20,7 +20,6 @@ classdef Rbe2 < Mpcs
     methods
         function obj = preprocess_sub(obj,model)
             nDependentNodes = size(obj.gm,2);
-            % nDependentDof = size(obj.cm,1)*nDependentNodes;
             
             % Nodes
             nSetNode = model.point.getNode(obj.gn,model);
@@ -29,13 +28,9 @@ classdef Rbe2 < Mpcs
                 error('RBE2 EID = %d has a GMi field that references a scalar point.',obj.eid);
             end        
             
-            % Independent DOF indices and constraint coefficent matrix
+            % Independent DOF indices and transformation
             obj.n = nSetNode.gdof.';
-            T_0n = zeros(6);
-            T_0n(1:3,1:3) = nSetNode.T_g0.';
-            T_0n(4:6,4:6) = T_0n(1:3,1:3);
-            % R_n6 = repmat(eye(6)*T_0n,[nDependentNodes,1]);
-            R_n6 = zeros(6*nDependentNodes,6);
+            T_n0 = nSetNode.T_g0;           
 
             % All 6 DOF indices for each node with dependent DOF
             mSetNodesGdof = [mSetNode.gdof];
@@ -53,30 +48,35 @@ classdef Rbe2 < Mpcs
             mElementDof = mElementDofColumns(:);            
             
             % Assemble dependent DOF constraint coefficent matrix
+            R_n6 = zeros(6*nDependentNodes,6);
             R_m6 = zeros(nDependentNodes*6);
             for i = 1:nDependentNodes
                 
-                % Relative location
-                r = mSetNode(i).x_0 - nSetNode.x_0;
+                % Transformation matrix to m set reference frame
+                T_m0 = mSetNode(i).T_g0;
+                T_mn = T_m0*T_n0.';
                 
-                % Transformation matrix
-                T_0m = zeros(6);
-                T_0m(1:3,1:3) = mSetNode(i).T_g0.';
-                T_0m(4:6,4:6) = T_0m(1:3,1:3);
+                % Relative location expressed in m reference frame
+                r = T_m0*( mSetNode(i).x_0 - nSetNode.x_0 );
+                
+                % 6DOF Transformation matrix
+                R_mn = zeros(6);
+                R_mn(1:3,1:3) = T_mn;
+                R_mn(4:6,4:6) = T_mn;
                 
                 index = (1:6)+6*(i-1);
                 R_n6(index,:) = ...
-                -1*[1     0     0     0     r(3) -r(2)
+                   [1     0     0     0     r(3) -r(2)
                     0     1     0    -r(3)  0     r(1)
                     0     0     1     r(2) -r(1)  0
                     0     0     0     1     0     0
                     0     0     0     0     1     0
-                    0     0     0     0     0     1   ]*T_0n;
-                R_m6(index,index) = eye(6)*T_0m;
+                    0     0     0     0     0     1   ]*R_mn;
+                R_m6(index,index) = -1*eye(6);
                 
             end
             
-            % Partition to only dependent DOF
+            % Down select and save
             obj.R_n = R_n6(mElementDof,:);
             obj.R_m = R_m6(mElementDof,mElementDof);
             

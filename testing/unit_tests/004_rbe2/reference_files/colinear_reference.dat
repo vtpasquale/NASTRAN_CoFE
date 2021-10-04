@@ -1,0 +1,78 @@
+INIT MASTER(S)
+NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1
+ID colinear,FEMAP
+SOL SESTATIC
+CEND
+  TITLE = test case
+  ECHO = NONE
+  DISPLACEMENT(PRINT) = ALL
+  SPCFORCES(PRINT) = ALL
+  FORCE(PRINT,CORNER) = ALL
+  SPC = 1
+SUBCASE 1
+  SUBTITLE = ux
+  LOAD = 1
+SUBCASE 2
+  SUBTITLE = uy
+  LOAD = 2
+SUBCASE 3
+  SUBTITLE = uz
+  LOAD = 3
+SUBCASE 4
+  SUBTITLE = rx
+  LOAD = 4
+SUBCASE 5
+  SUBTITLE = ry
+  LOAD = 5
+SUBCASE 6
+  SUBTITLE = rz
+  LOAD = 6
+BEGIN BULK
+$ ***************************************************************************
+$   Written by : Femap
+$   Version    : 2021.2.0
+$   Translator : Simcenter Nastran
+$   From Model : S:\aricciar\20210822_CoFE\rbe_test_cases\cases\colinear.modfem
+$   Date       : Sun Oct  3 08:46:16 2021
+$   Output To  : S:\aricciar\20210822_CoFE\rbe_test_cases\cases\
+$ ***************************************************************************
+$
+GRID           1       0     1.6     4.2     6.2       0
+GRID           2       02.285302     4.25.725863       0
+GRID           3       03.199038     4.25.093681       0
+GRID           4       04.341209     4.24.303454       0
+GRID           5       05.711813     4.23.355181       0
+GRID           6       05.0907745.4298876.964056       0
+GRID           7       07.1466815.4298875.541647       0
+MDLPRM,HDF5,0
+PARAM,PRGPST,NO
+PARAM,POST,-1
+PARAM,OGEOM,NO
+$ Femap Load Set 1 : ux
+SPCD           1       3       1      1.
+$ Femap Load Set 2 : uy
+SPCD           2       3       2      1.
+$ Femap Load Set 3 : uz
+SPCD           3       3       3      1.
+$ Femap Load Set 4 : rx
+SPCD           4       3       4      1.
+$ Femap Load Set 5 : ry
+SPCD           5       3       5      1.
+$ Femap Load Set 6 : rz
+SPCD           6       3       6      1.
+$ Femap Constraint Set 1 : fix node 3, 6
+SPC1           1  123456       3
+SPC1           1  123456       6
+$ Femap Property 1 : Dummy
+PBEAML         1       1 MSCBML0     ROD                                +       
++             .1      0.                
+$ Femap Material 1 : AISI 4340 Steel
+MAT1           1   2.9+7             .327.3315-4   6.6-6     70.        +       
++        215000. 240000. 156000.
+MAT4           14.8611-4   38.647.3315-4                        
+CBEAM          1       1       6       1      0.      1.      0.
+CBEAM          2       1       6       2      0.      1.      0.
+CBEAM          3       1       6       4      0.      1.      0.
+CBEAM          4       1       6       5      0.      1.      0.
+CBEAM          5       1       6       7      0.      1.      0.
+ENDDATA 98920c4b
