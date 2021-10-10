@@ -83,24 +83,26 @@ classdef Rbe3 < Mpcs
             
             % Right hand side matrix
             Z6 = W6*S;
-            
-            % Reduce to relevant DOF
+                        
+            % Reduce to relevant independent DOF
             W = W6(nElementDof,nElementDof);
-            Z = Z6(nElementDof,obj.refc);
+            Z = Z6(nElementDof,:);
             
-            % Singularity Check
+            % Singularity check
             A = Z.'*Z;
             if rank(A) < size(A,1)
                 error('Numerical analysis predicts a mechanism in RBE3 ID %d.  Additional DOF in C1 may stabalize the element.',obj.eid);
             end
             
-            % Least-squares solution for constraint matrix
-            G_m = A\Z.'*W;
+            % Least-squares solution for constraint matrix (includes extra dependent DOF)
+            G_m6 = A\Z.'*W;
+            
+            % Reduce to relavent dependent DOF
+            G_m = G_m6(obj.refc,:);
             
             % Save constraint coefficent matrices
             obj.R_n =  G_m;
-            obj.R_m = -1*eye(size(G_m,1));
-            
+            obj.R_m = -1*eye(size(obj.R_n,1));
         end
     end
 end

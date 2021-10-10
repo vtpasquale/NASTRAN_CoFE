@@ -14,21 +14,23 @@ classdef BulkEntrySpcd < BulkEntry
     
     methods
         function obj = BulkEntrySpcd(entryFields)
-            % Construct using entry field data input as cell array of char
-            obj.sid = castInputField('SPCD','SID',entryFields{2},'uint32',NaN,1);
-            obj.g1 = castInputField('SPCD','G1',entryFields{3},'uint32',NaN,0);
-            obj.c1 = castInputField('SPCD','C1',entryFields{4},'uint32',NaN,0,123456);
-            obj.c1 = expandComponents(obj.c1,'SPCD C1',true);
-            obj.d1 = castInputField('SPCD','D1',entryFields{5},'double',NaN);
-            
-            obj.g2 = castInputField('SPCD','G2',entryFields{6},'uint32',[],0);
-            obj.c2 = castInputField('SPCD','C2',entryFields{7},'uint32',[],0,123456);
-            if ~isempty(obj.c2)
-                obj.c2 = expandComponents(obj.c2,'SPCD C2',true);
-            end
-            obj.d2 = castInputField('SPCD','D2',entryFields{8},'double',[]);
-            if ~isempty(obj.g2) && any([isempty(obj.c2),isempty(obj.d2)])
-                error('When the SPCD entry G2 field is nonblank, C2 and D2 fields are required.')
+            if nargin > 0
+                % Construct using entry field data input as cell array of char
+                obj.sid = castInputField('SPCD','SID',entryFields{2},'uint32',NaN,1);
+                obj.g1 = castInputField('SPCD','G1',entryFields{3},'uint32',NaN,0);
+                obj.c1 = castInputField('SPCD','C1',entryFields{4},'uint32',NaN,0,123456);
+                obj.c1 = expandComponents(obj.c1,'SPCD C1',true);
+                obj.d1 = castInputField('SPCD','D1',entryFields{5},'double',NaN);
+                
+                obj.g2 = castInputField('SPCD','G2',entryFields{6},'uint32',[],0);
+                obj.c2 = castInputField('SPCD','C2',entryFields{7},'uint32',[],0,123456);
+                if ~isempty(obj.c2)
+                    obj.c2 = expandComponents(obj.c2,'SPCD C2',true);
+                end
+                obj.d2 = castInputField('SPCD','D2',entryFields{8},'double',[]);
+                if ~isempty(obj.g2) && any([isempty(obj.c2),isempty(obj.d2)])
+                    error('When the SPCD entry G2 field is nonblank, C2 and D2 fields are required.')
+                end
             end
         end
         function model = entry2model_sub(obj,model)

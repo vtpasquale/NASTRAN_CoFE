@@ -25,8 +25,7 @@ classdef (Abstract) Mpcs < matlab.mixin.Heterogeneous
         function model = assemble(obj,model)
             % Assemble constraint matricies
             nDependentDof = sum(model.m);
-            if nDependentDof > 1
-                nIndependentDof = model.nGdof - nDependentDof;
+            if nDependentDof > 0
                 % Create n set matricies using same dimension as g set so that
                 % g set indexing can be used (i.e., The real R_m = R_m(m,m)).
                 R_n = spalloc(model.nGdof,model.nGdof,6*nDependentDof);

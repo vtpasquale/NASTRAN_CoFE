@@ -320,7 +320,7 @@ classdef Model
                 % partition
                 obj.K_nn(N,N) = obj.K_gg(N,N) +  obj.K_gg(N,M)*Gm + Gm.'* obj.K_gg(N,M).' + Gm.'* obj.K_gg(M,M)*Gm;
                 obj.M_nn(N,N) = obj.M_gg(N,N) +  obj.M_gg(N,M)*Gm + Gm.'* obj.M_gg(N,M).' + Gm.'* obj.M_gg(M,M)*Gm;
-                obj.p_n(N,:)  = obj.p_g(N,:) + Gm'*obj.p_g(M,:); % Applied forces - obj.K_nn(N,obj.s)*obj.u_s(obj.s,:);  % Enforced displacements
+                obj.p_n(N,:)  = obj.p_g(N,:) + Gm'*obj.p_g(M,:); % Applied forces
             end            
             
         end
