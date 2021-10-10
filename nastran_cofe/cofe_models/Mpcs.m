@@ -14,10 +14,10 @@ classdef (Abstract) Mpcs < matlab.mixin.Heterogeneous
             nMpc = size(obj,1);
             for i=1:nMpc
                 obj(i)=obj(i).preprocess_sub(model);
-                if any(model.m(obj.m))
+                if any(model.m(obj(i).m))
                     error('Dependent degrees of freedom are overconstrained my multiple MPCs or rigid elements.')
                 end
-                model.m(obj.m) = true;
+                model.m(obj(i).m) = true;
             end
             model.n = ~model.m;
             model.mpcs = obj;

@@ -353,7 +353,13 @@ classdef Model
             u_g(obj.o,:) = u_o;
             %
             % Prescribed DOF - from single point constraints
-            u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
+            if isa(solution,'StaticsSolution')
+                u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
+            elseif isa(solution,'ModesSolution')
+                % u_g(obj.s,:) = 0; -- as preallocated
+            else
+                error('Update for new solution')
+            end
             %
             % Dependent DOF - from multipoint constraints
             if ~isempty(obj.G_m)
