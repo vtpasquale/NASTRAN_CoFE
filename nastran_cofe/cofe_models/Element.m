@@ -108,6 +108,7 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             model.element=obj;
             model.K_gg=K_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
             model.M_gg=model.wtmass*M_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
+            
         end
         function element = getElement(obj,id,model)
             % returns a single element object with the requested id from the element array

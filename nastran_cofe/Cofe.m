@@ -141,12 +141,17 @@ classdef Cofe
             %% Assemble model
             if ~p.Results.assemble; return; end
             obj.model = obj.model.assemble();
+                        
+            %% Static solution presolve
+            if contains([obj.model(1).caseControl.analysis],'STATICS')
+                obj.model(1).reducedModel=obj.model(1).reducedModel.solveUaAllLoadSets();
+            end
             
             %% Solve
             if ~p.Results.solve; return; end
             obj.solution = Solution.constructFromModel(obj.model);
             obj.solution = obj.solution.solve(obj.model);
-            
+                        
             %% Results
             % Create Hdf5 object from model and solution
             if p.Results.writeOutput2Disk || p.Results.getHdf5Object

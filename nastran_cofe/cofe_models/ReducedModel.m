@@ -8,21 +8,43 @@ classdef (Abstract) ReducedModel
     properties (Abstract)
         K_aa % ([nAdof,nAdof] sparse double) Elastic stiffness matrix of analysis set
         M_aa % ([nAdof,nAdof] sparse double) Mass matrix of analysis set
-        % u_a  % ([nAdof,nModes] double) Analysis set displacements
+        u_a  % ([nAdof,nLoadSets] double) Analysis set displacements for all load cases
         p_a %  ([nAdof,nLoadSets] double) Analysis set load vectors
+    end
+    properties (Hidden=true,SetAccess=private)
+        factorizationType; % [char]
+    end
+    properties (Access=private) % Matrix Factorization only calculated if/when needed. Stored in case needed again. Access using getUK() method.
+        UK % [nAdof,nAdof sparse double] upper triangular matrix.  
+        LK % [nAdof,nAdof sparse double] lower triangular matrix. Typcally unused - only used when complex step of the entire solution is needed.
     end
     methods (Abstract)
         expandResult(obj)
     end
-% %     methods (Sealed = true)
-% %         function obj=expand(obj,u_a)
-% %             [nReducedModel,mReducedModel]=size(obj);
-% %             if mReducedModel~=1; error('Function only operates on ReducedModel arrays size n x 1.'); end
-% %             for i = 1:nReducedModel
-% %                 obj(i) = obj(i).expand_sub(obj(i),u_a);
-% %             end
-% %         end
-% %     end
+    methods (Sealed = true)
+        function obj = solveUaAllLoadSets(obj)
+            obj.u_a = obj.K_aa\obj.p_a;
+        end
+        function obj = factorizeStiffness(obj)
+            if isreal(obj.K_aa)
+                obj.UK = chol(obj.K_aa);
+                obj.factorizationType = 'chol';
+            else
+                [obj.LK,obj.UK] = lu(obj.K_aa);
+                obj.factorizationType = 'lu';
+            end
+        end
+        function u = forwardaAndBackSubstitution(obj,p)
+            switch obj.factorizationType
+                case 'chol'
+                    u = obj.UK\(obj.UK.'\p);
+                case 'lu'
+                    u = obj.UK\(obj.LK\p);
+                otherwise
+                    error('Ensure the stiffness matrix is factorized before calling forwardaAndBackSubstitution().')
+            end
+        end
+    end
     methods (Sealed = true, Static = true)
         function reducedModel = constructFromModel(model)
             % Function creates a reduced model from a model.

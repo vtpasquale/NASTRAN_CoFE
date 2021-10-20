@@ -28,22 +28,17 @@ classdef StaticsSolution < Solution
             % Residual structure model and case control
             model0 = model(1);
             caseControl0 = model0.caseControl(caseControlIndex);
-            
-            % Residual structure analysis matricies
-            K_aa = model0.reducedModel.K_aa;
-            % M_aa = model0.reducedModel.M_aa;
-            p_a = model0.reducedModel.p_a;
-                        
+                      
             if isempty(caseControl0.load); warning('No load case identification number specified.'); end
             lc = find(caseControl0.load==model0.loadSIDs);
             if isempty(lc); warning('No applied loads found for this case.'); end
             obj.loadCaseIndex = lc;
             
-            % Solve
-            u_a = K_aa\p_a(:,lc);
+            % Access presolved displacements
+            u_a = model0.reducedModel.u_a(:,lc);
             
             % Calculate Total Energy
-            obj = obj.calculateTotalEnergy(K_aa,u_a);
+            obj = obj.calculateTotalEnergy(model0.reducedModel.K_aa,u_a);
             
             % Recover model results
             obj = model.recover(obj,u_a);

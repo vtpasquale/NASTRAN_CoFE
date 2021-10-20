@@ -85,7 +85,18 @@ switch dataType
             error('castInputField:fieldShouldBeInteger',...
                 'The %s field on a(n) %s entry should be an integer.',fieldName,entryName);
         end
-        if out < intmin(dataType) || out > intmax(dataType)
+        switch dataType
+            case 'uint32'
+                intMinDataType = uint32(0);
+                intMaxDataType = uint32(4294967295);
+            case 'uint8'
+                intMinDataType = uint8(0);
+                intMaxDataType = uint8(255);
+            otherwise
+                intMinDataType = int32(-2147483648);
+                intMaxDataType = int32(2147483647);
+        end
+        if out < intMinDataType || out > intMaxDataType
             error('castInputField:fieldValueOutsideIntegerRange',...
             'The %s field on a(n) %s entry has a value of %d, which is outside the range of values that can be stored using type %s.',fieldName,entryName,out,dataType);
         end
