@@ -49,21 +49,65 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
         function model = assemble(obj,model)
             % assemble element and global matricies
             
-            % Preallocate Sparse Matrices
-            K_gg = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
-            M_gg = K_gg;
+% %             % Inefficent assembly
+% %             K_gg = spalloc(model.nGdof,model.nGdof,20*model.nGdof);
+% %             M_gg = K_gg;
+% %             
+% %             % Loop through elements
+% %             nElement = size(obj,1);
+% %             for i=1:nElement
+% %                 oi=obj(i).assemble_sub(model);
+% %                 K_gg(oi.gdof,oi.gdof)=K_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
+% %                 M_gg(oi.gdof,oi.gdof)=M_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
+% %                 obj(i)=oi;
+% %             end
+% %             model.element=obj;
+% %             model.K_gg=K_gg;
+% %             model.M_gg=model.wtmass*M_gg;
+            
+%             K_gg1 = K_gg;
+%             M_gg1 = M_gg;
+            
+% %             % Assembly using triplet functions
+% %             [iK,jK,sK,nK] = initializeTriplet(20*model.nGdof);
+% %             [iM,jM,sM,nM] = initializeTriplet( 5*model.nGdof);
+% %             
+% %             % Loop through elements
+% %             nElement = size(obj,1);
+% %             for i=1:nElement
+% %                 oi=obj(i).assemble_sub(model);
+% %                 kg = oi.R_eg.'*oi.k_e*oi.R_eg;
+% %                 mg = oi.R_eg.'*oi.m_e*oi.R_eg;
+% %                 gDof = oi.gdof;
+% %                 [iK,jK,sK,nK] = updateTriplet(iK,jK,sK,nK,kg,gDof);
+% %                 [iM,jM,sM,nM] = updateTriplet(iM,jM,sM,nM,mg,gDof);
+% %                 obj(i)=oi;
+% %             end
+% %             model.element=obj;
+% %             model.K_gg=sparse(double(iK(1:nK)),double(jK(1:nK)),sK(1:nK),...
+% %                               model.nGdof,model.nGdof);
+% %             model.M_gg=model.wtmass*...
+% %                        sparse(double(iM(1:nM)),double(jM(1:nM)),sM(1:nM),...
+% %                               model.nGdof,model.nGdof);
+
+            % Assembly using triplet handle classes (value class performance is abysmal)
+            K_gg = SparseTriplet(20*model.nGdof);
+            M_gg = SparseTriplet( 5*model.nGdof);
             
             % Loop through elements
             nElement = size(obj,1);
             for i=1:nElement
                 oi=obj(i).assemble_sub(model);
-                K_gg(oi.gdof,oi.gdof)=K_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.k_e*oi.R_eg;
-                M_gg(oi.gdof,oi.gdof)=M_gg(oi.gdof,oi.gdof)+oi.R_eg.'*oi.m_e*oi.R_eg;
+                kg = oi.R_eg.'*oi.k_e*oi.R_eg;
+                mg = oi.R_eg.'*oi.m_e*oi.R_eg;
+                gDof = oi.gdof;
+                K_gg = K_gg.addMatrix(kg,gDof);
+                M_gg = M_gg.addMatrix(mg,gDof);
                 obj(i)=oi;
             end
             model.element=obj;
-            model.K_gg=K_gg;
-            model.M_gg=model.wtmass*M_gg;
+            model.K_gg=K_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
+            model.M_gg=model.wtmass*M_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
         end
         function element = getElement(obj,id,model)
             % returns a single element object with the requested id from the element array
