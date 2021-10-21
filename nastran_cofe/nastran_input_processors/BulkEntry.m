@@ -11,7 +11,11 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
         % Convert entry object to model object and store in model entity array
         model = entry2model_sub(obj,model)
     end
-    
+    methods (Static=true, Access=protected, Sealed=true)
+        function obj = getDefaultScalarElement()
+            obj = BulkEntryGrid;
+        end
+    end
     methods (Sealed = true)
         function echo(obj,fid)
             % Execute entry.echo_sub(fid) for all heterogeneous entry objects in array
@@ -33,7 +37,9 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
         end % constructFromFields()
         function bulkEntry = constructFromFields_sub(bulkDataFields)
             % Read input fields and create heterogeneous entry array from input data
-            for i = 1:size(bulkDataFields,1)
+            nBulkDataFields = size(bulkDataFields,1);
+            bulkEntryCell = cell(nBulkDataFields,1); % temporary cell
+            for i = 1:nBulkDataFields
                 fields = bulkDataFields{i};
                 % convert field 1 to case-sensitive class name
                 entryName =  lower(fields{1});
@@ -41,14 +47,20 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
                 if strcmp(entryName(end),'*')
                     entryName = entryName(1:end-1);
                 end
-                % check that input entry is supported
-                if exist(['BulkEntry',entryName],'class')==8
+                try
                     % Call contructor method for each entry
-                    eval(['bulkEntry(i,1) = BulkEntry',entryName,'(fields);']);
-                else
-                    error('Bulk data entry %s not supported.',upper(entryName))
+                    % bulkEntry(i,1) = feval(['BulkEntry',entryName],fields); % slow
+                    bulkEntryCell{i,1} = feval(['BulkEntry',entryName],fields); % place in temporary cell - 40% faster than assembling object array
+                catch
+                    % check that input entry is supported (cheaper to call after catch rather than each time)
+                    if ~exist(['BulkEntry',entryName],'class')==8
+                        error('Bulk data entry %s not supported.',upper(entryName))
+                    else
+                        error('Unknown error while processing %s entry. The entry should be supported because it has an associated class for processing it.',upper(entryName))
+                    end
                 end
             end
+            bulkEntry = [bulkEntryCell{:}].'; % convert to object array from cell - fast
         end % constructFromFields_sub()
         function model = entry2model(bulkEntry,superElementID)
             % Convert bulk data entry object array to model object entity arrays

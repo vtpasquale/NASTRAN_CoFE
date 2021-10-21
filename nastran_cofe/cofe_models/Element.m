@@ -97,18 +97,17 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             % Loop through elements
             nElement = size(obj,1);
             for i=1:nElement
-                oi=obj(i).assemble_sub(model);
+                oi=obj(i).assemble_sub(model); % changing this to a temporary cell array (in a seperate loop) saves a negligible amount of runtime
                 kg = oi.R_eg.'*oi.k_e*oi.R_eg;
                 mg = oi.R_eg.'*oi.m_e*oi.R_eg;
                 gDof = oi.gdof;
                 K_gg = K_gg.addMatrix(kg,gDof);
                 M_gg = M_gg.addMatrix(mg,gDof);
-                obj(i)=oi;
+                obj(i) = oi;
             end
             model.element=obj;
             model.K_gg=K_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
             model.M_gg=model.wtmass*M_gg.convertToSparseMatrix(model.nGdof,model.nGdof);
-            
         end
         function element = getElement(obj,id,model)
             % returns a single element object with the requested id from the element array
