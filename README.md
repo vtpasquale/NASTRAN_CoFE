@@ -8,11 +8,8 @@ CoFE reads Nastran-format text input files and writes Nastran-format HDF5 output
 
 CoFE is **NOT** a wrapper for Nastran. It is an independent solver that clones a subset of commercial-Nastran capabilities.
 
-### Benefits of Nastran Compatibility
-The main benefits of Nastran compatibility are:
-- Preprocessors are available to process the input. There are too many to list them all, but examples include PATRAN, Femap, and Gmsh.
-- Postprocessors are available to process the output. CoFE writes MSC Nastran-format HDF5 output files (other versions of Nastran have independent HDF5 output formats with completely different schemas). MSC HDF5 format can be postprocessed using PATRAN. No other postprocessor works with MSC HDF5 format, but the Femap development working to support this format.
-- Streamlined verification by input/output comparison.
+### Documentation
+CoFE is primarily documented at this repository's [*Wiki Page*](https://github.com/vtpasquale/NASTRAN_CoFE/wiki). All CoFE input entry formats are documented in the [*CoFE Quick Reference Guide*](https://github.com/vtpasquale/NASTRAN_CoFE/wiki/Quick-Reference-Guide). CoFE supports a subset of commercial-Nastran input data, and some CoFE-supported input entries have reduced functionality. Users who are unfamiliar with finite element analysis and/or Nastran should review a commercial-Nastran [*Getting Started User's Guide*](https://www.google.com/search?q=Nastran+Getting+Started+User%E2%80%99s+Guide). 
 
-### Intended Use
-CoFE is developed for education and research; it’s not intended to be a replacement for commercial Nastran solvers.  CoFE’s functionality and source code are intended to be useful for (1) students learning the finite element method or design optimization, and (2) researchers who are developing new analysis or optimization methods.
+### Pre/Post Processing
+Because the input format is Nastran-compatible, preprocessors intended for Nastran can be used to prepare CoFE models. There are too many preprocessor options to list them all, but examples include PATRAN, Femap, and Gmsh. CoFE writes MSC Nastran-format HDF5 output files (other commercial Nastran versions have independent HDF5 output formats with incompatible schemas). MSC HDF5 format can be postprocessed using PATRAN. Femap support for MSC HDF5 format is in-work according to [developers]( https://community.sw.siemens.com/s/question/0D54O000061xpmj/femap-needs-to-better-support-msc-nastrans-newer-features-feature-requests). 
