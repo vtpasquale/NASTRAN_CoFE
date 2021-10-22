@@ -111,6 +111,7 @@ classdef Cofe
             p.addParameter('preprocess'       ,true,@islogical);
             p.addParameter('assemble'         ,true,@islogical);
             p.addParameter('solve'            ,true,@islogical);
+            p.addParameter('presolve'         ,true,@islogical);
             p.addParameter('writeOutput2Disk' ,true,@islogical);
             p.addParameter('getHdf5Object'    ,false,@islogical);
             p.parse(inputData,varargin{:});            
@@ -143,11 +144,12 @@ classdef Cofe
             obj.model = obj.model.assemble();
                         
             %% Static solution presolve
+            if ~p.Results.presolve; return; end
             if contains([obj.model(1).caseControl.analysis],'STATICS')
                 obj.model(1).reducedModel=obj.model(1).reducedModel.solveUaAllLoadSets();
             end
             
-            %% Solve
+            %% Solve and recover
             if ~p.Results.solve; return; end
             obj.solution = Solution.constructFromModel(obj.model);
             obj.solution = obj.solution.solve(obj.model);

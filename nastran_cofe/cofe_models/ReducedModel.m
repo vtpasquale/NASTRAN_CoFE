@@ -25,6 +25,18 @@ classdef (Abstract) ReducedModel
         function obj = solveUaAllLoadSets(obj)
             obj.u_a = obj.K_aa\obj.p_a;
         end
+        function pseudoLoads = calculateDirectSensitivityPseudoLoad(obj,u_a,dx)
+            % Calculates direct sensitivity pseudo loads. This should only
+            % be called for complex-assembed ReducedModel objects.
+            %
+            % Inputs
+            % u_a [nAdof,nLoadSets real double] Analysis result displacements for all load cases
+            % dx [real double] Complex step size.
+            %
+            % Outputs
+            % pseudoLoads [nAdof,nLoadSets real double] direct sensitivity pseudo loads for all load cases
+            pseudoLoads = imag(obj.p_a)./dx - (imag(obj.K_aa)./dx)*u_a;
+        end
         function obj = factorizeStiffness(obj)
             if isreal(obj.K_aa)
                 obj.UK = chol(obj.K_aa);

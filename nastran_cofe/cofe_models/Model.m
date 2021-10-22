@@ -164,6 +164,35 @@ classdef Model
             obj(1).reducedModel = ReducedModel.constructFromModel(obj(1));
             
         end
+        function obj = mpcPartition(obj)
+            % Multipoint constraint partitioning
+            
+            % Create n set matricies using same dimension as g set so that
+            % g set indexing can be used (i.e., The real K_nn = K_nn(n,n)).
+            % This maintains the f set indcies, so K_ff = K_nn(f,f).
+            if isempty(obj.G_m)
+                obj.K_nn = obj.K_gg;
+                obj.M_nn = obj.M_gg;
+                obj.p_n  = obj.p_g; %  ... % Applied forces - obj.K_nn(:,obj.s)*obj.u_s(obj.s,:);  % Enforced displacements
+            else
+                % concise local variables without class properties name overlap
+                nG=obj.nGdof;
+                N = obj.n;
+                M = obj.m;
+                Gm = obj.G_m;
+                
+                % initialize            
+                obj.K_nn = spalloc(nG,nG,nnz(obj.K_gg));
+                obj.M_nn = spalloc(nG,nG,nnz(obj.M_gg));
+                obj.p_n  = zeros(size(obj.p_g));
+                
+                % partition
+                obj.K_nn(N,N) = obj.K_gg(N,N) +  obj.K_gg(N,M)*Gm + Gm.'* obj.K_gg(N,M).' + Gm.'* obj.K_gg(M,M)*Gm;
+                obj.M_nn(N,N) = obj.M_gg(N,N) +  obj.M_gg(N,M)*Gm + Gm.'* obj.M_gg(N,M).' + Gm.'* obj.M_gg(M,M)*Gm;
+                obj.p_n(N,:)  = obj.p_g(N,:) + Gm'*obj.p_g(M,:); % Applied forces
+            end            
+            
+        end
         function solution = recover(obj,solution,u_a)
             % Function to recover solution quantities from ASET solution.
             % This method is called once for all superelements speratly but
@@ -296,35 +325,6 @@ classdef Model
             obj = obj.mpcs.assemble(obj);
             obj = obj.load.assemble(obj);
         end
-        function obj = mpcPartition(obj)
-            % Multipoint constraint partitioning
-            
-            % Create n set matricies using same dimension as g set so that
-            % g set indexing can be used (i.e., The real K_nn = K_nn(n,n)).
-            % This maintains the f set indcies, so K_ff = K_nn(f,f).
-            if isempty(obj.G_m)
-                obj.K_nn = obj.K_gg;
-                obj.M_nn = obj.M_gg;
-                obj.p_n  = obj.p_g; %  ... % Applied forces - obj.K_nn(:,obj.s)*obj.u_s(obj.s,:);  % Enforced displacements
-            else
-                % concise local variables without class properties name overlap
-                nG=obj.nGdof;
-                N = obj.n;
-                M = obj.m;
-                Gm = obj.G_m;
-                
-                % initialize            
-                obj.K_nn = spalloc(nG,nG,nnz(obj.K_gg));
-                obj.M_nn = spalloc(nG,nG,nnz(obj.M_gg));
-                obj.p_n  = zeros(size(obj.p_g));
-                
-                % partition
-                obj.K_nn(N,N) = obj.K_gg(N,N) +  obj.K_gg(N,M)*Gm + Gm.'* obj.K_gg(N,M).' + Gm.'* obj.K_gg(M,M)*Gm;
-                obj.M_nn(N,N) = obj.M_gg(N,N) +  obj.M_gg(N,M)*Gm + Gm.'* obj.M_gg(N,M).' + Gm.'* obj.M_gg(M,M)*Gm;
-                obj.p_n(N,:)  = obj.p_g(N,:) + Gm'*obj.p_g(M,:); % Applied forces
-            end            
-            
-        end
         function solution = recover_sub(obj,solution,u_a)
             % Function to recover solution quantities from ASET solution.
             % This method is called speratly for each superelement and
@@ -355,7 +355,7 @@ classdef Model
             %
             % Prescribed DOF - from single point constraints
             if isa(solution,'StaticsSolution')
-                u_g(obj.s,:) = repmat(obj.u_s(obj.s,solution.loadCaseIndex),[1,nVectors]);
+                u_g(obj.s,:) = obj.u_s(obj.s,solution.loadCaseIndex);
             elseif isa(solution,'ModesSolution')
                 % u_g(obj.s,:) = 0; -- as preallocated
             else
