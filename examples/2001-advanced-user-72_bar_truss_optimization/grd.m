@@ -29,13 +29,15 @@ end
 nA = size(analysis.u_a,1); % A set size
 dudxLoadCase1 = zeros(nA,nX);
 dudxLoadCase2 = zeros(nA,nX);
+analysis = analysis.factorizeStiffness();
 for i = 1:nX
     % calculate direct pseudo load vectors (df_a/dx-dK_aa/dx*u_a) for all
     % load cases at once
     pseudoLoads = cofeComplex(i).model.reducedModel.calculateDirectSensitivityPseudoLoad(analysis.u_a,userData.dx);
 
     % calculate dudx for all load cases at once
-    dudx = analysis.K_aa\pseudoLoads;
+    % dudx = analysis.K_aa\pseudoLoads;
+    dudx = analysis.forwardaAndBackSubstitution(pseudoLoads);
     
     % % % check against complex-step dudx
     % % dudx_imag=cofeComplex(i).model.reducedModel.solveUaAllLoadSets()
