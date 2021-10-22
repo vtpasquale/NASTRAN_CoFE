@@ -13,7 +13,7 @@ classdef TestTenBar < matlab.unittest.TestCase
             testCase.verifyWarningFree(compare);
         end
         function runModes(testCase)
-            modesSolution = Cofe(fullfile('nastran_runs','static.dat'));
+            modesSolution = Cofe(fullfile('nastran_runs','modes.dat'));
         end
         function compareModes(testCase)
             cofeModes = Hdf5('modes.h5');

@@ -53,7 +53,7 @@ classdef (Abstract) BulkEntry < matlab.mixin.Heterogeneous
                     bulkEntryCell{i,1} = feval(['BulkEntry',entryName],fields); % place in temporary cell - 40% faster than assembling object array
                 catch
                     % check that input entry is supported (cheaper to call after catch rather than each time)
-                    if ~exist(['BulkEntry',entryName],'class')==8
+                    if exist(['BulkEntry',entryName],'class')~=8
                         error('Bulk data entry %s not supported.',upper(entryName))
                     else
                         error('Unknown error while processing %s entry. The entry should be supported because it has an associated class for processing it.',upper(entryName))

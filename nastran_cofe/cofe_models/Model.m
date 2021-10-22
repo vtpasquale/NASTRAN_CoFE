@@ -75,7 +75,7 @@ classdef Model
         % KD_gg % ([nGdof,nGdof] sparse double) Differential stiffness matrix in nodal displacement reference frame
         M_gg  % ([nGdof,nGdof] sparse double) Mass matrix in nodal displacement reference frame
         p_g % ([nGdof,nLoadSets] double) load vectors in nodal displacement reference frame
-        R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
+        % R_0g % ([nGdof,nGdof] sparse) Transformation matrix from nodal displacement reference frame to the basic reference frame
         
         %% Multipoint constraint matricies
         G_m % [nNdof,nMdof double] multipoint constraint matrix (u(m,:) = G_m*u(n,:))
@@ -207,6 +207,7 @@ classdef Model
         function nModes = getNumModes(obj,caseControlIndex)
             if isempty(obj.caseControl(caseControlIndex).method); error('No METHOD defined in Case Control section.'); end
             if isempty(obj.eigrl); error('No EIGRL entry defined in Bulk Data section.'); end
+            if size(unique(obj.eigrl(:,1)),1)~=size(obj.eigrl(:,1),1); error('EIGRL SID fields must be unique.'); end
             nModes = obj.eigrl(obj.caseControl(caseControlIndex).method==obj.eigrl(:,1),2);
             if isempty(nModes); error('EIGRL method is undefined. Check case control METHOD ID and bulk data EIGRL ID.'); end
         end
@@ -290,7 +291,7 @@ classdef Model
         end
         function obj = assemble_sub(obj)
             % Assemble
-            obj = obj.point.assemble(obj);
+            % obj = obj.point.assemble(obj); % skip - R_0g unused
             obj = obj.element.assemble(obj);
             obj = obj.mpcs.assemble(obj);
             obj = obj.load.assemble(obj);

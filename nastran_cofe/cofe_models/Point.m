@@ -27,7 +27,12 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
             obj = obj(ias);
             
             % node specific preprocessing
-            nodeFlag = arrayfun(@(x)isa(x,'Node'),obj);
+            if isa(obj,'Node')
+                nodeFlag = true(size(obj,1),1);
+            else
+                % there are scalar points (arrayfun is slow, so only run if needed.
+                nodeFlag = arrayfun(@(x)isa(x,'Node'),obj);
+            end
             node = obj(nodeFlag);
             node = node.preprocess_sub(model);
             obj(nodeFlag) = node;
@@ -53,25 +58,29 @@ classdef (Abstract) Point < matlab.mixin.Heterogeneous
         function model = assemble(obj,model)
             % Create transformation matrix from the nodal displacement
             % reference frame to the basic reference frame
-            R_0g=spalloc(model.nGdof,model.nGdof,18*model.nGdof);
+            R_0g=SparseTriplet(18*model.nGdof);
             
             % transformation matrix for each grid point
             nodes = obj(model.nodeFlag);
+            z3 = zeros(3);
             for i = 1:size(nodes,1)
                 oi = nodes(i);
                 T_0g = oi.T_g0.';
                 gdof = oi.gdof;
-                R_0g(gdof(1:3),gdof(1:3))= T_0g;
-                R_0g(gdof(4:6),gdof(4:6))= T_0g;
+                T_0g6 = [T_0g,z3;z3,T_0g];
+                R_0g = R_0g.addMatrix(T_0g6,gdof);
             end
             
             % transformation matrix for each scalar point
-            scalarPoints = obj(~model.nodeFlag);
-            gdof = [scalarPoints.gdof];
-            R_0g(gdof,gdof)=1.0;
+            if any(~model.nodeFlag)
+                scalarPoints = obj(~model.nodeFlag);
+                nScalarPoints = size(scalarPoints,1);
+                gdof = [scalarPoints.gdof];
+                R_0g = R_0g.addMatrix(eye(nScalarPoints),gdof);
+            end
             
             % save to model
-            model.R_0g = R_0g;
+            model.R_0g = R_0g.convertToSparseMatrix(model.nGdof,model.nGdof);
         end % assemble()
         function point = getPoint(obj,id,model)
             % returns a single point object with the requested id from the point array

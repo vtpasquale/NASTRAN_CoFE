@@ -15,7 +15,7 @@ classdef (Abstract) Cord2 < BulkEntry
         function obj = constructCord2(obj,entryFields)
             % Construct using entry field data input as cell array of char  
             obj.cid = castInputField('CORD2x','CID',entryFields{2},'uint32',NaN,1);
-            obj.rid = castInputField('CORD2x','RID',entryFields{3},'uint32',0,0);
+            obj.rid = castInputField('CORD2x','RID',entryFields{3},'uint32',uint32(0),0);
             obj.a = zeros(3,1);
             obj.b = zeros(3,1);
             obj.c = zeros(3,1);
