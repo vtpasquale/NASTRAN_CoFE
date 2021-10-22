@@ -21,8 +21,10 @@ analysis = cofe.model.reducedModel;
 for i = 1:nX
     xComplexStep = x;
     xComplexStep(i)    = xComplexStep(i) + 1i*userData.dx;
-    bdfEntriesComplexI = design2entries(xComplexStep,userData.initialBdfEntries);
-    cofeComplex(i)     = Cofe(bdfEntriesComplexI,'assemble',false);
+
+    % save assembly time by operating directly on the model rather than on the entries
+    cofeComplex(i).model = cofe.model;
+    cofeComplex(i).model.property(i).a = xComplexStep(i); % The design variable index i and the input entry index are only the same because the input file was intentionally ordered that way.
 
     % Select the property ID for selective assembly. Compare the bulk data 
     % index to design2entries(). The design variable index i and the input 
