@@ -32,13 +32,16 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
             if m > 1; error('elem.preprocess() can only handel nx1 arrays of elem objects. The second dimension exceeds 1.'); end
             
             % check that element id numbers are unique
-            EIDS=[obj.eid];
-            
-            [~,ia] = unique(EIDS,'stable');
+            unsortedIds=[obj.eid];
+            [~,ia] = unique(unsortedIds,'stable');
             if size(ia,1)~=nelem
                 nonunique=setxor(ia,1:nelem);
-                error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',EIDS(nonunique)))
+                error('Element identification numbers should be unique. Nonunique element identification number(s): %s',sprintf('%d,',unsortedIds(nonunique)))
             end
+            
+            % Sort by EID
+            [~,ias] = sort(unsortedIds);
+            obj = obj(ias);
         end
         function [gdof,p_g]=processPressureLoad(obj,pload)
             if size(obj,1)~=1

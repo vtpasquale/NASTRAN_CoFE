@@ -42,11 +42,14 @@ classdef DofSet
             model.o = add2LogicalSet(obj(strcmp(setNames,'o')),model.o,model);
             
             % check input sets
-            if any(model.a & model.o)
+            if any(and(model.a,model.o))
                 error('A-set and O-set degrees-of-freedom should be exclusive. Check ASET, ASET1, OMIT, and OMIT1 inputs.')
             end
-            if any(all([model.b,model.c,model.q,model.r,model.o],2))
-                error('Mutually exclusive degree-of-freedom sets are not exclusive. Check *SETi, OMITi, and/or SUPORTi inputs.')
+            if any( all([model.m,and(model.sb,model.sg)],2) )
+                error('Dependent DOF constrained by MPC equations (RBE2 or RBE3) are also constrained by SPC - this is not allowed.')
+            end
+            if any(sum([model.m,and(model.sb,model.sg),model.o,model.q,model.r,model.c,model.b],2)>1)
+                error('Mutually exclusive degree-of-freedom sets are not exclusive. Check *SETi, OMITi, SUPORTi, SPCi, and/or RBEi inputs.')
             end
         end % preprocess()
         function model = fromNastranSets(obj,model)
