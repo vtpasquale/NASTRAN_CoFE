@@ -1,0 +1,2423 @@
+1
+ 
+ 
+ 
+ 
+                                                             
+                 Copyright 2020 Siemens Product Lifecycle    
+                        Management Software Inc.             
+                         All Rights Reserved.                
+                                                             
+               This software and related documentation are   
+                 proprietary to Siemens Product Lifecycle    
+                        Management Software Inc.             
+                                                             
+              Siemens and the Siemens logo are registered    
+           trademarks of Siemens AG. Simcenter is a trademark
+              or registered trademark of Siemens Product     
+               Lifecycle Management Software Inc. or its     
+             subsidiaries in the United States and in other  
+             countries.  NASTRAN is a registered trademark   
+                 of the National Aeronautics and Space       
+                 Administration.  All other trademarks,      
+              registered trademarks or service marks belong  
+                      to their respective holders.           
+                                                             
+           LIMITATIONS TO U.S. GOVERNMENT RIGHTS. UNPUBLISHED
+           - RIGHTS RESERVED UNDER THE COPYRIGHT LAWS OF THE 
+            UNITED STATES. This computer software and related
+               computer software documentation have been     
+            developed exclusively at private expense and are 
+           provided subject to the following rights:  If this
+               computer software and computer  software      
+            documentation qualify as "commercial items" (as  
+             that term is defined in FAR 2.101), their use,  
+            duplication or disclosure by the U.S. Government 
+           is subject to the protections and restrictions as 
+            set forth in the Siemens commercial license for  
+            software and/or documentation, as prescribed in  
+           FAR 12.212 and FAR 27.405(b)(2)(i) (for civilian  
+             agencies) and in DFARS 227.7202-1(a) and DFARS  
+           227.7202-3(a) (for the Department of Defense), or 
+           any successor or similar regulation, as applicable
+           or as amended from time to time.  If this computer
+           software and computer documentation do not qualify
+            as "commercial items", then they are "restricted 
+           computer software" and are provided with "restric-
+            tive rights", and their use, duplication or dis- 
+            closure by the U.S. Government is subject to the 
+            protections and restrictions as set forth in FAR 
+           27.404(b) and FAR 52-227-14 (for civilian agencies
+           ), and DFARS 227.7203-5(c) and DFARS 252.227-7014 
+           (for the Department of Defense), or any successor 
+           or similar regulation, as applicable or as amended
+              from time to time.  Siemens PLM Software Inc.  
+            5800 Granite Parkway, Suite 600, Plano, TX 75024 
+
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *                                 * *
+                * *     Simcenter Nastran 2020.1    * *
+                * *                                 * *
+                * *       VERSION - 1915.0004       * *
+                * *                                 * *
+                * *          MAR 12, 2020           * *
+                * *                                 * *
+                * *                                 * *
+                * *Intel64 Family 6 Model 63 Steppi * *
+                * *                                 * *
+                * *MODEL Intel(R) Xeon(R) CPU E5-16 * *
+                * *                                 * *
+                * *           Windows 10            * *
+                * *                                 * *
+                * *       Compiled for X86-64       * *
+                * *                                 * *
+                * * * * * * * * * * * * * * * * * * * *
+                * * * * * * * * * * * * * * * * * * * *
+1 
+  
+                      Welcome to Simcenter Nastran
+                      ----------------------------
+  
+  
+ This "news" information can be turned off by setting "news=no" in the runtime
+ configuration (RC) file.  The "news" keyword can be set in the system RC file
+ for global, or multi-user control, and in a local file for local control.
+ Individual jobs can be controlled by setting news to yes or no on the command
+ line.
+1                                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=32769 $(C:/PROGRAM FILES/SIEMENS/FEMAP 2020.2/NASTRAN/CONF/NAST
+     NASTRAN BUFFPOOL=23554                                                          
+     NASTRAN DIAGA=128 DIAGB=0 $(C:/PROGRAM FILES/SIEMENS/FEMAP 2020.2/NASTRAN/CONF/N
+     NASTRAN REAL=8577351680 $(MEMORY LIMIT FOR MPI AND OTHER SPECIALIZED MODULES)   
+     INIT MASTER(S)                                                                  
+     NASTRAN SYSTEM(442)=-1,SYSTEM(319)=1                                            
+1                                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     ID OPTIMIZEWING,FEMAP                                                                   
+     SOL DESOPT                                                                              
+     GEOMCHECK, NONE                                                                         
+     CEND                                                                                    
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1        ANALYSIS = STATICS                                                                    
+                  2        DESOBJ(MIN) = 4                                                                       
+                  3        DESSUB = 10                                                                           
+                  4        TITLE = OPTIMIZEWING                                                                  
+                  5        ECHO = PUNCH(BSTBULK)                                                                 
+                  6        DISPLACEMENT(PLOT) = ALL                                                              
+                  7        SPCFORCE(PLOT) = ALL                                                                  
+                  8        OLOAD(PLOT) = ALL                                                                     
+                  9        STRESS(PLOT) = ALL                                                                    
+                 10        SPC = 1                                                                               
+                 11        LOAD = 1                                                                              
+                 12      BEGIN BULK                                                                              
+0                             INPUT BULK DATA ENTRY COUNT =        9392
+0                       TOTAL COUNT=      9352
+
+
+                                        M O D E L   S U M M A R Y
+
+                                   NUMBER OF GRID     POINTS   =     4454
+ 
+ 
+                                   NUMBER OF CQUAD4   ELEMENTS =     4584
+ 
+                                   NUMBER OF RBE3     ELEMENTS =        9
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+
+ THERE ARE       4584 QUAD4    ELEMENTS. FIRST EID =           10 LAST EID =         4603
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                  -----   COMPARISON BETWEEN INPUT PROPERTY VALUES FROM ANALYSIS AND DESIGN MODELS -----
+
+     -----------------------------------------------------------------------------------------------------------------------------
+      PROPERTY   PROPERTY   PROPERTY     ANALYSIS         DESIGN          LOWER           UPPER       DIFFERENCE     SPAWNING
+        TYPE        ID        NAME         VALUE          VALUE           BOUND           BOUND          FLAG          FLAG
+     -----------------------------------------------------------------------------------------------------------------------------
+      PSHELL          102          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          103          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          104          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          105          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          106          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          107          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          108          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          109          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          201          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          202          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          203          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          204          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          205          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          206          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          207          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          208          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          209          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          301          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          302          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          303          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          304          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          305          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          306          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          307          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          308          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+      PSHELL          309          T    5.000000E-01    5.000000E-01    2.000000E-01    1.000000E+01      NONE               
+
+     1. THE DIFFERENCE FLAG IS USED TO CHARACTERIZE DIfFERENCES BETWEEN ANALYSIS AND DESIGN MODEL PROPERTIES:
+        IF THE FLAG IS NONE, THEN THERE IS NO SIGNIFICANT DIFFERENCE BETWEEN THE TWO VALUES.
+        IF THE FLAG IS WARNING, THEN THE USER IS ADVISED THAT DIFFERENCES EXIST AND THE DESIGN MODEL
+        IS BEING USED TO OVERRIDE THE ANALYSIS MODEL. 
+        IF THE FLAG IS FATAL, THEN THE DIFFERENCES ARE GREATER THAN  1.00000E+35 AND THE RUN WILL BE TERMINATED.
+     2. THE SPAWNING FLAG (*) INDICATES THAT THE SPAWNED PROPERTY IS DERIVED EITHER FROM THE BEAM CROSS SECTION
+        LIBRARY OR FROM A PBEAM ENTRY. THE PROPERTY ID FOR THE SPAWNED PROPERTY IS IDENTICAL TO ITS PARENT.
+ *** USER INFORMATION MESSAGE 4109 (OUTPBN2)
+     THE LABEL IS NX2020.1 FOR FORTRAN UNIT 12
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        7 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =        8 RECORDS.)
+     (TOTAL DATA WRITTEN FOR TAPE LABEL =       17 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK PVT0     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                35                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       35 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       61 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK CASECC   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 1                 0              1200                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =     1200 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     1226 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK EDOM     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                 0                 2             33952              8192                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      341 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       49 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      769 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK EQEXINS  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101              4454                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =     8908 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    17846 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK DESTAB   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                26                26                 0                26                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        8 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      144 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      334 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK DESCYC   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 1                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        7 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       29 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         1 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  3.622146E+03  0.000000E+00  0.000000E+00  0.000000E+00  6.989143E-05 -7.418474E+05 *
+                      *  0.000000E+00  3.622146E+03  0.000000E+00 -6.989143E-05  0.000000E+00  5.758292E+05 *
+                      *  0.000000E+00  0.000000E+00  3.622146E+03  7.418474E+05 -5.758292E+05  0.000000E+00 *
+                      *  0.000000E+00 -6.989143E-05  7.418474E+05  2.166919E+08 -1.435084E+08 -1.657940E-02 *
+                      *  6.989143E-05  0.000000E+00 -5.758292E+05 -1.435084E+08  1.032255E+08 -3.133939E-02 *
+                      * -7.418474E+05  5.758292E+05  0.000000E+00 -1.657940E-02 -3.133939E-02  3.196102E+08 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            3.622146E+03      0.000000E+00  2.048088E+02  1.929559E-08
+                                  Y            3.622146E+03      1.589746E+02  0.000000E+00  1.929559E-08
+                                  Z            3.622146E+03      1.589746E+02  2.048088E+02  0.000000E+00
+                                                                I(S)
+                                           *  6.475502E+07  2.557356E+07  5.468443E-03 *
+                                           *  2.557356E+07  1.168329E+07  1.702501E-02 *
+                                           *  5.468443E-03  1.702501E-02  7.613108E+07 *
+                                                                I(Q)
+                                           *  7.507236E+07                             *
+                                           *                1.365949E+06               *
+                                           *                              7.613108E+07 *
+                                                                 Q
+                                           *  9.273732E-01  3.741376E-01  0.000000E+00 *
+                                           * -3.741376E-01  9.273732E-01  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       1.540000E+05  2.666961E+07 -2.256872E+07     ----                                  
+               MX       ----          ----          ----       3.918697E+06     ----          ----                                  
+               MY       ----          ----          ----          ----       2.861708E+06     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  1.540000E+05  3.058831E+07 -1.970701E+07  0.000000E+00                             
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            1 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          6.2834690E-11          1.1473995E+06
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  SPCFORCE RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX   -1.521472E-06     ----          ----          ----       8.007704E+06  0.000000E+00                             
+               FY       ----       9.530631E-07     ----      -2.997971E+07     ----       7.562113E-04                             
+               FZ       ----          ----      -1.540000E+05  0.000000E+00  1.229340E+07     ----                                  
+               MX       ----          ----          ----      -6.085944E+05     ----          ----                                  
+               MY       ----          ----          ----          ----      -5.940948E+05     ----                                  
+               MZ       ----          ----          ----          ----          ----      -7.677325E-06                             
+             TOTALS -1.521472E-06  9.530631E-07 -1.540000E+05 -3.058831E+07  1.970701E+07  7.485340E-04                             
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OQG1     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OUGV1    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OES1X1   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                63                10                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    65538 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       26 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    78109 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OPG1     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            1 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    17
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    18
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                     THIS IS THE FIRST ANALYSIS - NO CONVERGENCE CHECK
+                     -------------------------------------------------------
+                      MAXIMUM VALUE OF CONSTRAINTS           :  2.0499E+00
+                     -------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               181                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      919 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     3461 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    19
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                                ********************************************************************
+                                *                                                                  *
+                                *                                                                  *
+                                *                D E S I G N    O P T I M I Z A T I O N            *
+                                *                                                                  *
+                                *                                                                  *
+                                ********************************************************************
+
+
+
+                                         ***********************************************
+                                         *                                             *
+                                         *       I N I T I A L   A N A L Y S I S       *
+                                         *                                             *
+                                         ***********************************************
+
+
+
+                                    *******   ANALYSIS RESULTS BASED ON THE INITIAL DESIGN   *******
+
+
+                                                  -----   DESIGN OBJECTIVE   -----
+
+     ----------------------------------------------------------------------------------------------------
+                INTERNAL      TYPE                  MINIMIZE                                                           
+                RESPONSE       OF                      OR       SUPERELEMENT    SUBCASE
+                   ID       RESPONSE      LABEL     MAXIMIZE         ID            ID          VALUE   
+     ----------------------------------------------------------------------------------------------------
+                       1     DRESP1     WEIGHT      MINIMIZE             0            0      3.6221E+03
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER                               UPPER   
+               ID            ID          LABEL            BOUND             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------
+                   1             2      FEMAP2          2.0000E-01        5.0000E-01        1.0000E+01
+                   2             4      FEMAP4          2.0000E-01        5.0000E-01        1.0000E+01
+                   3             5      FEMAP5          2.0000E-01        5.0000E-01        1.0000E+01
+                   4             6      FEMAP6          2.0000E-01        5.0000E-01        1.0000E+01
+                   5             7      FEMAP7          2.0000E-01        5.0000E-01        1.0000E+01
+                   6             8      FEMAP8          2.0000E-01        5.0000E-01        1.0000E+01
+                   7             9      FEMAP9          2.0000E-01        5.0000E-01        1.0000E+01
+                   8            10      FEMAP10         2.0000E-01        5.0000E-01        1.0000E+01
+                   9           201      FEMAP201        2.0000E-01        5.0000E-01        1.0000E+01
+                  10           202      FEMAP202        2.0000E-01        5.0000E-01        1.0000E+01
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    20
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER                               UPPER   
+               ID            ID          LABEL            BOUND             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------
+                  11           203      FEMAP203        2.0000E-01        5.0000E-01        1.0000E+01
+                  12           204      FEMAP204        2.0000E-01        5.0000E-01        1.0000E+01
+                  13           205      FEMAP205        2.0000E-01        5.0000E-01        1.0000E+01
+                  14           206      FEMAP206        2.0000E-01        5.0000E-01        1.0000E+01
+                  15           207      FEMAP207        2.0000E-01        5.0000E-01        1.0000E+01
+                  16           208      FEMAP208        2.0000E-01        5.0000E-01        1.0000E+01
+                  17           209      FEMAP209        2.0000E-01        5.0000E-01        1.0000E+01
+                  18           301      FEMAP301        2.0000E-01        5.0000E-01        1.0000E+01
+                  19           302      FEMAP302        2.0000E-01        5.0000E-01        1.0000E+01
+                  20           303      FEMAP303        2.0000E-01        5.0000E-01        1.0000E+01
+                  21           304      FEMAP304        2.0000E-01        5.0000E-01        1.0000E+01
+                  22           305      FEMAP305        2.0000E-01        5.0000E-01        1.0000E+01
+                  23           306      FEMAP306        2.0000E-01        5.0000E-01        1.0000E+01
+                  24           307      FEMAP307        2.0000E-01        5.0000E-01        1.0000E+01
+                  25           308      FEMAP308        2.0000E-01        5.0000E-01        1.0000E+01
+                  26           309      FEMAP309        2.0000E-01        5.0000E-01        1.0000E+01
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            1 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            1 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    21
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                                ********************************************************************
+                                *                                                                  *
+                                *                                                                  *
+                                *                D E S I G N    O P T I M I Z A T I O N            *
+                                *                                                                  *
+                                *                                                                  *
+                                ********************************************************************
+
+
+
+                                             *******************************************
+                                             *                                         *
+                                             *      D E S I G N   C Y C L E       1    *
+                                             *                                         *
+                                             *******************************************
+
+
+
+                                 *****   OPTIMIZATION RESULTS BASED ON THE APPROXIMATE MODEL   *****
+
+
+                                                  -----   DESIGN OBJECTIVE   -----
+
+     ---------------------------------------------------------------------------------------------------------------------------
+                INTERNAL      TYPE                  MINIMIZE                                                           
+                RESPONSE       OF                      OR       SUPERELEMENT    SUBCASE        INPUT          OUTPUT   
+                   ID       RESPONSE      LABEL     MAXIMIZE         ID            ID          VALUE           VALUE   
+     ---------------------------------------------------------------------------------------------------------------------------
+                       1     DRESP1     WEIGHT      MINIMIZE             0            0      3.6221E+03      3.6908E+03
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER             INPUT            OUTPUT             UPPER   
+               ID            ID          LABEL            BOUND             VALUE             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------------------------
+                   1             2      FEMAP2          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   2             4      FEMAP4          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   3             5      FEMAP5          2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                   4             6      FEMAP6          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   5             7      FEMAP7          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   6             8      FEMAP8          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   7             9      FEMAP9          2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   8            10      FEMAP10         2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                   9           201      FEMAP201        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  10           202      FEMAP202        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    22
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER             INPUT            OUTPUT             UPPER   
+               ID            ID          LABEL            BOUND             VALUE             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------------------------
+                  11           203      FEMAP203        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  12           204      FEMAP204        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  13           205      FEMAP205        2.0000E-01        5.0000E-01        5.2892E-01        1.0000E+01
+                  14           206      FEMAP206        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  15           207      FEMAP207        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  16           208      FEMAP208        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  17           209      FEMAP209        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  18           301      FEMAP301        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  19           302      FEMAP302        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  20           303      FEMAP303        2.0000E-01        5.0000E-01        6.0000E-01        1.0000E+01
+                  21           304      FEMAP304        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  22           305      FEMAP305        2.0000E-01        5.0000E-01        5.9964E-01        1.0000E+01
+                  23           306      FEMAP306        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  24           307      FEMAP307        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  25           308      FEMAP308        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+                  26           309      FEMAP309        2.0000E-01        5.0000E-01        4.0000E-01        1.0000E+01
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    23
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         2 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            2 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    24
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -1.2054201E-11          9.6956043E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            2 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    25
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    26
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.8950E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  6.8639E+01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.5579E+00.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               193                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =      979 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     3689 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            2 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            2 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    27
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         3 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            3 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    28
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -6.5480309E-12          8.7223022E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            3 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    29
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    30
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  3.4359E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  1.2681E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.1435E+00.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               221                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1119 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4221 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            3 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            3 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    31
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         4 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            4 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    32
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.1609274E-12          7.9987295E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            4 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    33
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    34
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  2.1429E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  7.6371E+01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            7.9655E-01.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               243                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1229 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4639 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            4 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            4 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    35
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         5 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            5 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    36
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -5.6273783E-12          7.2204242E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            5 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    37
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    38
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  5.2519E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  1.9119E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            5.0815E-01.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               241                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1219 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4601 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            5 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            5 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    39
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         6 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            6 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    40
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          7.7741203E-12          6.6490254E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            6 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    41
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    42
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  9.4392E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  3.6167E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            2.7078E-01.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               241                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1219 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4601 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            6 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            6 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    43
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         7 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            7 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    44
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.5182843E-12          5.8871538E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            7 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    45
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    46
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.2768E-01  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  5.3539E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            7.5042E-02.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               220                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1114 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4202 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            7 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            7 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    47
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         8 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            8 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    48
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -6.0799000E-12          6.0997632E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            8 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    49
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    50
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  5.4937E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  2.5978E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            5.2728E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               235                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1189 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4487 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            8 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            8 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    51
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=         9 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            9 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    52
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -4.2973244E-12          6.5022409E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            9 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    53
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    54
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  5.8815E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  2.6283E+02  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.2594E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               235                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1189 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4487 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=            9 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=            9 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    55
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        10 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           10 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    56
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.5305871E-11          6.5929872E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           10 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    57
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    58
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.4625E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  6.1513E+01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            2.7563E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           10 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           10 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    59
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        11 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           11 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    60
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1         -2.2925371E-11          6.6540689E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           11 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    61
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    62
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.4601E-02  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  6.0514E+01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            2.5139E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           11 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           11 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    63
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     1.0797E-02 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      1.0797E-02  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        12 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           12 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    64
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.0956541E-11          6.6541330E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           12 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    65
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    66
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  3.7682E-05  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  1.5389E-01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   1.0797E-02  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   1.0797E-02  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            2.5146E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           12 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           12 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    67
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        13 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           13 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    68
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.1379524E-11          6.6550595E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           13 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    69
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    70
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  5.6350E-03  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  2.3012E+01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            2.5173E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           13 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           13 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    71
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        14 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           14 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    72
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          9.1770729E-12          6.6546029E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           14 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    73
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    74
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  2.1353E-03  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  8.6711E+00  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.5996E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           14 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           14 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    75
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     2.0000E-01 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        15 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           15 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    76
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          3.5324425E-12          6.6607938E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           15 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    77
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    78
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.5932E-03  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  6.4560E+00  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   2.0000E-01  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   2.0000E-01  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.6196E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           15 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           15 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    79
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                       ****************************************************************************************
+                       INSPECTION OF CONVERGENCE DATA FOR THE OPTIMAL DESIGN WITH RESPECT TO APPROXIMATE MODELS
+                                                  (SOFT CONVERGENCE DECISION LOGIC)                            
+                       ****************************************************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     3.2931E-02 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      3.2931E-02  MUST BE LESS THAN   1.0000E-03
+                       ****************************************************************************************
+
+
+  
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        16 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** USER INFORMATION MESSAGE - SINGULARITIES FOUND USING EIGENVALUE METHOD
+ ***       6 SINGULARITIES FOUND         0 SINGULARITIES ELIMINATED
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           16 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    80
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.7614472E-11          6.6621804E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           16 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    81
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    82
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                              CONVERGENCE NOT ACHIEVED YET   (HARD CONVERGENCE DECISION LOGIC)
+             ----------------------------------------------------------------------------------------------
+
+                      RELATIVE CHANGE IN OBJECTIVE           :  1.9214E-04  MUST BE LESS THAN   1.0000E-04
+              OR      ABSOLUTE CHANGE IN OBJECTIVE           :  7.7734E-01  MUST BE LESS THAN   1.0000E-20
+                     (BASED ON PREVIOUS DESIGN)           
+                                                      --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   3.2931E-02  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V.   3.2931E-02  MUST BE LESS THAN   1.0000E-03 .
+
+                        MAXIMUM CONSTRAINT VALUE            1.6201E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+             ----------------------------------------------------------------------------------------------
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9167 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           16 
+ ^^^ USER INFORMATION MESSAGE 9272 (FEA) 
+ ^^^ STATIC SENSITIVITY ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           16 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    83
+                                                                                                                                    
+0                                                                                                                                   
+
+                                         **************************************************
+                                         TERMINATION OF DESIGN ITERATION (SOFT CONVERGENCE)
+                                         **************************************************
+
+                          MAXIMUM OF RELATIVE PROP. CHANGES     0.0000E+00 MUST BE LESS THAN   1.0000E-03
+                                                        --- AND ---
+                          MAXIMUM OF RELATIVE D.V. CHANGES      0.0000E+00 MUST BE LESS THAN   1.0000E-03
+
+               EXPLANATION:
+                 THE OPTIMIZATION PROCESS WITH RESPECT TO THE APPROXIMATE MODELS DID NOT CHANGE APPRECIABLY.
+                 THIS DESIGN MAY NOT WARRANT AN ADDITIONAL COMPLETE FINITE ELEMENT ANALYSIS.
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        17 
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+ ^^^ USER INFORMATION MESSAGE (XMCE1)    
+ ^^^ USING ALTERNATE MULTIPOINT CONSTRAINT ELIMINATION   
+ *** SYSTEM INFORMATION MESSAGE 6916 (DFMSYN)
+     DECOMP ORDERING METHOD CHOSEN: DEFAULT, ORDERING METHOD USED: MMD
+ ^^^ USER INFORMATION MESSAGE 9051 (FEA) 
+ ^^^ STATIC ANALYSIS INITIATED.  DESIGN CYCLE NUMBER=           17 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    84
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 5293 (SSG3A)
+    FOR DATA BLOCK KLL     
+    LOAD SEQ. NO.             EPSILON              EXTERNAL WORK      EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+    User information:
+    One line of output is printed for each static loading condition.
+    Small values of EPSILON are due to accumulated round-off error. Large
+    values of EPSILON indicate possible singularities in the stiffness
+    matrix.  See Section 9.5.1.
+                1          1.7614472E-11          6.6621804E+05
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           17 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    85
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    86
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    87
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                 ***** NORMAL CONVERGENCE CRITERIA SATISFIED ***** (HARD CONVERGENCE DECISION LOGIC)
+
+                 **************************************************************************************
+                                  CONVERGENCE ACHIEVED BASED ON THE FOLLOWING CRITERIA
+                                            (WITH RESPECT TO PREVIOUS DESIGN)
+                                           (HARD CONVERGENCE DECISION LOGIC)          
+
+
+                        RELATIVE CHANGE IN OBJECTIVE        0.0000E+00  MUST BE LESS THAN   1.0000E-04
+                  OR    ABSOLUTE CHANGE IN OBJECTIVE        0.0000E+00  MUST BE LESS THAN   1.0000E-20
+                                                   --- AND ---
+                        MAXIMUM OF RELATIVE PROP. CHANGES   0.0000E+00  MUST BE LESS THAN   1.0000E-03
+                  AND   MAXIMUM OF RELATIVE D.V. CHANGES    0.0000E+00  MUST BE LESS THAN   1.0000E-03.
+
+                        MAXIMUM CONSTRAINT VALUE            1.6201E-03.
+                        MUST BE LESS THAN   5.0000E-03 FOR CONVERGENCE TO A FEASIBLE DESIGN
+                                               --- OTHERWISE ---
+                        CONVERGENCE TO A BEST COMPROMISE INFEASIBLE DESIGN
+                 **************************************************************************************
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK DESCYC   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 1                16                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =        7 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       29 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9024 (FEA) 
+ ^^^ STIFFNESS, MASS, DAMPING, AND LOAD GENERATION   INITIATED. DESIGN CYCLE NUMBER=        17 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    88
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =        0
+                                                                M O
+                      *  4.044883E+03  0.000000E+00  0.000000E+00  0.000000E+00  2.795671E-05 -4.799685E+05 *
+                      *  0.000000E+00  4.044883E+03  0.000000E+00 -2.795671E-05  0.000000E+00  5.051619E+05 *
+                      *  0.000000E+00  0.000000E+00  4.044883E+03  4.799685E+05 -5.051619E+05  0.000000E+00 *
+                      *  0.000000E+00 -2.795671E-05  4.799685E+05  1.112489E+08 -8.136482E+07 -6.631795E-03 *
+                      *  2.795671E-05  0.000000E+00 -5.051619E+05 -8.136482E+07  7.367561E+07 -1.253582E-02 *
+                      * -4.799685E+05  5.051619E+05  0.000000E+00 -6.631795E-03 -1.253582E-02  1.845530E+08 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            4.044883E+03      0.000000E+00  1.186607E+02  6.911624E-09
+                                  Y            4.044883E+03      1.248891E+02  0.000000E+00  6.911624E-09
+                                  Z            4.044883E+03      1.248891E+02  1.186607E+02  0.000000E+00
+                                                                I(S)
+                                           *  5.429557E+07  2.142197E+07  3.140305E-03 *
+                                           *  2.142197E+07  1.058636E+07  9.218459E-03 *
+                                           *  3.140305E-03  9.218459E-03  6.451040E+07 *
+                                                                I(Q)
+                                           *  6.304365E+07                             *
+                                           *                1.838283E+06               *
+                                           *                              6.451040E+07 *
+                                                                 Q
+                                           *  9.257808E-01  3.780608E-01  0.000000E+00 *
+                                           * -3.780608E-01  9.257808E-01  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    89
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OGPWG    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0                 0                 0                 0                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      146 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      254 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    90
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT ORIGIN OF SUPERELEMENT BASIC COORDINATE SYSTEM IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  SPCFORCE RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX   -1.391381E-07     ----          ----          ----       8.556147E+06  0.000000E+00                             
+               FY       ----       9.596988E-08     ----      -2.959146E+07     ----       1.030096E-04                             
+               FZ       ----          ----      -1.540000E+05  0.000000E+00  1.174117E+07     ----                                  
+               MX       ----          ----          ----      -9.968453E+05     ----          ----                                  
+               MY       ----          ----          ----          ----      -5.903057E+05     ----                                  
+               MZ       ----          ----          ----          ----          ----      -1.130513E-06                             
+             TOTALS -1.391381E-07  9.596988E-08 -1.540000E+05 -3.058831E+07  1.970701E+07  1.018791E-04                             
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OQG1     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OUGV1    WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    91
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    92
+                                                                                                                                    
+0                                                                                                                                   
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    93
+                                                                                                                                    
+0                                                                                                                                   
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OES1X1   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                63                10                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    65538 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       26 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    78109 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK OPG1     WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                 0             35632                25                21                 0                 1
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =    35632 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       24 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =    35813 WORDS.)
+ ^^^ USER INFORMATION MESSAGE 9052 (FEA) 
+ ^^^ STATIC ANALYSIS COMPLETED.  DESIGN CYCLE NUMBER=           17 
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    94
+                                                                                                                                    
+0                                                                                                                                   
+
+
+
+                                ********************************************************************
+                                *                                                                  *
+                                *                                                                  *
+                                *                D E S I G N    O P T I M I Z A T I O N            *
+                                *                                                                  *
+                                *                                                                  *
+                                ********************************************************************
+
+
+
+                                             *******************************************
+                                             *                                         *
+                                             *        F I N A L  A N A L Y S I S       *
+                                             *                                         *
+                                             *******************************************
+
+
+
+                                    *******   ANALYSIS RESULTS BASED ON THE FINAL DESIGN   *******
+
+
+                                                  -----   DESIGN OBJECTIVE   -----
+
+     ----------------------------------------------------------------------------------------------------
+                INTERNAL      TYPE                  MINIMIZE                                                           
+                RESPONSE       OF                      OR       SUPERELEMENT    SUBCASE
+                   ID       RESPONSE      LABEL     MAXIMIZE         ID            ID          VALUE   
+     ----------------------------------------------------------------------------------------------------
+                       1     DRESP1     WEIGHT      MINIMIZE             0            0      4.0449E+03
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER                               UPPER   
+               ID            ID          LABEL            BOUND             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------
+                   1             2      FEMAP2          2.0000E-01        2.0001E-01        1.0000E+01
+                   2             4      FEMAP4          2.0000E-01        2.0004E-01        1.0000E+01
+                   3             5      FEMAP5          2.0000E-01        2.0000E-01        1.0000E+01
+                   4             6      FEMAP6          2.0000E-01        2.0000E-01        1.0000E+01
+                   5             7      FEMAP7          2.0000E-01        2.0001E-01        1.0000E+01
+                   6             8      FEMAP8          2.0000E-01        2.0002E-01        1.0000E+01
+                   7             9      FEMAP9          2.0000E-01        2.0000E-01        1.0000E+01
+                   8            10      FEMAP10         2.0000E-01        2.0000E-01        1.0000E+01
+                   9           201      FEMAP201        2.0000E-01        1.6703E+00        1.0000E+01
+                  10           202      FEMAP202        2.0000E-01        9.3726E-01        1.0000E+01
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    95
+                                                                                                                                    
+0                                                                                                                                   
+
+
+                                                  -----   DESIGN VARIABLES   -----
+
+     ---------------------------------------------------------------------------------------------------------
+            INTERNAL       DESVAR                         LOWER                               UPPER   
+               ID            ID          LABEL            BOUND             VALUE             BOUND   
+     ---------------------------------------------------------------------------------------------------------
+                  11           203      FEMAP203        2.0000E-01        6.5206E-01        1.0000E+01
+                  12           204      FEMAP204        2.0000E-01        4.9757E-01        1.0000E+01
+                  13           205      FEMAP205        2.0000E-01        3.4370E-01        1.0000E+01
+                  14           206      FEMAP206        2.0000E-01        2.1692E-01        1.0000E+01
+                  15           207      FEMAP207        2.0000E-01        2.0002E-01        1.0000E+01
+                  16           208      FEMAP208        2.0000E-01        2.0000E-01        1.0000E+01
+                  17           209      FEMAP209        2.0000E-01        2.0000E-01        1.0000E+01
+                  18           301      FEMAP301        2.0000E-01        1.5781E+00        1.0000E+01
+                  19           302      FEMAP302        2.0000E-01        4.5718E-01        1.0000E+01
+                  20           303      FEMAP303        2.0000E-01        3.0603E-01        1.0000E+01
+                  21           304      FEMAP304        2.0000E-01        2.4223E-01        1.0000E+01
+                  22           305      FEMAP305        2.0000E-01        2.0000E-01        1.0000E+01
+                  23           306      FEMAP306        2.0000E-01        2.0000E-01        1.0000E+01
+                  24           307      FEMAP307        2.0000E-01        2.0002E-01        1.0000E+01
+                  25           308      FEMAP308        2.0000E-01        2.0002E-01        1.0000E+01
+                  26           309      FEMAP309        2.0000E-01        2.0000E-01        1.0000E+01
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    96
+                                                                                                                                    
+0                                                                                                                                   
+                                   ***************************************************************
+                                   S U M M A R Y   O F   D E S I G N    C Y C L E    H I S T O R Y
+                                   ***************************************************************
+
+                                                      (HARD CONVERGENCE ACHIEVED)
+
+                                                      (SOFT CONVERGENCE ACHIEVED)
+
+
+                                       NUMBER OF FINITE ELEMENT ANALYSES COMPLETED          17
+                                       NUMBER OF OPTIMIZATIONS W.R.T. APPROXIMATE MODELS    16
+
+
+                                              OBJECTIVE AND MAXIMUM CONSTRAINT HISTORY
+                                              ***(Best Design Found At Cycle    15)***
+           ---------------------------------------------------------------------------------------------------------------
+                              OBJECTIVE FROM           OBJECTIVE FROM          FRACTIONAL ERROR          MAXIMUM VALUE  
+             CYCLE              APPROXIMATE                 EXACT                    OF                       OF
+             NUMBER            OPTIMIZATION               ANALYSIS              APPROXIMATION             CONSTRAINT   
+           ---------------------------------------------------------------------------------------------------------------
+
+             INITIAL                                      3.622146E+03                                      2.049878E+00                  
+
+                   1             3.690785E+03             3.690785E+03            -1.158189E-14             1.557876E+00                  
+
+                   2             3.563974E+03             3.563974E+03            -9.633466E-14             1.143502E+00                  
+
+                   3             3.640346E+03             3.640346E+03            -7.332729E-14             7.965545E-01                  
+
+                   4             3.831534E+03             3.831534E+03             2.599212E-14             5.081537E-01                  
+
+                   5             4.193200E+03             4.193200E+03            -1.735180E-15             2.707807E-01                  
+
+                   6             4.728589E+03             4.728589E+03            -1.288675E-14             7.504246E-02                  
+
+                   7             4.468814E+03             4.468814E+03            -5.800331E-14             5.272777E-03                  
+
+                   8             4.205980E+03             4.205980E+03             1.708284E-14             1.259400E-03                  
+
+                   9             4.144467E+03             4.144467E+03             2.282259E-14             2.756307E-03                  
+
+                  10             4.083953E+03             4.083953E+03            -1.336198E-14             2.513930E-03                  
+
+                  11             4.083799E+03             4.083799E+03             2.338434E-15             2.514567E-03                  
+
+                  12             4.060787E+03             4.060787E+03             6.831087E-15             2.517300E-03                  
+
+                  13             4.052116E+03             4.052116E+03            -2.379163E-14             1.599624E-03                  
+
+                  14             4.045660E+03             4.045660E+03             9.666723E-15             1.619618E-03                  
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    97
+                                                                                                                                    
+0                                                                                                                                   
+           ---------------------------------------------------------------------------------------------------------------
+                              OBJECTIVE FROM           OBJECTIVE FROM          FRACTIONAL ERROR          MAXIMUM VALUE  
+             CYCLE              APPROXIMATE                 EXACT                    OF                       OF
+             NUMBER            OPTIMIZATION               ANALYSIS              APPROXIMATION             CONSTRAINT   
+           ---------------------------------------------------------------------------------------------------------------
+
+                  15             4.044883E+03             4.044883E+03            -3.035484E-15             1.620093E-03  <<== BEST DESIGN
+
+                  16             4.044883E+03             4.044883E+03             0.000000E+00             1.620093E-03                  
+           ---------------------------------------------------------------------------------------------------------------
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    98
+                                                                                                                                    
+0                                                                                                                                   
+                                                       DESIGN VARIABLE HISTORY
+ ----------------------------------------------------------------------------------------------------------------------------------
+  INTERNAL |   EXTERNAL   |             |                                                                                          
+   DV. ID. |    DV. ID.   |    LABEL    |   INITIAL    :      1       :      2       :      3       :      4       :      5       :
+ ----------------------------------------------------------------------------------------------------------------------------------
+         1 |          2   |  FEMAP2     |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5601E-01 :   2.0481E-01 :   2.0000E-01 :
+         2 |          4   |  FEMAP4     |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0480E-01 :   2.0000E-01 :
+         3 |          5   |  FEMAP5     |   5.0000E-01 :   6.0000E-01 :   4.8000E-01 :   3.8411E-01 :   4.0210E-01 :   4.4732E-01 :
+         4 |          6   |  FEMAP6     |   5.0000E-01 :   4.0000E-01 :   3.2004E-01 :   3.7078E-01 :   3.6465E-01 :   3.2028E-01 :
+         5 |          7   |  FEMAP7     |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.6967E-01 :   2.1573E-01 :   2.5888E-01 :
+         6 |          8   |  FEMAP8     |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   3.8367E-01 :   3.7991E-01 :   3.0393E-01 :
+         7 |          9   |  FEMAP9     |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   3.8400E-01 :   4.6080E-01 :   5.5296E-01 :
+         8 |         10   |  FEMAP10    |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   3.8398E-01 :   3.0718E-01 :   2.4575E-01 :
+         9 |        201   |  FEMAP201   |   5.0000E-01 :   6.0000E-01 :   7.2000E-01 :   8.6392E-01 :   1.0367E+00 :   1.2440E+00 :
+        10 |        202   |  FEMAP202   |   5.0000E-01 :   6.0000E-01 :   7.2000E-01 :   8.5205E-01 :   9.5211E-01 :   1.1425E+00 :
+        11 |        203   |  FEMAP203   |   5.0000E-01 :   6.0000E-01 :   6.5079E-01 :   5.2063E-01 :   5.8501E-01 :   5.6951E-01 :
+        12 |        204   |  FEMAP204   |   5.0000E-01 :   6.0000E-01 :   4.8460E-01 :   5.8147E-01 :   6.0625E-01 :   4.8501E-01 :
+        13 |        205   |  FEMAP205   |   5.0000E-01 :   5.2892E-01 :   4.2316E-01 :   5.0596E-01 :   5.0850E-01 :   6.1020E-01 :
+        14 |        206   |  FEMAP206   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0480E-01 :   2.0000E-01 :
+        15 |        207   |  FEMAP207   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   3.0720E-01 :   3.6864E-01 :
+        16 |        208   |  FEMAP208   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0480E-01 :   2.0000E-01 :
+        17 |        209   |  FEMAP209   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0480E-01 :   2.0000E-01 :
+        18 |        301   |  FEMAP301   |   5.0000E-01 :   6.0000E-01 :   7.2000E-01 :   8.6399E-01 :   1.0368E+00 :   1.2441E+00 :
+        19 |        302   |  FEMAP302   |   5.0000E-01 :   6.0000E-01 :   7.2000E-01 :   5.7600E-01 :   5.9361E-01 :   7.1233E-01 :
+        20 |        303   |  FEMAP303   |   5.0000E-01 :   6.0000E-01 :   7.2000E-01 :   8.6400E-01 :   6.9120E-01 :   6.7846E-01 :
+        21 |        304   |  FEMAP304   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5611E-01 :   2.0510E-01 :   2.2504E-01 :
+        22 |        305   |  FEMAP305   |   5.0000E-01 :   5.9964E-01 :   4.7971E-01 :   4.4350E-01 :   5.3220E-01 :   6.3864E-01 :
+        23 |        306   |  FEMAP306   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5681E-01 :   2.0545E-01 :   2.0000E-01 :
+        24 |        307   |  FEMAP307   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0540E-01 :   2.0000E-01 :
+        25 |        308   |  FEMAP308   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5600E-01 :   2.0480E-01 :   2.0000E-01 :
+        26 |        309   |  FEMAP309   |   5.0000E-01 :   4.0000E-01 :   3.2000E-01 :   2.5601E-01 :   2.0481E-01 :   2.0000E-01 :
+ ----------------------------------------------------------------------------------------------------------------------------------
+  INTERNAL |   EXTERNAL   |             |
+   DV. ID. |    DV. ID.   |    LABEL    |       6      :       7      :       8      :       9      :      10      :      11      :
+ ----------------------------------------------------------------------------------------------------------------------------------
+         1 |          2   |  FEMAP2     |   2.0000E-01 :   2.0001E-01 :   2.0001E-01 :   2.0002E-01 :   2.0001E-01 :   2.0001E-01 :
+         2 |          4   |  FEMAP4     |   2.0000E-01 :   2.0001E-01 :   2.0006E-01 :   2.0005E-01 :   2.0004E-01 :   2.0004E-01 :
+         3 |          5   |  FEMAP5     |   4.9196E-01 :   3.9357E-01 :   3.1485E-01 :   3.0712E-01 :   2.4570E-01 :   2.4570E-01 :
+         4 |          6   |  FEMAP6     |   3.8434E-01 :   3.0748E-01 :   2.6330E-01 :   2.4721E-01 :   2.0000E-01 :   2.0000E-01 :
+         5 |          7   |  FEMAP7     |   3.1066E-01 :   2.4854E-01 :   2.0338E-01 :   2.0000E-01 :   2.0001E-01 :   2.0001E-01 :
+         6 |          8   |  FEMAP8     |   2.4314E-01 :   2.0000E-01 :   2.0000E-01 :   2.0001E-01 :   2.0002E-01 :   2.0002E-01 :
+         7 |          9   |  FEMAP9     |   4.4237E-01 :   3.5389E-01 :   3.1803E-01 :   3.0976E-01 :   2.4781E-01 :   2.4513E-01 :
+         8 |         10   |  FEMAP10    |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+         9 |        201   |  FEMAP201   |   1.4928E+00 :   1.6151E+00 :   1.6348E+00 :   1.6355E+00 :   1.6405E+00 :   1.6405E+00 :
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE    99
+                                                                                                                                    
+0                                                                                                                                   
+ ----------------------------------------------------------------------------------------------------------------------------------
+  INTERNAL |   EXTERNAL   |             |
+   DV. ID. |    DV. ID.   |    LABEL    |       6      :       7      :       8      :       9      :      10      :      11      :
+ ----------------------------------------------------------------------------------------------------------------------------------
+        10 |        202   |  FEMAP202   |   1.3710E+00 :   1.0968E+00 :   8.9505E-01 :   8.9522E-01 :   8.9887E-01 :   8.9887E-01 :
+        11 |        203   |  FEMAP203   |   6.0726E-01 :   6.3104E-01 :   6.3676E-01 :   6.3726E-01 :   6.4574E-01 :   6.4574E-01 :
+        12 |        204   |  FEMAP204   |   4.8405E-01 :   4.9205E-01 :   4.9521E-01 :   4.9700E-01 :   4.9650E-01 :   4.9650E-01 :
+        13 |        205   |  FEMAP205   |   7.3224E-01 :   5.8580E-01 :   4.6864E-01 :   3.7491E-01 :   3.4057E-01 :   3.4057E-01 :
+        14 |        206   |  FEMAP206   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0681E-01 :   2.0681E-01 :
+        15 |        207   |  FEMAP207   |   2.9491E-01 :   2.3593E-01 :   2.0000E-01 :   2.0001E-01 :   2.0002E-01 :   2.0002E-01 :
+        16 |        208   |  FEMAP208   |   2.0000E-01 :   2.0001E-01 :   2.0001E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        17 |        209   |  FEMAP209   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        18 |        301   |  FEMAP301   |   1.4930E+00 :   1.7409E+00 :   1.7440E+00 :   1.7412E+00 :   1.6963E+00 :   1.6963E+00 :
+        19 |        302   |  FEMAP302   |   8.5480E-01 :   6.8384E-01 :   6.4388E-01 :   6.4193E-01 :   6.1996E-01 :   6.1996E-01 :
+        20 |        303   |  FEMAP303   |   8.1393E-01 :   6.5114E-01 :   5.5163E-01 :   5.1497E-01 :   4.1198E-01 :   4.1197E-01 :
+        21 |        304   |  FEMAP304   |   2.3826E-01 :   2.5878E-01 :   2.4534E-01 :   2.4314E-01 :   2.4209E-01 :   2.4209E-01 :
+        22 |        305   |  FEMAP305   |   7.6637E-01 :   6.1310E-01 :   5.1460E-01 :   5.0491E-01 :   4.0393E-01 :   4.0393E-01 :
+        23 |        306   |  FEMAP306   |   2.4000E-01 :   2.0001E-01 :   2.0001E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        24 |        307   |  FEMAP307   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0001E-01 :   2.0002E-01 :   2.0002E-01 :
+        25 |        308   |  FEMAP308   |   2.0000E-01 :   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :   2.0002E-01 :   2.0002E-01 :
+        26 |        309   |  FEMAP309   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+ ----------------------------------------------------------------------------------------------------------------------------------
+  INTERNAL |   EXTERNAL   |             |
+   DV. ID. |    DV. ID.   |    LABEL    |      12      :      13      :      14      :      15      :      16      :      17      :
+ ----------------------------------------------------------------------------------------------------------------------------------
+         1 |          2   |  FEMAP2     |   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :
+         2 |          4   |  FEMAP4     |   2.0004E-01 :   2.0004E-01 :   2.0004E-01 :   2.0004E-01 :   2.0004E-01 :
+         3 |          5   |  FEMAP5     |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+         4 |          6   |  FEMAP6     |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+         5 |          7   |  FEMAP7     |   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :   2.0001E-01 :
+         6 |          8   |  FEMAP8     |   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :
+         7 |          9   |  FEMAP9     |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+         8 |         10   |  FEMAP10    |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+         9 |        201   |  FEMAP201   |   1.6453E+00 :   1.6579E+00 :   1.6703E+00 :   1.6703E+00 :   1.6703E+00 :
+        10 |        202   |  FEMAP202   |   9.1932E-01 :   9.3893E-01 :   9.3723E-01 :   9.3726E-01 :   9.3726E-01 :
+        11 |        203   |  FEMAP203   |   6.5328E-01 :   6.5195E-01 :   6.5206E-01 :   6.5206E-01 :   6.5206E-01 :
+        12 |        204   |  FEMAP204   |   4.9702E-01 :   4.9769E-01 :   4.9758E-01 :   4.9757E-01 :   4.9757E-01 :
+        13 |        205   |  FEMAP205   |   3.4228E-01 :   3.4236E-01 :   3.4351E-01 :   3.4370E-01 :   3.4370E-01 :
+        14 |        206   |  FEMAP206   |   2.1092E-01 :   2.1373E-01 :   2.1652E-01 :   2.1692E-01 :   2.1692E-01 :
+        15 |        207   |  FEMAP207   |   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :
+        16 |        208   |  FEMAP208   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        17 |        209   |  FEMAP209   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        18 |        301   |  FEMAP301   |   1.6770E+00 :   1.6318E+00 :   1.5782E+00 :   1.5781E+00 :   1.5781E+00 :
+        19 |        302   |  FEMAP302   |   5.2828E-01 :   4.5805E-01 :   4.5732E-01 :   4.5718E-01 :   4.5718E-01 :
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE   100
+                                                                                                                                    
+0                                                                                                                                   
+ ----------------------------------------------------------------------------------------------------------------------------------
+  INTERNAL |   EXTERNAL   |             |
+   DV. ID. |    DV. ID.   |    LABEL    |      12      :      13      :      14      :      15      :      16      :      17      :
+ ----------------------------------------------------------------------------------------------------------------------------------
+        20 |        303   |  FEMAP303   |   3.3633E-01 :   3.0586E-01 :   3.0602E-01 :   3.0603E-01 :   3.0603E-01 :
+        21 |        304   |  FEMAP304   |   2.4054E-01 :   2.4160E-01 :   2.4214E-01 :   2.4223E-01 :   2.4223E-01 :
+        22 |        305   |  FEMAP305   |   3.2314E-01 :   2.5851E-01 :   2.0681E-01 :   2.0000E-01 :   2.0000E-01 :
+        23 |        306   |  FEMAP306   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+        24 |        307   |  FEMAP307   |   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :
+        25 |        308   |  FEMAP308   |   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :   2.0002E-01 :
+        26 |        309   |  FEMAP309   |   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :   2.0000E-01 :
+ *** USER INFORMATION MESSAGE 6464 (DOM12E)
+     RUN TERMINATED DUE TO HARD CONVERGENCE TO AN OPTIMUM AT CYCLE NUMBER =       16.
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK DBCOPT   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101                17                16                26                 1                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      416 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       44 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =      565 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK R1TABRG  WRITTEN ON FORTRAN UNIT  12, TRL =
+                    101               255                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       15 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =     1289 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =     4867 WORDS.)
+ *** USER INFORMATION MESSAGE 4114 (OUTPBN2)
+     DATA BLOCK HISADD   WRITTEN ON FORTRAN UNIT  12, TRL =
+                    102                26                 0                 0                 0                 0                 0
+     (MAXIMUM POSSIBLE FORTRAN RECORD SIZE =    65538 WORDS.)
+     (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =       33 WORDS.)
+     (NUMBER OF FORTRAN RECORDS WRITTEN =       19 RECORDS.)
+     (TOTAL DATA WRITTEN FOR DATA BLOCK =       59 WORDS.)
+ *** USER INFORMATION MESSAGE 4110 (OUTPBN2)
+                                 END-OF-DATA SIMULATION ON FORTRAN UNIT 12
+                                 (MAXIMUM SIZE OF FORTRAN RECORDS WRITTEN =      1 WORDS.)
+                                       (NUMBER OF FORTRAN RECORDS WRITTEN =      1 RECORDS.)
+                                       (TOTAL DATA WRITTEN FOR EOF MARKER =      1 WORDS.)
+1    OPTIMIZEWING                                                           OCTOBER  25, 2021  SIMCENTER NASTRAN  3/12/20   PAGE   101
+                                                                                                                                    
+0                                                                                                                                   
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     28
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     F      F      T      0     F     -1           16           T
+     0     0    1    1 '        '    T    T    T    T    T     F      F      T      0     F     -1           16           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+1                                        * * * END OF JOB * * *
+ 
+ 

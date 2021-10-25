@@ -1,0 +1,242 @@
+Simcenter Nastran 2020.1 (Intel64 Family 6 Model 63 Stepping 2 Windows 10  ) Control File:
+--------------------------------------------------------------------------------------
+Nastran BUFFSIZE=32769 $(c:/program files/siemens/femap 2020.2/nastran/conf/nastran.rcf[4])
+Nastran BUFFPOOL=20.0X $(c:/program files/siemens/femap 2020.2/nastran/conf/nastran.rcf[7])
+Nastran DIAGA=128 DIAGB=0 $(c:/program files/siemens/femap 2020.2/nastran/conf/nastran.rcf[11])
+Nastran REAL=8577351680 $(Memory limit for MPI and other specialized modules)
+JID='s:/aricciar/20210822_cofe/sweptwingexamplefemap12format/opt-wing-002.dat'
+OUT='s:/aricciar/20210822_cofe/sweptwingexamplefemap12format/opt-wing-002'
+MEM=3860515840
+MACH='Intel64 Family 6 Model 63 Stepping 2'
+OPER='Windows 10'
+OSV=' '
+MODEL='Intel(R) Xeon(R) CPU E5-1660 v3 @ 3.00GHz (Z440-63W10)'
+CONFIG=8666
+NPROC=16
+symbol=DELDIR='c:/program files/siemens/femap 2020.2/nastran/scnas/nast/del' $(program default)
+symbol=DEMODIR='c:/program files/siemens/femap 2020.2/nastran/scnas/nast/demo' $(program default)
+symbol=SSSALTERDIR='c:/program files/siemens/femap 2020.2/nastran/scnas/nast/misc/sssalter' $(program default)
+symbol=TPLDIR='c:/program files/siemens/femap 2020.2/nastran/scnas/nast/tpl' $(program default)
+SDIR='s:/scratch/opt-wing-002.T1412_26'
+DBS='s:/scratch/opt-wing-002.T1412_26'
+SCR=yes
+SMEM=20.0X
+NEWDEL='c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/SSS'
+DEL='NXNDEF'
+AUTH='28000@LocalHost'
+AUTHQUE=0
+MSGCAT='c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/analysis.msg'
+MSGDEST='f06'
+PROG=FEMAP
+NEWS='c:/program files/siemens/femap 2020.2/nastran/scnas/nast/news.txt'
+UMATLIB='libnxumat.dll'
+UCRPLIB='libucreep.dll'
+USOLLIB='libusol.dll'
+--------------------------------------------------------------------------------------
+NXN_ISHELLPATH=C:\Program Files\Siemens\Femap 2020.2\nastran\bin
+NXN_JIDPATH=
+PATH=c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl;c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/sysnoise;c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/samcef;c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/impi/bin;c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/monitor;C:\Apps\Vibrata_v4.0.0;C:\Program Files\Tecplot\Tecplot Chorus 2019 R1\bin;C:\Program Files\Tecplot\Tecplot 360 EX 2019 R1\bin;C:\Apps\Vibrata_v3.4.1;C:\Program Files\Microsoft MPI\Bin\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64_win\mpirt;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\ia32_win\mpirt;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64_win\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\ia32_win\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Files\fortran\bin\Intel64;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\SOLIDWORKS 2019 Data;C:\MSC.Software\Patran_x64\20180\bin;C:\ZAERO\;C:\SIMULIA\Commands;U:\atas\exe_win;C:\ProgramData\Oracle\Java\javapath;C:\ProgramData\Microsoft\Windows\Start Menu\Programs;C:\Program Files (x86)\Microsoft Office\Office16;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\ShoreTel\Connect\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\MSC.Software\Adams\2018_1\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\MATLAB\R2019a\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Siemens\NXI67\Team67;C:\Siemens\FEMAPv2019p1;C:\Siemens\NXI67\bin;C:\Siemens\NXI67;C:\Siemens\NX 12.0;C:\Utilityapps\PuTTY\;C:\UtilityApps\Anaconda3;C:\UtilityApps\convert;C:\UtilityApps\cygwin64\bin;C:\UtilityApps\emacs-26.1-x86_64\bin;C:\UtilityApps\Foxit Software\Foxit Reader;C:\UtilityApps\KDiff3;C:\UtilityApps\PFE32\pfe101i;C:\UtilityApps\XnViewMP;C:\UtilityApps\setnas;C:\UtilityApps\jEdit;C:\UtilityApps\Allercalc;U:\projects\templates\;C:\Siemens\Iona660\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\MATLAB\MATLAB Runtime\v910\runtime\win64;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\aricciar\AppData\Local\Microsoft\WindowsApps;C:\Users\aricciar\AppData\Local\Pandoc\;
+Command Line: S:\aricciar\20210822_CoFE\sweptWingExampleFemap12Format\opt-wing-002.dat bat=no out=S:\aricciar\20210822_CoFE\sweptWingExampleFemap12Format\ scr=yes
+Current Dir: C:\WINDOWS\system32
+Executable:  c:/program files/siemens/femap 2020.2/nastran/scnas/em64tntl/analysis.exe
+NXN_MSG:     stderr
+FPE:         no
+--------------------------------------------------------------------------------------
+Current resource limits:
+ Physical memory:                    65452 MB
+ Physical memory available:          57163 MB
+ Paging file size:                  129452 MB
+ Paging file size available:        121379 MB
+ Virtual memory:                 134217727 MB
+ Virtual memory available:       134213570 MB
+--------------------------------------------------------------------------------------
+System configuration:
+ Hostname:         Z440-63W10.ata-engineering.com
+ Architecture:     em64tnt
+ Platform:         Intel64 Family 6 Model 63 Stepping 2 Windows 10  
+ Model:            Intel(R) Xeon(R) CPU E5-1660 v3 @ 3.00GHz
+ Clock freq.:      2993 MHz
+ Number of CPUs:   16
+ Executable:       standard
+ Raw model ID:     8666
+ Config number:    8666
+ Physical memory:  65452 MB
+ Virtual memory:   129452 MB
+ Numeric format:   64-bit little-endian IEEE.
+ Bytes per word:   8
+ Disk block size:  512 bytes (64 words)
+ Remote shell cmd: Remote capabilities not available.
+--------------------------------------------------------------------------------------
+Simcenter Nastran started  Mon Oct 25 10:45:26 EDT 2021
+ 10:45:26  Beginning Analysis
+
+ 10:45:26  Simcenter NASTRAN Authorization Information - System Attributes
+ 10:45:26  --------------------------------------------------------
+ 10:45:26  Model: Intel(R) Xeon(R) CPU E5-1660 v3
+ 10:45:26  Machine: Intel64 Family 6 Model 63 Steppi
+ 10:45:26  OS: Windows 10
+ 10:45:26  Version:
+ 10:45:26  License File(s): 28000@LocalHost
+
+ 10:45:26  The FEMAP dll Search String is c:\program files\siemens\femap 2020.2\auth_*.dll .
+ 10:45:26  Found the FEMAP authorization dll auth_2020_2.dll
+ 10:45:26  Loading FEMAP Authorization dll auth_2020_2.dll
+
+ 10:45:27  Simcenter NASTRAN Authorization Information - Checkout Successful
+ 10:45:27  -----------------------------------------------------------------
+ 10:45:27  License for module Simcenter Nastran Basic - FEMAP Desktop  checked out successfully
+
+ 10:45:27  Analysis started.
+ 10:45:27  Geometry access/verification to CAD part initiated (if needed).
+ 10:45:27  Geometry access/verification to CAD part successfully completed (if needed).
+ 10:45:27  Design cycle 1 started.
+ 10:45:27  Finite element model generation started.
+ 10:45:28  Finite element model generated 26724 degrees of freedom.
+ 10:45:28  Finite element model generation successfully completed.
+ 10:45:28  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:28  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:28  Solution of the system equations for linear statics started.
+ 10:45:28  Solution of the system equations for linear statics successfully completed.
+
+ 10:45:29  Simcenter NASTRAN Authorization Information - Checkout Successful
+ 10:45:29  -----------------------------------------------------------------
+ 10:45:29  License for module Simcenter Nastran Optimization - FEMAP Desktop  checked out successfully
+
+ 10:45:29  Design cycle 2 started.
+ 10:45:29  Finite element model generation started.
+ 10:45:29  Finite element model generated 26724 degrees of freedom.
+ 10:45:29  Finite element model generation successfully completed.
+ 10:45:29  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:29  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:30  Solution of the system equations for linear statics started.
+ 10:45:30  Solution of the system equations for linear statics successfully completed.
+ 10:45:30  Design cycle 3 started.
+ 10:45:30  Finite element model generation started.
+ 10:45:30  Finite element model generated 26724 degrees of freedom.
+ 10:45:30  Finite element model generation successfully completed.
+ 10:45:30  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:30  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:31  Solution of the system equations for linear statics started.
+ 10:45:31  Solution of the system equations for linear statics successfully completed.
+ 10:45:31  Design cycle 4 started.
+ 10:45:31  Finite element model generation started.
+ 10:45:32  Finite element model generated 26724 degrees of freedom.
+ 10:45:32  Finite element model generation successfully completed.
+ 10:45:32  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:32  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:32  Solution of the system equations for linear statics started.
+ 10:45:32  Solution of the system equations for linear statics successfully completed.
+ 10:45:32  Design cycle 5 started.
+ 10:45:32  Finite element model generation started.
+ 10:45:33  Finite element model generated 26724 degrees of freedom.
+ 10:45:33  Finite element model generation successfully completed.
+ 10:45:33  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:33  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:33  Solution of the system equations for linear statics started.
+ 10:45:33  Solution of the system equations for linear statics successfully completed.
+ 10:45:34  Design cycle 6 started.
+ 10:45:34  Finite element model generation started.
+ 10:45:34  Finite element model generated 26724 degrees of freedom.
+ 10:45:34  Finite element model generation successfully completed.
+ 10:45:34  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:34  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:34  Solution of the system equations for linear statics started.
+ 10:45:34  Solution of the system equations for linear statics successfully completed.
+ 10:45:35  Design cycle 7 started.
+ 10:45:35  Finite element model generation started.
+ 10:45:35  Finite element model generated 26724 degrees of freedom.
+ 10:45:35  Finite element model generation successfully completed.
+ 10:45:35  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:35  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:35  Solution of the system equations for linear statics started.
+ 10:45:35  Solution of the system equations for linear statics successfully completed.
+ 10:45:36  Design cycle 8 started.
+ 10:45:36  Finite element model generation started.
+ 10:45:36  Finite element model generated 26724 degrees of freedom.
+ 10:45:36  Finite element model generation successfully completed.
+ 10:45:36  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:36  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:37  Solution of the system equations for linear statics started.
+ 10:45:37  Solution of the system equations for linear statics successfully completed.
+ 10:45:37  Design cycle 9 started.
+ 10:45:37  Finite element model generation started.
+ 10:45:37  Finite element model generated 26724 degrees of freedom.
+ 10:45:37  Finite element model generation successfully completed.
+ 10:45:37  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:37  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:38  Solution of the system equations for linear statics started.
+ 10:45:38  Solution of the system equations for linear statics successfully completed.
+ 10:45:38  Design cycle 10 started.
+ 10:45:38  Finite element model generation started.
+ 10:45:39  Finite element model generated 26724 degrees of freedom.
+ 10:45:39  Finite element model generation successfully completed.
+ 10:45:39  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:39  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:39  Solution of the system equations for linear statics started.
+ 10:45:39  Solution of the system equations for linear statics successfully completed.
+ 10:45:40  Design cycle 11 started.
+ 10:45:40  Finite element model generation started.
+ 10:45:40  Finite element model generated 26724 degrees of freedom.
+ 10:45:40  Finite element model generation successfully completed.
+ 10:45:40  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:40  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:40  Solution of the system equations for linear statics started.
+ 10:45:40  Solution of the system equations for linear statics successfully completed.
+ 10:45:41  Design cycle 12 started.
+ 10:45:41  Finite element model generation started.
+ 10:45:41  Finite element model generated 26724 degrees of freedom.
+ 10:45:41  Finite element model generation successfully completed.
+ 10:45:41  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:41  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:41  Solution of the system equations for linear statics started.
+ 10:45:42  Solution of the system equations for linear statics successfully completed.
+ 10:45:42  Design cycle 13 started.
+ 10:45:42  Finite element model generation started.
+ 10:45:42  Finite element model generated 26724 degrees of freedom.
+ 10:45:42  Finite element model generation successfully completed.
+ 10:45:42  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:42  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:43  Solution of the system equations for linear statics started.
+ 10:45:43  Solution of the system equations for linear statics successfully completed.
+ 10:45:43  Design cycle 14 started.
+ 10:45:43  Finite element model generation started.
+ 10:45:44  Finite element model generated 26724 degrees of freedom.
+ 10:45:44  Finite element model generation successfully completed.
+ 10:45:44  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:44  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:44  Solution of the system equations for linear statics started.
+ 10:45:44  Solution of the system equations for linear statics successfully completed.
+ 10:45:44  Design cycle 15 started.
+ 10:45:45  Finite element model generation started.
+ 10:45:45  Finite element model generated 26724 degrees of freedom.
+ 10:45:45  Finite element model generation successfully completed.
+ 10:45:45  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:45  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:45  Solution of the system equations for linear statics started.
+ 10:45:45  Solution of the system equations for linear statics successfully completed.
+ 10:45:46  Design cycle 16 started.
+ 10:45:46  Finite element model generation started.
+ 10:45:46  Finite element model generated 26724 degrees of freedom.
+ 10:45:46  Finite element model generation successfully completed.
+ 10:45:46  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:46  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:46  Solution of the system equations for linear statics started.
+ 10:45:46  Solution of the system equations for linear statics successfully completed.
+ 10:45:47  Design cycle 17 started.
+ 10:45:47  Finite element model generation started.
+ 10:45:47  Finite element model generated 26724 degrees of freedom.
+ 10:45:47  Finite element model generation successfully completed.
+ 10:45:47  Application of Loads and Boundary Conditions to the finite element model started.
+ 10:45:47  Application of Loads and Boundary Conditions to the finite element model successfully completed.
+ 10:45:47  Solution of the system equations for linear statics started.
+ 10:45:47  Solution of the system equations for linear statics successfully completed.
+ 10:45:47  Finite element model generation started.
+ 10:45:48  Finite element model generated 26724 degrees of freedom.
+ 10:45:48  Finite element model generation successfully completed.
+ 10:45:48  Sizing Optimization completed.
+ 10:45:48  NSEXIT: EXIT(0)
+ 10:45:48  Analysis complete  0
+Real:       22.005 seconds ( 0:00:22.005)
+User:       17.171 seconds ( 0:00:17.171)
+Sys:         1.828 seconds ( 0:00:01.828)
+Simcenter Nastran finished Mon Oct 25 10:45:48 EDT 2021

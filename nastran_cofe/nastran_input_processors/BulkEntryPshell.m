@@ -60,7 +60,48 @@ classdef BulkEntryPshell < BulkEntry
         end
         function echo_sub(obj,fid)
             % Print the entry in Nastran free field format to a text file with file id fid
-            error('TODO')
+            if isempty(obj.mid1)
+                mid1s = '';
+            else
+                mid1s = sprintf('%d',obj.mid1);
+            end
+            if isempty(obj.t)
+                ts = '';
+            else
+                ts = sprintf('%f',obj.t);
+            end
+            if isempty(obj.mid2)
+                mid2s = '';
+            else
+                mid2s = sprintf('%d',obj.mid2);
+            end
+            if isempty(obj.mid3)
+                mid3s = '';
+            else
+                mid3s = sprintf('%d',obj.mid3);
+            end
+            
+            fprintf(fid,'PSHELL,%d,%s,%s,%s,%f,%s,%f,%f\n',obj.pid,mid1s,ts,mid2s,...
+                obj.bendRatio,mid3s,obj.shearRatio,obj.nsm);
+            
+            if any([~isempty(obj.z1),~isempty(obj.z2),~isempty(obj.mid4)])
+                if isempty(obj.z1)
+                    z1s = '';
+                else
+                    z1s = sprintf('%f',obj.z1);
+                end
+                if isempty(obj.z2)
+                    z2s = '';
+                else
+                    z2s = sprintf('%f',obj.z2);
+                end
+                if isempty(obj.mid4)
+                    mid4s = '';
+                else
+                    mid4s = sprintf('%d',obj.mid4);
+                end
+                fprintf(fid,',%s,%s,%s\n',z1s,z2s,mid4s);
+            end
         end
     end
 end

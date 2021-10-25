@@ -15,6 +15,8 @@ classdef Cofe
             % inputData = [char] Nastran-formatted input file name. (Typical)
             %               OR
             %             [BdfEntries] BdfEntries object for restart. (For optimization)
+            %               OR
+            %             [Model] Model object for restart. (For optimization)
             %
             % OPTIONAL INPUT PARAMETERS 
             % Default parameter values should be used most of the time.
@@ -100,8 +102,8 @@ classdef Cofe
             p = inputParser;
             p.CaseSensitive = false;
             p.addRequired('inputData');
-            if ~any([ischar(inputData),isa(inputData,'BdfEntries')])
-                error('Input argument ''inputData'' must be type ''char'' or type ''BdfEntries''.')
+            if ~any([ischar(inputData),isa(inputData,'BdfEntries'),isa(inputData,'Model')])
+                error('Input argument ''inputData'' must be type ''char'', ''BdfEntries'', or ''Model''.')
             end
             p.addParameter('bulkDataOnly'     ,false,@islogical);
             p.addParameter('getBdfFields'     ,false,@islogical);
@@ -109,7 +111,9 @@ classdef Cofe
             p.addParameter('getBdfEntries'    ,false,@islogical);
             p.addParameter('stopAfterEntries' ,false,@islogical);
             p.addParameter('preprocess'       ,true,@islogical);
+            p.addParameter('skipPreprocess'   ,false,@islogical);
             p.addParameter('assemble'         ,true,@islogical);
+            p.addParameter('skipAssemble'     ,false,@islogical);
             p.addParameter('solve'            ,true,@islogical);
             p.addParameter('presolve'         ,true,@islogical);
             p.addParameter('writeOutput2Disk' ,true,@islogical);
@@ -128,21 +132,32 @@ classdef Cofe
                 if p.Results.getBdfEntries; optional.bdfEntries = bdfEntries; end
                 if p.Results.stopAfterEntries; return; end
                 
+                obj.model = bdfEntries.entries2model();
                 writeOutput2Disk = p.Results.writeOutput2Disk;
             else
-                bdfEntries = inputData;
                 writeOutput2Disk = false;
+                if isa(inputData,'BdfEntries')
+                    bdfEntries = inputData;
+                    obj.model = bdfEntries.entries2model();
+                elseif isa(inputData,'Model')
+                    obj.model = inputData;
+                else
+                    error('inputData type not allowed.')
+                end
             end
-            obj.model = bdfEntries.entries2model();
             
             %% Preprocess model
             if ~p.Results.preprocess; return; end
-            obj.model = obj.model.preprocess();
+            if ~p.Results.skipPreprocess
+                obj.model = obj.model.preprocess();
+            end
             
             %% Assemble model
             if ~p.Results.assemble; return; end
-            obj.model = obj.model.assemble();
-                        
+            if ~p.Results.skipAssemble
+                obj.model = obj.model.assemble();
+            end
+            
             %% Static solution presolve
             if ~p.Results.presolve; return; end
             if contains([obj.model(1).caseControl.analysis],'STATICS')

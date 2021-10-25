@@ -58,8 +58,10 @@ classdef BulkEntryCquad4 < BulkEntry
         end
         % Print the entry in NASTRAN free field format to a text file with file id fid
         function echo_sub(obj,fid)
-            error('TODO')
-            fprintf(fid,'CQUAD4,%d,%d,%d,%d,%f,%f,%f\n',obj.eid,obj.pid,obj.ga,obj.gb,obj.x(1),obj.x(2),obj.x(3));
+            fprintf(fid,'CQUAD4,%d,%d,%d,%d,%d,%d\n',obj.eid,obj.pid,obj.g1,obj.g2,obj.g3,obj.g4);
+            if ~isempty(obj.tFlag)
+                 fprintf(fid,',%d,%f,%f,%f,%f\n',obj.tFlag,obj.t1,obj.t2,obj.t3,obj.t4);
+            end
         end
     end
     
