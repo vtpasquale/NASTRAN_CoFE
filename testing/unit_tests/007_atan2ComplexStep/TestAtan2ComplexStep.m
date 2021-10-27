@@ -84,7 +84,8 @@ classdef TestAtan2ComplexStep < matlab.unittest.TestCase
             csDtdx = imag(csdx)./dcs;
             
             % analytic            
-            [dtdy,dtdx]=gradatan2(Y,X); % analytic
+            dtdx=-Y./(X.^2+Y.^2);
+            dtdy= X./(X.^2+Y.^2);
             AnalyticDiff = [csDtdy-dtdy; csDtdx-dtdx];
             maxAnalyticDiff = max(abs(AnalyticDiff(:)));
             
@@ -99,11 +100,6 @@ classdef TestAtan2ComplexStep < matlab.unittest.TestCase
             AnalyticDiff = [fdDtdy-csDtdy; fdDtdx-csDtdx];
             maxFdDiff = max(abs(AnalyticDiff(:)));
             
-        end
-        function [dtdy,dtdx]=gradatan2(Y,X)
-            % Analytic gradients
-            dtdx=-Y./(X.^2+Y.^2);
-            dtdy= X./(X.^2+Y.^2);
         end
     end
 end

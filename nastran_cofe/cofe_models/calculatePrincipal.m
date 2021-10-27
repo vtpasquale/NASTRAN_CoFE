@@ -15,7 +15,7 @@ if n == 3
     c2 = sqrt( (.5*(s(1,:)-s(2,:))).^2 + s(3,:).^2 );
     s1 = c1 + c2;
     s2 = c1 - c2; 
-    angle = .5*atan2d(real( 2*s(3,:)) , real( (s(1,:)-s(2,:))) );
+    angle = .5*(180/pi)*atan2ComplexStep(2*s(3,:),(s(1,:)-s(2,:)));
 elseif n == 6
     a = ones(1,size(s,2));
     b = s(1,:) + s(2,:) + s(3,:);
