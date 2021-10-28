@@ -19,8 +19,8 @@ classdef VtkFile
     properties
         vtkPoints % [VtkPoints] Points object
         vtkCells % [VtkCells] Cell object array
-        pointData
-        cellData
+        pointData % [VtkVector] Vector results data
+        cellData % [VtkScalar] Scalar results data
     end
     properties (Hidden=true)
        sizeCells % [uint32] total number of integers is CELLS data block
@@ -29,8 +29,17 @@ classdef VtkFile
     methods
         function obj = VtkFile(cofe)
             % Class constructed from Cofe object
-            obj.vtkPoints = VtkPoints(cofe.model.point(cofe.model.nodeFlag) );
-            [obj.vtkCells,obj.sizeCells]= VtkCells.elements2cells(cofe.model.element);
+            
+            % model data (superelement 0 only)
+            obj.vtkPoints = VtkPoints(cofe.model(1).point(cofe.model(1).nodeFlag) );
+            [obj.vtkCells,obj.sizeCells]= VtkCells.elements2cells(cofe.model(1).element);
+            
+            if ~isempty(cofe.solution)
+                % point data
+                obj.pointData = VtkVector.fromSolution(cofe.solution,obj.vtkPoints.pointID);
+            end
+                
+                
         end
         function print(obj,filename)
             % print to VTK file
@@ -43,6 +52,9 @@ classdef VtkFile
             fprintf(fid,'\nDATASET UNSTRUCTURED_GRID\n');
             obj.vtkPoints.print(fid);
             obj.vtkCells.print(fid,obj.sizeCells,obj.vtkPoints.pointID);
+            
+            fprintf(fid,'POINT_DATA %d\n',size(obj.vtkPoints.points,1));
+            obj.pointData.print(fid)
             
             fclose(fid);
         end
