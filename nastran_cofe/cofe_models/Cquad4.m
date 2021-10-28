@@ -39,6 +39,8 @@ classdef Cquad4 < Element
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(33); % [uint8] Element code corresponding to Nastran item codes documentation.
+        VTK_CELL_CLASSNAME = 'VtkCellQuad'; % [char] Vtk cell classname
+        VTK_CELL_TYPE = 9; % [uint8] VTK cell type number
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceQuad4';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainQuad4';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressQuad4';

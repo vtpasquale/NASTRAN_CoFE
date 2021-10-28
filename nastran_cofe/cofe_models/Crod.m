@@ -23,6 +23,8 @@ classdef Crod < Element
     end
     properties (Constant=true,Hidden = true)
         ELEMENT_TYPE = uint8(1); % [uint8] Nastran element code corresponding to Nastran item codes documentation
+        VTK_CELL_CLASSNAME = 'VtkCellLine'; % [char] Vtk cell classname
+        VTK_CELL_TYPE = 3; % [uint8] VTK cell type number
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceRod';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainRod';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressRod';
