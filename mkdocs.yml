@@ -1,0 +1,17 @@
+site_name: Nastran CoFE
+
+theme:
+  name: material
+
+repo_url: https://github.com/vtpasquale/NASTRAN_CoFE
+repo_name: vtpasquale/NASTRAN_CoFE
+
+copyright: Copyright &copy; 2013 - 2022 Anthony Ricciardi
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/vtpasquale
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/aeroelasticity/
+      
