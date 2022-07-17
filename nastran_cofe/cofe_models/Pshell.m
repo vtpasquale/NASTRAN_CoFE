@@ -53,13 +53,18 @@ classdef Pshell < Property
                 obj.E2dBend = obj.bendRatio*bendMaterial.E2D;
                 
                 if isempty(obj.mid3)
-                    error('PSHELL %d has nonblank MID2 and blank MID3, this is not allowed. Plates with with shear flexibility are not supported.',obj.pid)
+                    error('PSHELL %d has nonblank MID2 and blank MID3, this is not allowed. Plates withour shear flexibility are not supported.',obj.pid)
                 end
                 shearMaterial = model.material.getMaterial(obj.mid3,model,'Mat1');
                 obj.E2dShear = obj.shearRatio*shearMaterial.E2D(3,3)*eye(2);
             else
                 obj.isPlate = false;
             end
+            
+            if ~obj.isMembrane
+                obj.rho = bendMaterial.rho;
+            end
+            
         end
         
     end

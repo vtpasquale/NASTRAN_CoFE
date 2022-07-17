@@ -5,7 +5,7 @@ classdef Cquad4 < Element
     
     properties
         eid % [uint32] Element identification number.
-        pid % [uint32] Property identification number of a PBEAM entry.
+        pid % [uint32] Property identification number of a PSHELL entry.
         g   % [3,1 uint32] Grid point identification numbers of connection points [G1,G2,G3].
         
         % theta or mcid
