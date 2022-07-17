@@ -4,7 +4,7 @@
 classdef TestSvanbergBar < matlab.unittest.TestCase
     methods (Test)
         function compareMassAndStiffness(testCase)
-            matSolution = Cofe(fullfile('nastran_runs','barmat.dat'),'solve',false);
+            matSolution = Cofe(fullfile('nastran_runs','barmat.dat'),'stopBefore','solve');
             ck = matSolution.model.element(1).k_e;
             cm = matSolution.model.element(1).m_e;
             

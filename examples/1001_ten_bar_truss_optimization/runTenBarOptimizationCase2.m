@@ -15,7 +15,7 @@ haftkaOptimum = [30.52; 0.1; 23.20; 15.22; 0.1; 0.55; 7.46; 21.04; 21.53; 0.1];
 %% Process initial-design BDF entries
 [~,optional] = Cofe('tenBar.dat',...
                     'getBdfEntries',true,...
-                    'stopAfterEntries',true);
+                    'stopBefore','preprocess');
 initialBdfEntries = optional.bdfEntries;
 
 %% SQP options

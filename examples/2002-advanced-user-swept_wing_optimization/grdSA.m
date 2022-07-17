@@ -14,7 +14,7 @@ nX = size(x,1);
 model = design2model(x,userData.initialModel);
 
 % Run analysis
-cofe = Cofe(model,'solve',false,'skipPreprocess',true);
+cofe = Cofe(model,'skip','preprocess','stopBefore','solve');
 analysis = cofe.model.reducedModel;
 
 % Sensitivity system assembly with complex perturbations

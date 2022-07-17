@@ -11,7 +11,7 @@ svanbergOptimum = [6.016; 5.309; 4.494; 3.502; 2.153];
 %% Process initial-design BDF entries
 [~,optional] = Cofe('svanberg.dat',...
                     'getBdfEntries',true,...
-                    'stopAfterEntries',true);
+                    'stopBefore','preprocess');
 initialBdfEntries = optional.bdfEntries;
 
 %% SQP options

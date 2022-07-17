@@ -5,7 +5,7 @@ addpath(fullfile('..','canfield_slp_sqp'))
 %% Process initial-design BDF entries
 [~,optional] = Cofe('tenBar.dat',...
                     'getBdfEntries',true,...
-                    'stopAfterEntries',true);
+                    'stopBefore','preprocess');
 initialBdfEntries = optional.bdfEntries;
 
 %% SQP options

@@ -1,7 +1,7 @@
 % clearvars; close all; clc
 % addpath(genpath(fullfile('..','..','nastran_cofe')));
 cofeOptions.bulkDataOnly = true;
-cofeOptions.assemble = false;
+cofeOptions.stopBefore = 'assemble';
 cofeOptions.writeOutput2Disk = false;
 
 %% Trasform locations to basic reference frame - simple case

@@ -12,7 +12,7 @@ gradientFunction = @grdSA; % semi-analytic direct with selective assembly
 %% Process initial-design BDF entries
 [cofe,optional] = Cofe('sweptWing.dat',...
                     'getBdfEntries',true,...
-                    'presolve',false);
+                    'stopBefore','presolve');
 
 %% Define constant user data here to keep user functions organized
 userData.initialBdfEntries = optional.bdfEntries;

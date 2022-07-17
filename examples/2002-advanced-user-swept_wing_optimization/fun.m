@@ -13,7 +13,7 @@ function [obj,con] = fun(x,userData)
 model = design2model(x,userData.initialModel);
 
 % Run analysis
-cofe = Cofe(model,'skipPreprocess',true);
+cofe = Cofe(model,'skip','preprocess');
 
 % stress constraints
 allStress = [cofe.solution.stress.values];

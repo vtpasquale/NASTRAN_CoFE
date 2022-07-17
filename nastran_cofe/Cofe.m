@@ -22,23 +22,14 @@ classdef Cofe
             % Default parameter values should be used most of the time.
             % Parameters can be past as a struct or as name-value pairs.
             %
-            %      'getBdfFields' = [logical, default = false]
-            %                       If true, Nastran input file field data  
-            %                       (BdfFields object) is returned in the
-            %                        'optional' output struct.
+            %        'stopBefore' = [char, default = '']
+            %                       Stop the solution before: 'preprocess',
+            %                       'entries', model, 'assemble', 
+            %                       'presolve', or 'solve'.
             %
-            %   'stopAfterFields' = [logical, default = false]
-            %                       If true, CoFE will stop immidiately
-            %                       after processing the input file fields.
-            %
-            %     'getBdfEntries' = [logical, default = false]
-            %                       If true, Nastran input file entry data  
-            %                       (BdfEntries object) is returned in the
-            %                        'optional' output struct.
-            %
-            %  'stopAfterEntries' = [logical, default = false]
-            %                       If true, CoFE will stop immidiately
-            %                       after processing the input file entries.
+            %              'skip' = [char, default = '']
+            %                       Skip solution step: 'preprocess',
+            %                       'assemble'.
             %
             %      'bulkDataOnly' = [logical, default = false]
             %                       Can be set to true for reading Nastran
@@ -47,28 +38,26 @@ classdef Cofe
             %                       This option is most useful for using
             %                       CoFE to read input field data or for 
             %                       software testing.
-            % 
-            %        'preprocess' = [logical, default = true]
-            %                       Set to false to suppress model
-            %                       preprocessing, assembly, solution, and
-            %                       hard disk output.
-            %                       
-            %          'assemble' = [logical, default = true]
-            %                       Set to false to suppress model
-            %                       assembly, solution, and hard disk 
-            %                       output.
             %
-            %             'solve' = [logical, default = true]
-            %                       Set to false to suppress model
-            %                       solution and hard disk output.
+			%      'getBdfFields' = [logical, default = false]
+            %                       If true, Nastran input file field data  
+            %                       (BdfFields object) is returned in the
+            %                        'optional' output struct.
             %
-            %  'writeOutput2Disk' = [logical, default = true]
-            %                       Set to false to suppress hard disk 
-            %                       output.
+            %     'getBdfEntries' = [logical, default = false]
+            %                       If true, Nastran input file entry data  
+            %                       (BdfEntries object) is returned in the
+            %                        'optional' output struct.
             % 
             %     'getHdf5Object' = [logical, default = false]
             %                       Set to true for Hdf5 object to be
             %                       returned in the optional output struct.
+            %
+            %
+            %  'writeOutput2Disk' = [logical, default = true]
+            %                       Set to false to suppress hard disk 
+            %                       output. Forced to false if inputData is
+            %                       not type char. 
             %
             % OPTIONAL OUTPUT
             % optional.[struct] optional output. Fields: 
@@ -81,13 +70,12 @@ classdef Cofe
             %                    solution. Request using the 'getBdfFields' 
             %                    input parameter.
             %
-            %         .bdfFields [BdfFields] Nastran input file fields 
+            %        .bdfEntries [BdfEntries] Nastran input file entries 
             %                    object. This is supplemental functionality 
-            %                    that is meant for users who want to parse 
-            %                    a Nastran input file using CoFE but not 
-            %                    necessarily use CoFE for the analysis
-            %                    solution. Request using the 'getBdfFields' 
-            %                    input parameter.
+            %                    that is meant for users who want to use 
+            %                    the BdfEntries data for their own 
+            %                    processes. Request using the 
+            %                    'getBdfEntries' input parameter.
             %
             %          .hdf5 [Hdf5] Container and interface class for HDF5  
             %                output file in MSC Nastran format. Usually it  
@@ -105,33 +93,26 @@ classdef Cofe
             if ~any([ischar(inputData),isa(inputData,'BdfEntries'),isa(inputData,'Model')])
                 error('Input argument ''inputData'' must be type ''char'', ''BdfEntries'', or ''Model''.')
             end
+            p.addParameter('stopBefore'       ,'',@ischar);
+            p.addParameter('skip'             ,'',@ischar);
             p.addParameter('bulkDataOnly'     ,false,@islogical);
             p.addParameter('getBdfFields'     ,false,@islogical);
-            p.addParameter('stopAfterFields'  ,false,@islogical);
             p.addParameter('getBdfEntries'    ,false,@islogical);
-            p.addParameter('stopAfterEntries' ,false,@islogical);
-            p.addParameter('preprocess'       ,true,@islogical);
-            p.addParameter('skipPreprocess'   ,false,@islogical);
-            p.addParameter('assemble'         ,true,@islogical);
-            p.addParameter('skipAssemble'     ,false,@islogical);
-            p.addParameter('solve'            ,true,@islogical);
-            p.addParameter('presolve'         ,true,@islogical);
-            p.addParameter('writeOutput2Disk' ,true,@islogical);
             p.addParameter('getHdf5Object'    ,false,@islogical);
+            p.addParameter('writeOutput2Disk' ,true,@islogical);
             p.parse(inputData,varargin{:});            
             
             %% Input data processing
-            if ischar(inputData)
+            if ischar(inputData)           
                 bdfLines  = BdfLines(inputData,p.Results.bulkDataOnly);
-                
                 bdfFields = BdfFields(bdfLines);
                 if p.Results.getBdfFields; optional.bdfFields = bdfFields; end
-                if p.Results.stopAfterFields; return; end
                 
+                if strcmpi(p.Results.stopBefore,'entries'); return; end
                 bdfEntries = BdfEntries(bdfFields);
                 if p.Results.getBdfEntries; optional.bdfEntries = bdfEntries; end
-                if p.Results.stopAfterEntries; return; end
                 
+                if strcmpi(p.Results.stopBefore,'model'); return; end
                 obj.model = bdfEntries.entries2model();
                 writeOutput2Disk = p.Results.writeOutput2Disk;
             else
@@ -147,25 +128,25 @@ classdef Cofe
             end
             
             %% Preprocess model
-            if ~p.Results.preprocess; return; end
-            if ~p.Results.skipPreprocess
+            if strcmpi(p.Results.stopBefore,'preprocess'); return; end
+            if ~strcmpi(p.Results.skip,'preprocess')
                 obj.model = obj.model.preprocess();
             end
             
             %% Assemble model
-            if ~p.Results.assemble; return; end
-            if ~p.Results.skipAssemble
+            if strcmpi(p.Results.stopBefore,'assemble'); return; end
+            if ~strcmpi(p.Results.skip,'assemble')
                 obj.model = obj.model.assemble();
             end
             
             %% Static solution presolve
-            if ~p.Results.presolve; return; end
+            if strcmpi(p.Results.stopBefore,'presolve'); return; end
             if contains([obj.model(1).caseControl.analysis],'STATICS')
                 obj.model(1).reducedModel=obj.model(1).reducedModel.solveUaAllLoadSets();
             end
             
             %% Solve and recover
-            if ~p.Results.solve; return; end
+            if strcmpi(p.Results.stopBefore,'solve'); return; end
             obj.solution = Solution.constructFromModel(obj.model);
             obj.solution = obj.solution.solve(obj.model);
                         

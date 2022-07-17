@@ -14,7 +14,7 @@ nX = size(x,1);
 bdfEntries = design2entries(x,userData.initialBdfEntries);
 
 % Run analysis
-cofe = Cofe(bdfEntries,'solve',false);
+cofe = Cofe(bdfEntries,'stopBefore','solve');
 analysis = cofe.model.reducedModel;
 
 % Sensitivity system assembly with complex perturbations
@@ -22,7 +22,7 @@ for i = 1:nX
     xComplexStep = x;
     xComplexStep(i)    = xComplexStep(i) + 1i*userData.dx;
     bdfEntriesComplexI = design2entries(xComplexStep,userData.initialBdfEntries);
-    cofeComplex(i)     = Cofe(bdfEntriesComplexI,'presolve',false);
+    cofeComplex(i)     = Cofe(bdfEntriesComplexI,'stopBefore','presolve');
 end
 
 % Calculate dudx using semi-analytic approach
