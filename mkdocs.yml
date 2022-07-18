@@ -16,8 +16,6 @@ extra:
       link: https://github.com/vtpasquale
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/aeroelasticity/
-
-extra:
   analytics:
     provider: google
     property: G-HZ1JSYMKZ3
