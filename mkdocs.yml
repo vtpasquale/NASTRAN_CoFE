@@ -2,7 +2,9 @@ site_name: Nastran CoFE
 
 theme:
   name: material
-
+  icon:
+    logo: material/coffee
+    
 repo_url: https://github.com/vtpasquale/NASTRAN_CoFE
 repo_name: vtpasquale/NASTRAN_CoFE
 
@@ -14,4 +16,8 @@ extra:
       link: https://github.com/vtpasquale
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/aeroelasticity/
-      
+
+extra:
+  analytics:
+    provider: google
+    property: G-HZ1JSYMKZ3
