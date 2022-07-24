@@ -64,12 +64,6 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
                 obj(i,:)=solve_sub(obj(i,:),model); % defined in subclass
             end
         end % solve()
-        function output(obj,inputFile,model)
-            % Function to ouput solution data
-            [~,outputFile] = fileparts(inputFile);
-            obj.printTextOutput(model,[outputFile,'.out']);
-            
-        end % output()
         function printTextOutput(obj,model,outputFile)
             % Function to print Solution array output to text file
             % Input Solution array can include all subcases. The Model array
@@ -83,6 +77,11 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             if nRowsSolution~=nCases; error('The solution object array  in inconsistent with the residual structure case control array.'); end
             if nColumnsSolution~=nRowsModel; error('nColumnsSolution~=nRowsModel'); end
             if nColumnsModel~=1; error('nColumnsModel~=1'); end
+            
+            % Title sheet
+            titleString = fileread('titleSheet.txt');
+            fprintf(fid,titleString);
+            fprintf(fid,'Date and time: %s \n',datestr(now));
             
             % Loop through subcases
             for caseIndex = 1:nCases

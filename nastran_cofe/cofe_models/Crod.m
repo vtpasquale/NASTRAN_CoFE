@@ -29,6 +29,12 @@ classdef Crod < Element
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainRod';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressRod';
     end
+    properties (Constant=true,Hidden = true)
+        PAGE_TITLE = 'R O D   E L E M E N T S     ( C R O D )';
+        FORCE_ITEMS = {'AXIAL FORCE','TORSION MOMENT'};
+        STRESS_ITEMS = {'AXIAL STRESS','TORSION STRESS'};
+        STRAIN_ITEMS = {'AXIAL STRAIN','TORSION STRAIN'};
+    end
     properties (Hidden = true)
         E % [double] Elastic modulus
         G % [double] Shear modulus
@@ -74,8 +80,8 @@ classdef Crod < Element
             % stress(2,nvectors) = Torsional stress
             % strain(1,nvectors) = Axial strain
             % strain(2,nvectors) = Torsional strain
-            % strainEnergy(1,nvectors) = element strain energy
-            % kineticEnergy(1,nvectors) = element kinetic energy
+            % strainEnergy(3,nvectors) = element strain energy
+            % kineticEnergy(3,nvectors) = element kinetic energy
             
             % Check inputs
             if ~any(returnFlags); error('This function is not intended to be called if no vaules are to be recovered'); end

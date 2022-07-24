@@ -19,7 +19,7 @@ classdef BulkEntryProd < BulkEntry
             obj.mid = castInputField('PROD','MID',entryFields{3},'uint32',NaN,1);
             obj.a = castInputField('PROD','A',entryFields{4},'double',NaN);
             obj.j = castInputField('PROD','J',entryFields{5},'double',NaN);
-            obj.c = castInputField('PROD','C',entryFields{6},'double',[],0.0);
+            obj.c = castInputField('PROD','C',entryFields{6},'double',0.0);
             obj.nsm = castInputField('PROD','NSM',entryFields{7},'double',0.0);
         end
         function model = entry2model_sub(obj,model)

@@ -1,0 +1,27 @@
+
+                    $ $ $
+          $ $ $ $ $ $ $ $ $ $ $
+     $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $
+              $ $ $ $ $ $ $ $ $ $ $ $ $ $
+                       $ $ $ $ $ $ $ $ $
+                           $ $ $ $ $ $ $ $
+                                $ $ $ $ $ $
+                                    $ $ $ $
+                                    $ $ $
+                                  $ $ $
+                     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+                     $$                           $$
+               $$$$$$$$                           $$
+              $$     $$                           $$
+             $$      $$                           $$
+              $$     $$     Nastran Compatible    $$
+               $$    $$   Finite Elements (CoFE)  $$
+                $$   $$                           $$
+                 $$  $$                           $$
+                  $$$$$                           $$
+                     $$                           $$
+                     $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+  
+ License:       https://github.com/vtpasquale/NASTRAN_CoFE/blob/version5/LICENSE.txt
+ Documentation: https://vtpasquale.github.io/NASTRAN_CoFE/
+ 

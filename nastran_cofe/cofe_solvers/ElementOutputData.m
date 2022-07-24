@@ -37,40 +37,61 @@ classdef ElementOutputData
 %             if in < 1 || in > 5; error('ElementOutputData.responseType must be greater than zero and less than 6.'); end
 %             obj.responseType=uint8(in);
 %         end
+
+        function printTextOutput(obj,fid,model,outputHeading)
+            % Prints an array of ElementOutputData objects of a single
+            % responseType (e.g., stress) for a single superelement and single subcase
+            if size(unique([obj.responseType]),1)~=1; error('Input array elementOutputData should have uniform responseType properties.'); end
+            elementTypes = [obj.elementType];
+            uniqueElementTypes = unique(elementTypes);
+            % Loop through element types
+            for i = 1:size(uniqueElementTypes,1)
+                elementOutputDataI = obj(elementTypes==uniqueElementTypes(i));
+                elementIndex = ismember(model.elementEIDs,[elementOutputDataI.elementID]);
+                firstElementIndex = find(elementIndex,1);
+                
+                nElementsI = size(elementOutputDataI,1);
+                [nItemsI,nResponseVectors] = size(elementOutputDataI(1).values);
+                
+                idI = double([elementOutputDataI.elementID]);
+                valuesI = [elementOutputDataI.values];
+                
+                % rearrange data so response vector is third index
+                valuesMat = zeros(nElementsI,nItemsI,nResponseVectors);
+                for j = 1:nItemsI
+                    for k = 1:nResponseVectors
+                        valuesMat(:,j,k) = valuesI(j,k:nResponseVectors:end).';
+                    end
+                end
+                
+                switch elementOutputDataI(1).responseType
+                    case 1 % FORCE
+                        items = model.element(firstElementIndex).FORCE_ITEMS;
+                        titleText = 'F O R C E S   I N   ';
+                    case 2 % STRESS
+                        items = model.element(firstElementIndex).STRESS_ITEMS;
+                        titleText = 'S T R E S S E S   I N   ';
+                    case 3 % STRAIN
+                        items = model.element(firstElementIndex).STRAIN_ITEMS;
+                        titleText = 'S T R A I N S   I N   ';
+                    case 4 % STRAIN ENERGY
+                        items = {'STRAIN ENERGY','S.E. PERCENT','S.E. DENSITY'};
+                        titleText = ' S T R A I N   E N E R G Y   I N   ';
+                    case 5 % KINETIC ENERGY
+                        items = {'STRAIN ENERGY','K.E. PERCENT','K.E. DENSITY'};
+                        titleText = 'K I N E T I C   E N E R G Y   I N   ';
+                    otherwise
+                        error('Element responseType=%d not supported.',elementOutputDataI(1).responseType)
+                end
+                
+                for j = 1:nResponseVectors
+                    outputHeading.printTextOutput(fid,j)
+                    fprintf(fid, '\n\n        %s%s\n',titleText,model.element(firstElementIndex).PAGE_TITLE);
+                    fprintf(fid,['%14s',repmat('%15s',[1,nItemsI]),'\n'],'ELEM ID',items{:});
+                    fprintf(fid,['%14d',repmat('%15E',[1,nItemsI]),'\n'],[idI;valuesMat(:,:,j).']);
+                end
+            end
+        end % printTextOutput()
         
-% Obsolete
-%         function printTextOutput(obj,fid,model,outputHeading)
-%             % Prints an array of ElementOutputData objects of a single
-%             % responseType (e.g., stress) for a single superelement and single subcase
-%             if size(unique([obj.responseType]),1)~=1; error('Input array elementOutputData should have uniform responseType properties.'); end
-%             elementTypes = [obj.elementType];
-%             uniqueElementTypes = unique(elementTypes);
-%             % Loop through element types
-%             for i = 1:size(uniqueElementTypes,1)
-%                 elementOutputDataI = obj(elementTypes==uniqueElementTypes(i));
-%                 elementIndex = ismember(model.elementEIDs,[elementOutputDataI.elementID]);
-%                 elementTypeObj = model.element(elementIndex);
-%                 elementTypeObj.printTextOutput(fid,elementOutputDataI,outputHeading)
-%             end
-%         end
-%         function femapDataBlock = convert_2_FemapDataBlock1051(obj,model,startSetID)
-%             femapDataBlock = [];
-%             elementTypes = [obj.elementType];
-%             uniqueElementTypes = unique(elementTypes);
-%             for i = 1:size(uniqueElementTypes,2)
-%                 index = elementTypes==uniqueElementTypes(i);
-%                 oi = obj(index);
-%                 elementIDs = [oi.elementID].';
-%                 modelIndex = ismember(elementIDs,model.elementEIDs);
-%                 rType=unique([oi.responseType]);
-%                 if size(rType,2)~=1; error('There is more than one response type in the call to convert_2_db1051. Data processing should have prevented this.'); end
-%                 switch rType
-%                     case 1
-%                         femapDataBlock = [femapDataBlock;model.element(modelIndex).force_2_FemapDataBlock1051(oi,startSetID)];
-%                     case 2
-%                         femapDataBlock = [femapDataBlock;model.element(modelIndex).stress_2_FemapDataBlock1051(oi,startSetID)];
-%                 end
-%             end
-%         end
     end
 end

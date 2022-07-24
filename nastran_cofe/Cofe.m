@@ -164,10 +164,13 @@ classdef Cofe
             % Write output to hard disk
             if ~writeOutput2Disk; return; end
             [~,outputFile] = fileparts(inputData);
-            % Export Hdf5 data to hard disk
+            
+            % Write Hdf5 data
             hdf5.export([outputFile,'.h5']);
             
-            % obj.solution.output(inputFile,obj.model);
+            % Write text data
+            obj.solution.printTextOutput(obj.model,[outputFile,'.out'])
+            
         end
     end
 end
