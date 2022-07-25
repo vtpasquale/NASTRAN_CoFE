@@ -55,6 +55,14 @@ classdef Parameter
                 end
             end
             
+            % Post parameter
+            post = obj.getParameter('post');
+            if isempty(post)
+                model.post = ones(1,'int32');
+            else
+                model.post = castInputField('PARAM','POST',post,'int32',NaN);
+            end
+            
         end % preprocess() 
         function [value1,value2] = getParameter(obj,name)
             index = strcmpi({obj.n}',name);

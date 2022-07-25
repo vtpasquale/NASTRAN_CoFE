@@ -107,6 +107,7 @@ classdef Model
         coupledMassFlag % [logical] Coupled mass formulation is used if true, lumped mass formulation used otherwise.
         k6rot % [double] Used for the calculation of drilling stiffness
         wtmass % [double] Mass matrix scale factor - applied after assembly
+        post % [int32] Postprocess parameter. HDF5 output written if model(1).post < 1.
         
         %% Default Grid point properties:
         %  - Specified Grid points default to these options if not specified explicitly
