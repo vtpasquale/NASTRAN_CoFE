@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# RBE2
 Defines a rigid body with independent degrees-of-freedom that are specified at a single grid point and with dependent degrees-of-freedom that are specified at an arbitrary number of grid points.
 
 ## Format

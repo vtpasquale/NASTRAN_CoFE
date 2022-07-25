@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+#ANALYSIS
 Specifies the type of analysis being performed for the current subcase.
 
 ## Format

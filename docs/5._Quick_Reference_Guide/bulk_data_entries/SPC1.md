@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# SPC1
 Defines a set of single-point constraints.
 
 ## Format

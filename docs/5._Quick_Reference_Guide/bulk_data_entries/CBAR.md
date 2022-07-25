@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# CBAR
 Defines a simple beam element.
 
 ## Format

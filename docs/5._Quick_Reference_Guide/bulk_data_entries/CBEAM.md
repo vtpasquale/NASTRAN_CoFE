@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# CBEAM
 Defines a beam element.
 
 ## Format

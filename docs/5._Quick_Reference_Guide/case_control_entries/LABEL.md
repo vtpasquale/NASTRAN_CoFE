@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# LABEL
 Defines a character string label.
 
 ## Format

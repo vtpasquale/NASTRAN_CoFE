@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# TITLE
 Defines a character string title.
 
 ## Format

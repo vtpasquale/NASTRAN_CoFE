@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# METHOD
 Selects eigenvalue extraction parameters.
 
 ## Format

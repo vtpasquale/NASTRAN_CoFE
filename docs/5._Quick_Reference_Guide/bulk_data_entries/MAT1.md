@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# MAT1
 Defines linear isotropic material properties.
 
 ## Format

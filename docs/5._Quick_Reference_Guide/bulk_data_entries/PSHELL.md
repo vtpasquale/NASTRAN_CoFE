@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# PSHELL
 Defines the membrane, bending, and transverse shear properties for CTRIA3 and CQUAD4 elements.
 
 ## Format

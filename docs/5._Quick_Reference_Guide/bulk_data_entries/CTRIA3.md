@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# CTRIA3
 Defines an isoparametric membrane-bending-shear triangular plate element.
 
 ## Format

@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# SUBCASE
 Delimits and identifies a subcase.
 
 ## Format

@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# RBE3
 Defines the motion at a reference grid point as the weighted average of the motions at a set of other grid points.
 
 ## Format

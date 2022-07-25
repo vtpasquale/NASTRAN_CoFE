@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# GRID
 Defines the location of a node, the directions of its displacement, and its permanent single-point constraints.
 
 ## Format

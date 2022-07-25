@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+#SOL
 Specifies the solution sequence. 
 
 ## Format

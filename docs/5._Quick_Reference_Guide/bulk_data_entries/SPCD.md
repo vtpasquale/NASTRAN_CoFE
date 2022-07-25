@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# SPCD
 Defines an enforced displacement value.
 
 ## Format

@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# SUBTITLE
 Defines a character string subtitle.
 
 ## Format

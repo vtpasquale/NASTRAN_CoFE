@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# SET
 Defines a list of integers.
 
 ## Format

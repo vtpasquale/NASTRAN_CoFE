@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+# SPOINT
 Defines scalar points.
 
 ## Format

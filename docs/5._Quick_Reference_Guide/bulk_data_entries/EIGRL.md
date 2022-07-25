@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# EIGRL
 Defines data needed to perform real eigenvalue (vibration or buckling) analysis.
 
 ## Format

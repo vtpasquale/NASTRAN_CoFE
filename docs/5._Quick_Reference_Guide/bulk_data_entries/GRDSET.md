@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# GRDSET
 Defines default options for fields 3, 7, and 8, of all GRID entries.
 
 ## Format

@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# CORD2C
 Defines a rectangular coordinate system using the coordinates of three points.
 
 ## Format

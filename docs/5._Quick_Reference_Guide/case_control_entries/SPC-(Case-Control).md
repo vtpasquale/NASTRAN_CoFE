@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# SPC
 Selects a single-point constraint set to be applied.
 
 ## Format

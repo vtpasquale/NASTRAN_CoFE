@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# LOAD
 Selects a static load set.
 
 ## Format

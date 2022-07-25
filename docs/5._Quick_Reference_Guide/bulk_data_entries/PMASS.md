@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# PMASS
 Specifies the mass value of a scalar mass element (CMASS1 entries).
 
 ## Format

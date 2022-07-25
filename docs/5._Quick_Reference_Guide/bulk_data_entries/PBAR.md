@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# PBAR
 Defines the properties of a CBAR element.
 
 ## Format

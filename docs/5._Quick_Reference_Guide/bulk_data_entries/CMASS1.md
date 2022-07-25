@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# CMASS1
 Defines a scalar mass element.
 
 ## Format

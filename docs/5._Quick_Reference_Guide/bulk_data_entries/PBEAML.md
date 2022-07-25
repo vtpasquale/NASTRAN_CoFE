@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# PBEAML
 Defines the properties of a CBEAM element by cross-sectional dimensions.
 
 ## Format

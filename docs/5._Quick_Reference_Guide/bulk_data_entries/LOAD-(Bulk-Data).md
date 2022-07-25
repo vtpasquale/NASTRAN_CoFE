@@ -2,6 +2,7 @@
 hide:
   - toc
 ---
+# LOAD
 Defines a static load as a linear combination of load sets.
 
 ## Format
