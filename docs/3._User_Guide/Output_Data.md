@@ -66,12 +66,12 @@ PARAM,POST,-1
 Response type and response sets will be consistent with case control inputs.
 
 ## Left-hand-side describers
-Case control left-hand-side describers (LHSD) control if response types will be written text output or not. Native output and HDF5 output are not impacted by LHSD. LHSD options are blank, `PRINT`, and `POST`. Other LHSD will be ignored. 
-Specifying `POST` will result in text output suppression for that response type. For example, with `writeOutput2Disk` set to `true`, `PARAM,POST` set to `<1`, and
+Case control left-hand-side describers (LHSD) control if response types will be written text output or not. Native output and HDF5 output are not impacted by LHSD. LHSD options are blank, `PRINT`, and `PLOT`. Other LHSD will be ignored. 
+Specifying `PLOT` will result in text output suppression for that response type. For example, with `writeOutput2Disk` set to `true`, `PARAM,POST` set to `<1`, and
 ```
 FORCE = ALL
 STRESS(PRINT) = ALL
-STRAIN(POST) = ALL
+STRAIN(PLOT) = ALL
 ```
 force and stress results will be output to native, text, and HDF5. Strain results will be output to native and HDF5 only.
 
