@@ -45,7 +45,7 @@ classdef ElementOutputData
             elementTypes = [obj.elementType];
             uniqueElementTypes = unique(elementTypes);
             % Loop through element types
-            for i = 1:size(uniqueElementTypes,1)
+            for i = 1:size(uniqueElementTypes,2)
                 elementOutputDataI = obj(elementTypes==uniqueElementTypes(i));
                 elementIndex = ismember(model.elementEIDs,[elementOutputDataI.elementID]);
                 firstElementIndex = find(elementIndex,1);

@@ -31,9 +31,9 @@ classdef Crod < Element
     end
     properties (Constant=true,Hidden = true)
         PAGE_TITLE = 'R O D   E L E M E N T S     ( C R O D )';
-        FORCE_ITEMS = {'AXIAL FORCE','TORSION MOMENT'};
-        STRESS_ITEMS = {'AXIAL STRESS','TORSION STRESS'};
-        STRAIN_ITEMS = {'AXIAL STRAIN','TORSION STRAIN'};
+        FORCE_ITEMS = {'Axial','Torsion'};
+        STRESS_ITEMS = {'Axial','Torsion'};
+        STRAIN_ITEMS = {'Axial','Torsion'};
     end
     properties (Hidden = true)
         E % [double] Elastic modulus
@@ -138,58 +138,6 @@ classdef Crod < Element
                 kineticEnergy = [];
             end
         end
-        function printTextOutput(obj,fid,elementOutputData,outputHeading)
-            if ~all([elementOutputData.elementType]==obj(1).ELEMENT_TYPE)
-                error('This function should only be called for ELEMENT_TYPE = %d',obj(1).ELEMENT_TYPE)
-            end
-            
-            nCrod = size(elementOutputData,1);
-            nModes = size(elementOutputData(1).values,2);
-            IDs = double([elementOutputData.elementID]');
-            
-            % response type - [uint8] CoFE code specifying response type [1=FORCE,2=STRESS,3=STRAIN,4=STRAIN ENERGY,5=KINETIC ENERGY]
-            responseType = unique([elementOutputData.responseType]);
-            if size(responseType,2)~=1; error('The function should only be called for a single type of data.'); end
-            
-            % reshape data for printing
-            values = [elementOutputData.values];
-            switch responseType
-                case {1 2 3}
-                    axial = reshape(values(1,:),nCrod,nModes);
-                    torsional = reshape(values(2,:),nCrod,nModes);
-                otherwise
-                    energy = values;
-            end
-            
-            for m = 1:nModes
-                
-                outputHeading.printTextOutput(fid,m)
-                
-                switch responseType
-                    case 1 % FORCE
-                        fprintf(fid,'\n\n   F O R C E S   I N   R O D   E L E M E N T S     ( C R O D )\n');
-                        fprintf(fid,'       ELEMENT       AXIAL        TORQUE\n');
-                        fprintf(fid,'           ID.       FORCE\n');
-                        fprintf(fid,'%14d%15E%15E\n',[IDs,axial(:,m),torsional(:,m)]');
-                        
-                    case 2 % STRESS
-                        fprintf(fid,'\n\n   S T R E S S E S   I N   R O D   E L E M E N T S      ( C R O D )\n');
-                        fprintf(fid,'       ELEMENT       AXIAL        TORSIONAL\n');
-                        fprintf(fid,'           ID.      STRESS         STRESS\n');
-                        fprintf(fid,'%14d%15E%15E\n',[IDs,axial(:,m),torsional(:,m)]');
-
-                    case 3 % STRAIN
-                        
-                    case 4 % STRAIN ENERGY
-                        
-                    case 5 % KINETIC ENERGY
-                        
-                    otherwise
-                        error('Element responseType=%d not supported.',responseType)
-                end
-            end
-            
-        end        
     end
     methods (Access=private,Static=true)
         function [T_e0,k_e,m_e,volume,mass] = crodMat(p1,p2,E,G,A,J,rho,nsm,coupledMassFlag)

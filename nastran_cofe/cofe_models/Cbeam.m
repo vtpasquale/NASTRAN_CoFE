@@ -23,6 +23,18 @@ classdef Cbeam < Element
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainBeam';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressBeam';
     end
+    properties (Constant = true,Hidden = true)
+        PAGE_TITLE = 'B E A M   E L E M E N T S     ( C B E A M )';
+        FORCE_ITEMS = {'EndA_Axial','EndA_Shear_1','EndA_Shear_2','EndA_Torque','EndA_Moment_1','EndA_Moment_2',...
+                       'EndB_Axial','EndB_Shear_1','EndB_Shear_2','EndB_Torque','EndB_Moment_1','EndB_Moment_2',...
+                       'EndA_Grid_ID','EndB_Grid_ID'};
+        STRESS_ITEMS = {'EndA_PointC','EndA_PointD','EndA_PointE','EndA_PointF',...
+                        'EndB_PointC','EndB_PointD','EndB_PointE','EndB_PointF',...
+                        'EndA_Grid_ID','EndB_Grid_ID'};
+        STRAIN_ITEMS = {'EndA_PointC','EndA_PointD','EndA_PointE','EndA_PointF',...
+                        'EndB_PointC','EndB_PointD','EndB_PointE','EndB_PointF',...
+                        'EndA_Grid_ID','EndB_Grid_ID'};
+    end
     methods
         function obj=assemble_sub(obj,model)
             
@@ -160,73 +172,6 @@ classdef Cbeam < Element
             else
                 kineticEnergy = [];
             end
-            
-        end
-        function printTextOutput(obj,fid,elementOutputData,outputHeading)
-            if ~all([elementOutputData.elementType]==obj(1).ELEMENT_TYPE)
-                error('This function should only be called for ELEMENT_TYPE = %d',obj(1).ELEMENT_TYPE)
-            end
-            
-            nCbeam = size(elementOutputData,1);
-            nModes = size(elementOutputData(1).values,2);
-            IDs = [elementOutputData.elementID]';
-            
-            % response type - [uint8] CoFE code specifying response type [1=FORCE,2=STRESS,3=STRAIN,4=STRAIN ENERGY,5=KINETIC ENERGY]
-            responseType = unique([elementOutputData.responseType]);
-            if size(responseType,2)~=1; error('The function should only be called for a single type of data.'); end
-            
-            for m = 1:nModes
-                outputHeading.printTextOutput(fid,m)
-                
-                switch responseType
-                    
-                    case 1 % FORCE
-                        fprintf(fid,'\n\n      F O R C E S   I N   B E A M   E L E M E N T S        ( C B E A M )\n');
-                        fprintf(fid,'                    STAT DIST/   - BENDING MOMENTS -            - WEB  SHEARS -           AXIAL          TOTAL\n');
-                        fprintf(fid,'   ELEMENT-ID  GRID   LENGTH    PLANE 1       PLANE 2        PLANE 1       PLANE 2        FORCE          TORQUE\n');
-                        for e = 1:nCbeam
-                            val = elementOutputData(e).values(:,m);
-                            fprintf(fid,'0%10d\n',IDs(e));
-                            fprintf(fid,'%19d   0.000%16E%14E%14E%14E%14E%14E\n',obj(e).g(1),val([6 5 2 3 1 4]));
-                            fprintf(fid,'%19d   1.000%16E%14E%14E%14E%14E%14E\n',obj(e).g(2),val([12 11 8 9 7 10]));
-                        end
-                        
-                    case 2 % STRESS
-                        fprintf(fid,'\n\n      S T R E S S E S   I N   B E A M   E L E M E N T S        ( C B E A M )\n');
-                        fprintf(fid,'                    STAT DIST/\n');
-                        fprintf(fid,'   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF\n');
-                        for e = 1:nCbeam
-                            val = elementOutputData(e).values(:,m);
-                            fprintf(fid,'0%10d\n',IDs(e));
-                            fprintf(fid,'%19d   0.000%16E%14E%14E%14E\n',obj(e).g(1),val(1:4));
-                            fprintf(fid,'%19d   1.000%16E%14E%14E%14E\n',obj(e).g(2),val(5:8));
-                        end
-
-                    case 3 % STRAIN 
-                        fprintf(fid,'\n\n      S T R A I N S   I N   B E A M   E L E M E N T S        ( C B E A M )\n');
-                        fprintf(fid,'                    STAT DIST/\n');
-                        fprintf(fid,'   ELEMENT-ID  GRID   LENGTH    SXC           SXD           SXE           SXF\n');
-                        for e = 1:nCbeam
-                            val = elementOutputData(e).values(:,m);
-                            fprintf(fid,'0%10d\n',IDs(e));
-                            fprintf(fid,'%19d   0.000%16E%14E%14E%14E\n',obj(e).g(1),val(1:4));
-                            fprintf(fid,'%19d   1.000%16E%14E%14E%14E\n',obj(e).g(2),val(5:8));
-                        end
-                        
-                    case 4 % STRAIN ENERGY
-                        fprintf(fid,'\n\n                                           E L E M E N T   S T R A I N   E N E R G I E S\n');
-                        fprintf(fid,'                ELEMENT-TYPE = BEAM\n');
-                        fprintf(fid,'                                    ELEMENT-ID          STRAIN-ENERGY\n');
-                        for e = 1:nCbeam
-                            fprintf(fid,'                                    %10d%22E\n',IDs(e),elementOutputData(e).values(m));
-                        end
-                        
-                    % case 5 % KINETIC ENERGY
-                        
-                    otherwise
-                        error('Element responseType=%d not supported.',responseType)
-                end
-            end
-        end
+        end % recover_sub()
     end
 end

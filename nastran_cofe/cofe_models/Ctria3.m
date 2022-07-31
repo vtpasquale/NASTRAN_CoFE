@@ -41,6 +41,16 @@ classdef Ctria3 < Element
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceTria3';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';
+    end
+    properties (Constant=true,Hidden = true)
+        PAGE_TITLE = 'T R I A 3   E L E M E N T S     ( C T R I A 3 )';
+        FORCE_ITEMS = {'MembraneX','MembraneY','MembraneXY','MomentX','MomentY','MomentXY','ShearX','ShearY'};
+        STRESS_ITEMS = {'Location_Z1','NormalX_Z1','NormalY_Z1','ShearXY_Z1','ShearAngle_Z1','MajorPrin_Z1','MinorPrin_Z1','vonMises_Z1',...
+                        'Location_Z2','NormalX_Z2','NormalY_Z2','ShearXY_Z2','ShearAngle_Z2','MajorPrin_Z2','MinorPrin_Z2','vonMises_Z2'}
+        STRAIN_ITEMS = {'Location_Z1','NormalX_Z1','NormalY_Z1','ShearXY_Z1','ShearAngle_Z1','MajorPrin_Z1','MinorPrin_Z1','vonMises_Z1',...
+                        'Location_Z2','NormalX_Z2','NormalY_Z2','ShearXY_Z2','ShearAngle_Z2','MajorPrin_Z2','MinorPrin_Z2','vonMises_Z2'}
+    end
+    properties (Constant=true,Hidden = true)
         MEMBRANE_DOF = uint8([1,2,7,8,13,14]);
         DRILLING_DOF = uint8([6,12,18]);
         PLATE_DOF =    uint8([3,4,5,9,10,11,15,16,17]);

@@ -166,7 +166,7 @@ classdef Cofe
             [~,outputFile] = fileparts(inputData);
             
             % Write text output
-            obj.solution.printTextOutput(obj.model,[outputFile,'.out'])
+            obj.solution.printTextOutput(obj.model,[outputFile,'.f06'])
             
             % Write Hdf5 output
             if obj.model(1).post < 1

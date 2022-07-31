@@ -81,7 +81,7 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             % Title sheet
             titleString = fileread('titleSheet.txt');
             fprintf(fid,titleString);
-            fprintf(fid,'Date and time: %s \n',datestr(now));
+            fprintf(fid,'%s\n',datestr(now));
             
             % Loop through subcases
             for caseIndex = 1:nCases

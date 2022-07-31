@@ -21,7 +21,22 @@
                   $$$$$                           $$
                      $$                           $$
                      $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-  
- License:       https://github.com/vtpasquale/NASTRAN_CoFE/blob/version5/LICENSE.txt
- Documentation: https://vtpasquale.github.io/NASTRAN_CoFE/
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+|  LICENSE                                                                |
+|  https://github.com/vtpasquale/NASTRAN_CoFE/blob/version5/LICENSE.txt   |
+|                                                                         |
+|  DOCUMENTATION                                                          |
+|  https://vtpasquale.github.io/NASTRAN_CoFE/                             |
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  
+   FORMAT
+   This output file is designed to be human readable. Format may deviate 
+   from commercial Nastran .f06 format. 
+
+   MISSING DATA?
+   Don’t see the output data you want? Review this:
+   https://vtpasquale.github.io/NASTRAN_CoFE/3._User_Guide/Output_Data/
+   
+   RUN DATE AND TIME
+   
