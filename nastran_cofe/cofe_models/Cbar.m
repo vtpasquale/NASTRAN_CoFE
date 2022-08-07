@@ -19,6 +19,9 @@ classdef Cbar < Element
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(34); % [uint8] Element code corresponding to Nastran item codes documentation.
+        VTK_CELL_CLASSNAME = 'VtkCellLine'; % [char] Vtk cell classname
+        VTK_CELL_TYPE = uint8(3); % [uint8] VTK cell type number
+        VTK_RESULT_TYPE = uint8(34); % [uint8] VTK result type number. Same as ELEMENT_TYPE unless result items are shared across ELEMENT_TYPEs.
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceBar';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainBar';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressBar';

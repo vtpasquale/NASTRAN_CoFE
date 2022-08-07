@@ -19,7 +19,7 @@ classdef VtkCellLine < VtkCells
                 for i = 1:nElements
                     obj(i,1) = VtkCellLine();
                     obj(i,1).eid = CofeElements(i).eid;
-                    obj(i,1).vertices = CofeElements(i).g.';
+                    obj(i,1).vertices = [CofeElements(i).g(1);CofeElements(i).g(2)];
                 end
             end
         end

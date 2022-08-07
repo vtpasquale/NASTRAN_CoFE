@@ -38,6 +38,9 @@ classdef Ctria3 < Element
     end
     properties (Constant = true, Hidden = true)
         ELEMENT_TYPE = uint8(74); % [uint8] Element code corresponding to Nastran item codes documentation.
+        VTK_CELL_CLASSNAME = 'VtkCellTriangle'; % [char] Vtk cell classname
+        VTK_CELL_TYPE = uint8(5); % [uint8] VTK cell type number
+        VTK_RESULT_TYPE = uint8(33); % [uint8] VTK result type number. Result items are shared with Cquad4.
         HDF5_ELEMENT_FORCE_CLASSNAME = 'Hdf5ElementForceTria3';
         HDF5_STRAIN_CLASSNAME = 'Hdf5ElementStrainTria3';
         HDF5_STRESS_CLASSNAME = 'Hdf5ElementStressTria3';

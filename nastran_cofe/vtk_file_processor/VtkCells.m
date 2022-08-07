@@ -14,14 +14,22 @@ classdef (Abstract) VtkCells < matlab.mixin.Heterogeneous
     methods (Abstract)
         print_sub(obj,fid) % print to VtkFile
     end
-    
+    properties (Hidden=true,Dependent=true)
+       cell_type_access % dependent property workaround to allow concatenation of [VtkCells.CELL_TYPE] as [VtkCells.cell_type_access]
+    end
+    methods
+        function value = get.cell_type_access(obj)
+            % This is a workaround to allow concatenation of [VtkCells.CELL_TYPE] as [VtkCells.cell_type_access]
+            value = obj.CELL_TYPE;
+        end
+    end
     methods (Static=true, Sealed=true)
         function [obj,sizeCells]= elements2cells(CofeElements)
             % create VtkCells from CoFE Elements
             % sizeCells [uint32] total number of integers is CELLS data block
             
             % identify unique cell types
-            cellTypes = [CofeElements.VTK_CELL_TYPE].';
+            cellTypes = [CofeElements.vtk_cell_type_access].';
             uniqueCellTypes = unique(cellTypes);
             nUniqueCellTypes = size(uniqueCellTypes,1);
             
@@ -46,7 +54,7 @@ classdef (Abstract) VtkCells < matlab.mixin.Heterogeneous
             fprintf(fid,'CELLS %d %d\n',nCells,sizeCells);
             
             % print cells in blocks by type
-            cellTypes = [obj.CELL_TYPE].';
+            cellTypes = [obj.cell_type_access].';
             uniqueCellTypes = unique(cellTypes);
             nUniqueCellTypes = size(uniqueCellTypes,1);
             for i = 1:nUniqueCellTypes
@@ -54,6 +62,12 @@ classdef (Abstract) VtkCells < matlab.mixin.Heterogeneous
                 obj(cellTypes==cellType).print_sub(fid,pointID);
             end
             
+%             % print cells
+%             cellTypes = [obj.cell_type_access].';
+%             for i = 1:nCells
+%                 obj(i).print_sub(fid,pointID);
+%             end
+
             % types 
             fprintf(fid,'CELL_TYPES %d\n',nCells);
             fprintf(fid,'%d\n',cellTypes);

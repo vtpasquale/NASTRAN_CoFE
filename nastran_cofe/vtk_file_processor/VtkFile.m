@@ -29,16 +29,16 @@ classdef VtkFile
     methods
         function obj = VtkFile(cofe)
             % Class constructed from Cofe object
+            if size(cofe.model,1)~=1; error('Vtk files do not support superelements'); end
             
             % model data (superelement 0 only)
             obj.vtkPoints = VtkPoints(cofe.model(1).point(cofe.model(1).nodeFlag) );
             [obj.vtkCells,obj.sizeCells]= VtkCells.elements2cells(cofe.model(1).element);
             
             if ~isempty(cofe.solution)
-                % point data
                 obj.pointData = VtkVector.fromSolution(cofe.solution,obj.vtkPoints.pointID);
+                obj.cellData  = VtkScalar.fromSolution(obj,cofe); % .solution,[obj.vtkCells.eid].',[obj.vtkCells.resultType].');
             end
-                
                 
         end
         function print(obj,filename)
@@ -55,6 +55,9 @@ classdef VtkFile
             
             fprintf(fid,'POINT_DATA %d\n',size(obj.vtkPoints.points,1));
             obj.pointData.print(fid)
+            
+            fprintf(fid,'CELL_DATA %d\n',size(obj.vtkCells,1));
+            obj.cellData.print(fid)
             
             fclose(fid);
         end

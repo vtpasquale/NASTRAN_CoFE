@@ -17,14 +17,36 @@ classdef (Abstract) Element < matlab.mixin.Heterogeneous
     end
 %     properties (Constant = true, Hidden=true)
 %         ELEMENT_TYPE % [uint8] Nastran element code corresponding to Nastran item codes documentation
+%         VTK_CELL_CLASSNAME % [char] Vtk cell classname
 %         VTK_CELL_TYPE % [uint8] VTK cell type number
+%         VTK_RESULT_TYPE % [uint8] VTK result type number (used to group  different element types that have the same result items so they can be displayed together
 %         HDF5_ELEMENT_FORCE_CLASSNAME % [char]
 %         HDF5_STRAIN_CLASSNAME % [char]
 %         HDF5_STRESS_CLASSNAME  % [char]
 %     end
+%     properties (Constant = true, Hidden=true)
+%         PAGE_TITLE % [char] element title used for text output
+%         FORCE_ITEMS = {nItems,1 [char]} force item names used for text output
+%         STRESS_ITEMS = {nItems,1 [char]} stress item names used for text output
+%         STRAIN_ITEMS = {nItems,1 [char]} strain item names used for text output
+%     end
+    properties (Hidden=true,Dependent=true)
+        vtk_cell_type_access; % workaround dependent type to allow concatenation of [CofeElements.VTK_CELL_TYPE] as [CofeElements.vtk_cell_type_access]
+        vtk_result_type_access; % workaround dependent type to allow concatenation of [CofeElements.VTK_RESULT_TYPE] as [CofeElements.vtk_result_type_access]
+    end
     methods (Abstract)
         obj = assemble_sub(obj,model) % Calculate element matricies
         [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags) % Recover element response values
+    end
+    methods
+        function value = get.vtk_cell_type_access(obj)
+            % This is a workaround to allow concatenation of [CofeElements.VTK_CELL_TYPE] as [CofeElements.vtk_cell_type_access]
+            value = obj.VTK_CELL_TYPE;
+        end
+        function value = get.vtk_result_type_access(obj)
+            % This is a workaround to allow concatenation of [CofeElements.VTK_CELL_TYPE] as [CofeElements.vtk_cell_type_access]
+            value = obj.VTK_RESULT_TYPE;
+        end
     end
     methods (Sealed=true)
         function obj = preprocess(obj)

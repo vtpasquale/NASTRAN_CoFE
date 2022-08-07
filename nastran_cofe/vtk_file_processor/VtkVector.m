@@ -28,7 +28,7 @@ classdef VtkVector
             vtkVector = VtkVector();
             index = 0;
             for i = 1:nSubCases
-                subcasePrefix = sprintf('SC%d_',i);
+                subcasePrefix = sprintf('Sc%d_',i);
                 if ~isempty(solution(i,1).displacement)
                     vtkVectorNext = VtkVector.fromPointOutputData(solution(i,1).displacement,vtkPointIDs,subcasePrefix);
                     addIndex = size(vtkVectorNext,1);
@@ -48,7 +48,7 @@ classdef VtkVector
                 case 1
                     tType='translation';
                     rType='rotation';
-                case 5
+                case 4
                     tType='spc-force';
                     rType='spc-moment';
                 otherwise
@@ -63,7 +63,7 @@ classdef VtkVector
             vtkVector = VtkVector();
             index = 1;
             for i = 1:nVectors
-                vectorPrefix = sprintf('vec%d_',i);
+                vectorPrefix = sprintf('Vec%d_',i);
                 vectorData = preallocate;
                 vectorData(recoveredFlag,:) = [pointOutputData.T1(:,i),pointOutputData.T2(:,i),pointOutputData.T3(:,i)];
                 vtkVector(index,1) = VtkVector(vectorData,[subcasePrefix,vectorPrefix,tType]);
