@@ -28,7 +28,7 @@ classdef EigenvalueTable
             fprintf(fid,'                                    R E A L   E I G E N V A L U E S\n');
             fprintf(fid,'   MODE          EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED\n');
             fprintf(fid,'    NO.                                                                         MASS              STIFFNESS\n');
-            fprintf(fid,'%9d%20E%20E%20E%20E%20E\n',[(1:size(obj.eigenvalue,1))',obj.eigenvalue,obj.angularFrequency,obj.frequency,obj.generalizedMass,obj.generalizedStiffness]' );
+            fprintf(fid,'%9d%20E%20E%20E%20E%20E\n',[(1:size(obj.eigenvalue,1))',obj.eigenvalue,sqrt(abs(obj.eigenvalue)),sqrt(abs(obj.eigenvalue))./(2*pi),obj.generalizedMass,obj.generalizedStiffness]' );
         end
     end
 end

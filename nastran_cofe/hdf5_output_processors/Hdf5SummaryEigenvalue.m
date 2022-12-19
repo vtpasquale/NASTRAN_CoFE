@@ -61,8 +61,8 @@ classdef Hdf5SummaryEigenvalue < Hdf5Summary
             obj.MODE  = int32(1:n).';
             obj.ORDER = obj.MODE ;
             obj.EIGEN = et.eigenvalue;
-            obj.OMEGA = et.angularFrequency;
-            obj.FREQ  = et.frequency;
+            obj.OMEGA = sqrt(abs(et.eigenvalue));
+            obj.FREQ  = sqrt(abs(et.eigenvalue))./(2*pi);
             obj.MASS  = et.generalizedMass;
             obj.STIFF = et.generalizedStiffness;
             obj.RESFLG = zeros(n,1,'int32');
