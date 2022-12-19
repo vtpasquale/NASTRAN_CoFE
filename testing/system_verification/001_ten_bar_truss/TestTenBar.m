@@ -21,6 +21,17 @@ classdef TestTenBar < matlab.unittest.TestCase
             compare = @() cofeModes.compare(nastranModes);
             testCase.verifyWarningFree(compare);
         end
+        function runBuck(testCase)
+            buckSolution = Cofe(fullfile('nastran_runs','buckling.dat'));
+        end
+        function compareBuck(testCase)
+            cofeBuck = Hdf5('buckling.h5');
+            nastranBuck = Hdf5(fullfile('nastran_runs','buckling.h5'));
+            
+            % check eigenvalues
+            maxEigenvalueSquareDiff = max( (cofeBuck.summary.EIGEN - nastranBuck.summary.EIGEN).^2);
+            testCase.verifyTrue (maxEigenvalueSquareDiff < 1e-8)
+        end
     end
     
 end

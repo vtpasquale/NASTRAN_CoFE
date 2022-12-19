@@ -39,7 +39,7 @@ classdef Hdf5SummaryEigenvalue < Hdf5Summary
             if nargin > 0
                 if ischar(arg1)
                     obj = obj.importCompoundDatasetFromHdf5File(arg1);
-                elseif isa(arg1,'ModesSolution') 
+                elseif isa(arg1,'ModesSolution') || isa(arg1,'BuckSolution')
                     obj = obj.constructFromModesSolution(arg1);
                     obj.version = obj.SCHEMA_VERSION;
                 else

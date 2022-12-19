@@ -65,7 +65,7 @@ classdef (Abstract) Hdf5Summary < Hdf5CompoundDataset & matlab.mixin.Heterogeneo
             hdf5Summary = [];
             nSubcases=size(solution,1);
             for i = 1:nSubcases
-                if isa(solution(i,1),'ModesSolution')
+                if isa(solution(i,1),'ModesSolution') || isa(solution(i,1),'BuckSolution')
                     hdf5SummaryNext = Hdf5SummaryEigenvalue(solution(i,1));
                     if isempty(hdf5Summary)
                         hdf5Summary=hdf5SummaryNext;
