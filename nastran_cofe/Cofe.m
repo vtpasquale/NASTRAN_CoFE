@@ -152,7 +152,7 @@ classdef Cofe
                         
             %% Results
             % Create Hdf5 object from model and solution
-            if p.Results.getHdf5Object || (obj.model(1).post < 1 && p.Results.writeOutput2Disk) 
+            if p.Results.getHdf5Object || (obj.model(1).post < 1 && writeOutput2Disk) 
                 hdf5 = Hdf5(obj);
             end
             
