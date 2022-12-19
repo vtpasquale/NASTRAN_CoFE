@@ -4,6 +4,13 @@
 classdef (Abstract) Solution < matlab.mixin.Heterogeneous
     properties
         caseControlIndex % [1,1 uint32]
+        displacement
+        spcforces
+        force
+        stress
+        strain
+        ese
+        eke
     end
     properties (Hidden=true)
         vectorHdf5DomainID % [nResponseVectors,1 uint32] HDF5 output file Domain ID or each respone vector
@@ -59,9 +66,12 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
             %
             % OUTPUT
             % obj = [nSubcases,nSuperElements Solution] Array of Solution objects
-            
             for i = 1:size(obj,1)
-                obj(i,:)=solve_sub(obj(i,:),model); % defined in subclass
+                if isa(obj(i,:),'BuckSolution')
+                    obj(i,:)=solve_sub(obj(i,:),model,obj);
+                else
+                    obj(i,:)=solve_sub(obj(i,:),model);
+                end
             end
         end % solve()
         function printTextOutput(obj,model,outputFile)
@@ -97,7 +107,14 @@ classdef (Abstract) Solution < matlab.mixin.Heterogeneous
                     
                     % Print Eigenvalue table
                     obj(caseIndex,1).eigenvalueTable.printTextOutput(fid)
+                elseif isa(obj(caseIndex,1),'BuckSolution')
+                    outputHeading.headingVector = obj(caseIndex,1).eigenvalueTable.eigenvalue;
+                    outputHeading.headingVectorText = ' EIGENVALUE: %E\n';
+                    
+                    % Print Eigenvalue table
+                    obj(caseIndex,1).eigenvalueTable.printTextOutput(fid)
                 end
+                
                 
                 % Loop through superelements
                 for superElementIndex = 1:nRowsModel

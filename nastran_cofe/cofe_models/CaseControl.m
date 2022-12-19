@@ -19,6 +19,9 @@ classdef CaseControl
         load % (int > 0 or blank) Selects a load set to be applied
         method % (int > 0 or blank) Selects the real eigenvalue extraction parameters
         
+        % Static solution selection for differential stiffness
+        statsub % (int > 0 or blank) Selects the static solution for differential stiffness
+        
         % Output sets
         outputSet@OutputSet; % [nsets,1] Array of OutputSet objects
         

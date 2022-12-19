@@ -84,6 +84,7 @@ classdef Model
         % g set indexing can be used (i.e., The real K_nn = K_nn(n,n)).
         % This maintains the f set indcies, so K_ff = K_nn(f,f).
         K_nn % ([nGdof,nGdof] sparse double) Elastic stiffness matrix of indepedent set
+        % KD_nn % ([nGdof,nGdof] sparse double) Differential stiffness matrix of indepedent set
         M_nn % ([nGdof,nGdof] sparse double) Mass matrix of indepedent set
         p_n %  ([nGdof,nLoadSets] double) Indepedent set load vectors     
         
@@ -164,6 +165,49 @@ classdef Model
             % Reduce residual structure
             obj(1).reducedModel = ReducedModel.constructFromModel(obj(1));
             
+        end
+        function KD_aa = assembleDifferentialStiffness(obj,staticsSolution)
+            % Assembles differential stiffness matrix for a single static solution.
+            % Not compatible with superelements or dynamically reduced models.
+            
+            % Input checks
+            [nModel,mModel]=size(obj);
+            if any([mModel~=1,nModel~=1]); error('Buckling analysis not supported with superelements'); end
+            if any(obj.o); error('Buckling analysis not supported for dynamically reduced models'); end
+            
+            % Assemble g set
+            KD_ggTriplet = SparseTriplet(20*obj.nGdof);
+            elem = obj.element;
+            nElement = size(elem,1);
+            for i=1:nElement
+                ei=elem(i);
+                kd_e=ei.assembleKD(obj,staticsSolution);
+                kd_g = ei.R_eg.'*kd_e*ei.R_eg;
+                gDof = ei.gdof;
+                KD_ggTriplet = KD_ggTriplet.addMatrix(kd_g,gDof);
+            end
+            KD_gg=KD_ggTriplet.convertToSparseMatrix(obj.nGdof,obj.nGdof);
+            
+            % Partition n set
+            if isempty(obj.G_m)
+                KD_nn = KD_gg;
+            else
+                % concise local variables without class properties name overlap
+                nG=obj.nGdof;
+                N = obj.n;
+                M = obj.m;
+                Gm = obj.G_m;
+                
+                % initialize            
+                KD_nn = spalloc(nG,nG,nnz(obj.KD_gg));
+                
+                % partition
+                KD_nn(N,N) = KD_gg(N,N) +  KD_gg(N,M)*Gm + Gm.'* KD_gg(N,M).' + Gm.'* KD_gg(M,M)*Gm;               
+            end
+            
+            % Partition a set
+            KD_aa = KD_nn(obj.f,obj.f);
+                        
         end
         function obj = mpcPartition(obj)
             % Multipoint constraint partitioning
@@ -359,6 +403,8 @@ classdef Model
                 u_g(obj.s,:) = obj.u_s(obj.s,solution.loadCaseIndex);
             elseif isa(solution,'ModesSolution')
                 % u_g(obj.s,:) = 0; -- as preallocated
+            elseif isa(solution,'BuckSolution')
+                % u_g(obj.s,:) = 0; -- as preallocated
             else
                 error('Update for new solution')
             end
@@ -385,6 +431,8 @@ classdef Model
                     + obj.K_gg(obj.s,obj.s)*solution.u_g(obj.s,:) ...
                     + obj.M_gg(obj.s,obj.f)*a_g(obj.f,:) ...
                     + obj.M_gg(obj.s,obj.s)*a_g(obj.s,:);
+            elseif isa(solution,'BuckSolution')
+                warning('Constraint forces not recovered for buckling eigenvectors')
             else
                 error('Update for new solution')
             end

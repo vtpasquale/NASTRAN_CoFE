@@ -65,7 +65,6 @@ end
 
 % check consistency
 if size(unique(fieldColumSize),1)~=1
-%     keyboard
     error('The input struct contains fields with inconsistent array sizes.')
 end
 

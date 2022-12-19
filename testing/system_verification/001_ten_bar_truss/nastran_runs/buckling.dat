@@ -1,0 +1,54 @@
+$ **********************************************************
+$   E X E C U T I V E    C O N T R O L
+$ **********************************************************
+SOL 105
+CEND
+$ **********************************************************
+$   C A S E    C O N T R O L
+$ **********************************************************
+ECHO = NONE
+DISPLACEMENT(PLOT) = ALL
+SPCFORCES(PLOT) = ALL
+STRESS(PLOT) = ALL
+STRAIN(PLOT) = ALL
+ESE(PLOT,THRESH=0.0) = ALL
+EKE(PLOT,THRESH=0.0) = ALL
+FORCE(PLOT) = ALL
+SPC = 1
+METHOD = 1
+SUBCASE 1
+   ANALYSIS=STATICS
+   LOAD = 1
+SUBCASE 2
+   ANALYSIS=STATICS
+   LOAD = 2
+SUBCASE 3
+   ANALYSIS=BUCK
+   STATSUB=1
+SUBCASE 4
+   ANALYSIS=BUCK
+   STATSUB=2
+$ **********************************************************
+$   B U L K    D A T A
+$ **********************************************************
+BEGIN BULK
+$
+$ ---------------------------------------------
+$   ANALYSIS MODEL
+$ ---------------------------------------------
+$
+$ Eigenvalue method
+EIGRL   1                       10                              MASS
+$
+MDLPRM,HDF5,0
+PARAM    AUTOSPC NO
+PARAM    GRDPNT  0
+PARAM    POST    -1
+PARAM,COUPMASS,1
+$
+$
+$ Include the model
+INCLUDE 'tenBar.bdf'
+$
+$
+ENDDATA

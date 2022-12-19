@@ -5,13 +5,13 @@ classdef ModesSolution < Solution
     
     properties       
         eigenvalueTable
-        displacement
-        spcforces
-        force
-        stress
-        strain
-        ese
-        eke
+%         displacement
+%         spcforces
+%         force
+%         stress
+%         strain
+%         ese
+%         eke
     end
     properties (Hidden = true)
         u_g
@@ -24,7 +24,7 @@ classdef ModesSolution < Solution
             % Normal modes solution
             %
             % INPUTS
-            % obj = [1,nSuperElements ModesSolver] Array of ModesSolver objects, one for each superelement
+            % obj = [1,nSuperElements Solution] Array of Solution objects, one for each superelement
             % model = [nSuperElements,1 Model] Array of Model objects, one for each superelement
             
             % Checks

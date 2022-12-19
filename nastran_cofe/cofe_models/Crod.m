@@ -69,6 +69,39 @@ classdef Crod < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
         end
+        function kd_e=assembleKD(obj,model,staticsSolution)
+            % Assemble element differential stiffness matrix
+            %
+            % Inputs
+            % obj [Crod]
+            % model [Model]
+            % staticsSolution [StaticsSolution]
+            %
+            % Outputs
+            % kd_e [12,12 double] element differential stiffness matrix in the element reference frame
+            
+            % Axial force from reference solution
+            if isempty(staticsSolution.force); error('CROD element differential stiffness calculation requires element force data from reference solution.'); end
+            forceIndex = find([staticsSolution.force.elementID]==obj.eid); % This line may be inefficient for large models.
+            if length(forceIndex)~=1; error('There is an issue locating element force data for CROD element differential stiffness calculation'); end
+            referenceForce = staticsSolution.force(forceIndex);
+            if referenceForce.elementType~=1; error('There is an issue locating element force data for CROD element differential stiffness calculation'); end
+            
+            elementLength = obj.volume/obj.a;
+            kd_e = referenceForce.values(1)/elementLength *...
+                   [0     0     0     0     0     0     0     0     0     0     0     0
+                    0     1     0     0     0     0     0    -1     0     0     0     0
+                    0     0     1     0     0     0     0     0    -1     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0    -1     0     0     0     0     0     1     0     0     0     0
+                    0     0    -1     0     0     0     0     0     1     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0
+                    0     0     0     0     0     0     0     0     0     0     0     0];
+        end
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
             % u_g [ngodf,nvectors double] Response vector in nodal displacement reference frame

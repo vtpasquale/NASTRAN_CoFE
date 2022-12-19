@@ -30,8 +30,18 @@ classdef Cmass1 < Element
             
             pty = model.property.getProperty(obj.pid,model,'Pmass');
             obj.m_e = pty.m;
-            
-            
+        end
+        function kd_e=assembleKD(obj,model,staticsSolution)
+            % Assemble element differential stiffness matrix
+            %
+            % Inputs
+            % obj [Cmass1]
+            % model [Model]
+            % staticsSolution [StaticsSolution]
+            %
+            % Outputs
+            % kd_e [double] element differential stiffness matrix in the element reference frame
+            kd_e = 0;
         end
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             force=[];
