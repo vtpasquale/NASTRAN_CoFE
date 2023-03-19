@@ -1,5 +1,6 @@
 function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,...
-                E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag,torsionMassFlag)
+                E,G,A,Iy,Iz,J,rho,nsm,k1,k2,coupledMassFlag,...
+                torsionMassFlag,eid)
 % Returns the element matrices for a prismatic BEAM/BAR element in 3D space.
 %
 % Inputs
@@ -16,6 +17,7 @@ function [T_e0,k_e,m_e,volume,mass] = getBeamElementMatrices(p1,p2,nu_0,...
 % k1, k2 [double] Shear stiffness factor K in K.*A.*G for plane 1 and plane 2
 % coupledMassFlag [logical] Coupled mass provided if true, lumped mass otherwise.
 % torsionMassFlag [logical] Torsion mass terms included if true.
+% eid [integer] element id number - for potential error messages
 %
 % Outputs
 % T_e0 = [3,3 double] transformation matrix from the basic reference frame to the element reference frame
@@ -30,7 +32,12 @@ L = normCS(p2-p1); % norm(p2-p1) is not complex-step friendly % sqrt( (p2(1)-p1(
 
 % Transformation Matrix
 xVec = p2 - p1; xVec = xVec./normCS(xVec);
-zVec = cross3(xVec,nu_0); zVec = zVec./normCS(zVec);
+zVec = cross3(xVec,nu_0);
+normZ = normCS(zVec);
+if normZ == 0
+    error('CBEAM or CBAR EID = %d orientation is undefined because the orientation vector is aligned with the beam axis.',eid)
+end
+zVec = zVec./normZ;
 yVec = cross3(zVec,xVec); yVec = yVec./normCS(yVec);
 T_e0 = [xVec, yVec, zVec].';
 
