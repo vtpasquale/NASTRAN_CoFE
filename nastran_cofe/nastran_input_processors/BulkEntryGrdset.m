@@ -13,8 +13,8 @@ classdef BulkEntryGrdset < BulkEntry
     methods
         function obj = BulkEntryGrdset(entryFields)
             % Construct using entry field data input as cell array of char           
-            obj.cp = castInputField('GRDSET','CP',entryFields{3},'uint32',[],0);
-            obj.cd = castInputField('GRDSET','CD',entryFields{7},'uint32',[],0);
+            obj.cp = castInputField('GRDSET','CP',entryFields{3},'uint32',uint32(0),0);
+            obj.cd = castInputField('GRDSET','CD',entryFields{7},'uint32',uint32(0),0);
             obj.ps = castInputField('GRDSET','PS',entryFields{8},'uint32',[],1,123456);
             obj.seid = castInputField('GRDSET','SEID',entryFields{9},'uint32',[]);
         end

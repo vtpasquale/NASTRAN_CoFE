@@ -214,7 +214,7 @@ classdef Ctria3 < Element
                 % krot = model.k6rot/1e6 * (obj.E2dBend(1,1)+obj.E2dBend(2,2))
                 
                 % reverse engineered equation for CQUAD4 K(6,6)
-                krot = model.k6rot/1e7 * obj.E2dBend(3,3);
+                krot = model.k6rot/1e7 * obj.E2dMem(3,3);
                 
                 % Application similar to Zienkiewicz approach as documented
                 % in 16.4-2 in CMPW Eq. 16.4-2.
