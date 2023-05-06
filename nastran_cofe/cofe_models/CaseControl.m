@@ -23,7 +23,7 @@ classdef CaseControl
         statsub % (int > 0 or blank) Selects the static solution for differential stiffness
         
         % Output sets
-        outputSet@OutputSet; % [nsets,1] Array of OutputSet objects
+        outputSet(:,1) OutputSet % [nsets,1] Array of OutputSet objects
         
         % Nodal response output requests
         displacement = OutputRequest(); % [OutputRequest] Requests the form and type of nodal displacement output

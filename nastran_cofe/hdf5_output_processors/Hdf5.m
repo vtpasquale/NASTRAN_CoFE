@@ -33,10 +33,10 @@ classdef Hdf5
     
     properties
         schema = uint32(20182)% [uint32] HDF5 data schema (developed based on MSC Nastran 2018.2)
-        domains@Hdf5Domains; % [Hdf5Domains] HDF5 domain data.
-        elemental@Hdf5Elemental % [n,1 Hdf5Elemental] HDF5 element data.
-        nodal@Hdf5Nodal % [n,1 Hdf5Nodal] HDF5 node data.
-        summary@Hdf5Summary % [n,1 Hdf5Summary] HDF5 summary data.
+        domains Hdf5Domains; % [Hdf5Domains] HDF5 domain data.
+        elemental Hdf5Elemental % [n,1 Hdf5Elemental] HDF5 element data.
+        nodal Hdf5Nodal % [n,1 Hdf5Nodal] HDF5 node data.
+        summary Hdf5Summary % [n,1 Hdf5Summary] HDF5 summary data.
     end
     
     methods

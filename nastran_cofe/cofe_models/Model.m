@@ -7,28 +7,28 @@ classdef Model
         superElementID; % [uint32]
         
         %% Case control
-        caseControl@CaseControl;
+        caseControl CaseControl
         
         %% Model entities
-        coordinateSystem@CoordinateSystem;
-        material@Material;
-        property@Property;
-        point=Point.empty(0,1); % Grid points (nodes) and scalar points
-        element=Element.empty(0,1);
-        spcs@Spcs;
-        mpcs@Mpcs;
-        load@Load;
+        coordinateSystem CoordinateSystem;
+        material Material;
+        property Property;
+        point Point = Point.empty(0,1); % Grid points (nodes) and scalar points
+        element Element =Element.empty(0,1);
+        spcs Spcs;
+        mpcs Mpcs;
+        load Load;
         
-        superElement@SuperElement;
+        superElement SuperElement;
         reducedModel
         
         %% Simple entities
-        parameter@Parameter;
+        parameter Parameter;
         eigrl % [nEigrl,2 int] matrix with eigenvalue solver parameters [SID,ND], where SID = Set identification number and ND = number of roots desired.
     end
     properties (Hidden=true)
         %% Sets translated from input data - processed after degrees-of-freedom are numbered
-        dofSet@DofSet; % [nBulkEntry*set,1 DofSet]
+        dofSet DofSet; % [nBulkEntry*set,1 DofSet]
         
         %% Exclusive Degrees-of-freedom sets
         m  % ([nGdof,1] logical) Degrees-of-freedom eliminated by multiple constraints

@@ -6,10 +6,10 @@
 classdef Hdf5Elemental
     
     properties        
-        hdf5ElementForce@Hdf5ElementForce;
-        hdf5ElementEnergy@Hdf5ElementEnergy;
-        hdf5ElementStrain@Hdf5ElementStrain
-        hdf5ElementStress@Hdf5ElementStress
+        hdf5ElementForce Hdf5ElementForce;
+        hdf5ElementEnergy Hdf5ElementEnergy;
+        hdf5ElementStrain Hdf5ElementStrain
+        hdf5ElementStress Hdf5ElementStress
     end
     methods
         function obj = Hdf5Elemental(arg1,arg2)
