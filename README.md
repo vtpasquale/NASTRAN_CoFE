@@ -15,6 +15,3 @@ See CoFE's [*Getting Started*](https://vtpasquale.github.io/NASTRAN_CoFE/1._Gett
 
 ### Pre/Post Processing
 Because the input format is Nastran-compatible, preprocessors intended for Nastran can be used to prepare CoFE models. There are too many preprocessor options to list them all, but examples include PATRAN, Femap, and Gmsh. CoFE writes MSC Nastran-format HDF5 output files (other commercial Nastran versions have independent HDF5 output formats with incompatible schemas). MSC HDF5 format can be postprocessed using PATRAN. Femap support for MSC HDF5 format is in-work according to [developers]( https://community.sw.siemens.com/s/question/0D54O000061xpmj/femap-needs-to-better-support-msc-nastrans-newer-features-feature-requests). 
-
-### MATLAB Version Compatibility
-**MATLAB version 2021b or older is recommended until issue [#21](https://github.com/vtpasquale/NASTRAN_CoFE/issues/21) is closed.**
