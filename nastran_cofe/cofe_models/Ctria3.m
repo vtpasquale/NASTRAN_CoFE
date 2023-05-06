@@ -26,7 +26,7 @@ classdef Ctria3 < Element
         E2dShear % [2,2 double] Transverse shear elasticity matrix
         
         T_e0 % [3,3 double] Transformation from basic to element reference frame
-        
+        x2D_e % [3,2 double] node xy locations in element reference frame
         
         % stress recovery data
         centerT % [double] element thickness at center point
@@ -108,6 +108,8 @@ classdef Ctria3 < Element
             
             % node positions in element coordinate system
             x_e = T_e0*([x1, x2, x3] - [x0, x0, x0]);
+            x2D_e = x_e(1:2,:);
+
             
             % Property and material
             pshell = model.property.getProperty(obj.pid,model,'Pshell');
@@ -134,7 +136,8 @@ classdef Ctria3 < Element
             else
                 if ~isempty(obj.t)
                     if isempty(pshellT); error('No shell thinkness defined. Shell thickness must be specifed on PSHELL or CTRIA3 entries.'); end
-                    tNodes = mean(obj.t);
+%                     tNodes = mean(obj.t);
+                    tNodes = reshape(obj.t, [3,1]);
                 else
                     tNodes = ones(3,1)*pshellT;
                 end
@@ -258,9 +261,52 @@ classdef Ctria3 < Element
             obj.R_eg(4:6,4:6)     = T_e0*n1.T_g0.';
             obj.R_eg(1:3,1:3)     = T_e0*n1.T_g0.';
             
-            % Save area
+            % save select properties
             obj.area = area;
+            obj.T_e0 = T_e0;
+            obj.x2D_e = x2D_e;
         end
+
+        function kd_e = assembleKD(obj, model, staticsSolution)
+            % Assemble element differential stiffness matrix
+            %
+            % Inputs
+            % obj [Ctria3]
+            % model [Model]
+            % staticsSolution [StaticsSolution]
+            %
+            % Outputs
+            % kd_e [18,18 double] element differential stiffness matrix in the element reference frame
+
+            % In plane force from reference solution
+            if isempty(staticsSolution.force); error('CTRIA3 element differential stiffness calculation requires element force data from reference solution.'); end
+            forceIndex = find([staticsSolution.force.elementID]==obj.eid); % This line may be inefficient for large models.
+            if length(forceIndex)~=1; error('There is an issue locating element force data for CQUAD4 element differential stiffness calculation'); end
+            referenceForce = staticsSolution.force(forceIndex);
+            if referenceForce.elementType~=74; error('There is an issue locating element force data for CTRIA3 element differential stiffness calculation'); end
+            f = referenceForce.values(1:3);
+            T_gp = [[f(1), f(3)];
+                    [f(3), f(2)]];
+
+            % Gauss quadrature points and weights
+            gauss_weight = 0.5;
+
+            % Initialize geometric stiffness matrix (18x18)
+            kd_e = zeros(18);
+            w_inds = obj.PLATE_DOF(1:3:9);
+
+            % G matrix components
+            dN_dxi  = [-1,1,0];
+            dN_deta = [-1,0,1];
+            [~, detJ, invJ] = Ctria3.calculateJacobian2D(dN_dxi, dN_deta, obj.x2D_e);
+            G_e = invJ*[dN_dxi; dN_deta];
+           
+            % Assemble geometric stiffness matrix at the current Gauss point
+            kd_e_gp = G_e'*T_gp*G_e;
+            kd_e(w_inds,w_inds) = kd_e(w_inds,w_inds) + gauss_weight*kd_e_gp*detJ;
+
+        end
+
         function [gdof,p_g]=processPressureLoad_sub(obj,pload)
             R = [2/3 1/6 1/6];
             S = [1/6 1/6 2/3];
@@ -470,6 +516,52 @@ classdef Ctria3 < Element
                 0,X(3)-X(2),0,X(1)-X(3),0,X(2)-X(1);
                 X(3)-X(2),Y(2)-Y(3),X(1)-X(3),Y(3)-Y(1),X(2)-X(1),Y(1)-Y(2)];
         end
+
+        function [N,dNdxi,dNdeta] = evaluateShapeAndGradFunctions(xi,eta)
+            N      = [1 - xi - eta, xi, eta];
+            dNdxi  = [-1,1,0];
+            dNdeta = [-1,0,1];
+        end
+
+        function [J,detJ,invJ]=calculateJacobian2D(dNdxi,dNdeta,x2D_e)
+            J = [dNdxi;dNdeta]*x2D_e.';
+            detJ = det(J);
+            invJ=(1/detJ)*[J(2,2),-J(1,2);-J(2,1),J(1,1)];
+        end
+
+        function [quad_points, quad_weights] = triangle_quadrature(order)
+            % This function returns the quadrature points and weights for the reference
+            % triangle for a specified order of Gauss quadrature.
+        
+            switch order
+                case 1
+                    % Order 1 Gauss quadrature (1 point, degree of precision 1)
+                    quad_points = [1/3, 1/3];
+                    quad_weights = 1/2;
+        
+                case 2
+                    % Order 2 Gauss quadrature (3 points, degree of precision 3)
+                    quad_points = [2/3, 1/6;
+                                   1/6, 2/3;
+                                   1/6, 1/6];
+                    quad_weights = [1/6, 1/6, 1/6];
+        
+                case 3
+                    % Order 3 Gauss quadrature (4 points, degree of precision 5)
+                    a = 1/3;
+                    b = 3/5;
+                    c = 1/5;
+                    quad_points = [a, a;
+                                   b, c;
+                                   c, b;
+                                   c, c];
+                    quad_weights = [-9/32, 25/96, 25/96, 25/96];
+        
+                otherwise
+                    error('Unsupported quadrature order. Supported orders are 1, 2, and 3.');
+            end
+        end
+
         function B = calculateMindlinPlateB(N,dNdxi,dNdeta,invJ)
             % Mindlin plate strain-dispacement matrix
             dNdxy = invJ*[dNdxi; dNdeta];

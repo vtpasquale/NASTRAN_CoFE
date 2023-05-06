@@ -146,7 +146,7 @@ classdef Cquad4 < Element
             else
                 if ~isempty(obj.t)
                     if isempty(pshellT); error('No shell thinkness defined. Shell thickness must be specifed on PSHELL or CQUAD4 entries.'); end
-                    tNodes = obj.t;
+                    tNodes = reshape(obj.t, [4,1]);
                 else
                     tNodes = ones(4,1)*pshellT;
                 end
@@ -260,6 +260,62 @@ classdef Cquad4 < Element
             obj.T_e0 = T_e0;
             obj.x2D_e = x2D_e;
         end
+
+        function kd_e = assembleKD(obj, model, staticsSolution)
+            % Assemble element differential stiffness matrix
+            %
+            % Inputs
+            % obj [Cquad4]
+            % model [Model]
+            % staticsSolution [StaticsSolution]
+            %
+            % Outputs
+            % kd_e [24,24 double] element differential stiffness matrix in the element reference frame
+
+            % In plane force from reference solution
+            if isempty(staticsSolution.force); error('CQUAD4 element differential stiffness calculation requires element force data from reference solution.'); end
+            forceIndex = find([staticsSolution.force.elementID]==obj.eid); % This line may be inefficient for large models.
+            if length(forceIndex)~=1; error('There is an issue locating element force data for CQUAD4 element differential stiffness calculation'); end
+            referenceForce = staticsSolution.force(forceIndex);
+            if referenceForce.elementType~=33; error('There is an issue locating element force data for CQUAD4 element differential stiffness calculation'); end
+            f = referenceForce.values(1:3);
+            T_gp = [[f(1), f(3)];
+                    [f(3), f(2)]];
+
+            % Gauss quadrature points and weights
+            xi_gp = obj.GAUSS_POINT*[-1  1  1 -1];
+            eta_gp= obj.GAUSS_POINT*[-1 -1  1  1];
+ 
+            gauss_weights = [1, 1, 1, 1];
+
+            % Initialize geometric stiffness matrix (12x12)
+            kd_e = zeros(24);
+            w_inds = obj.PLATE_DOF(1:3:12);
+
+            % Loop through Gauss points
+            for i = 1:length(xi_gp)
+                xi = xi_gp(i);
+                eta = eta_gp(i);
+                
+                % Shape functions derivatives
+                [~, dN_dxi, dN_deta] = Cquad4.evaluateShapeFunctions(xi, eta);
+                
+                % Jacobian and its determinant
+                [~, detJ, invJ] = Cquad4.calculateJacobian2D(dN_dxi,dN_deta,obj.x2D_e);
+                
+                % G matrix components
+                G_e = invJ*[dN_dxi; dN_deta];
+               
+                % Assemble geometric stiffness matrix at the current Gauss point
+                kd_e_gp = G_e'*T_gp*G_e;
+                
+                % Add weighted geometric stiffness matrix of the current
+                % Gauss point to the total
+                kd_e(w_inds,w_inds) = kd_e(w_inds,w_inds) + gauss_weights(i)*kd_e_gp*detJ;
+            end
+
+        end
+
         function [gdof,p_g]=processPressureLoad_sub(obj,pload)
             Xi = obj.GAUSS_POINT*[-1  1  1 -1];
             Eta= obj.GAUSS_POINT*[-1 -1  1  1];
@@ -279,6 +335,7 @@ classdef Cquad4 < Element
             p_g = obj.R_eg.'*p_e;
             gdof = obj.gdof; 
         end
+
         function [force,stress,strain,strainEnergy,kineticEnergy] = recover_sub(obj,u_g,model,returnFlags)
             % INPUTS
             % u_g [nGodf,nVectors double] Response vector in nodal displacement reference frame
@@ -459,11 +516,13 @@ classdef Cquad4 < Element
             dNdxi  = .25*[      -(1-eta),       (1-eta),       (1+eta),      -(1+eta)];
             dNdeta = .25*[(1-xi)*-1     ,(1+xi)*-1     ,(1+xi)        ,(1-xi)        ];
         end
+
         function [J,detJ,invJ]=calculateJacobian2D(dNdxi,dNdeta,x2D_e)
             J = [dNdxi;dNdeta]*x2D_e.';
             detJ = det(J);
             invJ=(1/detJ)*[J(2,2),-J(1,2);-J(2,1),J(1,1)];
         end
+
         function B = calculateMembraneB(dNdxi,dNdeta,invJ)
             % Membrane strain-dispacement matrix
             B = [1 0 0 0;
